@@ -21,6 +21,9 @@ import { RecapClientComponent } from "./client/recap-client/recap-client.compone
 import { ReservationComponent } from "./prestations-service/reservation/reservation.component";
 import { AutresPrestationsComponent } from "./prestations-service/autres-prestations/autres-prestations.component";
 import { ParametrageComponent } from './parametrage/parametrage.component';
+import { PlaintesComponent } from './plaintes/plaintes.component';
+import { ReclamationsComponent } from './reclamations/reclamations.component';
+import { EditionsComponent } from './editions/editions.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +47,9 @@ import { ParametrageComponent } from './parametrage/parametrage.component';
     AgentComponent,
     JourneeExerciceComponent,
     ParametrageComponent,
+    PlaintesComponent,
+    ReclamationsComponent,
+    EditionsComponent,
   ],
   imports: [CommonModule, AdminRoutingModule],
 })

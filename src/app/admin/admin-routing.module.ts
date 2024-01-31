@@ -1,107 +1,51 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { AdminComponent } from "./admin.component";
-import { DashboardComponent } from "./dashboard/dashboard.component";
-import { ExtourneComponent } from "./comptabilite/extourne/extourne.component";
-import { ReglementFactureComponent } from "./comptabilite/reglement-facture/reglement-facture.component";
-import { ClientComponent } from "./client/client.component";
-import { ChambresComponent } from "./chambres/chambres.component";
-import { RecapClientComponent } from "./client/recap-client/recap-client.component";
-import { PrestationsServiceComponent } from "./prestations-service/prestations-service.component";
-import { RestaurationComponent } from "./restauration/restauration.component";
-import { ComptabiliteComponent } from "./comptabilite/comptabilite.component";
-import { ReservationComponent } from "./prestations-service/reservation/reservation.component";
-import { AutresPrestationsComponent } from "./prestations-service/autres-prestations/autres-prestations.component";
-import { EditionChambreComponent } from "./edition-etat/edition-chambre/edition-chambre.component";
-import { EditionClientComponent } from "./edition-etat/edition-client/edition-client.component";
-import { EditionComptabiliteComponent } from "./edition-etat/edition-comptabilite/edition-comptabilite.component";
-import { EditionPrestationsServicesComponent } from "./edition-etat/edition-prestations-services/edition-prestations-services.component";
-import { EditionEtatComponent } from "./edition-etat/edition-etat.component";
-import { ParametrageComponent } from "./parametrage/parametrage.component";
-import { AgentComponent } from "./parametrage/agent/agent.component";
-import { JourneeExerciceComponent } from "./parametrage/journee-exercice/journee-exercice.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AdminComponent } from './admin.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { PlaintesComponent } from './plaintes/plaintes.component';
+import { ReclamationsComponent } from './reclamations/reclamations.component';
+import { EditionsComponent } from './editions/editions.component';
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     component: AdminComponent,
     children: [
-      { path: "", redirectTo: "dashboard", pathMatch: "full" },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
 
       // menu dashboard
-      { path: "dashboard", component: DashboardComponent },
+      { path: 'dashboard', component: DashboardComponent },
 
-      // menu client
+      // menu plaintes
       {
-        path: "client",
+        path: 'plaintes',
         children: [
-          { path: "", redirectTo: "liste", pathMatch: "full" },
-          { path: "liste", component: ClientComponent },
-          { path: "recapClient", component: RecapClientComponent },
+          { path: '', redirectTo: 'liste', pathMatch: 'full' },
+          { path: 'liste', component: PlaintesComponent },
         ],
       },
 
-      // menu chambre
-      { path: "chambres", component: ChambresComponent },
-
-      // menu prestation de service
+      // menu reclamations
       {
-        path: "prestation",
+        path: 'reclamations',
         children: [
-          { path: "", redirectTo: "menu", pathMatch: "full" },
-          { path: "menu", component: PrestationsServiceComponent },
+          { path: '', redirectTo: 'liste', pathMatch: 'full' },
           {
-            path: "restauration",
-            component: RestaurationComponent,
+            path: 'liste',
+            component: ReclamationsComponent,
           },
-          { path: "autresPrestation", component: AutresPrestationsComponent },
         ],
       },
 
-      // menu reservation
-      { path: "reservation", component: ReservationComponent },
-
-      // menu comptabilité
+      // menu edition
       {
-        path: "comptabilite",
+        path: 'edition',
         children: [
-          { path: "", redirectTo: "menu", pathMatch: "full" },
-          { path: "menu", component: ComptabiliteComponent },
+          { path: '', redirectTo: 'liste', pathMatch: 'full' },
           {
-            path: "reglementFacture",
-            component: ReglementFactureComponent,
+            path: 'liste',
+            component: EditionsComponent,
           },
-          { path: "extourne", component: ExtourneComponent },
-        ],
-      },
-
-      // menu edition 
-      {
-        path: "edition",
-        children: [
-          { path: "", redirectTo: "menu", pathMatch: "full" },
-          { path: "menu", component: EditionEtatComponent },
-          {
-            path: "editionChambre",
-            component: EditionChambreComponent
-          },
-          { path: "editionClient", component: EditionClientComponent },
-        { path: "editionComptabilite", component: EditionComptabiliteComponent},
-        { path: "editionprestationsServices", component: EditionPrestationsServicesComponent},
-        ],
-      },
-
-      // menu parametrage (samuel)
-      {
-        path: "parametrage",
-        children: [
-          { path: "", redirectTo: "menu", pathMatch: "full" },
-          { path: "menu", component: ParametrageComponent },
-          {
-            path: "agent",
-            component: AgentComponent,
-          },
-          { path: "journeeExercice", component: JourneeExerciceComponent },
         ],
       },
     ],
