@@ -1,0 +1,31 @@
+// Variables
+$largeur-max: 1200px;
+
+// Mixin pour centrer les éléments
+@mixin centrer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// Mixin pour réorganiser en fonction de la taille de l'écran
+@mixin responsive-layout {
+  @media screen and (max-width: $largeur-max) {
+    // Styles pour les écrans plus petits
+    // Ajoutez vos règles CSS spécifiques pour les écrans plus petits ici
+  }
+}
+
+// Styles de base
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.authentication-wrapper {
+  @include centrer;
+  @include responsive-layout;
+
+  // Ajoutez vos styles généraux pour le conteneur ici
+}
