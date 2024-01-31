@@ -24,6 +24,7 @@ import { ParametrageComponent } from './parametrage/parametrage.component';
 import { PlaintesComponent } from './plaintes/plaintes.component';
 import { ReclamationsComponent } from './reclamations/reclamations.component';
 import { EditionsComponent } from './editions/editions.component';
+import { AttributionPlaintesReclamationsComponent } from './attribution-plaintes-reclamations/attribution-plaintes-reclamations.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { EditionsComponent } from './editions/editions.component';
     PlaintesComponent,
     ReclamationsComponent,
     EditionsComponent,
+    AttributionPlaintesReclamationsComponent,
   ],
   imports: [CommonModule, AdminRoutingModule],
 })
