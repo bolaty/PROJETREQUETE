@@ -1,0 +1,138 @@
+<!-- Content -->
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="app-ecommerce">
+      <!-- Add Product -->
+      <div
+        class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3"
+      >
+        <div class="d-flex flex-column justify-content-center">
+          <h4 class="mb-1 mt-3">Relance Reclamation / Plainte</h4>
+          <p>Consultation de plainte et Reclamation </p>
+        </div>
+      </div>
+      <!-- Inventory -->
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5 class="card-title mb-0">Liste</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <!-- Navigation -->
+            <div class="col-12 col-md-12 mx-auto ">
+                <div class="card-header">
+                    <h5 class="card-title">Search Filter</h5>
+                    <div class="d-flex justify-content-between align-items-center row py-3 gap-3 gap-md-0">
+                      <div class="col-md-4 user_role"></div>
+                      <div class="col-md-4 user_plan"></div>
+                      <div class="col-md-4 user_status"></div>
+                    </div>
+                  </div>
+                  <div class="card-datatable table-responsive pt-0">
+                    <table class="datatables-basic table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>LIBELLE</th>
+                          <th>NATURE</th>
+                          <th>STATUT</th>
+                          <th>DATE</th>
+                        </tr>
+                      </thead>
+                    </table>
+                  </div>
+            </div>
+            <!-- /Navigation -->
+          
+          </div>
+        </div>
+      </div>
+      <!-- /Inventory -->
+    </div>
+  </div>
+  <!-- / Content -->
+  
+  <!-- Content -->
+  <div
+      class="offcanvas offcanvas-end"
+      id="sendInvoiceOffcanvas"
+      aria-hidden="true"
+    >
+      <div class="offcanvas-header mb-3">
+        <h5 class="offcanvas-title">Send Invoice</h5>
+        <button
+          type="button"
+          class="btn-close text-reset"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body flex-grow-1">
+        <form>
+          <div class="form-floating form-floating-outline mb-4">
+            <input
+              type="text"
+              class="form-control"
+              id="invoice-from"
+              value="shelbyComapny@email.com"
+              placeholder="company@email.com"
+            />
+            <label for="invoice-from">From</label>
+          </div>
+          <div class="form-floating form-floating-outline mb-4">
+            <input
+              type="text"
+              class="form-control"
+              id="invoice-to"
+              value="qConsolidated@email.com"
+              placeholder="company@email.com"
+            />
+            <label for="invoice-to">To</label>
+          </div>
+          <div class="form-floating form-floating-outline mb-4">
+            <input
+              type="text"
+              class="form-control"
+              id="invoice-subject"
+              value="Invoice of purchased Admin Templates"
+              placeholder="Invoice regarding goods"
+            />
+            <label for="invoice-subject">Subject</label>
+          </div>
+          <div class="form-floating form-floating-outline mb-4">
+            <textarea
+              class="form-control"
+              name="invoice-message"
+              id="invoice-message"
+              style="height: 190px"
+            >
+  Dear Queen Consolidated,
+            Thank you for your business, always a pleasure to work with you!
+            We have generated a new invoice in the amount of $95.59
+            We would appreciate payment of this invoice by 05/11/2021</textarea
+            >
+            <label for="invoice-message">Message</label>
+          </div>
+          <div class="mb-4">
+            <span class="badge bg-label-primary rounded-pill">
+              <i class="mdi mdi-link-variant mdi-14px me-1"></i>
+              <span class="align-middle">Invoice Attached</span>
+            </span>
+          </div>
+          <div class="mb-3 d-flex flex-wrap">
+            <button
+              type="button"
+              class="btn btn-primary me-3"
+              data-bs-dismiss="offcanvas"
+            >
+              Send
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-bs-dismiss="offcanvas"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>

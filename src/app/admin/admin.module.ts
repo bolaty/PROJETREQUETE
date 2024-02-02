@@ -25,6 +25,9 @@ import { PlaintesComponent } from './plaintes/plaintes.component';
 import { ReclamationsComponent } from './reclamations/reclamations.component';
 import { EditionsComponent } from './editions/editions.component';
 import { AttributionPlaintesReclamationsComponent } from './attribution-plaintes-reclamations/attribution-plaintes-reclamations.component';
+import { OperateurComponent } from './operateur/operateur.component';
+import { RelanceComponent } from './relance/relance.component';
+import { SuiviRequeteComponent } from './suivi-requete/suivi-requete.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +55,9 @@ import { AttributionPlaintesReclamationsComponent } from './attribution-plaintes
     ReclamationsComponent,
     EditionsComponent,
     AttributionPlaintesReclamationsComponent,
+    OperateurComponent,
+    RelanceComponent,
+    SuiviRequeteComponent,
   ],
   imports: [CommonModule, AdminRoutingModule],
 })

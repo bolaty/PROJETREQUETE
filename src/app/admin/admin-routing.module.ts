@@ -5,7 +5,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { PlaintesComponent } from './plaintes/plaintes.component';
 import { ReclamationsComponent } from './reclamations/reclamations.component';
 import { EditionsComponent } from './editions/editions.component';
-
+import { OperateurComponent } from './operateur/operateur.component';
+import { RelanceComponent } from './relance/relance.component';
+import { SuiviRequeteComponent } from './suivi-requete/suivi-requete.component';
 const routes: Routes = [
   {
     path: '',
@@ -16,12 +18,19 @@ const routes: Routes = [
       // menu dashboard
       { path: 'dashboard', component: DashboardComponent },
 
+      // menu operateur
+      { path: 'Operateur', component: OperateurComponent },
+
+      // menu Relance
+      { path: 'Relance', component: RelanceComponent },
+
       // menu plaintes
       {
         path: 'plaintes',
         children: [
           { path: '', redirectTo: 'liste', pathMatch: 'full' },
           { path: 'liste', component: PlaintesComponent },
+          { path: 'SuiviRequete', component: SuiviRequeteComponent },
         ],
       },
 
@@ -34,6 +43,7 @@ const routes: Routes = [
             path: 'liste',
             component: ReclamationsComponent,
           },
+          { path: 'SuiviRequete', component: SuiviRequeteComponent },
         ],
       },
 
