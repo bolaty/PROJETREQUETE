@@ -7,6 +7,7 @@ import { AuthComponent } from "./auth.component";
 import { LoginComponent } from "./login/login.component";
 import { ForgotPasswordComponent } from "./forgot-password/forgot-password.component";
 import { ChangePasswordComponent } from "./change-password/change-password.component";
+import { CentreDeControleComponent } from './centre-de-controle/centre-de-controle.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { ChangePasswordComponent } from "./change-password/change-password.compo
     LoginComponent,
     ForgotPasswordComponent,
     ChangePasswordComponent,
+    CentreDeControleComponent,
   ],
   imports: [
     CommonModule,

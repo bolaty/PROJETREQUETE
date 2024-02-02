@@ -1,19 +1,23 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { AuthComponent } from "./auth.component";
-import { LoginComponent } from "./login/login.component";
-import { ForgotPasswordComponent } from "./forgot-password/forgot-password.component";
-import { ChangePasswordComponent } from "./change-password/change-password.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AuthComponent } from './auth.component';
+import { LoginComponent } from './login/login.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { CentreDeControleComponent } from './centre-de-controle/centre-de-controle.component';
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     component: AuthComponent,
     children: [
-      { path: "", redirectTo: "login", pathMatch: "full" },
-      { path: "login", component: LoginComponent },
-      { path: "forgotPassword", component: ForgotPasswordComponent },
-      { path: "changePassword", component: ChangePasswordComponent },
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      { path: 'login', component: LoginComponent },
+      { path: 'forgotPassword', component: ForgotPasswordComponent },
+      { path: 'changePassword', component: ChangePasswordComponent },
+
+      // menu centre de controle
+      { path: 'centredecontrole', component: CentreDeControleComponent },
     ],
   },
 ];
