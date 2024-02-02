@@ -126,10 +126,24 @@ export class RelanceComponent {
             selector: 'td:first-child'
           },
           rowCallback: function (row:any, data:any, index:any) {
-            $(row).on('click', function () {
+            $(row).on('dblclick', function () {
               // Appeler la fonction ici
               pt.rowClicked(data);
             });
+          },
+         /* createdRow: function (row, data, index) {
+            if (data.NATURE === 'RECLAMATION') {
+              $(row).find('td:eq(1)').css('color', 'green');
+            } else if (data.NATURE === 'PLAINTES') {
+              $(row).find('td:eq(1)').css('color', 'red');
+            }
+          }*/
+          createdRow: function (row:any, data:any, index:any) {
+            if (data.NATURE === 'RECLAMATION') {
+              $(row).css('background-color', '#f1faee');
+            } else if (data.NATURE === 'PLAINTE') {
+              $(row).css('background-color', '#ffffff');
+            }
           },
           responsive: true,
           order: [[2, 'desc']],

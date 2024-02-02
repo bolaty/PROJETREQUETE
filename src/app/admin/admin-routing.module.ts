@@ -30,7 +30,7 @@ const routes: Routes = [
         children: [
           { path: '', redirectTo: 'liste', pathMatch: 'full' },
           { path: 'liste', component: PlaintesComponent },
-          { path: 'SuiviRequete', component: SuiviRequeteComponent },
+          { path: 'liste/SuiviRequete', component: SuiviRequeteComponent },
         ],
       },
 
@@ -43,7 +43,7 @@ const routes: Routes = [
             path: 'liste',
             component: ReclamationsComponent,
           },
-          { path: 'SuiviRequete', component: SuiviRequeteComponent },
+          { path: 'liste/SuiviRequete', component: SuiviRequeteComponent },
         ],
       },
 
