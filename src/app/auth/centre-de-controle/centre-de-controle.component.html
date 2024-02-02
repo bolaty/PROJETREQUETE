@@ -1,18 +1,14 @@
-<body>
-  <div class="container">
-    <div class="cards">
-      <div class="card red">
-        <p class="tip">Hover Me</p>
-        <p class="second-text">Lorem Ipsum</p>
-      </div>
-      <div class="card blue">
-        <p class="tip">Hover Me</p>
-        <p class="second-text">Lorem Ipsum</p>
-      </div>
-      <div class="card green">
-        <p class="tip">Hover Me</p>
-        <p class="second-text">Lorem Ipsum</p>
-      </div>
-    </div>
+<div class="cards">
+  <div class="card red" (click)="RedirectionVersApp()">
+    <p class="tip">APPLICATION 1</p>
+    <p class="second-text">Zenith</p>
   </div>
-</body>
+  <div class="card white" (click)="RedirectionVersApp()">
+    <p class="tip">APPLICATION 2</p>
+    <p class="second-text">Tontine</p>
+  </div>
+  <div class="card blue" (click)="RedirectionVersApp()">
+    <p class="tip">APPLICATION 3</p>
+    <p class="second-text">Geolocalisation</p>
+  </div>
+</div>
