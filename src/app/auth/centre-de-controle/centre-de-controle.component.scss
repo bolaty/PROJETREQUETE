@@ -2,22 +2,18 @@
   display: flex;
   flex-direction: row;
   gap: 15px;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* Ajustez la hauteur selon vos besoins */
 }
 
 .cards .red {
-  background-color: #3a5683;
-}
-
-.cards .white {
-  background-color: #3a5683;
-  color: black;
+  background-color: #f43f5e;
 }
 
 .cards .blue {
-  background-color: #3a5683;
+  background-color: #3b82f6;
+}
+
+.cards .green {
+  background-color: #22c55e;
 }
 
 .cards .card {
@@ -26,10 +22,10 @@
   justify-content: center;
   flex-direction: column;
   text-align: center;
-  height: 200px;
-  width: 300px;
+  height: 100px;
+  width: 250px;
   border-radius: 10px;
-  color: rgb(1, 1, 1);
+  color: white;
   cursor: pointer;
   transition: 400ms;
 }
@@ -50,4 +46,11 @@
 .cards:hover > .card:not(:hover) {
   filter: blur(10px);
   transform: scale(0.9, 0.9);
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
