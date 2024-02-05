@@ -128,7 +128,7 @@
                   role="tab"
                   aria-selected="true">
                   <span class="mdi mdi-account mdi-20px d-sm-none"></span
-                  ><span class="d-none d-sm-block">Personal Info</span>
+                  ><span class="d-none d-sm-block">information personnelle</span>
                 </button>
               </li>
               <li class="nav-item">
@@ -139,7 +139,7 @@
                   role="tab"
                   aria-selected="false">
                   <span class="mdi mdi-account-details mdi-20px d-sm-none"></span
-                  ><span class="d-none d-sm-block">Account Details</span>
+                  ><span class="d-none d-sm-block">information sur la plainte</span>
                 </button>
               </li>
               
@@ -154,7 +154,7 @@
                   <div class="col-md-6">
                     <div class="row">
                       <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-first-name"
-                        >First Name</label
+                        >Numero de compte client</label
                       >
                       <div class="col-sm-9">
                         <input type="text" id="formtabs-first-name" class="form-control" placeholder="John" />
@@ -164,7 +164,7 @@
                   <div class="col-md-6">
                     <div class="row">
                       <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-last-name"
-                        >Last Name</label
+                        >Nom et prenoms</label
                       >
                       <div class="col-sm-9">
                         <input type="text" id="formtabs-last-name" class="form-control" placeholder="Doe" />
@@ -173,8 +173,21 @@
                   </div>
                   <div class="col-md-6">
                     <div class="row">
+                      <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-phone">Telephone</label>
+                      <div class="col-sm-9">
+                        <input
+                          type="text"
+                          id="formtabs-phone"
+                          class="form-control phone-mask"
+                          placeholder="658 799 8941"
+                          aria-label="658 799 8941" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="row">
                       <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-country"
-                        >Country</label
+                        >Agence</label
                       >
                       <div class="col-sm-9">
                         <select id="formtabs-country" class="select2 form-select" data-allow-clear="true">
@@ -207,59 +220,27 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-6 select2-primary">
-                    <div class="row">
-                      <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-language"
-                        >Language</label
-                      >
-                      <div class="col-sm-9">
-                        <select id="formtabs-language" class="select2 form-select" multiple>
-                          <option value="en" selected>English</option>
-                          <option value="fr" selected>French</option>
-                          <option value="de">German</option>
-                          <option value="pt">Portuguese</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
                   <div class="col-md-6">
                     <div class="row">
-                      <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-birthdate"
-                        >Birth Date</label
+                      <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-last-Localisation"
+                        >Localisation (lieu d'habitation)</label
                       >
                       <div class="col-sm-9">
-                        <input
-                          type="text"
-                          id="formtabs-birthdate"
-                          class="form-control dob-picker"
-                          placeholder="YYYY-MM-DD" />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="row">
-                      <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-phone">Phone No</label>
-                      <div class="col-sm-9">
-                        <input
-                          type="text"
-                          id="formtabs-phone"
-                          class="form-control phone-mask"
-                          placeholder="658 799 8941"
-                          aria-label="658 799 8941" />
+                        <input type="text" id="formtabs-last-Localisation" class="form-control" placeholder="Localisation" />
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="row mt-4">
+                <!-- <div class="row mt-4">
                   <div class="col-md-6">
                     <div class="row justify-content-end">
                       <div class="col-sm-9">
                         <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
-                        <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+                        <button type="reset" class="btn btn-outline-secondary">suivant</button>
                       </div>
                     </div>
                   </div>
-                </div>
+                </div>-->
               </form>
             </div>
             <!-- Account Details -->
@@ -268,8 +249,50 @@
                 <div class="row g-3">
                   <div class="col-md-6">
                     <div class="row">
+                      <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-country"
+                        >Type de plainte</label
+                      >
+                      <div class="col-sm-9">
+                        <select id="formtabs-country" class="select2 form-select" data-allow-clear="true">
+                          <option value="">Select</option>
+                          <option value="Australia">Australia</option>
+                          <option value="Bangladesh">Bangladesh</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-floating form-floating-outline mb-4">
+                    <textarea
+                      class="form-control"
+                      name="invoice-message"
+                      id="invoice-message"
+                      style="height: 190px"
+                    >
+                    Dear Queen Consolidated,
+                    Thank you for your business, always a pleasure to work with you!
+                    We have generated a new invoice in the amount of $95.59
+                    We would appreciate payment of this invoice by 05/11/2021</textarea
+                    >
+                    <label for="invoice-message">Description de la plainte</label>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="row">
+                      <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-country"
+                        >Mode de collecte</label
+                      >
+                      <div class="col-sm-9">
+                        <select id="formtabs-country" class="select2 form-select" data-allow-clear="true">
+                          <option value="">Select</option>
+                          <option value="Australia">Australia</option>
+                          <option value="Bangladesh">Bangladesh</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="row">
                       <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"
-                        >Username</label
+                        >Nom agent</label
                       >
                       <div class="col-sm-9">
                         <input
@@ -277,63 +300,6 @@
                           id="formtabs-username"
                           class="form-control"
                           placeholder="john.doe" />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="row">
-                      <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-email">Email</label>
-                      <div class="col-sm-9">
-                        <div class="input-group input-group-merge">
-                          <input
-                            type="text"
-                            id="formtabs-email"
-                            class="form-control"
-                            placeholder="john.doe"
-                            aria-label="john.doe"
-                            aria-describedby="formtabs-email2" />
-                          <span class="input-group-text" id="formtabs-email2">@example.com</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="row form-password-toggle">
-                      <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-password"
-                        >Password</label
-                      >
-                      <div class="col-sm-9">
-                        <div class="input-group input-group-merge">
-                          <input
-                            type="password"
-                            id="formtabs-password"
-                            class="form-control"
-                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                            aria-describedby="formtabs-password2" />
-                          <span class="input-group-text cursor-pointer" id="formtabs-password2"
-                            ><i class="mdi mdi-eye-off-outline"></i
-                          ></span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="row form-password-toggle">
-                      <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-confirm-password"
-                        >Confirm</label
-                      >
-                      <div class="col-sm-9">
-                        <div class="input-group input-group-merge">
-                          <input
-                            type="password"
-                            id="formtabs-confirm-password"
-                            class="form-control"
-                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                            aria-describedby="formtabs-confirm-password2" />
-                          <span class="input-group-text cursor-pointer" id="formtabs-confirm-password2"
-                            ><i class="mdi mdi-eye-off-outline"></i
-                          ></span>
-                        </div>
                       </div>
                     </div>
                   </div>
