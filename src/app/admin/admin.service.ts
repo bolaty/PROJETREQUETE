@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+import  Swal  from "sweetalert2"
 declare var $: any;
 
 @Injectable({
@@ -25,6 +25,16 @@ export class AdminService {
   // ***************** SECTION DES DECLARATIONS fin
 
   constructor() {}
+
+  ShowLoader(){
+    Swal.fire({
+      allowOutsideClick: false
+    })
+    Swal.showLoading()
+  }
+  CloseLoader(){
+    Swal.close()
+  }
 
   // **************** SECTION DES NOTIFICATIONS debut
   // notification pour les erreurs
@@ -303,7 +313,7 @@ export class AdminService {
               'background-color',
               'white'
             );
-          }
+          }//
         }
         // le type montant
         if (this.tab_type_de_donnee[index].type == 'montant') {
