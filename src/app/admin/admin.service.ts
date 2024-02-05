@@ -6,6 +6,10 @@ declare var $: any;
   providedIn: 'root',
 })
 export class AdminService {
+  // ***************** SECTION DES LIENS debut
+  lien_du_serveur: any = 'https://zenithwebserveur.mgdigitalplus.com:1002/';
+  // ***************** SECTION DES LIENS fin
+
   // ***************** SECTION DES DECLARATIONS debut
   date_sectionnee: any = {
     annee_date: '',

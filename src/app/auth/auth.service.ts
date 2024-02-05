@@ -6,6 +6,10 @@ declare var $: any;
   providedIn: 'root',
 })
 export class AuthService {
+  // ***************** SECTION DES LIENS debut
+
+  // ***************** SECTION DES LIENS fin
+
   // ***************** SECTION DES DECLARATIONS
 
   // *****************
