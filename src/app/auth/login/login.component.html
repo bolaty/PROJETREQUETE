@@ -125,10 +125,8 @@
         </p>
 
         <form
-          id="formAuthentication"
           class="mb-3"
-          action="index.html"
-          method="POST"
+          id="formAuthentication" #Connectform="ngForm"
         >
           <div class="form-floating form-floating-outline mb-3">
             <input
@@ -137,7 +135,10 @@
               id="email"
               name="email-username"
               placeholder="Entrez votre email ou votre nom d'utilisateur"
-              autofocus
+              autofocus 
+              minlength="1" maxlength="25"
+              [(ngModel)]="formLogin.login"
+              required=""
             />
             <label for="email">E-mail ou nom d'utilisateur</label>
           </div>
@@ -150,8 +151,11 @@
                     id="password"
                     class="form-control"
                     name="password"
+                    minlength="1" maxlength="25"
                     placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                     aria-describedby="password"
+                    [(ngModel)]="formLogin.mdp"
+                    required=""
                   />
                   <label for="password">Mot de passe</label>
                 </div>
@@ -176,7 +180,7 @@
               <span>Mot de passe oublié ?</span>
             </a>
           </div>
-          <button class="btn btn-primary d-grid w-100" (click)="SeConnecter()">
+          <button class="btn btn-primary d-grid w-100" [disabled]="!Connectform.form.valid" (click)="Login()" >
             Se connecter
           </button>
         </form>

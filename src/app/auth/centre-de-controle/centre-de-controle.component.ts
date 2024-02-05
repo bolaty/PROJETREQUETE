@@ -10,6 +10,6 @@ export class CentreDeControleComponent {
   constructor(public _router: Router) {}
 
   RedirectionVersApp() {
-    this._router.navigate(['/admin/dashboard']);
+    this._router.navigate(['/auth/login']);
   }
 }
