@@ -1,445 +1,467 @@
 <!-- Content -->
 <div class="container-xxl flex-grow-1 container-p-y">
-    <div class="app-ecommerce">
-          <div
-    class="faq-header d-flex flex-column justify-content-center align-items-center"
-    >
-    <h3 class="text-center text-primary mb-2">Hello, how can we help?</h3>
-    <p class="text-body text-center mb-0 px-3">
-    or choose a category to quickly find the help you need
-    </p>
+  <div class="app-ecommerce">
     <div
-    class="input-wrapper my-3 input-group input-group-lg input-group-merge px-sm-5"
+      class="faq-header d-flex flex-column justify-content-center align-items-center"
     >
-    <span class="input-group-text" id="basic-addon1"
-    ><i class="mdi mdi-magnify mdi-20px"></i
-    ></span>
-    <input
-    type="text"
-    class="form-control"
-    placeholder="Ask a question...."
-    aria-label="Search"
-    aria-describedby="basic-addon1"
-    />
-    </div>
-    </div>
-      <!-- Add Product -->
+      <h3 class="text-center text-primary mb-2">
+        Bonjour, comment pouvons-nous vous aider ?
+      </h3>
+      <p class="text-body text-center mb-0 px-3">
+        ou choisissez une catégorie pour trouver rapidement l'aide dont vous
+        avez besoin
+      </p>
       <div
-        class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3"
+        class="input-wrapper my-3 input-group input-group-lg input-group-merge px-sm-5"
       >
-        <div class="d-flex flex-column justify-content-center">
-          <h4 class="mb-1 mt-3">Suivi Reclamation / Plainte</h4>
-          <p>Consultation de plainte et Reclamation </p>
+        <span class="input-group-text" id="basic-addon1"
+          ><i class="mdi mdi-magnify mdi-20px"></i
+        ></span>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Poser une question..."
+          aria-label="Search"
+          aria-describedby="basic-addon1"
+        />
+      </div>
+    </div>
+    <!-- Add Product -->
+    <div
+      class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3"
+    >
+      <div class="d-flex flex-column justify-content-center">
+        <h4 class="mb-1 mt-3">Suivi reclamation / plainte</h4>
+        <p>Suivez l'évolution de votre plainte ou de votre reclamation</p>
+      </div>
+    </div>
+    <!-- Inventory -->
+    <div class="card mb-4">
+      <div class="row">
+        <!-- Navigation -->
+        <div class="card">
+          <div class="table-responsive text-nowrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Description</th>
+                  <th>Type plainte/reclamation</th>
+                  <th>Statut</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody class="table-border-bottom-0">
+                <tr>
+                  <td>
+                    <i
+                      class="mdi mdi-wallet-travel mdi-20px text-danger me-3"
+                    ></i
+                    ><span class="fw-medium">Tours Project</span>
+                  </td>
+                  <td>Albert Cook</td>
+                  <td>
+                    <span class="badge rounded-pill bg-label-primary me-1"
+                      >Active</span
+                    >
+                  </td>
+                  <td>
+                    <div class="dropdown">
+                      <button
+                        type="button"
+                        class="btn p-0 dropdown-toggle hide-arrow"
+                        data-bs-toggle="dropdown"
+                      >
+                        <i class="mdi mdi-dots-vertical"></i>
+                      </button>
+                      <div class="dropdown-menu">
+                        <a
+                          class="dropdown-item"
+                          href="javascript:void(0);"
+                          (click)="voirTraitement('Traitement')"
+                          ><i class="mdi mdi-pencil-outline me-1"></i>
+                          Traitement de la requete</a
+                        >
+                        <a
+                          class="dropdown-item"
+                          href="javascript:void(0);"
+                          (click)="ConsultationTraitement('Consultation')"
+                          ><i class="mdi mdi-progress-clock me-1"></i>
+                          Consultation de l'etat d'avancement de la requete</a
+                        >
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="mdi mdi-basketball mdi-20px text-info me-3"></i
+                    ><span class="fw-medium">Sports Project</span>
+                  </td>
+                  <td>Barry Hunter</td>
+                  <td>
+                    <span class="badge rounded-pill bg-label-success me-1"
+                      >Completed</span
+                    >
+                  </td>
+                  <td>
+                    <div class="dropdown">
+                      <button
+                        type="button"
+                        class="btn p-0 dropdown-toggle hide-arrow"
+                        data-bs-toggle="dropdown"
+                      >
+                        <i class="mdi mdi-dots-vertical"></i>
+                      </button>
+                      <div class="dropdown-menu">
+                        <a
+                          class="dropdown-item"
+                          href="javascript:void(0);"
+                          (click)="voirTraitement('Traitement')"
+                          ><i class="mdi mdi-pencil-outline me-2"></i>
+                          Traitement de la requete</a
+                        >
+                        <a
+                          class="dropdown-item"
+                          href="javascript:void(0);"
+                          (click)="ConsultationTraitement('Consultation')"
+                          ><i class="mdi mdi-progress-clock me-1"></i>
+                          Consultation de l'etat d'avancement de la requete</a
+                        >
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="mdi mdi-greenhouse mdi-20px text-success me-3"></i
+                    ><span class="fw-medium">Greenhouse Project</span>
+                  </td>
+                  <td>Trevor Baker</td>
+                  <td>
+                    <span class="badge rounded-pill bg-label-info me-1"
+                      >Scheduled</span
+                    >
+                  </td>
+                  <td>
+                    <div class="dropdown">
+                      <button
+                        type="button"
+                        class="btn p-0 dropdown-toggle hide-arrow"
+                        data-bs-toggle="dropdown"
+                      >
+                        <i class="mdi mdi-dots-vertical"></i>
+                      </button>
+                      <div class="dropdown-menu">
+                        <a
+                          class="dropdown-item"
+                          href="javascript:void(0);"
+                          (click)="voirTraitement('Traitement')"
+                          ><i class="mdi mdi-pencil-outline me-2"></i>
+                          Traitement de la requete</a
+                        >
+                        <a
+                          class="dropdown-item"
+                          href="javascript:void(0);"
+                          (click)="ConsultationTraitement('Consultation')"
+                          ><i class="mdi mdi-progress-clock me-1"></i>
+                          Consultation de l'etat d'avancement de la requete</a
+                        >
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="mdi mdi-bank mdi-20px text-primary me-3"></i
+                    ><span class="fw-medium">Bank Project</span>
+                  </td>
+                  <td>Jerry Milton</td>
+                  <td>
+                    <span class="badge rounded-pill bg-label-warning me-1"
+                      >Pending</span
+                    >
+                  </td>
+                  <td>
+                    <div class="dropdown">
+                      <button
+                        type="button"
+                        class="btn p-0 dropdown-toggle hide-arrow"
+                        data-bs-toggle="dropdown"
+                      >
+                        <i class="mdi mdi-dots-vertical"></i>
+                      </button>
+                      <div class="dropdown-menu">
+                        <a
+                          class="dropdown-item"
+                          href="javascript:void(0);"
+                          (click)="voirTraitement('Traitement')"
+                          ><i class="mdi mdi-pencil-outline me-2"></i>
+                          Traitement de la requete</a
+                        >
+                        <a
+                          class="dropdown-item"
+                          href="javascript:void(0);"
+                          (click)="ConsultationTraitement('Consultation')"
+                          ><i class="mdi mdi-progress-clock me-1"></i>
+                          Consultation de l'etat d'avancement de la requete</a
+                        >
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!--/ Basic Bootstrap Table -->
+      </div>
+    </div>
+    <!-- /Inventory -->
+  </div>
+</div>
+<!-- / Content -->
+
+<!-- Content pour le traitement de la requete (plainte ou reclamation)-->
+<div
+  class="offcanvas offcanvas-end"
+  id="sendInvoiceOffcanvas"
+  aria-hidden="true"
+>
+  <div class="offcanvas-header mb-3">
+    <h5 class="offcanvas-title">Traitement</h5>
+    <button
+      type="button"
+      class="btn-close text-reset"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="offcanvas-body flex-grow-1">
+    <form>
+      <div class="form-floating form-floating-outline mb-4">
+        <input
+          type="text"
+          class="form-control"
+          id="invoice-from"
+          value=""
+          placeholder="Objet de la requete"
+        />
+        <label for="invoice-from">Objet</label>
+      </div>
+      <div class="form-floating form-floating-outline mb-4">
+        <div class="form-floating form-floating-outline">
+          <select
+            id="offCanvasService"
+            name="offCanvasService"
+            class="select2 form-select"
+            data-allow-clear="true"
+          >
+            <option value="">Selectionner</option>
+            <option value="Australia">Australia</option>
+            <option value="Bangladesh">Bangladesh</option>
+            <option value="Belarus">Belarus</option>
+            <option value="Brazil">Brazil</option>
+            <option value="Canada">Canada</option>
+            <option value="China">China</option>
+            <option value="France">France</option>
+            <option value="Germany">Germany</option>
+            <option value="India">India</option>
+            <option value="Indonesia">Indonesia</option>
+            <option value="Israel">Israel</option>
+            <option value="Italy">Italy</option>
+            <option value="Japan">Japan</option>
+            <option value="Korea">Korea, Republic of</option>
+            <option value="Mexico">Mexico</option>
+            <option value="Philippines">Philippines</option>
+            <option value="Russia">Russian Federation</option>
+            <option value="South Africa">South Africa</option>
+            <option value="Thailand">Thailand</option>
+            <option value="Turkey">Turkey</option>
+            <option value="Ukraine">Ukraine</option>
+            <option value="United Arab Emirates">United Arab Emirates</option>
+            <option value="United Kingdom">United Kingdom</option>
+            <option value="United States">United States</option>
+          </select>
+          <label for="offCanvasService">Service</label>
         </div>
       </div>
-      <!-- Inventory -->
-      <div class="card mb-4">
-      
-  
-          <div class="row">
-            <!-- Navigation -->
-            <div class="card">
-                <h5 class="card-header">Table Basic</h5>
-                <div class="table-responsive text-nowrap">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>Project</th>
-                        <th>Client</th>
-                        <th>Users</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody class="table-border-bottom-0">
-                      <tr>
-                        <td>
-                          <i class="mdi mdi-wallet-travel mdi-20px text-danger me-3"></i
-                          ><span class="fw-medium">Tours Project</span>
-                        </td>
-                        <td>Albert Cook</td>
-                        <td>
-                          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                            <li
-                              data-bs-toggle="tooltip"
-                              data-popup="tooltip-custom"
-                              data-bs-placement="top"
-                              class="avatar avatar-xs pull-up"
-                              title="Lilian Fuller">
-                              <img src="../../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
-                            </li>
-                            <li
-                              data-bs-toggle="tooltip"
-                              data-popup="tooltip-custom"
-                              data-bs-placement="top"
-                              class="avatar avatar-xs pull-up"
-                              title="Sophia Wilkerson">
-                              <img src="../../assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
-                            </li>
-                            <li
-                              data-bs-toggle="tooltip"
-                              data-popup="tooltip-custom"
-                              data-bs-placement="top"
-                              class="avatar avatar-xs pull-up"
-                              title="Christina Parker">
-                              <img src="../../assets/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
-                            </li>
-                          </ul>
-                        </td>
-                        <td><span class="badge rounded-pill bg-label-primary me-1">Active</span></td>
-                        <td>
-                          <div class="dropdown">
-                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                              <i class="mdi mdi-dots-vertical"></i>
-                            </button>
-                            <div class="dropdown-menu">
-                              <a class="dropdown-item" href="javascript:void(0);" (click)="voirTraitement('Traitement')"
-                                ><i class="mdi mdi-pencil-outline me-1"></i> Traitement de la requete</a
-                              >
-                              <a class="dropdown-item" href="javascript:void(0);" (click)="ConsultationTraitement('Consultation')"
-                                ><i class="mdi mdi-trash-can-outline me-1"></i> Consultation de l'etat d'avancement de la requete</a
-                              >
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <i class="mdi mdi-basketball mdi-20px text-info me-3"></i
-                          ><span class="fw-medium">Sports Project</span>
-                        </td>
-                        <td>Barry Hunter</td>
-                        <td>
-                          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                            <li
-                              data-bs-toggle="tooltip"
-                              data-popup="tooltip-custom"
-                              data-bs-placement="top"
-                              class="avatar avatar-xs pull-up"
-                              title="Lilian Fuller">
-                              <img src="../../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
-                            </li>
-                            <li
-                              data-bs-toggle="tooltip"
-                              data-popup="tooltip-custom"
-                              data-bs-placement="top"
-                              class="avatar avatar-xs pull-up"
-                              title="Sophia Wilkerson">
-                              <img src="../../assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
-                            </li>
-                            <li
-                              data-bs-toggle="tooltip"
-                              data-popup="tooltip-custom"
-                              data-bs-placement="top"
-                              class="avatar avatar-xs pull-up"
-                              title="Christina Parker">
-                              <img src="../../assets/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
-                            </li>
-                          </ul>
-                        </td>
-                        <td><span class="badge rounded-pill bg-label-success me-1">Completed</span></td>
-                        <td>
-                          <div class="dropdown">
-                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                              <i class="mdi mdi-dots-vertical"></i>
-                            </button>
-                            <div class="dropdown-menu">
-                              <a class="dropdown-item" href="javascript:void(0);"  (click)="voirTraitement('Traitement')"
-                                ><i class="mdi mdi-pencil-outline me-2"></i> Traitement de la requete</a
-                              >
-                              <a class="dropdown-item" href="javascript:void(0);" (click)="ConsultationTraitement('Consultation')"
-                                ><i class="mdi mdi-trash-can-outline me-2"></i> Consultation de l'etat d'avancement de la requete</a
-                              >
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <i class="mdi mdi-greenhouse mdi-20px text-success me-3"></i
-                          ><span class="fw-medium">Greenhouse Project</span>
-                        </td>
-                        <td>Trevor Baker</td>
-                        <td>
-                          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                            <li
-                              data-bs-toggle="tooltip"
-                              data-popup="tooltip-custom"
-                              data-bs-placement="top"
-                              class="avatar avatar-xs pull-up"
-                              title="Lilian Fuller">
-                              <img src="../../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
-                            </li>
-                            <li
-                              data-bs-toggle="tooltip"
-                              data-popup="tooltip-custom"
-                              data-bs-placement="top"
-                              class="avatar avatar-xs pull-up"
-                              title="Sophia Wilkerson">
-                              <img src="../../assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
-                            </li>
-                            <li
-                              data-bs-toggle="tooltip"
-                              data-popup="tooltip-custom"
-                              data-bs-placement="top"
-                              class="avatar avatar-xs pull-up"
-                              title="Christina Parker">
-                              <img src="../../assets/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
-                            </li>
-                          </ul>
-                        </td>
-                        <td><span class="badge rounded-pill bg-label-info me-1">Scheduled</span></td>
-                        <td>
-                          <div class="dropdown">
-                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                              <i class="mdi mdi-dots-vertical"></i>
-                            </button>
-                            <div class="dropdown-menu">
-                              <a class="dropdown-item" href="javascript:void(0);" (click)="voirTraitement('Traitement')"
-                                ><i class="mdi mdi-pencil-outline me-2"></i> Traitement de la requete</a
-                              >
-                              <a class="dropdown-item" href="javascript:void(0);" (click)="ConsultationTraitement('Consultation')"
-                                ><i class="mdi mdi-trash-can-outline me-2"></i> Consultation de l'etat d'avancement de la requete</a
-                              >
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <i class="mdi mdi-bank mdi-20px text-primary me-3"></i
-                          ><span class="fw-medium">Bank Project</span>
-                        </td>
-                        <td>Jerry Milton</td>
-                        <td>
-                          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                            <li
-                              data-bs-toggle="tooltip"
-                              data-popup="tooltip-custom"
-                              data-bs-placement="top"
-                              class="avatar avatar-xs pull-up"
-                              title="Lilian Fuller">
-                              <img src="../../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
-                            </li>
-                            <li
-                              data-bs-toggle="tooltip"
-                              data-popup="tooltip-custom"
-                              data-bs-placement="top"
-                              class="avatar avatar-xs pull-up"
-                              title="Sophia Wilkerson">
-                              <img src="../../assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
-                            </li>
-                            <li
-                              data-bs-toggle="tooltip"
-                              data-popup="tooltip-custom"
-                              data-bs-placement="top"
-                              class="avatar avatar-xs pull-up"
-                              title="Christina Parker">
-                              <img src="../../assets/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
-                            </li>
-                          </ul>
-                        </td>
-                        <td><span class="badge rounded-pill bg-label-warning me-1">Pending</span></td>
-                        <td>
-                          <div class="dropdown">
-                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                              <i class="mdi mdi-dots-vertical"></i>
-                            </button>
-                            <div class="dropdown-menu">
-                              <a class="dropdown-item" href="javascript:void(0);" (click)="voirTraitement('Traitement')"
-                                ><i class="mdi mdi-pencil-outline me-2"></i> Traitement de la requete</a
-                              >
-                              <a class="dropdown-item" href="javascript:void(0);" (click)="ConsultationTraitement('Consultation')"
-                                ><i class="mdi mdi-trash-can-outline me-2"></i> Consultation de l'etat d'avancement de la requete</a
-                              >
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+      <div class="form-floating form-floating-outline mb-4">
+        <div class="form-floating form-floating-outline">
+          <select
+            id="offCanvasStatut"
+            name="offCanvasStatut"
+            class="select2 form-select"
+            data-allow-clear="true"
+          >
+            <option value="">Selectionner</option>
+            <option value="Australia">Australia</option>
+            <option value="Bangladesh">Bangladesh</option>
+            <option value="Belarus">Belarus</option>
+            <option value="Brazil">Brazil</option>
+            <option value="Canada">Canada</option>
+            <option value="China">China</option>
+            <option value="France">France</option>
+            <option value="Germany">Germany</option>
+            <option value="India">India</option>
+            <option value="Indonesia">Indonesia</option>
+            <option value="Israel">Israel</option>
+            <option value="Italy">Italy</option>
+            <option value="Japan">Japan</option>
+            <option value="Korea">Korea, Republic of</option>
+            <option value="Mexico">Mexico</option>
+            <option value="Philippines">Philippines</option>
+            <option value="Russia">Russian Federation</option>
+            <option value="South Africa">South Africa</option>
+            <option value="Thailand">Thailand</option>
+            <option value="Turkey">Turkey</option>
+            <option value="Ukraine">Ukraine</option>
+            <option value="United Arab Emirates">United Arab Emirates</option>
+            <option value="United Kingdom">United Kingdom</option>
+            <option value="United States">United States</option>
+          </select>
+          <label for="offCanvasStatut">Statut</label>
+        </div>
+      </div>
+      <div class="form-floating form-floating-outline mb-4">
+        <textarea
+          class="form-control"
+          name="invoice-message"
+          id="invoice-message"
+          style="height: 190px"
+          placeholder="Observation de l'agent traitant (portant sur la plainte ou la reclamation)"
+        ></textarea>
+        <label for="invoice-message">Observation</label>
+      </div>
+      <div class="mb-4">
+        <span class="badge bg-label-primary rounded-pill">
+          <i class="mdi mdi-link-variant mdi-14px me-1"></i>
+          <span class="align-middle">Invoice Attached</span>
+        </span>
+      </div>
+      <!-- Multi  -->
+      <div class="col-12 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <form
+              action="/upload"
+              class="dropzone needsclick"
+              id="dropzone-multi"
+            >
+              <div class="dz-message needsclick">
+                Drop files here or click to upload
+                <span class="note needsclick"
+                  >(This is just a demo dropzone. Selected files are
+                  <span class="fw-medium">not</span> actually uploaded.)</span
+                >
               </div>
-              <!--/ Basic Bootstrap Table -->
-          
+              <div class="fallback">
+                <input name="file" type="file" />
+              </div>
+            </form>
           </div>
-     
+        </div>
       </div>
-      <!-- /Inventory -->
-    </div>
+      <!-- Multi  -->
+
+      <div class="mb-3 d-flex flex-wrap">
+        <button
+          type="button"
+          class="btn btn-primary me-3"
+          data-bs-dismiss="offcanvas"
+        >
+          Valider
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          data-bs-dismiss="offcanvas"
+        >
+          Annuler
+        </button>
+      </div>
+    </form>
   </div>
-  <!-- / Content -->
-  
-  <!-- Content -->
-  <div
-      class="offcanvas offcanvas-end"
-      id="sendInvoiceOffcanvas"
-      aria-hidden="true"
-    >
-      <div class="offcanvas-header mb-3">
-        <h5 class="offcanvas-title">Traitement</h5>
+</div>
+
+<div
+  class="offcanvas offcanvas-end"
+  id="sendInvoiceOffcanvas2"
+  aria-hidden="true"
+>
+  <div class="offcanvas-header mb-3">
+    <h5 class="offcanvas-title">Consultation et avis</h5>
+    <button
+      type="button"
+      class="btn-close text-reset"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="offcanvas-body flex-grow-1">
+    <form>
+      <div class="form-floating form-floating-outline mb-4">
+        <div class="form-floating form-floating-outline">
+          <select
+            id="offCanvasStatut"
+            name="offCanvasStatut"
+            class="select2 form-select"
+            data-allow-clear="true"
+          >
+            <option value="">Selectionner</option>
+            <option value="Australia">Australia</option>
+            <option value="Bangladesh">Bangladesh</option>
+            <option value="Belarus">Belarus</option>
+            <option value="Brazil">Brazil</option>
+            <option value="Canada">Canada</option>
+            <option value="China">China</option>
+            <option value="France">France</option>
+            <option value="Germany">Germany</option>
+            <option value="India">India</option>
+            <option value="Indonesia">Indonesia</option>
+            <option value="Israel">Israel</option>
+            <option value="Italy">Italy</option>
+            <option value="Japan">Japan</option>
+            <option value="Korea">Korea, Republic of</option>
+            <option value="Mexico">Mexico</option>
+            <option value="Philippines">Philippines</option>
+            <option value="Russia">Russian Federation</option>
+            <option value="South Africa">South Africa</option>
+            <option value="Thailand">Thailand</option>
+            <option value="Turkey">Turkey</option>
+            <option value="Ukraine">Ukraine</option>
+            <option value="United Arab Emirates">United Arab Emirates</option>
+            <option value="United Kingdom">United Kingdom</option>
+            <option value="United States">United States</option>
+          </select>
+          <label for="offCanvasStatut">Statut</label>
+        </div>
+      </div>
+      <div class="form-floating form-floating-outline mb-4">
+        <textarea
+          class="form-control"
+          name="invoice-message"
+          id="invoice-message"
+          style="height: 190px"
+          placeholder="Observation de l'agent traitant (portant sur la plainte ou la reclamation)"
+        ></textarea>
+        <label for="invoice-message">Observation</label>
+      </div>
+      <div class="mb-3 d-flex flex-wrap">
         <button
           type="button"
-          class="btn-close text-reset"
+          class="btn btn-primary me-3"
           data-bs-dismiss="offcanvas"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="offcanvas-body flex-grow-1">
-        <form>
-          <div class="form-floating form-floating-outline mb-4">
-            <input
-              type="text"
-              class="form-control"
-              id="invoice-from"
-              value="shelbyComapny@email.com"
-              placeholder="company@email.com"
-            />
-            <label for="invoice-from">From</label>
-          </div>
-          <div class="form-floating form-floating-outline mb-4">
-            <input
-              type="text"
-              class="form-control"
-              id="invoice-to"
-              value="qConsolidated@email.com"
-              placeholder="company@email.com"
-            />
-            <label for="invoice-to">To</label>
-          </div>
-          <div class="form-floating form-floating-outline mb-4">
-            <input
-              type="text"
-              class="form-control"
-              id="invoice-subject"
-              value="Invoice of purchased Admin Templates"
-              placeholder="Invoice regarding goods"
-            />
-            <label for="invoice-subject">Subject</label>
-          </div>
-          <div class="form-floating form-floating-outline mb-4">
-            <textarea
-              class="form-control"
-              name="invoice-message"
-              id="invoice-message"
-              style="height: 190px"
-            >
-  Dear Queen Consolidated,
-            Thank you for your business, always a pleasure to work with you!
-            We have generated a new invoice in the amount of $95.59
-            We would appreciate payment of this invoice by 05/11/2021</textarea
-            >
-            <label for="invoice-message">Message</label>
-          </div>
-          <div class="mb-4">
-            <span class="badge bg-label-primary rounded-pill">
-              <i class="mdi mdi-link-variant mdi-14px me-1"></i>
-              <span class="align-middle">Invoice Attached</span>
-            </span>
-          </div>
-          <div class="mb-3 d-flex flex-wrap">
-            <button
-              type="button"
-              class="btn btn-primary me-3"
-              data-bs-dismiss="offcanvas"
-            >
-              Send
-            </button>
-            <button
-              type="button"
-              class="btn btn-outline-secondary"
-              data-bs-dismiss="offcanvas"
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-
-    <div
-      class="offcanvas offcanvas-end"
-      id="sendInvoiceOffcanvas2"
-      aria-hidden="true"
-    >
-      <div class="offcanvas-header mb-3">
-        <h5 class="offcanvas-title">Consultation et avis</h5>
+        >
+          Send
+        </button>
         <button
           type="button"
-          class="btn-close text-reset"
+          class="btn btn-outline-secondary"
           data-bs-dismiss="offcanvas"
-          aria-label="Close"
-        ></button>
+        >
+          Cancel
+        </button>
       </div>
-      <div class="offcanvas-body flex-grow-1">
-        <form>
-          <div class="form-floating form-floating-outline mb-4">
-            <input
-              type="text"
-              class="form-control"
-              id="invoice-from"
-              value="shelbyComapny@email.com"
-              placeholder="company@email.com"
-            />
-            <label for="invoice-from">From</label>
-          </div>
-          <div class="form-floating form-floating-outline mb-4">
-            <input
-              type="text"
-              class="form-control"
-              id="invoice-to"
-              value="qConsolidated@email.com"
-              placeholder="company@email.com"
-            />
-            <label for="invoice-to">To</label>
-          </div>
-          <div class="form-floating form-floating-outline mb-4">
-            <input
-              type="text"
-              class="form-control"
-              id="invoice-subject"
-              value="Invoice of purchased Admin Templates"
-              placeholder="Invoice regarding goods"
-            />
-            <label for="invoice-subject">Subject</label>
-          </div>
-          <div class="form-floating form-floating-outline mb-4">
-            <textarea
-              class="form-control"
-              name="invoice-message"
-              id="invoice-message"
-              style="height: 190px"
-            >
-  Dear Queen Consolidated,
-            Thank you for your business, always a pleasure to work with you!
-            We have generated a new invoice in the amount of $95.59
-            We would appreciate payment of this invoice by 05/11/2021</textarea
-            >
-            <label for="invoice-message">Message</label>
-          </div>
-          <div class="mb-4">
-            <span class="badge bg-label-primary rounded-pill">
-              <i class="mdi mdi-link-variant mdi-14px me-1"></i>
-              <span class="align-middle">Invoice Attached</span>
-            </span>
-          </div>
-          <div class="mb-3 d-flex flex-wrap">
-            <button
-              type="button"
-              class="btn btn-primary me-3"
-              data-bs-dismiss="offcanvas"
-            >
-              Send
-            </button>
-            <button
-              type="button"
-              class="btn btn-outline-secondary"
-              data-bs-dismiss="offcanvas"
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+    </form>
+  </div>
+</div>

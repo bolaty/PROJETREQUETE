@@ -1,0 +1,7 @@
+{
+  "name": "projet-hotel",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "custom"
+}
