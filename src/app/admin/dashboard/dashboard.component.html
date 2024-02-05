@@ -280,197 +280,54 @@
         <span>Statistique des plaintes</span>
       </div>
     </div>
-    
+
     <!-- Total Earnings -->
-    <div class="col-xl-3 col-md-6">
+    <div class="col">
       <div class="card">
         <div
           class="card-header d-flex align-items-center justify-content-between"
         >
           <h5 class="card-title m-0 me-2">Nouvelles plaintes</h5>
-          <div class="dropdown">
-            <button
-              class="btn p-0"
-              type="button"
-              id="totalEarnings"
-              data-bs-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <i class="mdi mdi-dots-vertical mdi-24px"></i>
-            </button>
-            <div
-              class="dropdown-menu dropdown-menu-end"
-              aria-labelledby="totalEarnings"
-            >
-              <a class="dropdown-item" href="javascript:void(0);"
-                >Last 28 Days</a
-              >
-              <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
-              <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
-            </div>
-          </div>
         </div>
         <div class="card-body">
-          <div class="mb-3 mt-md-3 mb-md-5">
-            <div class="d-flex align-items-center">
-              <h2 class="mb-0">$24,895</h2>
-              <span class="text-success ms-2 fw-medium">
-                <i class="mdi mdi-menu-up mdi-24px"></i>
-                <small>10%</small>
-              </span>
-            </div>
-            <small class="mt-1">Compared to $84,325 last year</small>
-          </div>
-         
+          <canvas id="MyChartPie1">{{ chart_pie }}</canvas>
         </div>
       </div>
     </div>
     <!--/ Total Earnings -->
 
-       <!-- Total Earnings -->
-       <div class="col-xl-3 col-md-6">
-        <div class="card">
-          <div
-            class="card-header d-flex align-items-center justify-content-between"
-          >
-            <h5 class="card-title m-0 me-2">Plaintes en cours</h5>
-            <div class="dropdown">
-              <button
-                class="btn p-0"
-                type="button"
-                id="totalEarnings"
-                data-bs-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <i class="mdi mdi-dots-vertical mdi-24px"></i>
-              </button>
-              <div
-                class="dropdown-menu dropdown-menu-end"
-                aria-labelledby="totalEarnings"
-              >
-                <a class="dropdown-item" href="javascript:void(0);"
-                  >Last 28 Days</a
-                >
-                <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
-                <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
-              </div>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="mb-3 mt-md-3 mb-md-5">
-              <div class="d-flex align-items-center">
-                <h2 class="mb-0">$24,895</h2>
-                <span class="text-success ms-2 fw-medium">
-                  <i class="mdi mdi-menu-up mdi-24px"></i>
-                  <small>10%</small>
-                </span>
-              </div>
-              <small class="mt-1">Compared to $84,325 last year</small>
-            </div>
-           
-          </div>
-        </div>
-      </div>
-      <!--/ Total Earnings -->
-
-       <!-- Total Earnings -->
-       <div class="col-xl-3 col-md-6">
-        <div class="card">
-          <div
-            class="card-header d-flex align-items-center justify-content-between"
-          >
-            <h5 class="card-title m-0 me-2">Plaintes déjà traitées</h5>
-            <div class="dropdown">
-              <button
-                class="btn p-0"
-                type="button"
-                id="totalEarnings"
-                data-bs-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <i class="mdi mdi-dots-vertical mdi-24px"></i>
-              </button>
-              <div
-                class="dropdown-menu dropdown-menu-end"
-                aria-labelledby="totalEarnings"
-              >
-                <a class="dropdown-item" href="javascript:void(0);"
-                  >Last 28 Days</a
-                >
-                <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
-                <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
-              </div>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="mb-3 mt-md-3 mb-md-5">
-              <div class="d-flex align-items-center">
-                <h2 class="mb-0">$24,895</h2>
-                <span class="text-success ms-2 fw-medium">
-                  <i class="mdi mdi-menu-up mdi-24px"></i>
-                  <small>10%</small>
-                </span>
-              </div>
-              <small class="mt-1">Compared to $84,325 last year</small>
-            </div>
-           
-          </div>
-        </div>
-      </div>
-      <!--/ Total Earnings -->
-
-      <!-- Total Earnings -->
-    <div class="col-xl-3 col-md-6">
+    <!-- Total Earnings -->
+    <div class="col">
       <div class="card">
         <div
           class="card-header d-flex align-items-center justify-content-between"
         >
-          <h5 class="card-title m-0 me-2">Total Earning</h5>
-          <div class="dropdown">
-            <button
-              class="btn p-0"
-              type="button"
-              id="totalEarnings"
-              data-bs-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <i class="mdi mdi-dots-vertical mdi-24px"></i>
-            </button>
-            <div
-              class="dropdown-menu dropdown-menu-end"
-              aria-labelledby="totalEarnings"
-            >
-              <a class="dropdown-item" href="javascript:void(0);"
-                >Last 28 Days</a
-              >
-              <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
-              <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
-            </div>
-          </div>
+          <h5 class="card-title m-0 me-2">Plaintes en cours</h5>
         </div>
         <div class="card-body">
-          <div class="mb-3 mt-md-3 mb-md-5">
-            <div class="d-flex align-items-center">
-              <h2 class="mb-0">$24,895</h2>
-              <span class="text-success ms-2 fw-medium">
-                <i class="mdi mdi-menu-up mdi-24px"></i>
-                <small>10%</small>
-              </span>
-            </div>
-            <small class="mt-1">Compared to $84,325 last year</small>
-          </div>
-         
+          <canvas id="MyChartBar1">{{ chart_bar }}</canvas>
         </div>
       </div>
     </div>
     <!--/ Total Earnings -->
-    
-     <!--/ Weekly Overview Chart -->
-     <div class="d-flex mb-3 gap-3">
+
+    <!-- Total Earnings -->
+    <div class="col">
+      <div class="card">
+        <div
+          class="card-header d-flex align-items-center justify-content-between"
+        >
+          <h5 class="card-title m-0 me-2">Plaintes déjà traitées</h5>
+        </div>
+        <div class="card-body">
+          <canvas id="MyChartPie2">{{ chart_pie }}</canvas>
+        </div>
+      </div>
+    </div>
+    <!--/ Total Earnings -->
+
+    <!--/ Weekly Overview Chart -->
+    <div class="d-flex mb-3 gap-3">
       <div class="avatar avatar-md">
         <div class="avatar-initial bg-label-primary rounded">
           <!-- <i class="mdi mdi-credit-card-outline mdi-24px"></i> -->
@@ -484,193 +341,49 @@
         <span>Statistique des reclamations</span>
       </div>
     </div>
-     <!-- Total Earnings -->
-     <div class="col-xl-3 col-md-6">
+    <!-- Total Earnings -->
+    <div class="col">
       <div class="card">
         <div
           class="card-header d-flex align-items-center justify-content-between"
         >
           <h5 class="card-title m-0 me-2">Nouvelles reclamations</h5>
-          <div class="dropdown">
-            <button
-              class="btn p-0"
-              type="button"
-              id="totalEarnings"
-              data-bs-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <i class="mdi mdi-dots-vertical mdi-24px"></i>
-            </button>
-            <div
-              class="dropdown-menu dropdown-menu-end"
-              aria-labelledby="totalEarnings"
-            >
-              <a class="dropdown-item" href="javascript:void(0);"
-                >Last 28 Days</a
-              >
-              <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
-              <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
-            </div>
-          </div>
         </div>
         <div class="card-body">
-          <div class="mb-3 mt-md-3 mb-md-5">
-            <div class="d-flex align-items-center">
-              <h2 class="mb-0">$24,895</h2>
-              <span class="text-success ms-2 fw-medium">
-                <i class="mdi mdi-menu-up mdi-24px"></i>
-                <small>10%</small>
-              </span>
-            </div>
-            <small class="mt-1">Compared to $84,325 last year</small>
-          </div>
-         
+          <canvas id="MyChartPie3">{{ chart_pie }}</canvas>
         </div>
       </div>
     </div>
     <!--/ Total Earnings -->
 
-     <!-- Total Earnings -->
-     <div class="col-xl-3 col-md-6">
+    <!-- Total Earnings -->
+    <div class="col">
       <div class="card">
         <div
           class="card-header d-flex align-items-center justify-content-between"
         >
           <h5 class="card-title m-0 me-2">Reclamations en cours</h5>
-          <div class="dropdown">
-            <button
-              class="btn p-0"
-              type="button"
-              id="totalEarnings"
-              data-bs-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <i class="mdi mdi-dots-vertical mdi-24px"></i>
-            </button>
-            <div
-              class="dropdown-menu dropdown-menu-end"
-              aria-labelledby="totalEarnings"
-            >
-              <a class="dropdown-item" href="javascript:void(0);"
-                >Last 28 Days</a
-              >
-              <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
-              <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
-            </div>
-          </div>
         </div>
         <div class="card-body">
-          <div class="mb-3 mt-md-3 mb-md-5">
-            <div class="d-flex align-items-center">
-              <h2 class="mb-0">$24,895</h2>
-              <span class="text-success ms-2 fw-medium">
-                <i class="mdi mdi-menu-up mdi-24px"></i>
-                <small>10%</small>
-              </span>
-            </div>
-            <small class="mt-1">Compared to $84,325 last year</small>
-          </div>
-         
+          <canvas id="MyChartBar2">{{ chart_bar }}</canvas>
         </div>
       </div>
     </div>
     <!--/ Total Earnings -->
 
-     <!-- Total Earnings -->
-     <div class="col-xl-3 col-md-6">
+    <!-- Total Earnings -->
+    <div class="col">
       <div class="card">
         <div
           class="card-header d-flex align-items-center justify-content-between"
         >
           <h5 class="card-title m-0 me-2">Reclamations déjà traitées</h5>
-          <div class="dropdown">
-            <button
-              class="btn p-0"
-              type="button"
-              id="totalEarnings"
-              data-bs-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <i class="mdi mdi-dots-vertical mdi-24px"></i>
-            </button>
-            <div
-              class="dropdown-menu dropdown-menu-end"
-              aria-labelledby="totalEarnings"
-            >
-              <a class="dropdown-item" href="javascript:void(0);"
-                >Last 28 Days</a
-              >
-              <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
-              <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
-            </div>
-          </div>
         </div>
         <div class="card-body">
-          <div class="mb-3 mt-md-3 mb-md-5">
-            <div class="d-flex align-items-center">
-              <h2 class="mb-0">$24,895</h2>
-              <span class="text-success ms-2 fw-medium">
-                <i class="mdi mdi-menu-up mdi-24px"></i>
-                <small>10%</small>
-              </span>
-            </div>
-            <small class="mt-1">Compared to $84,325 last year</small>
-          </div>
-         
+          <canvas id="MyChartPie4">{{ chart_pie }}</canvas>
         </div>
       </div>
     </div>
     <!--/ Total Earnings -->
-
-      <!-- Total Earnings -->
-      <div class="col-xl-3 col-md-6">
-        <div class="card">
-          <div
-            class="card-header d-flex align-items-center justify-content-between"
-          >
-            <h5 class="card-title m-0 me-2">Reclamations attribuées</h5>
-            <div class="dropdown">
-              <button
-                class="btn p-0"
-                type="button"
-                id="totalEarnings"
-                data-bs-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <i class="mdi mdi-dots-vertical mdi-24px"></i>
-              </button>
-              <div
-                class="dropdown-menu dropdown-menu-end"
-                aria-labelledby="totalEarnings"
-              >
-                <a class="dropdown-item" href="javascript:void(0);"
-                  >Last 28 Days</a
-                >
-                <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
-                <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
-              </div>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="mb-3 mt-md-3 mb-md-5">
-              <div class="d-flex align-items-center">
-                <h2 class="mb-0">$24,895</h2>
-                <span class="text-success ms-2 fw-medium">
-                  <i class="mdi mdi-menu-up mdi-24px"></i>
-                  <small>10%</small>
-                </span>
-              </div>
-              <small class="mt-1">Compared to $84,325 last year</small>
-            </div>
-           
-          </div>
-        </div>
-      </div>
-      <!--/ Total Earnings -->
-    
   </div>
 </div>
