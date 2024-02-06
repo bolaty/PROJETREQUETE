@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-
+  recupinfo: any = JSON.parse(sessionStorage.getItem("infoLogin") || '');
+  ngOnInit(): void {
+    if (!sessionStorage.getItem('isLoggedIn')) {
+      window.location.href = '/auth';
+    }
+  }
 }

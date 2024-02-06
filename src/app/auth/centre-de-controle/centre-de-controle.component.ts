@@ -12,4 +12,9 @@ export class CentreDeControleComponent {
   RedirectionVersApp() {
     this._router.navigate(['/auth/login']);
   }
+  ngOnInit(): void {
+    if (sessionStorage.getItem('isLoggedIn')) {
+      window.location.href = '/admin';
+    }
+   }
 }

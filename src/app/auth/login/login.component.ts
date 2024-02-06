@@ -67,5 +67,9 @@ export class LoginComponent {
       );
     }
 
- 
+    ngOnInit(): void {
+      if (sessionStorage.getItem('isLoggedIn')) {
+        window.location.href = '/admin';
+      }
+     }
 }

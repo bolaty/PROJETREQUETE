@@ -754,7 +754,7 @@
                         </div>
                       </div>
                       <div class="flex-grow-1">
-                        <h6 class="mb-0">John Doe</h6>
+                        <h6 class="mb-0">{{recupinfo[0].CU_NOMUTILISATEUR}}</h6>
                         <small class="text-muted">Admin</small>
                       </div>
                     </div>
@@ -766,10 +766,10 @@
                 <li>
                   <a class="dropdown-item" style="cursor: pointer">
                     <i class="mdi mdi-account-outline me-1 mdi-20px"></i>
-                    <span class="align-middle">My Profile</span>
+                    <span class="align-middle">Mon Profile</span>
                   </a>
                 </li>
-                <li>
+               <!--  <li>
                   <a class="dropdown-item" style="cursor: pointer">
                     <i class="mdi mdi-cog-outline me-1 mdi-20px"></i>
                     <span class="align-middle">Settings</span>
@@ -803,7 +803,7 @@
                     <i class="mdi mdi-currency-usd me-1 mdi-20px"></i>
                     <span class="align-middle">Pricing</span>
                   </a>
-                </li>
+                </li>-->
                 <li>
                   <div class="dropdown-divider my-1"></div>
                 </li>
@@ -812,9 +812,10 @@
                     class="dropdown-item"
                     style="cursor: pointer"
                     target="_blank"
+                    (click)="Deconnexion()"
                   >
                     <i class="mdi mdi-logout me-1 mdi-20px"></i>
-                    <span class="align-middle">Log Out</span>
+                    <span class="align-middle">Deconnexion</span>
                   </a>
                 </li>
               </ul>

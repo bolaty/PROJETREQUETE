@@ -8,6 +8,13 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./admin.component.scss"],
 })
 export class AdminComponent implements OnInit {
+  recupinfo: any = JSON.parse(sessionStorage.getItem("infoLogin") || '');
+  Deconnexion() {
+    // $.removeCookie('isLoggedIn', { path: '/' });
+     sessionStorage.clear();
+     localStorage.clear();
+     window.location.reload();
+   }
   InitialisationMainJs() {
     "use strict";
     var i18NextHttpBackend;

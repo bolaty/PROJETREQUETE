@@ -233,5 +233,8 @@ export class AuthService {
       })
     );
   }
-
+  isLoggedinUser() {
+    return !!sessionStorage.getItem('isLoggedIn');
+    
+  }
 }
