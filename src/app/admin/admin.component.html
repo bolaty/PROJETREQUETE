@@ -147,10 +147,16 @@
             <div data-i18n="Relance">Relance</div>
           </a>
         </li>
-        <li class="menu-item" routerLink="Operateur">
+        <li class="menu-item" (click)="ChoixCreation('operateur')">
           <a style="cursor: pointer" class="menu-link">
             <i class="menu-icon tf-icons mdi mdi-account-sync"></i>
             <div data-i18n="Operateur">Operateur</div>
+          </a>
+        </li>
+        <li class="menu-item" (click)="ChoixCreation('client')">
+          <a style="cursor: pointer" class="menu-link">
+            <i class="menu-icon tf-icons mdi mdi-account-sync"></i>
+            <div data-i18n="Client">Client</div>
           </a>
         </li>
         <li class="menu-item" routerLink="edition">

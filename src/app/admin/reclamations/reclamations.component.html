@@ -49,41 +49,42 @@
                 class="nav-link"
                 data-bs-toggle="tab"
                 data-bs-target="#delivery"
+                (click)="ListeRequete()"
               >
                 <i class="mdi mdi-dots-vertical mdi-24px"></i>
                 <span class="align-middle">Liste des reclamations</span>
               </button>
             </li>
             <!-- <li class="nav-item">
-  <button
-  class="nav-link"
-  data-bs-toggle="tab"
-  data-bs-target="#cancellation"
-  >
-  <i class="mdi mdi-reload me-2"></i>
-  <span class="align-middle">Cancellation & Return</span>
-  </button>
-  </li>
-  <li class="nav-item">
-  <button
-  class="nav-link"
-  data-bs-toggle="tab"
-  data-bs-target="#orders"
-  >
-  <i class="mdi mdi-wallet-giftcard me-2"></i>
-  <span class="align-middle">My Orders</span>
-  </button>
-  </li>
-  <li class="nav-item">
-  <button
-  class="nav-link"
-  data-bs-toggle="tab"
-  data-bs-target="#product"
-  >
-  <i class="mdi mdi-cog-outline me-2"></i>
-  <span class="align-middle">Product & Services</span>
-  </button>
-  </li>-->
+    <button
+    class="nav-link"
+    data-bs-toggle="tab"
+    data-bs-target="#cancellation"
+    >
+    <i class="mdi mdi-reload me-2"></i>
+    <span class="align-middle">Cancellation & Return</span>
+    </button>
+    </li>
+    <li class="nav-item">
+    <button
+    class="nav-link"
+    data-bs-toggle="tab"
+    data-bs-target="#orders"
+    >
+    <i class="mdi mdi-wallet-giftcard me-2"></i>
+    <span class="align-middle">My Orders</span>
+    </button>
+    </li>
+    <li class="nav-item">
+    <button
+    class="nav-link"
+    data-bs-toggle="tab"
+    data-bs-target="#product"
+    >
+    <i class="mdi mdi-cog-outline me-2"></i>
+    <span class="align-middle">Product & Services</span>
+    </button>
+    </li>-->
           </ul>
           <div class="d-none d-md-block">
             <div class="mt-5 text-center">
@@ -112,7 +113,7 @@
                 <h5 class="mb-1">
                   <span class="align-middle">Nouvelles reclamations</span>
                 </h5>
-                <span>Soumettez-nous votre Reclamations</span>
+                <span>Soumettez-nous votre reclamation</span>
               </div>
             </div>
             <!-- Form with Tabs -->
@@ -176,6 +177,7 @@
                               <div class="col-sm-9">
                                 <input
                                   type="text"
+                                  name="num-cpte-clt"
                                   id="formtabs-num-cpte-clt"
                                   class="form-control"
                                   placeholder="*********"
@@ -196,6 +198,7 @@
                               <div class="col-sm-9">
                                 <input
                                   type="text"
+                                  name="nom-prenoms"
                                   id="formtabs-nom-prenoms"
                                   class="form-control"
                                   placeholder="Entrez votre nom et vos prénoms"
@@ -216,6 +219,7 @@
                               <div class="col-sm-9">
                                 <input
                                   type="text"
+                                  name="telephone"
                                   id="formtabs-telephone"
                                   class="form-control phone-mask"
                                   placeholder="01 XX XX XX XX"
@@ -237,26 +241,19 @@
                               <div class="col-sm-9">
                                 <select
                                   id="formtabs-agence"
+                                  name="agence"
                                   class="select2 form-select"
                                   data-allow-clear="true"
                                   [(ngModel)]="
                                     formulaire_plaintes_reclamations[3].valeur
                                   "
                                 >
-                                  <option value="">Selectionnez</option>
-                                  <option value="Australia">Australia</option>
-                                  <option value="Bangladesh">Bangladesh</option>
-                                  <option value="Belarus">Belarus</option>
-                                  <option value="Brazil">Brazil</option>
-                                  <option value="Canada">Canada</option>
-                                  <option value="China">China</option>
-                                  <option value="France">France</option>
-                                  <option value="Germany">Germany</option>
-                                  <option value="India">India</option>
-                                  <option value="Indonesia">Indonesia</option>
-                                  <option value="Israel">Israel</option>
-                                  <option value="Italy">Italy</option>
-                                  <option value="Japan">Japan</option>
+                                <option
+                                 *ngFor="let ListAgence of ListeComboAgence"
+                                  value="{{ ListAgence.AG_CODEAGENCE }}"
+                                >
+                                  {{ ListAgence.AG_RAISONSOCIAL }}
+                                </option>
                                 </select>
                               </div>
                             </div>
@@ -271,11 +268,75 @@
                               <div class="col-sm-9">
                                 <input
                                   type="text"
+                                  name="Localisation"
                                   id="formtabs-Localisation"
                                   class="form-control"
                                   placeholder="Lieu d'habitation"
                                   [(ngModel)]="
                                     formulaire_plaintes_reclamations[4].valeur
+                                  "
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="row">
+                              <label
+                                class="col-sm-3 col-form-label text-sm-end"
+                                for="formtabs-last-Email"
+                                >Email</label
+                              >
+                              <div class="col-sm-9">
+                                <input
+                                  type="text"
+                                  name="Email"
+                                  id="formtabs-Email"
+                                  class="form-control"
+                                  placeholder="Email"
+                                  [(ngModel)]="
+                                    formulaire_plaintes_reclamations[10].valeur
+                                  "
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="row">
+                              <label
+                                class="col-sm-3 col-form-label text-sm-end"
+                                for="formtabs-last-Login"
+                                >Login</label
+                              >
+                              <div class="col-sm-9">
+                                <input
+                                  type="text"
+                                  name="Login"
+                                  id="formtabs-Login"
+                                  class="form-control"
+                                  placeholder="Login"
+                                  [(ngModel)]="
+                                    formulaire_plaintes_reclamations[11].valeur
+                                  "
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="row">
+                              <label
+                                class="col-sm-3 col-form-label text-sm-end"
+                                for="formtabs-last-passe"
+                                >Mot de passe</label
+                              >
+                              <div class="col-sm-9">
+                                <input
+                                  type="text"
+                                  name="passe"
+                                  id="formtabs-passe"
+                                  class="form-control"
+                                  placeholder="Mot de passe"
+                                  [(ngModel)]="
+                                    formulaire_plaintes_reclamations[12].valeur
                                   "
                                 />
                               </div>
@@ -302,15 +363,19 @@
                               <div class="col-sm-9">
                                 <select
                                   id="formtabs-type-plainte"
+                                  name="type-plainte"
                                   class="select2 form-select"
                                   data-allow-clear="true"
                                   [(ngModel)]="
                                     formulaire_plaintes_reclamations[5].valeur
                                   "
                                 >
-                                  <option value="">Selectionnez</option>
-                                  <option value="Australia">Australia</option>
-                                  <option value="Bangladesh">Bangladesh</option>
+                                <option
+                                 *ngFor="let ListTypeRequete of this.ListeTypeRequete_1"
+                                  value="{{ ListTypeRequete.TR_CODETYEREQUETE }}"
+                                >
+                                  {{ ListTypeRequete.TR_LIBELLETYEREQUETE }}
+                                </option>
                                 </select>
                               </div>
                             </div>
@@ -339,15 +404,19 @@
                               <div class="col-sm-9">
                                 <select
                                   id="formtabs-mode-collecte"
+                                  name="mode-collecte"
                                   class="select2 form-select"
                                   data-allow-clear="true"
                                   [(ngModel)]="
                                     formulaire_plaintes_reclamations[7].valeur
                                   "
                                 >
-                                  <option value="">Selectionnez</option>
-                                  <option value="Australia">Australia</option>
-                                  <option value="Bangladesh">Bangladesh</option>
+                                <option
+                                *ngFor="let ListComboModeCollecte of ListeComboModeCollecte"
+                                 value="{{ ListComboModeCollecte.MC_CODEMODECOLLETE }}"
+                                >
+                                  {{ ListComboModeCollecte.MC_LIBELLEMODECOLLETE }}
+                                </option>
                                 </select>
                               </div>
                             </div>
@@ -362,12 +431,14 @@
                               <div class="col-sm-9">
                                 <input
                                   type="text"
+                                  name="nom-agent"
                                   id="formtabs-nom-agent"
                                   class="form-control"
                                   placeholder="Entrez un nom"
                                   [(ngModel)]="
                                     formulaire_plaintes_reclamations[8].valeur
                                   "
+                                  readonly=""
                                 />
                               </div>
                             </div>
@@ -392,11 +463,13 @@
                                 </div>
                                 <div class="fallback">
                                   <input
+                                    id="identif"
                                     name="file"
                                     type="file"
                                     [(ngModel)]="
                                       formulaire_plaintes_reclamations[9].valeur
                                     "
+                                    (change)="handleFileInput($event)"
                                   />
                                 </div>
                               </form>
@@ -412,6 +485,7 @@
                                 <button
                                   type="submit"
                                   class="btn btn-primary me-sm-3 me-1"
+                                  (click)="EnregistrementCompteClient(formulaire_plaintes_reclamations)"
                                 >
                                   Enregistrer
                                 </button>
@@ -443,12 +517,12 @@
                 <h5 class="mb-1">
                   <span class="align-middle">Liste des reclamations</span>
                 </h5>
-                <span>Consultez-vos reclamations</span>
+                <span>Consultez vos reclamations</span>
               </div>
             </div>
-            <div id="accordionDelivery" class="accordion">
-              <div class="accordion-item">
-                <h2 class="accordion-header">
+            <div id="accordionDelivery" class="accordion" *ngIf="statutliste">
+              <div class="accordion-item" *ngFor="let ListRetourRequetes of ListeRetourRequete;let index = index" >
+                <h2 class="accordion-header" >
                   <button
                     class="accordion-button collapsed"
                     type="button"
@@ -457,23 +531,20 @@
                     data-bs-target="#accordionDelivery-1"
                     aria-controls="accordionDelivery-1"
                   >
-                    How would you ship my order?
+                  {{ListRetourRequetes.RQ_DESCRIPTIONREQUETE}}
                   </button>
                 </h2>
 
-                <div
+               <!-- <div
                   id="accordionDelivery-1"
                   class="accordion-collapse collapse"
                 >
                   <div class="accordion-body">
-                    For large products, we deliver your product via a third
-                    party logistics company offering you the “room of choice”
-                    scheduled delivery service. For small products, we offer
-                    free parcel delivery.
+                    {{ListRetourRequetes.RQ_DESCRIPTIONREQUETE}}
                   </div>
                 </div>
 
-                <!-- bouton d'action -->
+                 bouton d'action -->
                 <div class="dropdown">
                   <button
                     type="button"
@@ -488,121 +559,15 @@
                       href="javascript:void(0);"
                       data-bs-toggle="modal"
                       data-bs-target="#addNewAddress"
+                      (click)="recupListe(ListRetourRequetes)"
                       ><i class="mdi mdi-account-tag me-1"></i> Attribution de
                       reclamation</a
                     >
-
                     <a
                       class="dropdown-item"
                       href="javascript:void(0);"
                       routerLink="SuiviRequete"
-                      ><i class="mdi mdi-animation-outline me-1"></i> Suivi de
-                      reclamation</a
-                    >
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button
-                    class="accordion-button collapsed"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#accordionDelivery-2"
-                    aria-controls="accordionDelivery-2"
-                  >
-                    What is the delivery cost of my order?
-                  </button>
-                </h2>
-                <div
-                  id="accordionDelivery-2"
-                  class="accordion-collapse collapse"
-                >
-                  <div class="accordion-body">
-                    The cost of scheduled delivery is $69 or $99 per order,
-                    depending on the destination postal code. The parcel
-                    delivery is free.
-                  </div>
-                </div>
-
-                <!-- bouton d'action -->
-                <div class="dropdown">
-                  <button
-                    type="button"
-                    class="btn p-0 dropdown-toggle hide-arrow"
-                    data-bs-toggle="dropdown"
-                  >
-                    <i class="mdi mdi-dots-vertical"></i>
-                  </button>
-                  <div class="dropdown-menu">
-                    <a
-                      class="dropdown-item"
-                      href="javascript:void(0);"
-                      data-bs-toggle="modal"
-                      data-bs-target="#addNewAddress"
-                      ><i class="mdi mdi-account-tag me-1"></i> Attribution de
-                      reclamation</a
-                    >
-
-                    <a
-                      class="dropdown-item"
-                      href="javascript:void(0);"
-                      routerLink="SuiviRequete"
-                      ><i class="mdi mdi-animation-outline me-1"></i> Suivi de
-                      reclamation</a
-                    >
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button
-                    class="accordion-button collapsed"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#accordionDelivery-4"
-                    aria-controls="accordionDelivery-4"
-                  >
-                    What to do if my product arrives damaged?
-                  </button>
-                </h2>
-                <div
-                  id="accordionDelivery-4"
-                  class="accordion-collapse collapse"
-                >
-                  <div class="accordion-body">
-                    We will promptly replace any product that is damaged in
-                    transit. Just contact our
-                    <a href="javascript:void(0);">support team</a>, to notify us
-                    of the situation within 48 hours of product arrival.
-                  </div>
-                </div>
-
-                <!-- bouton d'action -->
-                <div class="dropdown">
-                  <button
-                    type="button"
-                    class="btn p-0 dropdown-toggle hide-arrow"
-                    data-bs-toggle="dropdown"
-                  >
-                    <i class="mdi mdi-dots-vertical"></i>
-                  </button>
-                  <div class="dropdown-menu">
-                    <a
-                      class="dropdown-item"
-                      href="javascript:void(0);"
-                      data-bs-toggle="modal"
-                      data-bs-target="#addNewAddress"
-                      ><i class="mdi mdi-account-tag me-1"></i> Attribution de
-                      reclamation</a
-                    >
-
-                    <a
-                      class="dropdown-item"
-                      href="javascript:void(0);"
-                      routerLink="SuiviRequete"
+                      (click)="recupListe(ListRetourRequetes)"
                       ><i class="mdi mdi-animation-outline me-1"></i> Suivi de
                       reclamation</a
                     >
@@ -906,11 +871,21 @@
       </div>
       <!-- /FAQ's -->
     </div>
-  </div>
+
+    <!-- Contact -->
+    <div class="row mt-5">
+      <div class="col-12 text-center mb-4">
+        <div class="badge bg-label-primary rounded-pill"></div>
+        <h5 class="my-3"></h5>
+        <p></p>
+      </div>
+    </div>
+
+    <!-- /Contact -->
+  </div>ai
   <!-- / Content -->
 </div>
 <!-- Content wrapper -->
-
 <!-- Add New Address Modal -->
 <div class="modal fade" id="addNewAddress" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-simple modal-add-new-address">
@@ -938,33 +913,12 @@
                 data-allow-clear="true"
                 [(ngModel)]="formulaire_attr_reclamations[0].valeur"
               >
-                <option value="">Selectionner</option>
-                <option value="Australia">Australia</option>
-                <option value="Bangladesh">Bangladesh</option>
-                <option value="Belarus">Belarus</option>
-                <option value="Brazil">Brazil</option>
-                <option value="Canada">Canada</option>
-                <option value="China">China</option>
-                <option value="France">France</option>
-                <option value="Germany">Germany</option>
-                <option value="India">India</option>
-                <option value="Indonesia">Indonesia</option>
-                <option value="Israel">Israel</option>
-                <option value="Italy">Italy</option>
-                <option value="Japan">Japan</option>
-                <option value="Korea">Korea, Republic of</option>
-                <option value="Mexico">Mexico</option>
-                <option value="Philippines">Philippines</option>
-                <option value="Russia">Russian Federation</option>
-                <option value="South Africa">South Africa</option>
-                <option value="Thailand">Thailand</option>
-                <option value="Turkey">Turkey</option>
-                <option value="Ukraine">Ukraine</option>
-                <option value="United Arab Emirates">
-                  United Arab Emirates
-                </option>
-                <option value="United Kingdom">United Kingdom</option>
-                <option value="United States">United States</option>
+              <option
+              *ngFor="let ListComboOperateur of ListeComboOperateur"
+               value="{{ ListComboOperateur.CU_CODECOMPTEUTULISATEUR }}"
+              >
+                {{ ListComboOperateur.CU_NOMUTILISATEUR }}
+              </option>
               </select>
               <label for="modalOperateur">Opérateur</label>
             </div>
@@ -972,9 +926,9 @@
           <div class="col-12">
             <div class="form-floating form-floating-outline">
               <input
-                type="text"
+                type="number"
                 id="modalDuree"
-                name="modalDuree"
+                name="modalDurees"
                 class="form-control"
                 placeholder="Entrez une durée"
                 [(ngModel)]="formulaire_attr_reclamations[1].valeur"
@@ -983,7 +937,7 @@
             </div>
           </div>
           <div class="col-12 text-center">
-            <button type="submit" class="btn btn-primary me-sm-3 me-1">
+            <button type="submit" class="btn btn-primary me-sm-3 me-1" (click)="EnregistrementRequeteAffectation(formulaire_attr_reclamations)">
               Soumettre
             </button>
             <button

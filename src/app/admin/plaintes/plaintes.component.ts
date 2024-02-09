@@ -108,11 +108,31 @@ export class PlaintesComponent {
       label: 'mot de passe',
     },
   ];
+  formulaire_attr_reclamations: any = [
+    {
+      id: 'modalOperateur',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'N',
+      label: 'opérateur',
+    },
+    {
+      id: 'modalDuree',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'N',
+      label: 'durée du traitement',
+    },
+  ];
+
   ListeComboAgence:any=[]
   ListeTypeRequete:any=[]
   ListeComboModeCollecte:any=[]
   retourRequeteEnregistrement:any=[]
   ListeRetourRequete:any=[]
+  ListeComboOperateur:any=[]
+  ListeTypeRequete_1:any=[]
+  statutliste:boolean=false
   constructor(
     public AdminService:AdminService,
     private toastr: ToastrService
@@ -138,6 +158,35 @@ export class PlaintesComponent {
         this.ListeComboAgence = success;
         this.ListeComboAgence = this.ListeComboAgence.pvgReqAgenceComboResult;
         if (this.ListeComboAgence[0].clsResultat.SL_RESULTAT == 'TRUE') {
+         this.ComboOperateur()
+        } else {
+        
+        }
+      },
+      (error) => {
+       
+      }
+    );
+  }
+  ComboOperateur() {
+    let Option = 'RequeteClientsClasse.svc/pvgListeUtilisateursCombo';
+    let body = {
+        "Objets": [
+            {
+                "OE_PARAM": [],
+                "clsObjetEnvoi": {
+                    "ET_CODEETABLISSEMENT": "",
+                    "AN_CODEANTENNE": "",
+                    "TYPEOPERATION": "01"
+                }
+            }
+        ]
+    };
+    this.AdminService.AppelServeur(body, Option).subscribe(
+      (success: any) => {
+        this.ListeComboOperateur = success;
+        this.ListeComboOperateur = this.ListeComboOperateur.pvgListeUtilisateursComboResult;
+        if (this.ListeComboOperateur[0].clsResultat.SL_RESULTAT == 'TRUE') {
          this.ComboTypeRequete()
         } else {
         
@@ -167,6 +216,12 @@ export class PlaintesComponent {
         this.ListeTypeRequete = success;
         this.ListeTypeRequete = this.ListeTypeRequete.pvgReqtyperequeteComboResult;
         if (this.ListeTypeRequete[0].clsResultat.SL_RESULTAT == 'TRUE') {
+          this.ListeTypeRequete_1 = []
+          for(let i=0;i<this.ListeTypeRequete.length;i++){
+            if(this.ListeTypeRequete[i].NR_CODENATUREREQUETE == '02'){
+               this.ListeTypeRequete_1.push(this.ListeTypeRequete[i])
+            }
+          }
           this.ComboModeCollecte()
         } else {
         
@@ -258,7 +313,7 @@ export class PlaintesComponent {
                   "RQ_LOCALISATIONCLIENT": this.formulaire_plaintes_reclamations[4].valeur,//"LOCALISATION DU CLIENT",
                   "RQ_NUMERORECOMPTE": this.formulaire_plaintes_reclamations[0].valeur,//"0",
                   "RQ_NUMEROREQUETE": "0",
-                  "RQ_OBJETREQUETE": "OBJET DE LA REQUETE",
+                  "RQ_OBJETREQUETE": "PLAINTE",
                   "RQ_OBSERVATIONAGENTTRAITEMENTREQUETE": "",
                   "RQ_OBSERVATIONDELAITRAITEMENTREQUETE": "",
                   "RQ_SIGNATURE": this.base64Image,
@@ -335,7 +390,7 @@ export class PlaintesComponent {
                 "CU_NUMEROUTILISATEUR": "0",
                 "CU_TOKEN": "",
                 "PI_CODEPIECE": "00001",
-                "TU_CODETYPEUTILISATEUR": "0001",
+                "TU_CODETYPEUTILISATEUR": "0002",
                 "clsReqmicclient": null,
                 "clsReqmicprospect": null,
                 "clsReqoperateur": null,
@@ -371,12 +426,97 @@ export class PlaintesComponent {
      
     }
   }
+
+  EnregistrementRequeteAffectation(tableau_recu: any) {
+    this.AdminService.SecuriteChampObligatoireEtTypeDeDonnee(tableau_recu);
+    this.AdminService.TypeDeDonneeChampNonObligatoire(tableau_recu);
+    if (
+      this.AdminService.statut_traitement == true &&
+      this.AdminService.statut_traitement_champ_non_obligatoire == true
+    ) {
+      var d = new Date()
+      var date = d.getDate() +'-0'+(d.getMonth()+1)+'-'+d.getFullYear()
+      var jour = d.getDate()
+      if(jour < 10){
+        var date = '0'+ d.getDate() +'-0'+(d.getMonth()+1)+'-'+d.getFullYear()
+        console.log(date)
+      }
+     var recuperation = JSON.parse(sessionStorage.getItem("infoReque") || "")
+        let Options =
+          'RequeteClientsClasse.svc/pvgMajReqrequete'; // le chemin d'appel du service web
+        //objet d'envoi
+        let body = {
+          "Objets": [
+              {
+                  "AC_CODEACTIONCORRECTIVE": "",
+                  "CU_CODECOMPTEUTULISATEUR": "1",
+                  "CU_CODECOMPTEUTULISATEURAGENTENCHARGE": this.formulaire_attr_reclamations[0].valeur,
+                  "MC_CODEMODECOLLETE": "01",
+                  "NS_CODENIVEAUSATISFACTION": "",
+                  "RQ_CODEREQUETE": recuperation.RQ_CODEREQUETE,
+                  "RQ_CODEREQUETERELANCEE": "",
+                  "RQ_DATECLOTUREREQUETE": "01/01/1900",
+                  "RQ_DATEDEBUTTRAITEMENTREQUETE": "01/01/1900",
+                  "RQ_DATEFINTRAITEMENTREQUETE": "01/01/1900",
+                  "RQ_DATESAISIEREQUETE": "01/01/1900",
+                  "RQ_DATETRANSFERTREQUETE": date,
+                  "RQ_DELAITRAITEMENTREQUETE": this.formulaire_attr_reclamations[1].valeur,
+                  "RQ_DESCRIPTIONREQUETE": "DESCRIPTION DE LA REQUETE",
+                  "RQ_DUREETRAITEMENTREQUETE": "",
+                  "RQ_LOCALISATIONCLIENT": "LOCALISATION DU CLIENT",
+                  "RQ_NUMERORECOMPTE": "0",
+                  "RQ_NUMEROREQUETE": "0",
+                  "RQ_OBJETREQUETE": "PLAINTE",
+                  "RQ_OBSERVATIONAGENTTRAITEMENTREQUETE": "",
+                  "RQ_OBSERVATIONDELAITRAITEMENTREQUETE": "",
+                  "RQ_SIGNATURE": "",
+                  "RQ_SIGNATURE1": "",
+                  "RS_CODESTATUTRECEVABILITE": "",
+                  "SR_CODESERVICE": "",
+                  "TR_CODETYEREQUETE": "00001",
+                  "clsObjetEnvoi": {
+                      "ET_CODEETABLISSEMENT": "",
+                      "AN_CODEANTENNE": "",
+                      "TYPEOPERATION": "3"
+                  }
+              }
+              ]
+          };
+      
+        this.AdminService.AppelServeur(body, Options).subscribe(
+          (success) => {
+            this.retourRequeteEnregistrement = success;
+            this.retourRequeteEnregistrement = this.retourRequeteEnregistrement.pvgMajReqrequeteResult;
+            this.AdminService.CloseLoader()
+            if (this.retourRequeteEnregistrement.clsResultat.SL_RESULTAT == 'FALSE') {
+              //this.toastr.error(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE);
+              this.toastr.error(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE, 'error', { positionClass: 'toast-bottom-left'});
+            } else {
+             // this.toastr.success(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE);
+              this.toastr.success(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE, 'success', { positionClass: 'toast-bottom-left'});
+
+              this.viderChampAff()
+            }
+          },
+          (error: any) => {
+            this.AdminService.CloseLoader()
+           // this.toastr.warning(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE);
+            this.toastr.warning(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE, 'warning', { positionClass: 'toast-bottom-left'});
+          }
+        );
+     
+    }
+  }
   ListeRequete() {
     let Option = 'RequeteClientsClasse.svc/pvgListeReqrequete';
-    let body = {
+    var body = {}
+     if (
+      this.recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') 
+    ) {
+       body = {
         "Objets": [
             {
-                "OE_PARAM": ["01"],
+                "OE_PARAM": ["02"],
                 "clsObjetEnvoi": {
                     "ET_CODEETABLISSEMENT": "",
                     "AN_CODEANTENNE": "",
@@ -384,27 +524,51 @@ export class PlaintesComponent {
                 }
             }
         ]
-    };
+      };
+    }else{
+       body = {
+        "Objets": [
+            {
+                "OE_PARAM": ["02",this.recupinfo[0].CU_CODECOMPTEUTULISATEUR],
+                "clsObjetEnvoi": {
+                    "ET_CODEETABLISSEMENT": "",
+                    "AN_CODEANTENNE": "",
+                    "TYPEOPERATION": "01"
+                }
+            }
+        ]
+      };
+    }
+    
+    this.AdminService.ShowLoader()
     this.AdminService.AppelServeur(body, Option).subscribe(
       (success: any) => {
         this.ListeRetourRequete = success;
         this.ListeRetourRequete = this.ListeRetourRequete.pvgListeReqrequeteResult;
+        this.AdminService.CloseLoader()
         if (this.ListeRetourRequete[0].clsResultat.SL_RESULTAT == 'TRUE') {
-         
+         this.statutliste = true
         } else {
           this.toastr.info(this.ListeRetourRequete[0].clsResultat.SL_MESSAGE, 'info', { positionClass: 'toast-bottom-left'});
+          this.statutliste = false
         }
       },
       (error) => {
+        this.AdminService.CloseLoader()
+        this.statutliste = false
         this.toastr.warning(this.ListeRetourRequete[0].clsResultat.SL_MESSAGE, 'warning', { positionClass: 'toast-bottom-left'});
       }
     );
   }
   recupListe(info:any){
-       sessionStorage.setItem("infoReque", JSON.stringify(info));
+    sessionStorage.setItem("infoReque", JSON.stringify(info));
+    if(info.CU_CODECOMPTEUTULISATEUR != "" &&  info.CU_CODECOMPTEUTULISATEURAGENTENCHARGE != ""){
+      this.formulaire_attr_reclamations[0].valeur = info.CU_CODECOMPTEUTULISATEURAGENTENCHARGE
+    }else{
+      this.formulaire_attr_reclamations[0].valeur = info.CU_CODECOMPTEUTULISATEUR
+    }
   }
   viderChamp(){
-    this.toastr.warning("Le message d'avertissement", 'warning', { positionClass: 'toast-bottom-left'});
     this.formulaire_plaintes_reclamations[0].valeur = ""
     this.formulaire_plaintes_reclamations[1].valeur = ""
     this.formulaire_plaintes_reclamations[2].valeur = ""
@@ -418,6 +582,11 @@ export class PlaintesComponent {
     this.formulaire_plaintes_reclamations[10].valeur = ""
     this.formulaire_plaintes_reclamations[11].valeur = ""
     this.formulaire_plaintes_reclamations[12].valeur = ""
+  }
+  viderChampAff(){
+    this.formulaire_attr_reclamations[0].valeur = ""
+    this.formulaire_attr_reclamations[1].valeur = ""
+   $("#addNewAddress").modal("hide");
   }
   ngOnInit(): void {
     this.ComboAgence()

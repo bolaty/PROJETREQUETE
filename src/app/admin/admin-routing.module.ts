@@ -21,6 +21,9 @@ const routes: Routes = [
       // menu operateur
       { path: 'Operateur', component: OperateurComponent },
 
+      // menu operateur
+      { path: 'Client', component: OperateurComponent },
+
       // menu Relance
       { path: 'Relance', component: RelanceComponent },
 

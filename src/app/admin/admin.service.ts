@@ -13,7 +13,7 @@ import  Swal  from "sweetalert2"
 })
 export class AdminService {
   // ***************** SECTION DES LIENS debut
-  LienServeur: any = 'http://localhost:22248/';
+  LienServeur: any ='http://localhost:22248/'; //'http://51.210.111.16:1009/';
   // ***************** SECTION DES LIENS fin
 
   // ***************** SECTION DES DECLARATIONS debut
@@ -36,7 +36,7 @@ export class AdminService {
   libelleConnexion: any = '';
   tempsRestant: number = 10;
   statusConnect: boolean = false;
-  
+  choix_de_l_ecran: any = ""
   constructor(private http: HttpClient) {
     Network.addListener(
       'networkStatusChange',

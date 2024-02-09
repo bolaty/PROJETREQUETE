@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-
+import { AuthService } from "../auth/auth.service";
+import { Router } from "@angular/router";
 //declare var $: any; // Si vous utilisez jQuery
 
 @Component({
@@ -9,6 +10,11 @@ import { Component, OnInit } from "@angular/core";
 })
 export class AdminComponent implements OnInit {
   recupinfo: any = JSON.parse(sessionStorage.getItem("infoLogin") || '');
+
+  constructor(
+    private _router: Router
+  ){}
+
   Deconnexion() {
     // $.removeCookie('isLoggedIn', { path: '/' });
      sessionStorage.clear();
@@ -894,6 +900,16 @@ export class AdminComponent implements OnInit {
       });
     }
   }
+
+  ChoixCreation(ecran: any){
+    sessionStorage.setItem('choix_ecran', ecran)
+    if (ecran == 'client') {
+      this._router.navigate(['/admin/Client']);
+    } else {
+      this._router.navigate(['/admin/Operateur']);
+    }
+  }
+
 
   ngOnInit(): void {
     setTimeout(() => {
