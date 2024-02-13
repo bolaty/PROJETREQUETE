@@ -81,7 +81,7 @@
         </svg>
       </span>
     </span>
-    <span class="app-brand-text demo text-heading fw-semibold">Materio</span>
+    <span class="app-brand-text demo text-heading fw-semibold">Requete Client</span>
   </a>
   <!-- /Logo -->
 
@@ -187,8 +187,8 @@
 
         <p class="text-center mt-2">
           <span>Nouveau sur notre plateforme ?</span> &#160;
-          <a href="auth-register-cover.html">
-            <span>Créer un compte</span>
+          <a routerLink="/login" (click)="voirTraitement()">
+            Faire une Suggestion 
           </a>
         </p>
 
@@ -232,3 +232,100 @@
 </div>
 
 <!-- / Content -->
+<div
+  class="offcanvas offcanvas-end"
+  id="sendInvoiceOffcanvas"
+  aria-hidden="true">
+  <div class="offcanvas-header mb-3">
+    <h5 class="offcanvas-title">Consultation et avis</h5>
+    <button
+      type="button"
+      class="btn-close text-reset"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="offcanvas-body flex-grow-1">
+    <form>
+      <div class="form-floating form-floating-outline mb-4">
+        <input
+        class="form-control"
+        type="text"
+        id="nom"
+        name="nom"
+        placeholder="Nom"
+        value=""
+        autofocus
+        [(ngModel)]="formulaire_avis[0].valeur"
+        />
+        <label for="nom">Nom</label>
+      </div>
+      <div class="form-floating form-floating-outline mb-4">
+        <input
+        class="form-control"
+        type="text"
+        name="prenoms"
+        id="prenoms"
+        value=""
+        placeholder="Prénoms"
+        [(ngModel)]="formulaire_avis[1].valeur"
+        />
+        <label for="prenoms">Prénoms</label>
+      </div>
+      <div class="form-floating form-floating-outline mb-4">
+        <input
+        class="form-control"
+        type="text"
+        id="email"
+        name="email"
+        value=""
+        placeholder="mail@example.com"
+        [(ngModel)]="formulaire_avis[2].valeur"
+      />
+      <label for="email">E-mail</label>
+      </div>
+      <div class="form-floating form-floating-outline mb-4">
+        <div class="form-floating form-floating-outline">
+          <input
+            type="text"
+            id="telephone"
+            name="telephone"
+            class="form-control"
+            placeholder="01 00 00 00 00"
+            [(ngModel)]="formulaire_avis[3].valeur"
+          />
+          <label for="telephone">Numéro de téléphone</label>
+        </div>
+      </div>
+      <div class="form-floating form-floating-outline mb-4">
+        <textarea
+          class="form-control"
+          name="invoice-observation-avis"
+          id="invoice-observation-avis"
+          style="height: 190px"
+          placeholder="Observation de l'agent traitant (portant sur la plainte ou la reclamation)"
+          [(ngModel)]="formulaire_avis[4].valeur"
+        ></textarea>
+        <label for="invoice-observation-avis">Observation</label>
+      </div>
+    
+      <div class="mb-3 d-flex flex-wrap">
+        <button
+          type="button"
+          class="btn btn-primary me-3"
+          data-bs-dismiss="offcanvas"
+         
+        >
+          Enregistrer
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          data-bs-dismiss="offcanvas"
+        >
+          Annuler
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

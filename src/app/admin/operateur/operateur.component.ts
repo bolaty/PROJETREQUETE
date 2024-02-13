@@ -13,6 +13,7 @@ export class OperateurComponent {
   ecran_affiche: any = sessionStorage.getItem('choix_ecran')
   tab_eng_operateur: any = []
   ListeComboAgence: any = []
+  ListeOperateur: any = []
   formulaire_operateur: any = [
     {
       id: 'nom',
@@ -64,14 +65,218 @@ export class OperateurComponent {
       label: 'mot de passe',
     },
   ];
-
+  RecupOerateurs:any=[]
+  voirlist:any
+  recupclient:any =  [
+    {
+      "id": 1,
+      "LIBELLE": "PROBLEME DE VERSEMENT",
+      "NATURE": "PLAINTE",
+      "STATUT": "NOUVELLE PLAINTE",
+      "DATE": "01/01/2024",
+    },
+    {
+      "id": 2,
+      "LIBELLE": "PROBLEME DE RETRAIT",
+      "NATURE": "RECLAMATION",
+      "STATUT": "NOUVELLE PLAINTE",
+      "DATE": "02/01/2024",
+    },
+    {
+      "id": 1,
+      "LIBELLE": "PROBLEME DE VERSEMENT",
+      "NATURE": "PLAINTE",
+      "STATUT": "NOUVELLE PLAINTE",
+      "DATE": "01/01/2024",
+    },
+    {
+      "id": 2,
+      "LIBELLE": "PROBLEME DE RETRAIT",
+      "NATURE": "RECLAMATION",
+      "STATUT": "NOUVELLE PLAINTE",
+      "DATE": "02/01/2024",
+    }
+    ,
+    {
+      "id": 1,
+      "LIBELLE": "PROBLEME DE VERSEMENT",
+      "NATURE": "PLAINTE",
+      "STATUT": "NOUVELLE PLAINTE",
+      "DATE": "01/01/2024",
+    },
+    {
+      "id": 2,
+      "LIBELLE": "PROBLEME DE RETRAIT",
+      "NATURE": "RECLAMATION",
+      "STATUT": "NOUVELLE PLAINTE",
+      "DATE": "02/01/2024",
+    }
+    ,
+    {
+      "id": 1,
+      "LIBELLE": "PROBLEME DE VERSEMENT",
+      "NATURE": "PLAINTE",
+      "STATUT": "NOUVELLE PLAINTE",
+      "DATE": "01/01/2024",
+    },
+    {
+      "id": 2,
+      "LIBELLE": "PROBLEME DE RETRAIT",
+      "NATURE": "RECLAMATION",
+      "STATUT": "NOUVELLE PLAINTE",
+      "DATE": "02/01/2024",
+    }
+    ,
+    {
+      "id": 1,
+      "LIBELLE": "PROBLEME DE VERSEMENT",
+      "NATURE": "PLAINTE",
+      "STATUT": "NOUVELLE PLAINTE",
+      "DATE": "01/01/2024",
+    },
+    {
+      "id": 2,
+      "LIBELLE": "PROBLEME DE RETRAIT",
+      "NATURE": "RECLAMATION",
+      "STATUT": "NOUVELLE PLAINTE",
+      "DATE": "02/01/2024",
+    }
+    ,
+    {
+      "id": 1,
+      "LIBELLE": "PROBLEME DE VERSEMENT",
+      "NATURE": "PLAINTE",
+      "STATUT": "NOUVELLE PLAINTE",
+      "DATE": "01/01/2024",
+    },
+    {
+      "id": 2,
+      "LIBELLE": "PROBLEME DE RETRAIT",
+      "NATURE": "RECLAMATION",
+      "STATUT": "NOUVELLE PLAINTE",
+      "DATE": "02/01/2024",
+    }
+    
+  ]
+  statuFormulaire:any="ENREGISTREMENT"
+  statusOrderListe:boolean = false
   constructor(
     public AdminService:AdminService,
     private toastr: ToastrService
     ) {}
 
 
-
+    rowClicked(info: any): void {
+      $("#sendInvoiceOffcanvas").offcanvas('show')
+      this.statusOrderListe = true
+       this.voirlist = this.ListeOperateur[info.id]
+      }
+      checkModif(){
+        this.statusOrderListe = false
+        this.statuFormulaire = 'MODIFICATION'
+        this.formulaire_operateur[0].valeur = this.voirlist.CU_NOMUTILISATEUR
+        this.formulaire_operateur[1].valeur = ""
+        this.formulaire_operateur[2].valeur = this.voirlist.CU_EMAIL
+        this.formulaire_operateur[3].valeur = this.voirlist.AG_CODEAGENCE
+        this.formulaire_operateur[4].valeur = this.voirlist.CU_CONTACT
+        this.formulaire_operateur[5].valeur = this.voirlist.CU_LOGIN
+        this.formulaire_operateur[6].valeur = this.voirlist.CU_MOTDEPASSE
+      }
+      chargementDate(){
+        var pt = this
+        $(function () {
+          'use strict';
+          $.fn.dataTable.ext.errMode = 'throw';
+          $(".datatables-basic").DataTable().destroy();
+          var dt_basic_table = $('.datatables-basic');
+        
+          // DataTable with buttons
+          // --------------------------------------------------------------------
+        
+          if (dt_basic_table.length) {
+            var dt_basic = dt_basic_table.DataTable({
+              data: pt.RecupOerateurs,
+              columns: [
+                { data: 'NOM' },  // Colonne "full_name"
+                { data: 'CONTACT' },  // Colonne "full_name"
+                { data: 'LOGIN' },  // Colonne "full_name"
+                { data: 'MOTDEPASSE' },  // Colonne "email"
+              
+              ],
+              select: {
+                style: 'single',
+                selector: 'td:first-child'
+              },
+              rowCallback: function (row:any, data:any, index:any) {
+                $(row).on('dblclick', function () {
+                  // Appeler la fonction ici
+                  pt.rowClicked(data);
+                });
+              },
+             /* createdRow: function (row, data, index) {
+                if (data.NATURE === 'RECLAMATION') {
+                  $(row).find('td:eq(1)').css('color', 'green');
+                } else if (data.NATURE === 'PLAINTES') {
+                  $(row).find('td:eq(1)').css('color', 'red');
+                }
+              }*/
+              createdRow: function (row:any, data:any, index:any) {
+                if (data.NATURE === 'RECLAMATION') {
+                  $(row).css('background-color', '#f1faee');
+                } else if (data.NATURE === 'PLAINTE') {
+                  $(row).css('background-color', '#ffffff');
+                }
+              },
+              responsive: true,
+              order: [[2, 'desc']],
+              dom: '<"card-header"<"head-label text-center"><"dt-action-buttons text-end"B>><"d-flex justify-content-between align-items-center row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+              displayLength: 7,
+              lengthMenu: [7, 10, 25, 50, 75, 100],
+              buttons: [
+                {
+                  extend: 'collection',
+                  className: 'btn btn-label-primary dropdown-toggle me-2',
+                  text: '<i class="mdi mdi-export-variant me-1"></i>Export',
+                  buttons: [
+                    {
+                      extend: 'print',
+                      text: '<i class="mdi mdi-printer-outline me-1" ></i>Print',
+                      className: 'dropdown-item',
+                      exportOptions: { columns: [0, 1, 2, 3] }
+                    },
+                    {
+                      extend: 'csv',
+                      text: '<i class="mdi mdi-file-document-outline me-1" ></i>Csv',
+                      className: 'dropdown-item',
+                      exportOptions: { columns:  [0, 1, 2, 3] }
+                    },
+                    {
+                      extend: 'excel',
+                      text: '<i class="mdi mdi-file-excel-outline me-1"></i>Excel',
+                      className: 'dropdown-item',
+                      exportOptions: { columns:  [0, 1, 2, 3] }
+                    },
+                    {
+                      extend: 'pdf',
+                      text: '<i class="mdi mdi-file-pdf-box me-1"></i>Pdf',
+                      className: 'dropdown-item',
+                      exportOptions: { columns:  [0, 1, 2, 3]}
+                    },
+                    {
+                      extend: 'copy',
+                      text: '<i class="mdi mdi-content-copy me-1" ></i>Copy',
+                      className: 'dropdown-item',
+                      exportOptions: { columns:  [0, 1, 2, 3] }
+                    }
+                  ]
+                }
+              ]
+            });
+            
+            $('div.head-label').html('<h5 class="card-title mb-0">Liste Operateurs</h5>');
+          }
+    });
+      }
 
     ComboAgence() {
       let Option = 'RequeteClientsClasse.svc/pvgReqAgenceCombo';
@@ -103,6 +308,59 @@ export class OperateurComponent {
       );
     }
 
+    ListeOperateurs() {
+      let Option = 'RequeteClientsClasse.svc/pvgListeUtilisateurs';
+      let body = {
+          "Objets": [
+              {
+                  "OE_PARAM": ["1000","0001"],
+                  "clsObjetEnvoi": {
+                      "ET_CODEETABLISSEMENT": "",
+                      "AN_CODEANTENNE": "",
+                      "TYPEOPERATION": "01"
+                  }
+              }
+          ]
+      };
+     // $(".datatables-basic").DataTable().destroy();
+      this.AdminService.AppelServeur(body, Option).subscribe(
+        (success: any) => {
+          this.ListeOperateur = success;
+          this.ListeOperateur = this.ListeOperateur.pvgListeUtilisateursResult;
+          if (this.ListeOperateur[0].clsResultat.SL_RESULTAT == 'TRUE') {
+            this.AdminService.CloseLoader()
+            this.RecupOerateurs = []
+             var obj = {
+              id:'',
+              NOM:'',
+              CONTACT:'',
+              LOGIN:'',
+              MOTDEPASSE:''
+             }
+             for(let i=0;i<this.ListeOperateur.length;i++){
+                  obj={
+                    id: i.toString(),
+                    NOM:this.ListeOperateur[i].CU_NOMUTILISATEUR,
+                    CONTACT:this.ListeOperateur[i].CU_CONTACT,
+                    LOGIN:this.ListeOperateur[i].CU_LOGIN,
+                    MOTDEPASSE:this.ListeOperateur[i].CU_MOTDEPASSE,
+                  }
+                  this.RecupOerateurs.push(obj)
+             }
+             this.toastr.success(this.ListeOperateur[0].clsResultat.SL_MESSAGE, 'success', { positionClass: 'toast-bottom-left'});
+             this.chargementDate()
+          } else {
+            this.AdminService.CloseLoader()
+            this.toastr.error(this.ListeOperateur[0].clsResultat.SL_MESSAGE, 'error', { positionClass: 'toast-bottom-left'});
+            this.RecupOerateurs = [] 
+          }
+        },
+        (error) => {
+          this.AdminService.CloseLoader()
+           this.toastr.warning(this.ListeOperateur[0].clsResultat.SL_MESSAGE, 'warning', { positionClass: 'toast-bottom-left'});
+        }
+      );
+    }
   EnregistrementCompteOperateur(tableau_recu: any) {
     this.AdminService.SecuriteChampObligatoireEtTypeDeDonnee(tableau_recu);
     this.AdminService.TypeDeDonneeChampNonObligatoire(tableau_recu);
@@ -117,6 +375,8 @@ export class OperateurComponent {
         var date = '0'+ d.getDate() +'-0'+(d.getMonth()+1)+'-'+d.getFullYear()
         console.log(date)
       }
+
+
         let Options =
           'RequeteClientsClasse.svc/pvgMajUtilisateurs'; // le chemin d'appel du service web
         //objet d'envoi
@@ -126,7 +386,7 @@ export class OperateurComponent {
                 "AG_CODEAGENCE": this.formulaire_operateur[3].valeur,
                 "CU_ADRESSEGEOGRAPHIQUEUTILISATEUR": ".",
                 "CU_CLESESSION": "",
-                "CU_CODECOMPTEUTULISATEUR": "",
+                "CU_CODECOMPTEUTULISATEUR": this.statuFormulaire == "MODIFICATION" ? this.voirlist.CU_CODECOMPTEUTULISATEUR  :"",
                 "CU_CONTACT": this.formulaire_operateur[4].valeur,//"2250747839553",
                 "CU_DATECLOTURE": "01/01/1900",
                 "CU_DATECREATION": date,//"01/01/1900",
@@ -148,7 +408,7 @@ export class OperateurComponent {
                   "clsObjetEnvoi": {
                       "ET_CODEETABLISSEMENT": "",
                       "AN_CODEANTENNE": "",
-                      "TYPEOPERATION": "0"
+                      "TYPEOPERATION":this.statuFormulaire == "MODIFICATION" ? "1"  :"0",
                   }
               }
               ]
@@ -182,6 +442,12 @@ export class OperateurComponent {
   ngOnInit(): void {
   //  this.ecran_affiche = this.ecran_affiche == "" ? "client" : "operateur"
     this.ComboAgence()
+
+    var pt = this
+    
+   /* setTimeout(() => {
+      pt.chargementDate();
+    }, 1000);*/
   }
 
 }

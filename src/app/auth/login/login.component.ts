@@ -12,6 +12,43 @@ declare var $: any;
 export class LoginComponent {
   formLogin:any={}
   RetoursChargement:any=[]
+  formulaire_avis: any = [
+    {
+      id: 'nom',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'N',
+      label: 'nom',
+    },
+    {
+      id: 'prenoms',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'N',
+      label: 'prénoms',
+    },
+    {
+      id: 'email',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'N',
+      label: 'email',
+    },
+    {
+      id: 'telephone',
+      type: 'telephone',
+      valeur: '',
+      obligatoire: 'N',
+      label: 'numéro de téléphone',
+    },
+    {
+      id: 'invoice-observation-avis',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'N',
+      label: 'observation',
+    }
+  ];
   constructor(
     public _router: Router,
     private toastr: ToastrService,
@@ -66,7 +103,10 @@ export class LoginComponent {
       }
       );
     }
+    voirTraitement(): void {
+      $("#sendInvoiceOffcanvas").offcanvas('show')
 
+    }
     ngOnInit(): void {
       if (sessionStorage.getItem('isLoggedIn')) {
         window.location.href = '/admin';

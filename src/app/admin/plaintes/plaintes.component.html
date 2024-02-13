@@ -10,15 +10,13 @@
         Bonjour, comment pouvons-nous vous aider ?
       </h3>
       <p class="text-body text-center mb-0 px-3">
-        ou choisissez une catégorie pour trouver rapidement l'aide dont vous
+        trouver rapidement l'aide dont vous
         avez besoin
       </p>
       <div
         class="input-wrapper my-3 input-group input-group-lg input-group-merge px-sm-5"
       >
-        <span class="input-group-text" id="basic-addon1"
-          ><i class="mdi mdi-magnify mdi-20px"></i
-        ></span>
+       
         <input
           type="text"
           class="form-control"
@@ -26,6 +24,9 @@
           aria-label="Search"
           aria-describedby="basic-addon1"
         />
+        <span class="input-group-text" id="basic-addon1" (click)="RechercherSelonEcran()"
+        ><i class="mdi mdi-magnify mdi-20px"></i
+      ></span>
       </div>
     </div>
 
@@ -41,7 +42,7 @@
                 data-bs-target="#payment"
               >
                 <i class="mdi mdi-playlist-edit mdi-24px"></i>
-                <span class="align-middle">Nouvelles Plaintes</span>
+                <span class="align-middle" (click)="checkStatusForm('Nouvelles')">Nouvelles Plaintes</span>
               </button>
             </li>
             <li class="nav-item">
@@ -49,42 +50,42 @@
                 class="nav-link"
                 data-bs-toggle="tab"
                 data-bs-target="#delivery"
-                (click)="ListeRequete()"
+                (click)="checkStatusForm('Liste')"
               >
                 <i class="mdi mdi-dots-vertical mdi-24px"></i>
                 <span class="align-middle">Liste des Plaintes</span>
               </button>
             </li>
             <!-- <li class="nav-item">
-    <button
-    class="nav-link"
-    data-bs-toggle="tab"
-    data-bs-target="#cancellation"
-    >
-    <i class="mdi mdi-reload me-2"></i>
-    <span class="align-middle">Cancellation & Return</span>
-    </button>
-    </li>
-    <li class="nav-item">
-    <button
-    class="nav-link"
-    data-bs-toggle="tab"
-    data-bs-target="#orders"
-    >
-    <i class="mdi mdi-wallet-giftcard me-2"></i>
-    <span class="align-middle">My Orders</span>
-    </button>
-    </li>
-    <li class="nav-item">
-    <button
-    class="nav-link"
-    data-bs-toggle="tab"
-    data-bs-target="#product"
-    >
-    <i class="mdi mdi-cog-outline me-2"></i>
-    <span class="align-middle">Product & Services</span>
-    </button>
-    </li>-->
+              <button
+              class="nav-link"
+              data-bs-toggle="tab"
+              data-bs-target="#cancellation"
+              >
+              <i class="mdi mdi-reload me-2"></i>
+              <span class="align-middle">Cancellation & Return</span>
+              </button>
+              </li>
+              <li class="nav-item">
+              <button
+              class="nav-link"
+              data-bs-toggle="tab"
+              data-bs-target="#orders"
+              >
+              <i class="mdi mdi-wallet-giftcard me-2"></i>
+              <span class="align-middle">My Orders</span>
+              </button>
+              </li>
+              <li class="nav-item">
+              <button
+              class="nav-link"
+              data-bs-toggle="tab"
+              data-bs-target="#product"
+              >
+              <i class="mdi mdi-cog-outline me-2"></i>
+              <span class="align-middle">Product & Services</span>
+              </button>
+              </li>-->
           </ul>
           <div class="d-none d-md-block">
             <div class="mt-5 text-center">
@@ -532,7 +533,7 @@
                             alt="Avatar"
                             class="rounded-circle" />
                         </div>
-                        <div class="me-2 text-heading h5 mb-0">Vue.js Dev Team</div>
+                        <div class="me-2 text-heading h6 mb-0">{{ListRetourRequetes.TR_LIBELLETYEREQUETE}}</div>
                       </a>
                       <div class="ms-auto">
                         <ul class="list-inline mb-0 d-flex align-items-center">
@@ -553,14 +554,17 @@
                                 <i class="mdi mdi-dots-vertical mdi-24px text-muted"></i>
                               </button>
                               <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="javascript:void(0);" (click)="recupListe(ListRetourRequetes)"><i class="mdi mdi-account-tag me-1"></i> Attribution de
+                                <li><a class="dropdown-item" href="javascript:void(0);"     data-bs-toggle="modal"
+                                  data-bs-target="#addNewAddress2" (click)="recupListe(ListRetourRequetes)"><i class="mdi mdi-account-tag me-1"></i> Avis recevabilité</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0);"     data-bs-toggle="modal"
+                                  data-bs-target="#addNewAddress" (click)="recupListe(ListRetourRequetes)"><i class="mdi mdi-account-tag me-1"></i> Attribution de
                                   plainte</a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);" (click)="recupListe(ListRetourRequetes)"><i class="mdi mdi-animation-outline me-1"></i> Suivi de
+                                <li><a class="dropdown-item" href="javascript:void(0);" (click)="recupListe(ListRetourRequetes)" routerLink="SuiviRequete"><i class="mdi mdi-animation-outline me-1"></i> Suivi de
                                   plainte</a></li>
-                                <li>
+                                <!--<li>
                                   <hr class="dropdown-divider" />
                                 </li>
-                                <li><a class="dropdown-item" href="javascript:void(0);">Delete Team</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0);">Delete Team</a></li>-->
                               </ul>
                             </div>
                           </li>
@@ -571,7 +575,7 @@
                       {{ListRetourRequetes.RQ_DESCRIPTIONREQUETE}}
                     </p>
                     <div class="d-flex align-items-center">
-                      <div class="d-flex align-items-center">
+                      <!--<div class="d-flex align-items-center">
                         <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
                           <li
                             data-bs-toggle="tooltip"
@@ -607,12 +611,13 @@
                             >
                           </li>
                         </ul>
-                      </div>
+                      </div>-->
                       <div class="ms-auto">
-                        <a href="javascript:;" class="me-2"
+                         <!--<a href="javascript:;" class="me-2"
                           ><span class="badge bg-label-success rounded-pill">Vuejs</span></a
-                        >
-                        <a href="javascript:;"><span class="badge bg-label-danger rounded-pill">Developer</span></a>
+                        >-->
+                        <a href="javascript:;" *ngIf="ListRetourRequetes.RQ_DATECLOTUREREQUETE == '01/01/1900'"><span class="badge bg-label-primary rounded-pill">En cours de traitement</span></a>
+                        <a href="javascript:;" *ngIf="ListRetourRequetes.RQ_DATECLOTUREREQUETE != '01/01/1900'"><span class="badge bg-label-danger rounded-pill">Cloturée</span></a>
                       </div>
                     </div>
                   </div>
@@ -621,297 +626,9 @@
             </div>
             <!--/ Teams Cards -->
           </div>
-          <div class="tab-pane fade" id="cancellation" role="tabpanel">
-            <div class="d-flex mb-3 gap-3">
-              <div class="avatar avatar-md">
-                <span class="avatar-initial bg-label-primary rounded">
-                  <i class="mdi mdi-reload mdi-24px"></i>
-                </span>
-              </div>
-              <div>
-                <h5 class="mb-1">
-                  <span class="align-middle">Cancellation & Return</span>
-                </h5>
-                <span>Lorem ipsum, dolor sit amet.</span>
-              </div>
-            </div>
-            <div id="accordionCancellation" class="accordion">
-              <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button
-                    class="accordion-button collapsed"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    aria-expanded="false"
-                    data-bs-target="#accordionCancellation-1"
-                    aria-controls="accordionCancellation-1"
-                  >
-                    Can I cancel my order?
-                  </button>
-                </h2>
-
-                <div
-                  id="accordionCancellation-1"
-                  class="accordion-collapse collapse"
-                >
-                  <div class="accordion-body">
-                    <p>
-                      Scheduled delivery orders can be cancelled 72 hours prior
-                      to your selected delivery date for full refund.
-                    </p>
-                    <p class="mb-0">
-                      Parcel delivery orders cannot be cancelled, however a free
-                      return label can be provided upon request.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button
-                    class="accordion-button collapsed"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#accordionCancellation-2"
-                    aria-controls="accordionCancellation-2"
-                  >
-                    Can I return my product?
-                  </button>
-                </h2>
-                <div
-                  id="accordionCancellation-2"
-                  class="accordion-collapse collapse"
-                >
-                  <div class="accordion-body">
-                    You can return your product within 15 days of delivery, by
-                    contacting our
-                    <a href="javascript:void(0);">support team</a>, All
-                    merchandise returned must be in the original packaging with
-                    all original items.
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button
-                    class="accordion-button collapsed"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    aria-controls="accordionCancellation-3"
-                    data-bs-target="#accordionCancellation-3"
-                  >
-                    Where can I view status of return?
-                  </button>
-                </h2>
-                <div
-                  id="accordionCancellation-3"
-                  class="accordion-collapse collapse"
-                >
-                  <div class="accordion-body">
-                    <p>
-                      Locate the item from Your
-                      <a href="javascript:void(0);">Orders</a>
-                    </p>
-                    <p class="mb-0">
-                      Select <span class="fw-medium">Return/Refund</span> status
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="tab-pane fade" id="orders" role="tabpanel">
-            <div class="d-flex mb-3 gap-3">
-              <div class="avatar avatar-md">
-                <span class="avatar-initial bg-label-primary rounded">
-                  <i class="mdi mdi-wallet-giftcard mdi-24px"></i>
-                </span>
-              </div>
-              <div>
-                <h5 class="mb-1">
-                  <span class="align-middle">My Orders</span>
-                </h5>
-                <span>Lorem ipsum, dolor sit amet.</span>
-              </div>
-            </div>
-            <div id="accordionOrders" class="accordion">
-              <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button
-                    class="accordion-button collapsed"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    aria-expanded="false"
-                    data-bs-target="#accordionOrders-1"
-                    aria-controls="accordionOrders-1"
-                  >
-                    Has my order been successful?
-                  </button>
-                </h2>
-
-                <div id="accordionOrders-1" class="accordion-collapse collapse">
-                  <div class="accordion-body">
-                    <p>
-                      All successful order transactions will receive an order
-                      confirmation email once the order has been processed. If
-                      you have not received your order confirmation email within
-                      24 hours, check your junk email or spam folder.
-                    </p>
-                    <p class="mb-0">
-                      Alternatively, log in to your account to check your order
-                      summary. If you do not have a account, you can contact our
-                      Customer Care Team on
-                      <span class="fw-medium">1-000-000-000</span>.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button
-                    class="accordion-button collapsed"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#accordionOrders-2"
-                    aria-controls="accordionOrders-2"
-                  >
-                    My Promotion Code is not working, what can I do?
-                  </button>
-                </h2>
-                <div id="accordionOrders-2" class="accordion-collapse collapse">
-                  <div class="accordion-body">
-                    If you are having issues with a promotion code, please
-                    contact us at
-                    <span class="fw-medium">1 000 000 000</span> for assistance.
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button
-                    class="accordion-button collapsed"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#accordionOrders-3"
-                    aria-controls="accordionOrders-3"
-                  >
-                    How do I track my Orders?
-                  </button>
-                </h2>
-                <div id="accordionOrders-3" class="accordion-collapse collapse">
-                  <div class="accordion-body">
-                    <p>
-                      If you have an account just sign into your account from
-                      <a href="javascript:void(0);">here</a> and select
-                      <span class="fw-medium">“My Orders”</span>.
-                    </p>
-                    <p class="mb-0">
-                      If you have a a guest account track your order from
-                      <a href="javascript:void(0);">here</a> using the order
-                      number and the email address.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="tab-pane fade" id="product" role="tabpanel">
-            <div class="d-flex mb-3 gap-3">
-              <div class="avatar avatar-md">
-                <span class="avatar-initial bg-label-primary rounded">
-                  <i class="mdi mdi-cog-outline mdi-24px"></i>
-                </span>
-              </div>
-              <div>
-                <h5 class="mb-1">
-                  <span class="align-middle">Product & Services</span>
-                </h5>
-                <span>Lorem ipsum, dolor sit amet.</span>
-              </div>
-            </div>
-            <div id="accordionProduct" class="accordion">
-              <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button
-                    class="accordion-button collapsed"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    aria-expanded="false"
-                    data-bs-target="#accordionProduct-1"
-                    aria-controls="accordionProduct-1"
-                  >
-                    Will I be notified once my order has shipped?
-                  </button>
-                </h2>
-
-                <div
-                  id="accordionProduct-1"
-                  class="accordion-collapse collapse"
-                >
-                  <div class="accordion-body">
-                    Yes, We will send you an email once your order has been
-                    shipped. This email will contain tracking and order
-                    information.
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button
-                    class="accordion-button collapsed"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#accordionProduct-2"
-                    aria-controls="accordionProduct-2"
-                  >
-                    Where can I find warranty information?
-                  </button>
-                </h2>
-                <div
-                  id="accordionProduct-2"
-                  class="accordion-collapse collapse"
-                >
-                  <div class="accordion-body">
-                    We are committed to quality products. For information on
-                    warranty period and warranty services, visit our Warranty
-                    section <a href="javascript:void(0);">here</a>.
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button
-                    class="accordion-button collapsed"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#accordionProduct-3"
-                    aria-controls="accordionProduct-3"
-                  >
-                    How can I purchase additional warranty coverage?
-                  </button>
-                </h2>
-                <div
-                  id="accordionProduct-3"
-                  class="accordion-collapse collapse"
-                >
-                  <div class="accordion-body">
-                    For the peace of your mind, we offer extended warranty plans
-                    that add additional year(s) of protection to the standard
-                    manufacturer’s warranty provided by us. To purchase or find
-                    out more about the extended warranty program, visit Extended
-                    Warranty section
-                    <a href="javascript:void(0);">here</a>.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        
+       
+      
         </div>
       </div>
       <!-- /FAQ's -->
@@ -948,41 +665,402 @@
             Attribuer une plainte à un opérateur
           </p>
         </div>
+       
+             <!-- Inventory -->
+            <div class="card mb-4">
+              <div class="card-header">
+                <h5 class="card-title mb-0">Niveau de traitement de Plainte</h5>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <!-- Navigation -->
+                  <div class="col-12 col-md-4 mx-auto card-separator">
+                    <div
+                      class="d-flex justify-content-between flex-column mb-3 mb-md-0 pe-md-3"
+                    >
+                      <ul class="nav nav-align-left nav-pills flex-column">
+                        <li class="nav-item">
+                          <button
+                            class="nav-link active"
+                            data-bs-toggle="tab"
+                            data-bs-target="#restock"
+                          >
+                            <i class="mdi mdi-cube-outline me-2"></i>
+                            <span class="align-middle">Analyse</span>
+                          </button>
+                        </li>
+                        <li class="nav-item">
+                          <button
+                            class="nav-link"
+                            data-bs-toggle="tab"
+                            data-bs-target="#shipping"
+                          >
+                            <i class="mdi mdi-car-estate me-2"></i>
+                            <span class="align-middle">Etude</span>
+                          </button>
+                        </li>
+                        <li class="nav-item">
+                          <button
+                            class="nav-link"
+                            data-bs-toggle="tab"
+                            data-bs-target="#global-delivery"
+                          >
+                            <i class="mdi mdi-web me-2"></i>
+                            <span class="align-middle">Traitement</span>
+                          </button>
+                        </li>
+                        <li class="nav-item">
+                          <button
+                            class="nav-link"
+                            data-bs-toggle="tab"
+                            data-bs-target="#attributes"
+                          >
+                            <i class="mdi mdi-link-variant me-2"></i>
+                            <span class="align-middle">verification</span>
+                          </button>
+                        </li>
+                        <li class="nav-item">
+                          <button
+                            class="nav-link"
+                            data-bs-toggle="tab"
+                            data-bs-target="#advanced"
+                          >
+                            <i class="mdi mdi-lock me-2"></i>
+                            <span class="align-middle">Validation</span>
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <!-- /Navigation -->
+                  <!-- Options -->
+                  <div class="col-12 col-md-8 pt-4 pt-md-0">
+                    <div class="tab-content p-0 pe-xl-0 ps-md-3">
+                      <!-- Restock Tab -->
+                      <div
+                        class="tab-pane fade show active"
+                        id="restock"
+                        role="tabpanel"
+                      >
+                        <h6 class="text-body">Analyse</h6>
+                        <form id="addNewAddressForm" class="row g-4" onsubmit="return false">
+                          <div class="col-12">
+                            <div class="form-floating form-floating-outline">
+                              <select
+                                id="modalOperateur"
+                                name="modalOperateur"
+                                class="select2 form-select"
+                                data-allow-clear="true"
+                                [(ngModel)]="formulaire_attr_reclamations[0].valeur"
+                              >
+                              <option
+                              *ngFor="let ListComboOperateur of ListeComboOperateur"
+                              value="{{ ListComboOperateur.CU_CODECOMPTEUTULISATEUR }}"
+                              >
+                                {{ ListComboOperateur.CU_NOMUTILISATEUR }}
+                              </option>
+                              </select>
+                              <label for="modalOperateur">Opérateur</label>
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <div class="form-floating form-floating-outline">
+                              <input
+                                type="number"
+                                id="modalDuree"
+                                name="modalDuree"
+                                class="form-control"
+                                placeholder="Entrez une durée"
+                                [(ngModel)]="formulaire_attr_reclamations[1].valeur"
+                              />
+                              <label for="modalDuree">Durée de traitement</label>
+                            </div>
+                          </div>
+                          <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-primary me-sm-3 me-1" (click)="EnregistrementRequeteAffectation(formulaire_attr_reclamations)">
+                              Soumettre
+                            </button>
+                            <button
+                              type="reset"
+                              class="btn btn-outline-secondary"
+                              data-bs-dismiss="modal"
+                              aria-label="Close"
+                            >
+                              Reinitialiser
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                      <!-- Shipping Tab -->
+                      <div class="tab-pane fade" id="shipping" role="tabpanel">
+                        <h6 class="text-body">Etude de faisabilité</h6>
+                        <form id="addNewAddressForm" class="row g-4" onsubmit="return false">
+                          <div class="col-12">
+                            <div class="form-floating form-floating-outline">
+                              <select
+                                id="modalOperateur"
+                                name="modalOperateur"
+                                class="select2 form-select"
+                                data-allow-clear="true"
+                                [(ngModel)]="formulaire_attr_reclamations[0].valeur"
+                              >
+                              <option
+                              *ngFor="let ListComboOperateur of ListeComboOperateur"
+                              value="{{ ListComboOperateur.CU_CODECOMPTEUTULISATEUR }}"
+                              >
+                                {{ ListComboOperateur.CU_NOMUTILISATEUR }}
+                              </option>
+                              </select>
+                              <label for="modalOperateur">Opérateur</label>
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <div class="form-floating form-floating-outline">
+                              <input
+                                type="number"
+                                id="modalDuree"
+                                name="modalDuree"
+                                class="form-control"
+                                placeholder="Entrez une durée"
+                                [(ngModel)]="formulaire_attr_reclamations[1].valeur"
+                              />
+                              <label for="modalDuree">Durée de traitement</label>
+                            </div>
+                          </div>
+                          <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-primary me-sm-3 me-1" (click)="EnregistrementRequeteAffectation(formulaire_attr_reclamations)">
+                              Soumettre
+                            </button>
+                            <button
+                              type="reset"
+                              class="btn btn-outline-secondary"
+                              data-bs-dismiss="modal"
+                              aria-label="Close"
+                            >
+                              Reinitialiser
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                      <!-- Global Delivery Tab -->
+                      <div class="tab-pane fade" id="global-delivery" role="tabpanel">
+                        <h6 class="text-body">Traitement de la requete</h6>
+                        <form id="addNewAddressForm" class="row g-4" onsubmit="return false">
+                          <div class="col-12">
+                            <div class="form-floating form-floating-outline">
+                              <select
+                                id="modalOperateur"
+                                name="modalOperateur"
+                                class="select2 form-select"
+                                data-allow-clear="true"
+                                [(ngModel)]="formulaire_attr_reclamations[0].valeur"
+                              >
+                              <option
+                              *ngFor="let ListComboOperateur of ListeComboOperateur"
+                              value="{{ ListComboOperateur.CU_CODECOMPTEUTULISATEUR }}"
+                              >
+                                {{ ListComboOperateur.CU_NOMUTILISATEUR }}
+                              </option>
+                              </select>
+                              <label for="modalOperateur">Opérateur</label>
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <div class="form-floating form-floating-outline">
+                              <input
+                                type="number"
+                                id="modalDuree"
+                                name="modalDuree"
+                                class="form-control"
+                                placeholder="Entrez une durée"
+                                [(ngModel)]="formulaire_attr_reclamations[1].valeur"
+                              />
+                              <label for="modalDuree">Durée de traitement</label>
+                            </div>
+                          </div>
+                          <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-primary me-sm-3 me-1" (click)="EnregistrementRequeteAffectation(formulaire_attr_reclamations)">
+                              Soumettre
+                            </button>
+                            <button
+                              type="reset"
+                              class="btn btn-outline-secondary"
+                              data-bs-dismiss="modal"
+                              aria-label="Close"
+                            >
+                              Reinitialiser
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                      <!-- Attributes Tab -->
+                      <div class="tab-pane fade" id="attributes" role="tabpanel">
+                        <h6 class="text-body">verification</h6>
+                        <form id="addNewAddressForm" class="row g-4" onsubmit="return false">
+                          <div class="col-12">
+                            <div class="form-floating form-floating-outline">
+                              <select
+                                id="modalOperateur"
+                                name="modalOperateur"
+                                class="select2 form-select"
+                                data-allow-clear="true"
+                                [(ngModel)]="formulaire_attr_reclamations[0].valeur"
+                              >
+                              <option
+                              *ngFor="let ListComboOperateur of ListeComboOperateur"
+                              value="{{ ListComboOperateur.CU_CODECOMPTEUTULISATEUR }}"
+                              >
+                                {{ ListComboOperateur.CU_NOMUTILISATEUR }}
+                              </option>
+                              </select>
+                              <label for="modalOperateur">Opérateur</label>
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <div class="form-floating form-floating-outline">
+                              <input
+                                type="number"
+                                id="modalDuree"
+                                name="modalDuree"
+                                class="form-control"
+                                placeholder="Entrez une durée"
+                                [(ngModel)]="formulaire_attr_reclamations[1].valeur"
+                              />
+                              <label for="modalDuree">Durée de traitement</label>
+                            </div>
+                          </div>
+                          <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-primary me-sm-3 me-1" (click)="EnregistrementRequeteAffectation(formulaire_attr_reclamations)">
+                              Soumettre
+                            </button>
+                            <button
+                              type="reset"
+                              class="btn btn-outline-secondary"
+                              data-bs-dismiss="modal"
+                              aria-label="Close"
+                            >
+                              Reinitialiser
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                      <!-- /Attributes Tab -->
+                      <!-- Advanced Tab -->
+                      <div class="tab-pane fade" id="advanced" role="tabpanel">
+                        <h6 class="text-body">Validation </h6>
+                        <form id="addNewAddressForm" class="row g-4" onsubmit="return false">
+                          <div class="col-12">
+                            <div class="form-floating form-floating-outline">
+                              <select
+                                id="modalOperateur"
+                                name="modalOperateur"
+                                class="select2 form-select"
+                                data-allow-clear="true"
+                                [(ngModel)]="formulaire_attr_reclamations[0].valeur"
+                              >
+                              <option
+                              *ngFor="let ListComboOperateur of ListeComboOperateur"
+                              value="{{ ListComboOperateur.CU_CODECOMPTEUTULISATEUR }}"
+                              >
+                                {{ ListComboOperateur.CU_NOMUTILISATEUR }}
+                              </option>
+                              </select>
+                              <label for="modalOperateur">Opérateur</label>
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <div class="form-floating form-floating-outline">
+                              <input
+                                type="number"
+                                id="modalDuree"
+                                name="modalDuree"
+                                class="form-control"
+                                placeholder="Entrez une durée"
+                                [(ngModel)]="formulaire_attr_reclamations[1].valeur"
+                              />
+                              <label for="modalDuree">Durée de traitement</label>
+                            </div>
+                          </div>
+                          <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-primary me-sm-3 me-1" (click)="EnregistrementRequeteAffectation(formulaire_attr_reclamations)">
+                              Soumettre
+                            </button>
+                            <button
+                              type="reset"
+                              class="btn btn-outline-secondary"
+                              data-bs-dismiss="modal"
+                              aria-label="Close"
+                            >
+                              Reinitialiser
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                      <!-- /Advanced Tab -->
+                    </div>
+                  </div>
+                  <!-- /Options-->
+                </div>
+              </div>
+            </div>
+            <!-- /Inventory -->
+      </div>
+    </div>
+  </div>
+</div>
+<!--/ Add New Address Modal -->
+
+<!-- Add New Address Modal -->
+<div class="modal fade" id="addNewAddress2" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-simple modal-add-new-address">
+    <div class="modal-content p-3 p-md-5">
+      <div class="modal-body p-md-0">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+        <div class="text-center mb-4">
+          <h3 class="address-title mb-2 pb-1">Avis sur la plainte</h3>
+          <p class="address-subtitle">
+            Donner votre avis sur la recevabilité de cette plainte
+          </p>
+        </div>
+       
         <form id="addNewAddressForm" class="row g-4" onsubmit="return false">
-          <div class="col-12">
+          <div class="col-12" >
             <div class="form-floating form-floating-outline">
               <select
                 id="modalOperateur"
                 name="modalOperateur"
                 class="select2 form-select"
                 data-allow-clear="true"
-                [(ngModel)]="formulaire_attr_reclamations[0].valeur"
+                [(ngModel)]="formulaire_avis[0].valeur"
               >
               <option
-              *ngFor="let ListComboOperateur of ListeComboOperateur"
-               value="{{ ListComboOperateur.CU_CODECOMPTEUTULISATEUR }}"
+              *ngFor="let ListAvisrecevabilit of ListeComboAvisrecevabilite"
+              value="{{ ListAvisrecevabilit.RS_CODESTATUTRECEVABILITE }}"
               >
-                {{ ListComboOperateur.CU_NOMUTILISATEUR }}
+                {{ ListAvisrecevabilit.RS_LIBELLESTATUTRECEVABILITE }}
               </option>
               </select>
-              <label for="modalOperateur">Opérateur</label>
+              <label for="modalOperateur">Avis</label>
             </div>
           </div>
-          <div class="col-12">
-            <div class="form-floating form-floating-outline">
-              <input
-                type="number"
-                id="modalDuree"
-                name="modalDuree"
-                class="form-control"
-                placeholder="Entrez une durée"
-                [(ngModel)]="formulaire_attr_reclamations[1].valeur"
-              />
-              <label for="modalDuree">Durée de traitement</label>
-            </div>
+          <div class="form-floating form-floating-outline mb-4">
+            <textarea
+              class="form-control"
+              name="invoice-observation-avis"
+              id="invoice-observation-avis"
+              style="height: 190px"
+              placeholder="Observation de l'agent traitant (portant sur la plainte ou la reclamation)"
+              [(ngModel)]="formulaire_avis[1].valeur"
+            ></textarea>
+            <label for="invoice-observation-avis">Observation</label>
           </div>
           <div class="col-12 text-center">
-            <button type="submit" class="btn btn-primary me-sm-3 me-1" (click)="EnregistrementRequeteAffectation(formulaire_attr_reclamations)">
+            <button type="submit" class="btn btn-primary me-sm-3 me-1" (click)="EnregistrerAvis(formulaire_avis)">
               Soumettre
             </button>
             <button
@@ -992,7 +1070,7 @@
               aria-label="Close"
             >
               Reinitialiser
-            </button>
+            </button><hr>
           </div>
         </form>
       </div>
@@ -1000,3 +1078,4 @@
   </div>
 </div>
 <!--/ Add New Address Modal -->
+

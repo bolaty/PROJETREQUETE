@@ -4,7 +4,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="card mb-4">
-        <h4 class="card-header">Details du profil</h4>
+        <h4 class="card-header">Details du profil Operateur</h4>
         <!-- Account -->
         <!-- <div class="card-body">
           <div class="d-flex align-items-start align-items-sm-center gap-4">
@@ -44,126 +44,204 @@
             </div>
           </div>
         </div> -->
+  
+
         <div class="card-body pt-2 mt-1">
-          <form id="formAccountSettings" method="POST" onsubmit="return false">
-            <div class="row mt-2 gy-4">
-              <div class="col-md-6">
-                <div class="form-floating form-floating-outline">
-                  <input
-                    class="form-control"
-                    type="text"
-                    id="nom"
-                    name="nom"
-                    placeholder="Nom"
-                    value=""
-                    autofocus
-                    [(ngModel)]="formulaire_operateur[0].valeur"
-                  />
-                  <label for="nom">Nom</label>
+          <div class="row">
+              <!-- Navigation -->
+              <div class="col-12 col-md-2 mx-auto card-separator">
+                <div
+                  class="d-flex justify-content-between flex-column mb-3 mb-md-0 pe-md-3"
+                >
+                  <ul class="nav nav-align-left nav-pills flex-column">
+                    <li class="nav-item">
+                      <button
+                        class="nav-link active"
+                        data-bs-toggle="tab"
+                        data-bs-target="#restock"
+                      >
+                        <i class="mdi mdi-cube-outline me-2"></i>
+                        <span class="align-middle">Nouveau</span>
+                      </button>
+                    </li>
+                    <li class="nav-item">
+                      <button
+                        class="nav-link"
+                        data-bs-toggle="tab"
+                        data-bs-target="#shipping"
+                        (click)="ListeOperateurs()"
+                      >
+                       
+                        <i class="mdi mdi-list-box-outline me-2"></i>
+                        <span class="align-middle">Liste</span>
+                      </button>
+                    </li>
+                    
+                  </ul>
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="form-floating form-floating-outline">
-                  <input
-                    class="form-control"
-                    type="text"
-                    name="prenoms"
-                    id="prenoms"
-                    value=""
-                    placeholder="Prénoms"
-                    [(ngModel)]="formulaire_operateur[1].valeur"
-                  />
-                  <label for="prenoms">Prénoms</label>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-floating form-floating-outline">
-                  <input
-                    class="form-control"
-                    type="text"
-                    id="email"
-                    name="email"
-                    value=""
-                    placeholder="mail@example.com"
-                    [(ngModel)]="formulaire_operateur[2].valeur"
-                  />
-                  <label for="email">E-mail</label>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-floating form-floating-outline">
-                  <select
-                    id="agence"
-                    name="agence"
-                    class="select2 form-select"
-                    data-allow-clear="true"
-                    placeholder="Agence"
-                    [(ngModel)]="formulaire_operateur[3].valeur"
+              <!-- /Navigation -->
+              <!-- Options -->
+              <div class="col-12 col-md-10 pt-4 pt-md-0">
+                <div class="tab-content p-0 pe-xl-0 ps-md-3">
+                  <!-- Restock Tab -->
+                  <div
+                    class="tab-pane fade show active"
+                    id="restock"
+                    role="tabpanel"
                   >
-                  <option
-                  *ngFor="let ListAgence of ListeComboAgence"
-                  value="{{ ListAgence.AG_CODEAGENCE }}"
-                  >
-                  {{ ListAgence.AG_RAISONSOCIAL }}
-                  </option>
-                  </select>
-                  <label for="agence">Agence</label>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="input-group input-group-merge">
-                  <div class="form-floating form-floating-outline">
-                    <input
-                      type="text"
-                      id="telephone"
-                      name="telephone"
-                      class="form-control"
-                      placeholder="01 00 00 00 00"
-                      [(ngModel)]="formulaire_operateur[4].valeur"
-                    />
-                    <label for="telephone">Numéro de téléphone</label>
+                    <h6 class="text-body">Nouveau</h6>
+                    <form id="formAccountSettings" method="POST" onsubmit="return false">
+                      <div class="row mt-2 gy-4">
+                        <div class="col-md-6">
+                          <div class="form-floating form-floating-outline">
+                            <input
+                              class="form-control"
+                              type="text"
+                              id="nom"
+                              name="nom"
+                              placeholder="Nom"
+                              value=""
+                              autofocus
+                              [(ngModel)]="formulaire_operateur[0].valeur"
+                            />
+                            <label for="nom">Nom</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-floating form-floating-outline">
+                            <input
+                              class="form-control"
+                              type="text"
+                              name="prenoms"
+                              id="prenoms"
+                              value=""
+                              placeholder="Prénoms"
+                              [(ngModel)]="formulaire_operateur[1].valeur"
+                            />
+                            <label for="prenoms">Prénoms</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-floating form-floating-outline">
+                            <input
+                              class="form-control"
+                              type="text"
+                              id="email"
+                              name="email"
+                              value=""
+                              placeholder="mail@example.com"
+                              [(ngModel)]="formulaire_operateur[2].valeur"
+                            />
+                            <label for="email">E-mail</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-floating form-floating-outline">
+                            <select
+                              id="agence"
+                              name="agence"
+                              class="select2 form-select"
+                              data-allow-clear="true"
+                              placeholder="Agence"
+                              [(ngModel)]="formulaire_operateur[3].valeur"
+                            >
+                            <option
+                            *ngFor="let ListAgence of ListeComboAgence"
+                            value="{{ ListAgence.AG_CODEAGENCE }}"
+                            >
+                            {{ ListAgence.AG_RAISONSOCIAL }}
+                            </option>
+                            </select>
+                            <label for="agence">Agence</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="input-group input-group-merge">
+                            <div class="form-floating form-floating-outline">
+                              <input
+                                type="text"
+                                id="telephone"
+                                name="telephone"
+                                class="form-control"
+                                placeholder="01 00 00 00 00"
+                                [(ngModel)]="formulaire_operateur[4].valeur"
+                              />
+                              <label for="telephone">Numéro de téléphone</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-floating form-floating-outline">
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="login"
+                              name="login"
+                              placeholder="Login"
+                              [(ngModel)]="formulaire_operateur[5].valeur"
+                            />
+                            <label for="login">Login</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-floating form-floating-outline">
+                            <input
+                              class="form-control"
+                              type="text"
+                              id="motdepasse"
+                              name="motdepasse"
+                              placeholder="Mot de passe"
+                              [(ngModel)]="formulaire_operateur[6].valeur"
+                            />
+                            <label for="motdepasse">Mot de passe</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mt-4">
+                        <button type="submit" class="btn btn-primary me-2" (click)="EnregistrementCompteOperateur(formulaire_operateur)">
+                          Sauvegarder
+                        </button>
+                        <button type="reset" class="btn btn-outline-secondary">
+                          Réinitialiser
+                        </button>
+                      </div>
+                    </form>
                   </div>
-                  <span class="input-group-text">CIV (+225)</span>
+                  <!-- Shipping Tab -->
+                  <div class="tab-pane fade" id="shipping" role="tabpanel">
+                    <h6 class="text-body">Liste</h6>
+                     <!-- Navigation -->
+                        <div class="card-header">
+                          <h5 class="card-title">Search Filter</h5>
+                          <div class="d-flex justify-content-between align-items-center row py-3 gap-3 gap-md-0">
+                            <div class="col-md-4 user_role"></div>
+                            <div class="col-md-4 user_plan"></div>
+                            <div class="col-md-4 user_status"></div>
+                          </div>
+                        </div>
+                        <div class="card-datatable table-responsive pt-0">
+                         <table class="datatables-basic table table-bordered" >
+                            <thead style="background-color: #83c5be;">
+                              <tr>
+                                <th>NOM</th>
+                                <th>CONTACT</th>
+                                <th>LOGIN</th>
+                                <th>MOTDEPASSE</th>
+                              </tr>
+                            </thead>
+                        </table>
+                  </div>
+                  <!-- /Navigation -->
+                  </div>
+                 
+                 
+                  
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="form-floating form-floating-outline">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="login"
-                    name="login"
-                    placeholder="Login"
-                    [(ngModel)]="formulaire_operateur[5].valeur"
-                  />
-                  <label for="login">Login</label>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-floating form-floating-outline">
-                  <input
-                    class="form-control"
-                    type="text"
-                    id="motdepasse"
-                    name="motdepasse"
-                    placeholder="Mot de passe"
-                    [(ngModel)]="formulaire_operateur[6].valeur"
-                  />
-                  <label for="motdepasse">Mot de passe</label>
-                </div>
-              </div>
+              <!-- /Options-->
             </div>
-            <div class="mt-4">
-              <button type="submit" class="btn btn-primary me-2" (click)="EnregistrementCompteOperateur(formulaire_operateur)">
-                Sauvegarder
-              </button>
-              <button type="reset" class="btn btn-outline-secondary">
-                Réinitialiser
-              </button>
-            </div>
-          </form>
         </div>
-        <!-- /Account -->
       </div>
     </div>
   </div>
@@ -214,123 +292,180 @@
           </div>
         </div> -->
         <div class="card-body pt-2 mt-1">
-          <form id="formAccountSettings" method="POST" onsubmit="return false">
-            <div class="row mt-2 gy-4">
-              <div class="col-md-6">
-                <div class="form-floating form-floating-outline">
-                  <input
-                    class="form-control"
-                    type="text"
-                    id="nom"
-                    name="nom"
-                    placeholder="Nom"
-                    value=""
-                    autofocus
-                    [(ngModel)]="formulaire_operateur[0].valeur"
-                  />
-                  <label for="nom">Nom</label>
+     
+
+          <div class="row">
+              <!-- Navigation -->
+              <div class="col-12 col-md-4 mx-auto card-separator">
+                <div
+                  class="d-flex justify-content-between flex-column mb-3 mb-md-0 pe-md-3"
+                >
+                  <ul class="nav nav-align-left nav-pills flex-column">
+                    <li class="nav-item">
+                      <button
+                        class="nav-link active"
+                        data-bs-toggle="tab"
+                        data-bs-target="#restock"
+                      >
+                        <i class="mdi mdi-cube-outline me-2"></i>
+                        <span class="align-middle">Nouveau</span>
+                      </button>
+                    </li>
+                    <li class="nav-item">
+                      <button
+                        class="nav-link"
+                        data-bs-toggle="tab"
+                        data-bs-target="#shipping"
+                      >
+                        <i class="mdi mdi-car-estate me-2"></i>
+                        <span class="align-middle">Liste</span>
+                      </button>
+                    </li>
+                    
+                  </ul>
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="form-floating form-floating-outline">
-                  <input
-                    class="form-control"
-                    type="text"
-                    name="prenoms"
-                    id="prenoms"
-                    value=""
-                    placeholder="Prénoms"
-                    [(ngModel)]="formulaire_operateur[1].valeur"
-                  />
-                  <label for="prenoms">Prénoms</label>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-floating form-floating-outline">
-                  <input
-                    class="form-control"
-                    type="text"
-                    id="email"
-                    name="email"
-                    value=""
-                    placeholder="mail@example.com"
-                    [(ngModel)]="formulaire_operateur[2].valeur"
-                  />
-                  <label for="email">E-mail</label>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-floating form-floating-outline">
-                  <select
-                    id="agence"
-                    name="agence"
-                    class="select2 form-select"
-                    data-allow-clear="true"
-                    placeholder="Agence"
-                    [(ngModel)]="formulaire_operateur[3].valeur"
+              <!-- /Navigation -->
+              <!-- Options -->
+              <div class="col-12 col-md-8 pt-4 pt-md-0">
+                <div class="tab-content p-0 pe-xl-0 ps-md-3">
+                  <!-- Restock Tab -->
+                  <div
+                    class="tab-pane fade show active"
+                    id="restock"
+                    role="tabpanel"
                   >
-                  <option
-                  *ngFor="let ListAgence of ListeComboAgence"
-                  value="{{ ListAgence.AG_CODEAGENCE }}"
-                  >
-                  {{ ListAgence.AG_RAISONSOCIAL }}
-                  </option>
-                  </select>
-                  <label for="agence">Agence</label>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="input-group input-group-merge">
-                  <div class="form-floating form-floating-outline">
-                    <input
-                      type="text"
-                      id="telephone"
-                      name="telephone"
-                      class="form-control"
-                      placeholder="01 00 00 00 00"
-                      [(ngModel)]="formulaire_operateur[4].valeur"
-                    />
-                    <label for="telephone">Numéro de téléphone</label>
+                    <h6 class="text-body">Nouveau</h6>
+                    <form id="formAccountSettings" method="POST" onsubmit="return false">
+                      <div class="row mt-2 gy-4">
+                        <div class="col-md-6">
+                          <div class="form-floating form-floating-outline">
+                            <input
+                              class="form-control"
+                              type="text"
+                              id="nom"
+                              name="nom"
+                              placeholder="Nom"
+                              value=""
+                              autofocus
+                              [(ngModel)]="formulaire_operateur[0].valeur"
+                            />
+                            <label for="nom">Nom</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-floating form-floating-outline">
+                            <input
+                              class="form-control"
+                              type="text"
+                              name="prenoms"
+                              id="prenoms"
+                              value=""
+                              placeholder="Prénoms"
+                              [(ngModel)]="formulaire_operateur[1].valeur"
+                            />
+                            <label for="prenoms">Prénoms</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-floating form-floating-outline">
+                            <input
+                              class="form-control"
+                              type="text"
+                              id="email"
+                              name="email"
+                              value=""
+                              placeholder="mail@example.com"
+                              [(ngModel)]="formulaire_operateur[2].valeur"
+                            />
+                            <label for="email">E-mail</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-floating form-floating-outline">
+                            <select
+                              id="agence"
+                              name="agence"
+                              class="select2 form-select"
+                              data-allow-clear="true"
+                              placeholder="Agence"
+                              [(ngModel)]="formulaire_operateur[3].valeur"
+                            >
+                            <option
+                            *ngFor="let ListAgence of ListeComboAgence"
+                            value="{{ ListAgence.AG_CODEAGENCE }}"
+                            >
+                            {{ ListAgence.AG_RAISONSOCIAL }}
+                            </option>
+                            </select>
+                            <label for="agence">Agence</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="input-group input-group-merge">
+                            <div class="form-floating form-floating-outline">
+                              <input
+                                type="text"
+                                id="telephone"
+                                name="telephone"
+                                class="form-control"
+                                placeholder="01 00 00 00 00"
+                                [(ngModel)]="formulaire_operateur[4].valeur"
+                              />
+                              <label for="telephone">Numéro de téléphone</label>
+                            </div>
+                            <span class="input-group-text">CIV (+225)</span>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-floating form-floating-outline">
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="login"
+                              name="login"
+                              placeholder="Login"
+                              [(ngModel)]="formulaire_operateur[5].valeur"
+                            />
+                            <label for="login">Login</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-floating form-floating-outline">
+                            <input
+                              class="form-control"
+                              type="text"
+                              id="motdepasse"
+                              name="motdepasse"
+                              placeholder="Mot de passe"
+                              [(ngModel)]="formulaire_operateur[6].valeur"
+                            />
+                            <label for="motdepasse">Mot de passe</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mt-4">
+                        <button type="submit" class="btn btn-primary me-2" (click)="EnregistrementCompteOperateur(formulaire_operateur)">
+                          Sauvegarder
+                        </button>
+                        <button type="reset" class="btn btn-outline-secondary">
+                          Réinitialiser
+                        </button>
+                      </div>
+                    </form>
                   </div>
-                  <span class="input-group-text">CIV (+225)</span>
+                  <!-- Shipping Tab -->
+                  <div class="tab-pane fade" id="shipping" role="tabpanel">
+                    <h6 class="text-body">Liste</h6>
+                   
+                  </div>
+                 
+                 
+                  
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="form-floating form-floating-outline">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="login"
-                    name="login"
-                    placeholder="Login"
-                    [(ngModel)]="formulaire_operateur[5].valeur"
-                  />
-                  <label for="login">Login</label>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-floating form-floating-outline">
-                  <input
-                    class="form-control"
-                    type="text"
-                    id="motdepasse"
-                    name="motdepasse"
-                    placeholder="Mot de passe"
-                    [(ngModel)]="formulaire_operateur[6].valeur"
-                  />
-                  <label for="motdepasse">Mot de passe</label>
-                </div>
-              </div>
+              <!-- /Options-->
             </div>
-            <div class="mt-4">
-              <button type="submit" class="btn btn-primary me-2" (click)="EnregistrementCompteOperateur(formulaire_operateur)">
-                Sauvegarder
-              </button>
-              <button type="reset" class="btn btn-outline-secondary">
-                Réinitialiser
-              </button>
-            </div>
-          </form>
         </div>
         <!-- /Account -->
       </div>
@@ -338,3 +473,170 @@
   </div>
 </div>
 <!-- / Content -->
+  <!-- Content -->
+  <div
+      class="offcanvas offcanvas-end"
+      id="sendInvoiceOffcanvas"
+      aria-hidden="true"
+    >
+      <div class="offcanvas-header mb-3">
+        <h5 class="offcanvas-title">Actions</h5>
+        <button
+          type="button"
+          class="btn-close text-reset"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body flex-grow-1">
+        <h5 class="pb-3 border-bottom mb-3" *ngIf="statusOrderListe">Details</h5>
+        <div class="info-container" *ngIf="statusOrderListe">
+                        <ul class="list-unstyled mb-4">
+                          
+                          <li class="mb-3">
+                            <span class="h6">Nom :</span>
+                            <span>{{voirlist.CU_NOMUTILISATEUR}}</span>
+                          </li>
+                          <li class="mb-3">
+                            <span class="h6">Status:</span>
+                            <span class="badge bg-label-success rounded-pill">Actif</span>
+                          </li>
+                          <li class="mb-3">
+                            <span class="h6">E-mail:</span>
+                            <span>{{voirlist.CU_EMAIL}}</span>
+                          </li>
+                          
+                          <li class="mb-3">
+                            <span class="h6">Contact:</span>
+                            <span>{{voirlist.CU_CONTACT}}</span>
+                          </li>
+                          <li class="mb-3">
+                            <span class="h6">Login:</span>
+                            <span>{{voirlist.CU_LOGIN}}</span>
+                          </li>
+                          <li class="mb-3">
+                            <span class="h6">Mot de passe:</span>
+                            <span>{{voirlist.CU_MOTDEPASSE}}</span>
+                          </li>
+                        </ul>
+                        <div class="d-flex justify-content-center">
+                          <a
+                            href="javascript:;"
+                            class="btn btn-primary me-3"
+                            (click)="checkModif()"
+                            >Modifier</a
+                          >
+                        </div>
+        </div>
+        <form *ngIf="!statusOrderListe">
+          <div class="form-floating form-floating-outline mb-4">
+            <input
+            class="form-control"
+            type="text"
+            id="nom"
+            name="nom"
+            placeholder="Nom"
+            value=""
+            autofocus
+            [(ngModel)]="formulaire_operateur[0].valeur"
+            />
+            <label for="nom">Nom</label>
+          </div>
+          <div class="form-floating form-floating-outline mb-4">
+            <input
+            class="form-control"
+            type="text"
+            name="prenoms"
+            id="prenoms"
+            value=""
+            placeholder="Prénoms"
+            [(ngModel)]="formulaire_operateur[1].valeur"
+            />
+            <label for="prenoms">Prénoms</label>
+          </div>
+          <div class="form-floating form-floating-outline mb-4">
+            <input
+            class="form-control"
+            type="text"
+            id="email"
+            name="email"
+            value=""
+            placeholder="mail@example.com"
+            [(ngModel)]="formulaire_operateur[2].valeur"
+          />
+          <label for="email">E-mail</label>
+          </div>
+          <div class="form-floating form-floating-outline mb-4">
+            <select
+            id="agence"
+            name="agence"
+            class="select2 form-select"
+            data-allow-clear="true"
+            placeholder="Agence"
+            [(ngModel)]="formulaire_operateur[3].valeur"
+            >
+            <option
+            *ngFor="let ListAgence of ListeComboAgence"
+            value="{{ ListAgence.AG_CODEAGENCE }}"
+            >
+              {{ ListAgence.AG_RAISONSOCIAL }}
+            </option>
+            </select>
+            <label for="agence">Agence</label>
+          </div>
+          <div class="form-floating form-floating-outline mb-4">
+            <div class="form-floating form-floating-outline">
+              <input
+                type="text"
+                id="telephone"
+                name="telephone"
+                class="form-control"
+                placeholder="01 00 00 00 00"
+                [(ngModel)]="formulaire_operateur[4].valeur"
+              />
+              <label for="telephone">Numéro de téléphone</label>
+            </div>
+          </div>
+          <div class="form-floating form-floating-outline mb-4">
+            <input
+              type="text"
+              class="form-control"
+              id="login"
+              name="login"
+              placeholder="Login"
+              [(ngModel)]="formulaire_operateur[5].valeur"
+              />
+              <label for="login">Login</label>
+          </div>
+          <div class="form-floating form-floating-outline mb-4">
+            <input
+            class="form-control"
+            type="text"
+            id="email"
+            name="email"
+            value=""
+            placeholder="mail@example.com"
+            [(ngModel)]="formulaire_operateur[2].valeur"
+          />
+          <label for="email">E-mail</label>
+          </div>
+          <div class="mb-3 d-flex flex-wrap">
+            <button
+              type="button"
+              class="btn btn-primary me-3"
+              data-bs-dismiss="offcanvas"
+              (click)="EnregistrementCompteOperateur(formulaire_operateur)"
+            >
+              Soumettre
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-bs-dismiss="offcanvas"
+            >
+              Annuler
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>

@@ -381,5 +381,6 @@ export class SuiviRequeteComponent {
    this.ComboStatut()
    this.TestEpateRequete()
    this.ComboSatisfaction()
+   this.formulaire_suivi[0].valeur =  this.recupinfo.RQ_DESCRIPTIONREQUETE
     }
 }

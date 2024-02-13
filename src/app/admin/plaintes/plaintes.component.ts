@@ -124,15 +124,33 @@ export class PlaintesComponent {
       label: 'durée du traitement',
     },
   ];
-
+  formulaire_avis: any = [
+    {
+      id: 'offcanvaSatisfaction',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'N',
+      label: 'satisfaction',
+    },
+    {
+      id: 'invoice-observation-avis',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'N',
+      label: 'observation',
+    },
+  ];
   ListeComboAgence:any=[]
   ListeTypeRequete:any=[]
   ListeComboModeCollecte:any=[]
   retourRequeteEnregistrement:any=[]
+  ListeComboAvisrecevabilite:any=[]
+  tab_enregistrement_traitement:any=[]
   ListeRetourRequete:any=[]
   ListeComboOperateur:any=[]
   ListeTypeRequete_1:any=[]
   statutliste:boolean=false
+  statutFrmulaire:string='ENREGISTREMENT'
   constructor(
     public AdminService:AdminService,
     private toastr: ToastrService
@@ -252,6 +270,36 @@ export class PlaintesComponent {
         this.ListeComboModeCollecte = success;
         this.ListeComboModeCollecte = this.ListeComboModeCollecte.pvgReqmodecollecteComboResult;
         if (this.ListeComboModeCollecte[0].clsResultat.SL_RESULTAT == 'TRUE') {
+          this.ComboAvisrecevabilite()
+        } else {
+        
+        }
+      },
+      (error) => {
+       
+      }
+    );
+  }
+
+  ComboAvisrecevabilite() {
+    let Option = 'RequeteClientsClasse.svc/pvgReqstatutrecevabiliteCombo';
+    let body = {
+        "Objets": [
+            {
+                "OE_PARAM": [],
+                "clsObjetEnvoi": {
+                    "ET_CODEETABLISSEMENT": "",
+                    "AN_CODEANTENNE": "",
+                    "TYPEOPERATION": "01"
+                }
+            }
+        ]
+    };
+    this.AdminService.AppelServeur(body, Option).subscribe(
+      (success: any) => {
+        this.ListeComboAvisrecevabilite = success;
+        this.ListeComboAvisrecevabilite = this.ListeComboAvisrecevabilite.pvgReqstatutrecevabiliteComboResult;
+        if (this.ListeComboAvisrecevabilite[0].clsResultat.SL_RESULTAT == 'TRUE') {
          
         } else {
         
@@ -507,6 +555,88 @@ export class PlaintesComponent {
      
     }
   }
+  EnregistrerAvis(tableau_recu: any) {
+    this.AdminService.SecuriteChampObligatoireEtTypeDeDonnee(tableau_recu);
+    this.AdminService.TypeDeDonneeChampNonObligatoire(tableau_recu);
+    if (
+      this.AdminService.statut_traitement == true &&
+      this.AdminService.statut_traitement_champ_non_obligatoire == true
+    ) {
+      var d = new Date()
+      var date = d.getDate() +'-0'+(d.getMonth()+1)+'-'+d.getFullYear()
+      var jour = d.getDate()
+      if(jour < 10){
+        var date = '0'+ d.getDate() +'-0'+(d.getMonth()+1)+'-'+d.getFullYear()
+        console.log(date)
+      }
+        let Options =
+          'RequeteClientsClasse.svc/pvgMajReqrequete'; // le chemin d'appel du service web
+        //objet d'envoi
+        let body = {
+          "Objets": [
+              {
+                  "AC_CODEACTIONCORRECTIVE": "",
+                  "CU_CODECOMPTEUTULISATEUR": this.recupinfo.CU_CODECOMPTEUTULISATEUR,// this.recupinfo[0].CU_CODECOMPTEUTULISATEUR,//"1",
+                  "CU_CODECOMPTEUTULISATEURAGENTENCHARGE": this.recupinfo.CU_CODECOMPTEUTULISATEURAGENTENCHARGE,//this.formulaire_suivi[8].valeur,
+                  "MC_CODEMODECOLLETE":this.recupinfo.MC_CODEMODECOLLETE,//"01",
+                  "NS_CODENIVEAUSATISFACTION": this.formulaire_avis[0].valeur,
+                  "RQ_CODEREQUETE": this.recupinfo.RQ_CODEREQUETE,
+                  "RQ_CODEREQUETERELANCEE": "",
+                  "RQ_DATECLOTUREREQUETE": date,
+                  "RQ_DATEDEBUTTRAITEMENTREQUETE": date,
+                  "RQ_DATEFINTRAITEMENTREQUETE": date,
+                  "RQ_DATESAISIEREQUETE": this.recupinfo.RQ_DATESAISIEREQUETE,
+                  "RQ_DATETRANSFERTREQUETE": this.recupinfo.RQ_DATETRANSFERTREQUETE,
+                  "RQ_DELAITRAITEMENTREQUETE": "",
+                  "RQ_DESCRIPTIONREQUETE": this.recupinfo.RQ_DESCRIPTIONREQUETE,//"DESCRIPTION DE LA REQUETE",
+                  "RQ_DUREETRAITEMENTREQUETE": "",
+                  "RQ_LOCALISATIONCLIENT": this.recupinfo.RQ_LOCALISATIONCLIENT,//"LOCALISATION DU CLIENT",
+                  "RQ_NUMERORECOMPTE":this.recupinfo.RQ_NUMERORECOMPTE,//"0",
+                  "RQ_NUMEROREQUETE":this.recupinfo.RQ_NUMEROREQUETE,
+                  "RQ_OBJETREQUETE": this.recupinfo.RQ_OBJETREQUETE,
+                  "RQ_OBSERVATIONAGENTTRAITEMENTREQUETE":  this.recupinfo.RQ_OBSERVATIONAGENTTRAITEMENTREQUETE,
+                  "RQ_OBSERVATIONDELAITRAITEMENTREQUETE": this.formulaire_avis[1].valeur,
+                  "RQ_SIGNATURE": "",
+                  "RQ_SIGNATURE1": "",
+                  "RS_CODESTATUTRECEVABILITE": this.formulaire_avis[0].valeur,
+                  "SR_CODESERVICE": this.recupinfo.SR_CODESERVICE.valeur,
+                  "TR_CODETYEREQUETE": this.recupinfo.TR_CODETYEREQUETE,//"00001",
+                  "clsObjetEnvoi": {
+                      "ET_CODEETABLISSEMENT": "",
+                      "AN_CODEANTENNE": "",
+                      "TYPEOPERATION": "1"
+                  }
+              }
+              ]
+          };
+      
+        this.AdminService.AppelServeur(body, Options).subscribe(
+          (success) => {
+            this.tab_enregistrement_traitement = success;
+            this.tab_enregistrement_traitement = this.tab_enregistrement_traitement.pvgMajReqrequeteResult;
+            this.AdminService.CloseLoader()
+            if (this.tab_enregistrement_traitement.clsResultat.SL_RESULTAT == 'FALSE') {
+              //this.toastr.error(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
+              this.toastr.error(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE, 'error', { positionClass: 'toast-bottom-left'});
+            } else {
+             // this.toastr.success(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
+              this.toastr.success(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE, 'success', { positionClass: 'toast-bottom-left'});
+              this.ViderChamp()
+            }
+          },
+          (error: any) => {
+            this.AdminService.CloseLoader()
+           // this.toastr.warning(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
+            this.toastr.warning(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE, 'warning', { positionClass: 'toast-bottom-left'});
+          }
+        );
+    }
+  }
+  ViderChamp(){
+    for (let index = 0; index < this.formulaire_avis.length; index++) {
+      this.formulaire_avis[index].valeur = ""
+    }
+  }
   ListeRequete() {
     let Option = 'RequeteClientsClasse.svc/pvgListeReqrequete';
     var body = {}
@@ -560,6 +690,15 @@ export class PlaintesComponent {
       }
     );
   }
+
+  RechercherSelonEcran(){
+    if(this.statutFrmulaire == "ENREGISTREMENT"){
+      this.listeClients();
+    }else{
+
+    }
+  }
+  listeClients(){}
   recupListe(info:any){
     sessionStorage.setItem("infoReque", JSON.stringify(info));
     if(info.CU_CODECOMPTEUTULISATEUR != "" &&  info.CU_CODECOMPTEUTULISATEURAGENTENCHARGE != ""){
@@ -567,6 +706,15 @@ export class PlaintesComponent {
     }else{
       this.formulaire_attr_reclamations[0].valeur = info.CU_CODECOMPTEUTULISATEUR
     }
+  }
+
+  checkStatusForm(infoEcran:any){
+       if(infoEcran == "Liste"){
+          this.statutFrmulaire = "LISTE";
+          this.ListeRequete()
+       }else{
+        this.statutFrmulaire = "ENREGISTREMENT";
+       }
   }
   viderChamp(){
     this.formulaire_plaintes_reclamations[0].valeur = ""
