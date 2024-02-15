@@ -21,8 +21,10 @@
           type="text"
           class="form-control"
           placeholder="Poser une question..."
+          name="SearchPersonal"
           aria-label="Search"
           aria-describedby="basic-addon1"
+          [(ngModel)]="SearchValue"
         />
         <span class="input-group-text" id="basic-addon1" (click)="RechercherSelonEcran()"
         ><i class="mdi mdi-magnify mdi-20px"></i
@@ -122,7 +124,7 @@
               <div class="col">
                 <h6 class="mt-4">Formulaire</h6>
                 <div class="card mb-3">
-                  <div class="card-header">
+                  <div class="card-header" *ngIf="statutClientExiste">
                     <ul class="nav nav-tabs" role="tablist">
                       <li class="nav-item">
                         <button
@@ -159,7 +161,7 @@
                     </ul>
                   </div>
 
-                  <div class="tab-content">
+                  <div class="tab-content" *ngIf="statutClientExiste">
                     <!-- Personal Info -->
                     <div
                       class="tab-pane fade active show"
@@ -502,6 +504,185 @@
                       </form>
                     </div>
                   </div>
+
+                  <div class="card-header" *ngIf="!statutClientExiste">
+                    <ul class="nav nav-tabs" role="tablist">
+                      <li class="nav-item">
+                        <button
+                          class="nav-link active"
+                          data-bs-toggle="tab"
+                          data-bs-target="#form-tabs-account"
+                          role="tab"
+                          aria-selected="false"
+                        >
+                          <span
+                            class="mdi mdi-account-details mdi-20px d-sm-none"
+                          ></span
+                          ><span class="d-none d-sm-block"
+                            >information sur la plainte de {{ListeClients[0].CU_NOMUTILISATEUR}}</span
+                          >
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="tab-content" *ngIf="!statutClientExiste">
+                    <!-- Account Details -->
+                    <div
+                      class="tab-pane fade active show"
+                      id="form-tabs-account"
+                      role="tabpanel"
+                    >
+                      <form>
+                        <div class="row g-3">
+                          <div class="col-md-6">
+                            <div class="row">
+                              <label
+                                class="col-sm-3 col-form-label text-sm-end"
+                                for="formtabs-country"
+                                >Type de plainte</label
+                              >
+                              <div class="col-sm-9">
+                                <select
+                                  id="formtabs-type-plainte"
+                                  name="type-plainte"
+                                  class="select2 form-select"
+                                  data-allow-clear="true"
+                                  [(ngModel)]="
+                                    formulaire_plaintes_reclamations[5].valeur
+                                  "
+                                >
+                                <option
+                                 *ngFor="let ListTypeRequete of this.ListeTypeRequete_1"
+                                  value="{{ ListTypeRequete.TR_CODETYEREQUETE }}"
+                                >
+                                  {{ ListTypeRequete.TR_LIBELLETYEREQUETE }}
+                                </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-floating form-floating-outline mb-4">
+                            <textarea
+                              class="form-control"
+                              name="invoice-message"
+                              id="invoice-description"
+                              style="height: 190px"
+                              [(ngModel)]="
+                                formulaire_plaintes_reclamations[6].valeur
+                              "
+                            ></textarea>
+                            <label for="invoice-message"
+                              >Description de la plainte</label
+                            >
+                          </div>
+                          <div class="col-md-6">
+                            <div class="row">
+                              <label
+                                class="col-sm-3 col-form-label text-sm-end"
+                                for="formtabs-country"
+                                >Mode de collecte</label
+                              >
+                              <div class="col-sm-9">
+                                <select
+                                  id="formtabs-mode-collecte"
+                                  name="mode-collecte"
+                                  class="select2 form-select"
+                                  data-allow-clear="true"
+                                  [(ngModel)]="
+                                    formulaire_plaintes_reclamations[7].valeur
+                                  "
+                                >
+                                <option
+                                *ngFor="let ListComboModeCollecte of ListeComboModeCollecte"
+                                 value="{{ ListComboModeCollecte.MC_CODEMODECOLLETE }}"
+                                >
+                                  {{ ListComboModeCollecte.MC_LIBELLEMODECOLLETE }}
+                                </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="row">
+                              <label
+                                class="col-sm-3 col-form-label text-sm-end"
+                                for="formtabs-username"
+                                >Nom agent</label
+                              >
+                              <div class="col-sm-9">
+                                <input
+                                  type="text"
+                                  name="nom-agent"
+                                  id="formtabs-nom-agent"
+                                  class="form-control"
+                                  placeholder="Entrez un nom"
+                                  [(ngModel)]="
+                                    formulaire_plaintes_reclamations[8].valeur
+                                  "
+                                  readonly=""
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <!-- Multi  -->
+                          <div class="col-12 mb-6">
+                            <!-- <div class="card"> -->
+                            <div class="card-body">
+                              <form
+                                action="/upload"
+                                class="dropzone needsclick"
+                                id="dropzone-multi-fichier"
+                              >
+                                <div class="dz-message needsclick">
+                                  Drop files here or click to upload
+                                  <span class="note needsclick"
+                                    >(This is just a demo dropzone. Selected
+                                    files are
+                                    <span class="fw-medium">not</span>
+                                    actually uploaded.)</span
+                                  >
+                                </div>
+                                <div class="fallback">
+                                  <input
+                                    name="file"
+                                    type="file"
+                                    [(ngModel)]="
+                                      formulaire_plaintes_reclamations[9].valeur
+                                    "
+                                    (change)="handleFileInput($event)"
+                                  />
+                                </div>
+                              </form>
+                            </div>
+                            <!-- </div> -->
+                          </div>
+                          <!-- Multi  -->
+                        </div>
+                        <div class="row mt-4">
+                          <div class="col-md-6">
+                            <div class="row justify-content-end">
+                              <div class="col-sm-9">
+                                <button
+                                  type="submit"
+                                  class="btn btn-primary me-sm-3 me-1"
+                                  (click)="EnregistrementRequete(formulaire_plaintes_reclamations)"
+                                >
+                                  Enregistrer
+                                </button>
+                                <button
+                                  type="reset"
+                                  class="btn btn-outline-secondary"
+                                >
+                                  Annuler
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -650,7 +831,7 @@
 <!-- Content wrapper -->
 <!-- Add New Address Modal -->
 <div class="modal fade" id="addNewAddress" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-simple modal-add-new-address">
+  <div class="modal-dialog modal-lg  modal-add-new-address">
     <div class="modal-content p-3 p-md-5">
       <div class="modal-body p-md-0">
         <button
@@ -679,17 +860,18 @@
                       class="d-flex justify-content-between flex-column mb-3 mb-md-0 pe-md-3"
                     >
                       <ul class="nav nav-align-left nav-pills flex-column">
-                        <li class="nav-item">
+                        <li class="nav-item" *ngFor="let ListEtapes of ListeComboEtapes; let i = index">
                           <button
-                            class="nav-link active"
+                            class="nav-link "
                             data-bs-toggle="tab"
                             data-bs-target="#restock"
+                            (click)="selectionEtape(ListEtapes)"
                           >
                             <i class="mdi mdi-cube-outline me-2"></i>
-                            <span class="align-middle">Analyse</span>
+                            <span class="align-middle">{{ListEtapes.RE_LIBELLEETAPE}}</span>
                           </button>
                         </li>
-                        <li class="nav-item">
+                        <!--<li class="nav-item">
                           <button
                             class="nav-link"
                             data-bs-toggle="tab"
@@ -728,7 +910,7 @@
                             <i class="mdi mdi-lock me-2"></i>
                             <span class="align-middle">Validation</span>
                           </button>
-                        </li>
+                        </li>-->
                       </ul>
                     </div>
                   </div>
@@ -742,7 +924,7 @@
                         id="restock"
                         role="tabpanel"
                       >
-                        <h6 class="text-body">Analyse</h6>
+                        <h6 class="text-body">{{recupEtape.RE_LIBELLEETAPE}}</h6>
                         <form id="addNewAddressForm" class="row g-4" onsubmit="return false">
                           <div class="col-12">
                             <div class="form-floating form-floating-outline">
@@ -763,18 +945,42 @@
                               <label for="modalOperateur">Opérateur</label>
                             </div>
                           </div>
-                          <div class="col-12">
+                          <div class="col-6">
                             <div class="form-floating form-floating-outline">
                               <input
-                                type="number"
+                                type="text"
                                 id="modalDuree"
                                 name="modalDuree"
                                 class="form-control"
-                                placeholder="Entrez une durée"
+                                placeholder="Entrez une date"
                                 [(ngModel)]="formulaire_attr_reclamations[1].valeur"
                               />
-                              <label for="modalDuree">Durée de traitement</label>
+                              <label for="modalDuree">Durée de debut</label>
                             </div>
+                          </div>
+                          <div class="col-6">
+                            <div class="form-floating form-floating-outline">
+                              <input
+                                type="text"
+                                id="modalDureefin"
+                                name="modalDureefin"
+                                class="form-control"
+                                placeholder="Entrez une date"
+                                [(ngModel)]="formulaire_attr_reclamations[2].valeur"
+                              />
+                              <label for="modalDureefin">Durée de fin</label>
+                            </div>
+                          </div>
+                          <div class="form-floating form-floating-outline mb-4">
+                            <textarea
+                              class="form-control"
+                              name="invoice-observation-avis"
+                              id="invoice-observation-avis"
+                              style="height: 190px"
+                              placeholder="objectif de la tache"
+                              [(ngModel)]="formulaire_attr_reclamations[3].valeur"
+                            ></textarea>
+                            <label for="invoice-observation-avis">Description</label>
                           </div>
                           <div class="col-12 text-center">
                             <button type="submit" class="btn btn-primary me-sm-3 me-1" (click)="EnregistrementRequeteAffectation(formulaire_attr_reclamations)">
@@ -783,220 +989,14 @@
                             <button
                               type="reset"
                               class="btn btn-outline-secondary"
-                              data-bs-dismiss="modal"
-                              aria-label="Close"
+                             
                             >
                               Reinitialiser
                             </button>
                           </div>
                         </form>
                       </div>
-                      <!-- Shipping Tab -->
-                      <div class="tab-pane fade" id="shipping" role="tabpanel">
-                        <h6 class="text-body">Etude de faisabilité</h6>
-                        <form id="addNewAddressForm" class="row g-4" onsubmit="return false">
-                          <div class="col-12">
-                            <div class="form-floating form-floating-outline">
-                              <select
-                                id="modalOperateur"
-                                name="modalOperateur"
-                                class="select2 form-select"
-                                data-allow-clear="true"
-                                [(ngModel)]="formulaire_attr_reclamations[0].valeur"
-                              >
-                              <option
-                              *ngFor="let ListComboOperateur of ListeComboOperateur"
-                              value="{{ ListComboOperateur.CU_CODECOMPTEUTULISATEUR }}"
-                              >
-                                {{ ListComboOperateur.CU_NOMUTILISATEUR }}
-                              </option>
-                              </select>
-                              <label for="modalOperateur">Opérateur</label>
-                            </div>
-                          </div>
-                          <div class="col-12">
-                            <div class="form-floating form-floating-outline">
-                              <input
-                                type="number"
-                                id="modalDuree"
-                                name="modalDuree"
-                                class="form-control"
-                                placeholder="Entrez une durée"
-                                [(ngModel)]="formulaire_attr_reclamations[1].valeur"
-                              />
-                              <label for="modalDuree">Durée de traitement</label>
-                            </div>
-                          </div>
-                          <div class="col-12 text-center">
-                            <button type="submit" class="btn btn-primary me-sm-3 me-1" (click)="EnregistrementRequeteAffectation(formulaire_attr_reclamations)">
-                              Soumettre
-                            </button>
-                            <button
-                              type="reset"
-                              class="btn btn-outline-secondary"
-                              data-bs-dismiss="modal"
-                              aria-label="Close"
-                            >
-                              Reinitialiser
-                            </button>
-                          </div>
-                        </form>
-                      </div>
-                      <!-- Global Delivery Tab -->
-                      <div class="tab-pane fade" id="global-delivery" role="tabpanel">
-                        <h6 class="text-body">Traitement de la requete</h6>
-                        <form id="addNewAddressForm" class="row g-4" onsubmit="return false">
-                          <div class="col-12">
-                            <div class="form-floating form-floating-outline">
-                              <select
-                                id="modalOperateur"
-                                name="modalOperateur"
-                                class="select2 form-select"
-                                data-allow-clear="true"
-                                [(ngModel)]="formulaire_attr_reclamations[0].valeur"
-                              >
-                              <option
-                              *ngFor="let ListComboOperateur of ListeComboOperateur"
-                              value="{{ ListComboOperateur.CU_CODECOMPTEUTULISATEUR }}"
-                              >
-                                {{ ListComboOperateur.CU_NOMUTILISATEUR }}
-                              </option>
-                              </select>
-                              <label for="modalOperateur">Opérateur</label>
-                            </div>
-                          </div>
-                          <div class="col-12">
-                            <div class="form-floating form-floating-outline">
-                              <input
-                                type="number"
-                                id="modalDuree"
-                                name="modalDuree"
-                                class="form-control"
-                                placeholder="Entrez une durée"
-                                [(ngModel)]="formulaire_attr_reclamations[1].valeur"
-                              />
-                              <label for="modalDuree">Durée de traitement</label>
-                            </div>
-                          </div>
-                          <div class="col-12 text-center">
-                            <button type="submit" class="btn btn-primary me-sm-3 me-1" (click)="EnregistrementRequeteAffectation(formulaire_attr_reclamations)">
-                              Soumettre
-                            </button>
-                            <button
-                              type="reset"
-                              class="btn btn-outline-secondary"
-                              data-bs-dismiss="modal"
-                              aria-label="Close"
-                            >
-                              Reinitialiser
-                            </button>
-                          </div>
-                        </form>
-                      </div>
-                      <!-- Attributes Tab -->
-                      <div class="tab-pane fade" id="attributes" role="tabpanel">
-                        <h6 class="text-body">verification</h6>
-                        <form id="addNewAddressForm" class="row g-4" onsubmit="return false">
-                          <div class="col-12">
-                            <div class="form-floating form-floating-outline">
-                              <select
-                                id="modalOperateur"
-                                name="modalOperateur"
-                                class="select2 form-select"
-                                data-allow-clear="true"
-                                [(ngModel)]="formulaire_attr_reclamations[0].valeur"
-                              >
-                              <option
-                              *ngFor="let ListComboOperateur of ListeComboOperateur"
-                              value="{{ ListComboOperateur.CU_CODECOMPTEUTULISATEUR }}"
-                              >
-                                {{ ListComboOperateur.CU_NOMUTILISATEUR }}
-                              </option>
-                              </select>
-                              <label for="modalOperateur">Opérateur</label>
-                            </div>
-                          </div>
-                          <div class="col-12">
-                            <div class="form-floating form-floating-outline">
-                              <input
-                                type="number"
-                                id="modalDuree"
-                                name="modalDuree"
-                                class="form-control"
-                                placeholder="Entrez une durée"
-                                [(ngModel)]="formulaire_attr_reclamations[1].valeur"
-                              />
-                              <label for="modalDuree">Durée de traitement</label>
-                            </div>
-                          </div>
-                          <div class="col-12 text-center">
-                            <button type="submit" class="btn btn-primary me-sm-3 me-1" (click)="EnregistrementRequeteAffectation(formulaire_attr_reclamations)">
-                              Soumettre
-                            </button>
-                            <button
-                              type="reset"
-                              class="btn btn-outline-secondary"
-                              data-bs-dismiss="modal"
-                              aria-label="Close"
-                            >
-                              Reinitialiser
-                            </button>
-                          </div>
-                        </form>
-                      </div>
-                      <!-- /Attributes Tab -->
-                      <!-- Advanced Tab -->
-                      <div class="tab-pane fade" id="advanced" role="tabpanel">
-                        <h6 class="text-body">Validation </h6>
-                        <form id="addNewAddressForm" class="row g-4" onsubmit="return false">
-                          <div class="col-12">
-                            <div class="form-floating form-floating-outline">
-                              <select
-                                id="modalOperateur"
-                                name="modalOperateur"
-                                class="select2 form-select"
-                                data-allow-clear="true"
-                                [(ngModel)]="formulaire_attr_reclamations[0].valeur"
-                              >
-                              <option
-                              *ngFor="let ListComboOperateur of ListeComboOperateur"
-                              value="{{ ListComboOperateur.CU_CODECOMPTEUTULISATEUR }}"
-                              >
-                                {{ ListComboOperateur.CU_NOMUTILISATEUR }}
-                              </option>
-                              </select>
-                              <label for="modalOperateur">Opérateur</label>
-                            </div>
-                          </div>
-                          <div class="col-12">
-                            <div class="form-floating form-floating-outline">
-                              <input
-                                type="number"
-                                id="modalDuree"
-                                name="modalDuree"
-                                class="form-control"
-                                placeholder="Entrez une durée"
-                                [(ngModel)]="formulaire_attr_reclamations[1].valeur"
-                              />
-                              <label for="modalDuree">Durée de traitement</label>
-                            </div>
-                          </div>
-                          <div class="col-12 text-center">
-                            <button type="submit" class="btn btn-primary me-sm-3 me-1" (click)="EnregistrementRequeteAffectation(formulaire_attr_reclamations)">
-                              Soumettre
-                            </button>
-                            <button
-                              type="reset"
-                              class="btn btn-outline-secondary"
-                              data-bs-dismiss="modal"
-                              aria-label="Close"
-                            >
-                              Reinitialiser
-                            </button>
-                          </div>
-                        </form>
-                      </div>
-                      <!-- /Advanced Tab -->
+                     
                     </div>
                   </div>
                   <!-- /Options-->

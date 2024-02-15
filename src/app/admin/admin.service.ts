@@ -7,7 +7,7 @@ declare var feather: any;
 import { from, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import  Swal  from "sweetalert2"
-
+import { ToastrService } from 'ngx-toastr';
 @Injectable({
   providedIn: 'root',
 })
@@ -37,7 +37,7 @@ export class AdminService {
   tempsRestant: number = 10;
   statusConnect: boolean = false;
   choix_de_l_ecran: any = ""
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private toastr: ToastrService) {
     Network.addListener(
       'networkStatusChange',
       this.checkNetworkStatus.bind(this)
@@ -136,6 +136,14 @@ export class AdminService {
     feather.replace();
   }
 
+
+  ComparerDeuxDates(date_recu: any) {
+    let nouvelleDate = new Date(date_recu);
+    nouvelleDate.setFullYear(date_recu.substr(6, 4));
+    nouvelleDate.setMonth(date_recu.substr(3, 2));
+    nouvelleDate.setDate(date_recu.substr(0, 2));
+    return nouvelleDate.getTime();
+  }
 
   async checkNetworkStatus() {
     const status = await Network.getStatus();
@@ -399,7 +407,7 @@ export class AdminService {
     if (this.champ_a_renseigner.length != 0) {
       this.statut_champ_obligatoire = false;
       this.tab_type_de_donnee = [];
-      this.NotificationErreur('Veuillez renseigner les champs obligatoire');
+      this.toastr.error('Veuillez renseigner les champs obligatoire', 'error', { positionClass: 'toast-bottom-left'});
       for (let index = 0; index < this.champ_a_renseigner.length; index++) {
         $('#' + this.champ_a_renseigner[index].id).css(
           'background-color',
@@ -414,10 +422,8 @@ export class AdminService {
         // le type email
         if (this.tab_type_de_donnee[index].type == 'email') {
           if (!this.tab_type_de_donnee[index].valeur.match(regex_email)) {
-            this.NotificationErreur(
-              'Veuillez renseigner correctement le champ ' +
-                this.tab_type_de_donnee[index].label
-            );
+            this.toastr.error('Veuillez renseigner correctement le champ ' +
+            this.tab_type_de_donnee[index].label, 'error', { positionClass: 'toast-bottom-left'});
             $('#' + this.tab_type_de_donnee[index].id).css(
               'background-color',
               'MistyRose'
@@ -436,10 +442,8 @@ export class AdminService {
         // le type montant
         if (this.tab_type_de_donnee[index].type == 'montant') {
           if (!this.tab_type_de_donnee[index].valeur.match(regex_montant)) {
-            this.NotificationErreur(
-              'Veuillez renseigner correctement le champ ' +
-                this.tab_type_de_donnee[index].label
-            );
+            this.toastr.error('Veuillez renseigner correctement le champ ' +
+            this.tab_type_de_donnee[index].label, 'error', { positionClass: 'toast-bottom-left'});
             $('#' + this.tab_type_de_donnee[index].id).css(
               'background-color',
               'MistyRose'
@@ -460,10 +464,8 @@ export class AdminService {
           this.tab_type_de_donnee[index].valeur =
             this.tab_type_de_donnee[index].valeur.toString();
           if (!this.tab_type_de_donnee[index].valeur.match(regex_numerique)) {
-            this.NotificationErreur(
-              'Veuillez renseigner correctement le champ ' +
-                this.tab_type_de_donnee[index].label
-            );
+            this.toastr.error('Veuillez renseigner correctement le champ ' +
+            this.tab_type_de_donnee[index].label, 'error', { positionClass: 'toast-bottom-left'});
             $('#' + this.tab_type_de_donnee[index].id).css(
               'background-color',
               'MistyRose'
@@ -487,10 +489,8 @@ export class AdminService {
           JourDateRecu = this.tab_type_de_donnee[index].valeur.substr(0, 2);
           // verification du pattern
           if (!this.tab_type_de_donnee[index].valeur.match(regex_date)) {
-            this.NotificationErreur(
-              'Veuillez renseigner correctement le champ ' +
-                this.tab_type_de_donnee[index].label
-            );
+            this.toastr.error('Veuillez renseigner correctement le champ ' +
+            this.tab_type_de_donnee[index].label, 'error', { positionClass: 'toast-bottom-left'});
             $('#' + this.tab_type_de_donnee[index].id).css(
               'background-color',
               'MistyRose'
@@ -505,10 +505,8 @@ export class AdminService {
             MoisDateRecu == '02' &&
             JourDateRecu > '28'
           ) {
-            this.NotificationErreur(
-              this.tab_type_de_donnee[index].label +
-                " n'est pas une date valide"
-            );
+            this.toastr.error(this.tab_type_de_donnee[index].label +
+              " n'est pas une date valide", 'error', { positionClass: 'toast-bottom-left'});
             $('#' + this.tab_type_de_donnee[index].id).css(
               'background-color',
               'MistyRose'
@@ -523,10 +521,8 @@ export class AdminService {
             MoisDateRecu == '02' &&
             JourDateRecu > '29'
           ) {
-            this.NotificationErreur(
-              this.tab_type_de_donnee[index].label +
-                " n'est pas une date valide"
-            );
+            this.toastr.error(this.tab_type_de_donnee[index].label +
+              " n'est pas une date valide", 'error', { positionClass: 'toast-bottom-left'});
             $('#' + this.tab_type_de_donnee[index].id).css(
               'background-color',
               'MistyRose'
@@ -543,10 +539,8 @@ export class AdminService {
               MoisDateRecu == '11') &&
             JourDateRecu > '30'
           ) {
-            this.NotificationErreur(
-              this.tab_type_de_donnee[index].label +
-                " n'est pas une date valide"
-            );
+            this.toastr.error(this.tab_type_de_donnee[index].label +
+              " n'est pas une date valide", 'error', { positionClass: 'toast-bottom-left'});
             $('#' + this.tab_type_de_donnee[index].id).css(
               'background-color',
               'MistyRose'
@@ -565,10 +559,8 @@ export class AdminService {
         // le type annee
         if (this.tab_type_de_donnee[index].type == 'annee') {
           if (!this.tab_type_de_donnee[index].valeur.match(regex_annee)) {
-            this.NotificationErreur(
-              'Veuillez renseigner correctement le champ ' +
-                this.tab_type_de_donnee[index].label
-            );
+            this.toastr.error( 'Veuillez renseigner correctement le champ ' +
+            this.tab_type_de_donnee[index].label, 'error', { positionClass: 'toast-bottom-left'});
             $('#' + this.tab_type_de_donnee[index].id).css(
               'background-color',
               'MistyRose'
@@ -587,10 +579,8 @@ export class AdminService {
         // le type telephone
         if (this.tab_type_de_donnee[index].type == 'telephone') {
           if (!this.tab_type_de_donnee[index].valeur.match(regex_telephone)) {
-            this.NotificationErreur(
-              'Veuillez renseigner correctement le champ ' +
-                this.tab_type_de_donnee[index].label
-            );
+            this.toastr.error(  'Veuillez renseigner correctement le champ ' +
+            this.tab_type_de_donnee[index].label, 'error', { positionClass: 'toast-bottom-left'});
             $('#' + this.tab_type_de_donnee[index].id).css(
               'background-color',
               'MistyRose'
@@ -609,10 +599,8 @@ export class AdminService {
         // le type taux
         if (this.tab_type_de_donnee[index].type == 'taux') {
           if (!this.tab_type_de_donnee[index].valeur.match(regex_taux)) {
-            this.NotificationErreur(
-              'Veuillez renseigner correctement le champ ' +
-                this.tab_type_de_donnee[index].label
-            );
+            this.toastr.error(  'Veuillez renseigner correctement le champ ' +
+            this.tab_type_de_donnee[index].label, 'error', { positionClass: 'toast-bottom-left'});
             $('#' + this.tab_type_de_donnee[index].id).css(
               'background-color',
               'MistyRose'
@@ -670,10 +658,9 @@ export class AdminService {
         // le type email
         if (tableau_recu[index].type == 'email') {
           if (!tableau_recu[index].valeur.match(regex_email)) {
-            this.NotificationErreur(
-              'Veuillez renseigner correctement le champ ' +
-                tableau_recu[index].label
-            );
+            this.toastr.error(  'Veuillez renseigner correctement le champ ' +
+             tableau_recu[index].label, 'error', { positionClass: 'toast-bottom-left'});
+
             $('#' + tableau_recu[index].id).css(
               'background-color',
               'MistyRose'
@@ -689,10 +676,8 @@ export class AdminService {
         // le type montant
         if (tableau_recu[index].type == 'montant') {
           if (!tableau_recu[index].valeur.match(regex_montant)) {
-            this.NotificationErreur(
-              'Veuillez renseigner correctement le champ ' +
-                tableau_recu[index].label
-            );
+            this.toastr.error(  'Veuillez renseigner correctement le champ ' +
+             tableau_recu[index].label, 'error', { positionClass: 'toast-bottom-left'});
             $('#' + tableau_recu[index].id).css(
               'background-color',
               'MistyRose'
@@ -708,10 +693,8 @@ export class AdminService {
         // le type numerique
         if (tableau_recu[index].type == 'numerique') {
           if (!tableau_recu[index].valeur.match(regex_numerique)) {
-            this.NotificationErreur(
-              'Veuillez renseigner correctement le champ ' +
-                tableau_recu[index].label
-            );
+            this.toastr.error(  'Veuillez renseigner correctement le champ ' +
+             tableau_recu[index].label, 'error', { positionClass: 'toast-bottom-left'});
             $('#' + tableau_recu[index].id).css(
               'background-color',
               'MistyRose'
@@ -732,10 +715,8 @@ export class AdminService {
           JourDateRecu = tableau_recu[index].valeur.substr(0, 2);
           // verification du pattern
           if (!tableau_recu[index].valeur.match(regex_date)) {
-            this.NotificationErreur(
-              'Veuillez renseigner correctement le champ ' +
-                tableau_recu[index].label
-            );
+            this.toastr.error(  'Veuillez renseigner correctement le champ ' +
+             tableau_recu[index].label, 'error', { positionClass: 'toast-bottom-left'});
             $('#' + tableau_recu[index].id).css(
               'background-color',
               'MistyRose'
@@ -750,9 +731,7 @@ export class AdminService {
             MoisDateRecu == '02' &&
             JourDateRecu > '28'
           ) {
-            this.NotificationErreur(
-              tableau_recu[index].label + " n'est pas une date valide"
-            );
+             this.toastr.error(   tableau_recu[index].label + " n'est pas une date valide", 'error', { positionClass: 'toast-bottom-left'});
             $('#' + tableau_recu[index].id).css(
               'background-color',
               'MistyRose'
@@ -767,9 +746,7 @@ export class AdminService {
             MoisDateRecu == '02' &&
             JourDateRecu > '29'
           ) {
-            this.NotificationErreur(
-              tableau_recu[index].label + " n'est pas une date valide"
-            );
+             this.toastr.error(   tableau_recu[index].label + " n'est pas une date valide", 'error', { positionClass: 'toast-bottom-left'});
             $('#' + tableau_recu[index].id).css(
               'background-color',
               'MistyRose'
@@ -786,9 +763,7 @@ export class AdminService {
               MoisDateRecu == '11') &&
             JourDateRecu > '30'
           ) {
-            this.NotificationErreur(
-              tableau_recu[index].label + " n'est pas une date valide"
-            );
+             this.toastr.error(   tableau_recu[index].label + " n'est pas une date valide", 'error', { positionClass: 'toast-bottom-left'});
             $('#' + tableau_recu[index].id).css(
               'background-color',
               'MistyRose'
@@ -804,10 +779,8 @@ export class AdminService {
         // le type annee
         if (tableau_recu[index].type == 'annee') {
           if (!tableau_recu[index].valeur.match(regex_annee)) {
-            this.NotificationErreur(
-              'Veuillez renseigner correctement le champ ' +
-                tableau_recu[index].label
-            );
+            this.toastr.error(  'Veuillez renseigner correctement le champ ' +
+             tableau_recu[index].label, 'error', { positionClass: 'toast-bottom-left'});
             $('#' + tableau_recu[index].id).css(
               'background-color',
               'MistyRose'
@@ -823,10 +796,8 @@ export class AdminService {
         // le type telephone
         if (tableau_recu[index].type == 'telephone') {
           if (!tableau_recu[index].valeur.match(regex_telephone)) {
-            this.NotificationErreur(
-              'Veuillez renseigner correctement le champ ' +
-                tableau_recu[index].label
-            );
+            this.toastr.error(  'Veuillez renseigner correctement le champ ' +
+             tableau_recu[index].label, 'error', { positionClass: 'toast-bottom-left'});
             $('#' + tableau_recu[index].id).css(
               'background-color',
               'MistyRose'
@@ -842,10 +813,8 @@ export class AdminService {
         // le type taux
         if (tableau_recu[index].type == 'taux') {
           if (!tableau_recu[index].valeur.match(regex_taux)) {
-            this.NotificationErreur(
-              'Veuillez renseigner correctement le champ ' +
-                tableau_recu[index].label
-            );
+            this.toastr.error(  'Veuillez renseigner correctement le champ ' +
+             tableau_recu[index].label, 'error', { positionClass: 'toast-bottom-left'});
             $('#' + tableau_recu[index].id).css(
               'background-color',
               'MistyRose'
@@ -939,10 +908,8 @@ export class AdminService {
                   regex_email
                 )
               ) {
-                this.NotificationErreur(
-                  'Veuillez renseigner correctement le champ ' +
-                    tableau_recu[index1].colonneTableau[index].label
-                );
+                this.toastr.error(  'Veuillez renseigner correctement le champ ' +
+                    tableau_recu[index1].colonneTableau[index].label, 'error', { positionClass: 'toast-bottom-left'});
                 /* $('#' + tableau_recu[index1].colonneTableau[index].id).css(
                 'background-color',
                 'MistyRose'
@@ -965,10 +932,8 @@ export class AdminService {
                   regex_montant
                 )
               ) {
-                this.NotificationErreur(
-                  'Veuillez renseigner correctement le champ ' +
-                    tableau_recu[index1].colonneTableau[index].label
-                );
+                this.toastr.error(  'Veuillez renseigner correctement le champ ' +
+                    tableau_recu[index1].colonneTableau[index].label, 'error', { positionClass: 'toast-bottom-left'});
                 /* $('#' + tableau_recu[index1].colonneTableau[index].id).css(
                 'background-color',
                 'MistyRose'
@@ -993,10 +958,8 @@ export class AdminService {
                   regex_numerique
                 )
               ) {
-                this.NotificationErreur(
-                  'Veuillez renseigner correctement le champ ' +
-                    tableau_recu[index1].colonneTableau[index].label
-                );
+                this.toastr.error(  'Veuillez renseigner correctement le champ ' +
+                    tableau_recu[index1].colonneTableau[index].label, 'error', { positionClass: 'toast-bottom-left'});
                 /*  $('#' + tableau_recu[index1].colonneTableau[index].id).css(
                 'background-color',
                 'MistyRose'
@@ -1030,10 +993,8 @@ export class AdminService {
                   regex_date
                 )
               ) {
-                this.NotificationErreur(
-                  'Veuillez renseigner correctement le champ ' +
-                    tableau_recu[index1].colonneTableau[index].label
-                );
+                this.toastr.error(  'Veuillez renseigner correctement le champ ' +
+                    tableau_recu[index1].colonneTableau[index].label, 'error', { positionClass: 'toast-bottom-left'});
                 /* $('#' + tableau_recu[index1].colonneTableau[index].id).css(
                 'background-color',
                 'MistyRose'
@@ -1048,10 +1009,8 @@ export class AdminService {
                 MoisDateRecu == '02' &&
                 JourDateRecu > '28'
               ) {
-                this.NotificationErreur(
-                  tableau_recu[index1].colonneTableau[index].label +
-                    " n'est pas une date valide"
-                );
+                 this.toastr.error( tableau_recu[index1].colonneTableau[index].label +
+                    " n'est pas une date valide", 'error', { positionClass: 'toast-bottom-left'});
                 /*  $('#' + tableau_recu[index1].colonneTableau[index].id).css(
                 'background-color',
                 'MistyRose'
@@ -1066,10 +1025,8 @@ export class AdminService {
                 MoisDateRecu == '02' &&
                 JourDateRecu > '29'
               ) {
-                this.NotificationErreur(
-                  tableau_recu[index1].colonneTableau[index].label +
-                    " n'est pas une date valide"
-                );
+                 this.toastr.error( tableau_recu[index1].colonneTableau[index].label +
+                    " n'est pas une date valide", 'error', { positionClass: 'toast-bottom-left'});
                 /* $('#' + tableau_recu[index1].colonneTableau[index].id).css(
                 'background-color',
                 'MistyRose'
@@ -1086,10 +1043,8 @@ export class AdminService {
                   MoisDateRecu == '11') &&
                 JourDateRecu > '30'
               ) {
-                this.NotificationErreur(
-                  tableau_recu[index1].colonneTableau[index].label +
-                    " n'est pas une date valide"
-                );
+                 this.toastr.error( tableau_recu[index1].colonneTableau[index].label +
+                    " n'est pas une date valide", 'error', { positionClass: 'toast-bottom-left'});
                 /* $('#' + tableau_recu[index1].colonneTableau[index].id).css(
                 'background-color',
                 'MistyRose'
@@ -1112,10 +1067,8 @@ export class AdminService {
                   regex_annee
                 )
               ) {
-                this.NotificationErreur(
-                  'Veuillez renseigner correctement le champ ' +
-                    tableau_recu[index1].colonneTableau[index].label
-                );
+                this.toastr.error(  'Veuillez renseigner correctement le champ ' +
+                    tableau_recu[index1].colonneTableau[index].label, 'error', { positionClass: 'toast-bottom-left'});
                 /* $('#' + tableau_recu[index1].colonneTableau[index].id).css(
                 'background-color',
                 'MistyRose'
@@ -1140,10 +1093,8 @@ export class AdminService {
                   regex_telephone
                 )
               ) {
-                this.NotificationErreur(
-                  'Veuillez renseigner correctement le champ ' +
-                    tableau_recu[index1].colonneTableau[index].label
-                );
+                this.toastr.error(  'Veuillez renseigner correctement le champ ' +
+                    tableau_recu[index1].colonneTableau[index].label, 'error', { positionClass: 'toast-bottom-left'});
                 /* $('#' + tableau_recu[index1].colonneTableau[index].id).css(
                 'background-color',
                 'MistyRose'
@@ -1166,10 +1117,8 @@ export class AdminService {
                   regex_taux
                 )
               ) {
-                this.NotificationErreur(
-                  'Veuillez renseigner correctement le champ ' +
-                    tableau_recu[index1].colonneTableau[index].label
-                );
+                this.toastr.error(  'Veuillez renseigner correctement le champ ' +
+                    tableau_recu[index1].colonneTableau[index].label, 'error', { positionClass: 'toast-bottom-left'});
                 /* $('#' + tableau_recu[index1].colonneTableau[index].id).css(
                 'background-color',
                 'MistyRose'
@@ -1198,10 +1147,8 @@ export class AdminService {
                   regex_email
                 )
               ) {
-                this.NotificationErreur(
-                  'Veuillez renseigner correctement le champ ' +
-                    tableau_recu[index1].colonneTableau[index].label
-                );
+                this.toastr.error(  'Veuillez renseigner correctement le champ ' +
+                    tableau_recu[index1].colonneTableau[index].label, 'error', { positionClass: 'toast-bottom-left'});
                 /* $('#' + tableau_recu[index1].colonneTableau[index].id).css(
                 'background-color',
                 'MistyRose'
@@ -1224,10 +1171,8 @@ export class AdminService {
                   regex_montant
                 )
               ) {
-                this.NotificationErreur(
-                  'Veuillez renseigner correctement le champ ' +
-                    tableau_recu[index1].colonneTableau[index].label
-                );
+                this.toastr.error(  'Veuillez renseigner correctement le champ ' +
+                    tableau_recu[index1].colonneTableau[index].label, 'error', { positionClass: 'toast-bottom-left'});
                 /* $('#' + tableau_recu[index1].colonneTableau[index].id).css(
                 'background-color',
                 'MistyRose'
@@ -1252,10 +1197,8 @@ export class AdminService {
                   regex_numerique
                 )
               ) {
-                this.NotificationErreur(
-                  'Veuillez renseigner correctement le champ ' +
-                    tableau_recu[index1].colonneTableau[index].label
-                );
+                this.toastr.error(  'Veuillez renseigner correctement le champ ' +
+                    tableau_recu[index1].colonneTableau[index].label, 'error', { positionClass: 'toast-bottom-left'});
                 /*  $('#' + tableau_recu[index1].colonneTableau[index].id).css(
                 'background-color',
                 'MistyRose'
@@ -1289,10 +1232,8 @@ export class AdminService {
                   regex_date
                 )
               ) {
-                this.NotificationErreur(
-                  'Veuillez renseigner correctement le champ ' +
-                    tableau_recu[index1].colonneTableau[index].label
-                );
+                this.toastr.error(  'Veuillez renseigner correctement le champ ' +
+                    tableau_recu[index1].colonneTableau[index].label, 'error', { positionClass: 'toast-bottom-left'});
                 /* $('#' + tableau_recu[index1].colonneTableau[index].id).css(
                 'background-color',
                 'MistyRose'
@@ -1307,10 +1248,8 @@ export class AdminService {
                 MoisDateRecu == '02' &&
                 JourDateRecu > '28'
               ) {
-                this.NotificationErreur(
-                  tableau_recu[index1].colonneTableau[index].label +
-                    " n'est pas une date valide"
-                );
+                 this.toastr.error( tableau_recu[index1].colonneTableau[index].label +
+                    " n'est pas une date valide", 'error', { positionClass: 'toast-bottom-left'});
                 /*  $('#' + tableau_recu[index1].colonneTableau[index].id).css(
                 'background-color',
                 'MistyRose'
@@ -1325,10 +1264,8 @@ export class AdminService {
                 MoisDateRecu == '02' &&
                 JourDateRecu > '29'
               ) {
-                this.NotificationErreur(
-                  tableau_recu[index1].colonneTableau[index].label +
-                    " n'est pas une date valide"
-                );
+                 this.toastr.error( tableau_recu[index1].colonneTableau[index].label +
+                    " n'est pas une date valide", 'error', { positionClass: 'toast-bottom-left'});
                 /* $('#' + tableau_recu[index1].colonneTableau[index].id).css(
                 'background-color',
                 'MistyRose'
@@ -1345,10 +1282,8 @@ export class AdminService {
                   MoisDateRecu == '11') &&
                 JourDateRecu > '30'
               ) {
-                this.NotificationErreur(
-                  tableau_recu[index1].colonneTableau[index].label +
-                    " n'est pas une date valide"
-                );
+                 this.toastr.error( tableau_recu[index1].colonneTableau[index].label +
+                    " n'est pas une date valide", 'error', { positionClass: 'toast-bottom-left'});
                 /* $('#' + tableau_recu[index1].colonneTableau[index].id).css(
                 'background-color',
                 'MistyRose'
@@ -1371,10 +1306,8 @@ export class AdminService {
                   regex_annee
                 )
               ) {
-                this.NotificationErreur(
-                  'Veuillez renseigner correctement le champ ' +
-                    tableau_recu[index1].colonneTableau[index].label
-                );
+                this.toastr.error(  'Veuillez renseigner correctement le champ ' +
+                    tableau_recu[index1].colonneTableau[index].label, 'error', { positionClass: 'toast-bottom-left'});
                 /* $('#' + tableau_recu[index1].colonneTableau[index].id).css(
                 'background-color',
                 'MistyRose'
@@ -1399,10 +1332,8 @@ export class AdminService {
                   regex_telephone
                 )
               ) {
-                this.NotificationErreur(
-                  'Veuillez renseigner correctement le champ ' +
-                    tableau_recu[index1].colonneTableau[index].label
-                );
+                this.toastr.error(  'Veuillez renseigner correctement le champ ' +
+                    tableau_recu[index1].colonneTableau[index].label, 'error', { positionClass: 'toast-bottom-left'});
                 /* $('#' + tableau_recu[index1].colonneTableau[index].id).css(
                 'background-color',
                 'MistyRose'
@@ -1425,10 +1356,8 @@ export class AdminService {
                   regex_taux
                 )
               ) {
-                this.NotificationErreur(
-                  'Veuillez renseigner correctement le champ ' +
-                    tableau_recu[index1].colonneTableau[index].label
-                );
+                this.toastr.error(  'Veuillez renseigner correctement le champ ' +
+                    tableau_recu[index1].colonneTableau[index].label, 'error', { positionClass: 'toast-bottom-left'});
                 /* $('#' + tableau_recu[index1].colonneTableau[index].id).css(
                 'background-color',
                 'MistyRose'
@@ -1464,7 +1393,7 @@ export class AdminService {
       this.statut_champ_obligatoire = false;
       this.statut_type_de_donnee = false;
       this.tab_type_de_donnee = [];
-      this.NotificationErreur('Veuillez renseigner les champs obligatoire');
+       this.toastr.error('Veuillez renseigner les champs obligatoire', 'error', { positionClass: 'toast-bottom-left'});
       for (let index = 0; index < this.champ_a_renseigner.length; index++) {
         console.log(this.champ_a_renseigner[index].id);
 
