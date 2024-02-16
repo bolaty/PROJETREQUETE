@@ -25,8 +25,9 @@
           aria-label="Search"
           aria-describedby="basic-addon1"
           [(ngModel)]="SearchValue"
+          *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR != '0002'"
         />
-        <span class="input-group-text" id="basic-addon1" (click)="RechercherSelonEcran()"
+        <span class="input-group-text" id="basic-addon1" *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR != '0002'" (click)="RechercherSelonEcran()"
         ><i class="mdi mdi-magnify mdi-20px"></i
       ></span>
       </div>
@@ -519,7 +520,7 @@
                             class="mdi mdi-account-details mdi-20px d-sm-none"
                           ></span
                           ><span class="d-none d-sm-block"
-                            >information sur la plainte de {{ListeClients[0].CU_NOMUTILISATEUR}}</span
+                            >information sur la plainte de {{ListeClients[0]?.CU_NOMUTILISATEUR}}</span
                           >
                         </button>
                       </li>
@@ -735,9 +736,9 @@
                                 <i class="mdi mdi-dots-vertical mdi-24px text-muted"></i>
                               </button>
                               <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="javascript:void(0);"     data-bs-toggle="modal"
+                                <li><a class="dropdown-item" href="javascript:void(0);"     data-bs-toggle="modal" *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR != '0002' && recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')"
                                   data-bs-target="#addNewAddress2" (click)="recupListe(ListRetourRequetes)"><i class="mdi mdi-account-tag me-1"></i> Avis recevabilité</a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);"     data-bs-toggle="modal"
+                                <li><a class="dropdown-item" href="javascript:void(0);"     data-bs-toggle="modal" *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR != '0002' && recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')"
                                   data-bs-target="#addNewAddress" (click)="recupListe(ListRetourRequetes)"><i class="mdi mdi-account-tag me-1"></i> Attribution de
                                   plainte</a></li>
                                 <li><a class="dropdown-item" href="javascript:void(0);" (click)="recupListe(ListRetourRequetes)" routerLink="SuiviRequete"><i class="mdi mdi-animation-outline me-1"></i> Suivi de
@@ -851,6 +852,7 @@
             <div class="card mb-4">
               <div class="card-header">
                 <h5 class="card-title mb-0">Niveau de traitement de Plainte</h5>
+                
               </div>
               <div class="card-body">
                 <div class="row">
@@ -925,6 +927,11 @@
                         role="tabpanel"
                       >
                         <h6 class="text-body">{{recupEtape.RE_LIBELLEETAPE}}</h6>
+                        <div class="alert d-flex align-items-center bg-label-warning mb-0" role="alert">
+                          <i class="mdi mdi-bell-outline me-2"></i>
+                          Voulez-vous Cloturée cette etape ?. &nbsp;&nbsp;
+                          <span class="mdi mdi-cancel bg-label-danger me-2" (click)="ClotureEtape()"></span>
+                        </div><br>
                         <form id="addNewAddressForm" class="row g-4" onsubmit="return false">
                           <div class="col-12">
                             <div class="form-floating form-floating-outline">

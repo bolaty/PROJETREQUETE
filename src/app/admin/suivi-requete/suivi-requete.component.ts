@@ -13,6 +13,7 @@ declare var $: any;
 })
 export class SuiviRequeteComponent {
   recupinfo: any = JSON.parse(sessionStorage.getItem("infoReque") || '');
+  recupinfoconnect: any = JSON.parse(sessionStorage.getItem("infoLogin") || '');
   statutValreq:any=""
   ListeComboStatut: any = []
   tab_enregistrement_traitement: any = []
@@ -215,6 +216,7 @@ export class SuiviRequeteComponent {
                     "RQ_OBJETREQUETE": this.formulaire_suivi[0].valeur,
                     "RQ_OBSERVATIONAGENTTRAITEMENTREQUETE": this.formulaire_suivi[3].valeur,
                     "RQ_OBSERVATIONDELAITRAITEMENTREQUETE": "",
+                    RQ_AFFICHERINFOCLIENT: "O",
                     "RQ_SIGNATURE": this.base64Image,
                     "RQ_SIGNATURE1": "",
                     "RS_CODESTATUTRECEVABILITE": this.formulaire_suivi[2].valeur,
@@ -340,6 +342,7 @@ export class SuiviRequeteComponent {
                   "RQ_OBJETREQUETE": this.recupinfo.RQ_OBJETREQUETE,
                   "RQ_OBSERVATIONAGENTTRAITEMENTREQUETE":  this.recupinfo.RQ_OBSERVATIONAGENTTRAITEMENTREQUETE,
                   "RQ_OBSERVATIONDELAITRAITEMENTREQUETE": this.formulaire_avis[1].valeur,
+                  RQ_AFFICHERINFOCLIENT: "O",
                   "RQ_SIGNATURE": "",
                   "RQ_SIGNATURE1": "",
                   "RS_CODESTATUTRECEVABILITE": this.formulaire_suivi[2].valeur,

@@ -169,6 +169,7 @@ export class PlaintesComponent {
   statutliste:boolean=false
   SearchValue:any
   statutClientExiste:boolean=true
+
   statutFrmulaire:string='ENREGISTREMENT'
   constructor(
     public AdminService:AdminService,
@@ -239,7 +240,7 @@ export class PlaintesComponent {
     let body = {
         "Objets": [
             {
-                "OE_PARAM": [],
+                "OE_PARAM": ["1000","0001"],
                 "clsObjetEnvoi": {
                     "ET_CODEETABLISSEMENT": "",
                     "AN_CODEANTENNE": "",
@@ -253,6 +254,12 @@ export class PlaintesComponent {
         this.ListeComboOperateur = success;
         this.ListeComboOperateur = this.ListeComboOperateur.pvgListeUtilisateursComboResult;
         if (this.ListeComboOperateur[0].clsResultat.SL_RESULTAT == 'TRUE') {
+          for (let i = 0;i<this.ListeComboOperateur.length;i++) {
+             if(this.ListeComboOperateur[i].CU_NOMUTILISATEUR.includes('ADMIN')){
+                this.ListeComboOperateur.splice(i,1);
+                break
+             }
+          }
          this.ComboTypeRequete()
         } else {
         
@@ -387,67 +394,134 @@ export class PlaintesComponent {
       }
         let Options =
           'RequeteClientsClasse.svc/pvgMajReqrequete'; // le chemin d'appel du service web
-        //objet d'envoi
-        let body = {
-          "Objets": [
-              {
-                 // "AG_CODEAGENCE": this.recupinfo[0].AG_CODEAGENCE,
-                  "AC_CODEACTIONCORRECTIVE": "",
-                  "CU_CODECOMPTEUTULISATEUR": this.statutClientExiste == false ? this.ListeClients[0].CU_CODECOMPTEUTULISATEUR : "",// this.recupinfo[0].CU_CODECOMPTEUTULISATEUR,//"1",
-                  "CU_CODECOMPTEUTULISATEURAGENTENCHARGE": "",//this.formulaire_plaintes_reclamations[8].valeur,
-                  "MC_CODEMODECOLLETE": this.formulaire_plaintes_reclamations[7].valeur,//"01",
-                  "NS_CODENIVEAUSATISFACTION": "",
-                  "RQ_CODEREQUETE": "",
-                  "RQ_CODEREQUETERELANCEE": "",
-                  "RQ_DATECLOTUREREQUETE": "01/01/1900",
-                  "RQ_DATEDEBUTTRAITEMENTREQUETE": "01/01/1900",
-                  "RQ_DATEFINTRAITEMENTREQUETE": "01/01/1900",
-                  "RQ_DATESAISIEREQUETE": date, //"01/01/1900",
-                  "RQ_DATETRANSFERTREQUETE": "01/01/1900",
-                  "RQ_DELAITRAITEMENTREQUETE": "",
-                  "RQ_DESCRIPTIONREQUETE": this.formulaire_plaintes_reclamations[6].valeur,//"DESCRIPTION DE LA REQUETE",
-                  "RQ_DUREETRAITEMENTREQUETE": "",
-                  "RQ_AFFICHERINFOCLIENT": "O",
-                  "RQ_LOCALISATIONCLIENT": this.statutClientExiste == false ? "" : this.formulaire_plaintes_reclamations[4].valeur,// this.formulaire_plaintes_reclamations[4].valeur,//"LOCALISATION DU CLIENT",
-                  "RQ_NUMERORECOMPTE": this.statutClientExiste == false ? this.ListeClients[0].CU_NUMEROUTILISATEUR : this.formulaire_plaintes_reclamations[0].valeur,//this.formulaire_plaintes_reclamations[0].valeur,//"0",
-                  "RQ_NUMEROREQUETE": "0",
-                  "RQ_OBJETREQUETE": "PLAINTE",
-                  "RQ_OBSERVATIONAGENTTRAITEMENTREQUETE": "",
-                  "RQ_OBSERVATIONDELAITRAITEMENTREQUETE": "",
-                  "RQ_SIGNATURE": this.base64Image,
-                  "RQ_SIGNATURE1": "",
-                  "RS_CODESTATUTRECEVABILITE": "",
-                  "SR_CODESERVICE": "",
-                  "TR_CODETYEREQUETE": this.formulaire_plaintes_reclamations[5].valeur,//"00001",
-                  "clsObjetEnvoi": {
-                      "ET_CODEETABLISSEMENT": "",
-                      "AN_CODEANTENNE": "",
-                      "TYPEOPERATION": "0"
+
+          if(this.recupinfo[0].TU_CODETYPEUTILISATEUR == '0002'){
+              //objet d'envoi
+              let body = {
+                "Objets": [
+                    {
+                      // "AG_CODEAGENCE": this.recupinfo[0].AG_CODEAGENCE,
+                        "AC_CODEACTIONCORRECTIVE": "",
+                        "CU_CODECOMPTEUTULISATEUR": this.recupinfo[0].CU_CODECOMPTEUTULISATEUR ,// this.recupinfo[0].CU_CODECOMPTEUTULISATEUR,//"1",
+                        "CU_CODECOMPTEUTULISATEURAGENTENCHARGE": "",//this.formulaire_plaintes_reclamations[8].valeur,
+                        "MC_CODEMODECOLLETE": this.formulaire_plaintes_reclamations[7].valeur,//"01",
+                        "NS_CODENIVEAUSATISFACTION": "",
+                        "RQ_CODEREQUETE": "",
+                        "RQ_CODEREQUETERELANCEE": "",
+                        "RQ_DATECLOTUREREQUETE": "01/01/1900",
+                        "RQ_DATEDEBUTTRAITEMENTREQUETE": "01/01/1900",
+                        "RQ_DATEFINTRAITEMENTREQUETE": "01/01/1900",
+                        "RQ_DATESAISIEREQUETE": date, //"01/01/1900",
+                        "RQ_DATETRANSFERTREQUETE": "01/01/1900",
+                        "RQ_DELAITRAITEMENTREQUETE": "",
+                        "RQ_DESCRIPTIONREQUETE": this.formulaire_plaintes_reclamations[6].valeur,//"DESCRIPTION DE LA REQUETE",
+                        "RQ_DUREETRAITEMENTREQUETE": "",
+                        "RQ_AFFICHERINFOCLIENT": "O",
+                        "RQ_LOCALISATIONCLIENT":  "" ,// this.formulaire_plaintes_reclamations[4].valeur,//"LOCALISATION DU CLIENT",
+                        "RQ_NUMERORECOMPTE": this.recupinfo[0].CU_NUMEROUTILISATEUR ,//this.formulaire_plaintes_reclamations[0].valeur,//"0",
+                        "RQ_NUMEROREQUETE": "0",
+                        "RQ_OBJETREQUETE": "PLAINTE",
+                        "RQ_OBSERVATIONAGENTTRAITEMENTREQUETE": "",
+                        "RQ_OBSERVATIONDELAITRAITEMENTREQUETE": "",
+                        "RQ_SIGNATURE": this.base64Image,
+                        "RQ_SIGNATURE1": "",
+                        "RS_CODESTATUTRECEVABILITE": "",
+                        "SR_CODESERVICE": "",
+                        "TR_CODETYEREQUETE": this.formulaire_plaintes_reclamations[5].valeur,//"00001",
+                        "clsObjetEnvoi": {
+                            "ET_CODEETABLISSEMENT": "",
+                            "AN_CODEANTENNE": "",
+                            "TYPEOPERATION": "5"
+                        }
+                    }
+                    ]
+                };
+
+              this.AdminService.AppelServeur(body, Options).subscribe(
+                (success) => {
+                  this.retourRequeteEnregistrement = success;
+                  this.retourRequeteEnregistrement = this.retourRequeteEnregistrement.pvgMajReqrequeteResult;
+                  this.AdminService.CloseLoader()
+                  if (this.retourRequeteEnregistrement.clsResultat.SL_RESULTAT == 'FALSE') {
+                    //this.toastr.error(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE);
+                    this.toastr.error(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE, 'error', { positionClass: 'toast-bottom-left'});
+                  } else {
+                  // this.toastr.success(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE);
+                    this.toastr.success(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE, 'success', { positionClass: 'toast-bottom-left'});
+                    this.viderChamp()
                   }
-              }
-              ]
-          };
-      
-        this.AdminService.AppelServeur(body, Options).subscribe(
-          (success) => {
-            this.retourRequeteEnregistrement = success;
-            this.retourRequeteEnregistrement = this.retourRequeteEnregistrement.pvgMajReqrequeteResult;
-            this.AdminService.CloseLoader()
-            if (this.retourRequeteEnregistrement.clsResultat.SL_RESULTAT == 'FALSE') {
-              //this.toastr.error(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE);
-              this.toastr.error(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE, 'error', { positionClass: 'toast-bottom-left'});
-            } else {
-             // this.toastr.success(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE);
-              this.toastr.success(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE, 'success', { positionClass: 'toast-bottom-left'});
-              this.viderChamp()
-            }
-          },
-          (error: any) => {
-            this.AdminService.CloseLoader()
-           // this.toastr.warning(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE);
-            this.toastr.warning(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE, 'warning', { positionClass: 'toast-bottom-left'});
+                },
+                (error: any) => {
+                  this.AdminService.CloseLoader()
+                // this.toastr.warning(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE);
+                  this.toastr.warning(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE, 'warning', { positionClass: 'toast-bottom-left'});
+                }
+              );
+          }else{
+             //objet d'envoi
+              let body = {
+                "Objets": [
+                    {
+                      // "AG_CODEAGENCE": this.recupinfo[0].AG_CODEAGENCE,
+                        "AC_CODEACTIONCORRECTIVE": "",
+                        "CU_CODECOMPTEUTULISATEUR": this.statutClientExiste == false ? this.ListeClients[0].CU_CODECOMPTEUTULISATEUR : "",// this.recupinfo[0].CU_CODECOMPTEUTULISATEUR,//"1",
+                        "CU_CODECOMPTEUTULISATEURAGENTENCHARGE": "",//this.formulaire_plaintes_reclamations[8].valeur,
+                        "MC_CODEMODECOLLETE": this.formulaire_plaintes_reclamations[7].valeur,//"01",
+                        "NS_CODENIVEAUSATISFACTION": "",
+                        "RQ_CODEREQUETE": "",
+                        "RQ_CODEREQUETERELANCEE": "",
+                        "RQ_DATECLOTUREREQUETE": "01/01/1900",
+                        "RQ_DATEDEBUTTRAITEMENTREQUETE": "01/01/1900",
+                        "RQ_DATEFINTRAITEMENTREQUETE": "01/01/1900",
+                        "RQ_DATESAISIEREQUETE": date, //"01/01/1900",
+                        "RQ_DATETRANSFERTREQUETE": "01/01/1900",
+                        "RQ_DELAITRAITEMENTREQUETE": "",
+                        "RQ_DESCRIPTIONREQUETE": this.formulaire_plaintes_reclamations[6].valeur,//"DESCRIPTION DE LA REQUETE",
+                        "RQ_DUREETRAITEMENTREQUETE": "",
+                        "RQ_AFFICHERINFOCLIENT": "O",
+                        "RQ_LOCALISATIONCLIENT": this.statutClientExiste == false ? "" : this.formulaire_plaintes_reclamations[4].valeur,// this.formulaire_plaintes_reclamations[4].valeur,//"LOCALISATION DU CLIENT",
+                        "RQ_NUMERORECOMPTE": this.statutClientExiste == false ? this.ListeClients[0].CU_NUMEROUTILISATEUR : this.formulaire_plaintes_reclamations[0].valeur,//this.formulaire_plaintes_reclamations[0].valeur,//"0",
+                        "RQ_NUMEROREQUETE": "0",
+                        "RQ_OBJETREQUETE": "PLAINTE",
+                        "RQ_OBSERVATIONAGENTTRAITEMENTREQUETE": "",
+                        "RQ_OBSERVATIONDELAITRAITEMENTREQUETE": "",
+                        "RQ_SIGNATURE": this.base64Image,
+                        "RQ_SIGNATURE1": "",
+                        "RS_CODESTATUTRECEVABILITE": "",
+                        "SR_CODESERVICE": "",
+                        "TR_CODETYEREQUETE": this.formulaire_plaintes_reclamations[5].valeur,//"00001",
+                        "clsObjetEnvoi": {
+                            "ET_CODEETABLISSEMENT": "",
+                            "AN_CODEANTENNE": "",
+                            "TYPEOPERATION": "0"
+                        }
+                    }
+                    ]
+                };
+            
+              this.AdminService.AppelServeur(body, Options).subscribe(
+                (success) => {
+                  this.retourRequeteEnregistrement = success;
+                  this.retourRequeteEnregistrement = this.retourRequeteEnregistrement.pvgMajReqrequeteResult;
+                  this.AdminService.CloseLoader()
+                  if (this.retourRequeteEnregistrement.clsResultat.SL_RESULTAT == 'FALSE') {
+                    //this.toastr.error(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE);
+                    this.toastr.error(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE, 'error', { positionClass: 'toast-bottom-left'});
+                  } else {
+                  // this.toastr.success(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE);
+                    this.toastr.success(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE, 'success', { positionClass: 'toast-bottom-left'});
+                    this.viderChamp()
+                  }
+                },
+                (error: any) => {
+                  this.AdminService.CloseLoader()
+                // this.toastr.warning(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE);
+                  this.toastr.warning(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE, 'warning', { positionClass: 'toast-bottom-left'});
+                }
+              );
           }
-        );
+
+       
      
     }
   }
@@ -688,17 +762,70 @@ export class PlaintesComponent {
         );
     }
   }
+
+  ClotureEtape() {
+      var d = new Date()
+      var date = d.getDate() +'-0'+(d.getMonth()+1)+'-'+d.getFullYear()
+      var jour = d.getDate()
+      if(jour < 10){
+        var date = '0'+ d.getDate() +'-0'+(d.getMonth()+1)+'-'+d.getFullYear()
+        console.log(date)
+      }
+      var recuperation = JSON.parse(sessionStorage.getItem("infoReque") || "")
+        let Options =
+          'RequeteClientsClasse.svc/pvgMajReqrequeteEtape'; // le chemin d'appel du service web
+        //objet d'envoi
+        let body = {
+          "Objets": [
+              {
+                "AG_CODEAGENCE": this.recupinfo[0].AG_CODEAGENCE,
+                "AT_DATECLOTUREETAPE": date,
+                "AT_INDEXETAPE": this.recupEtape.RE_CODEETAPE,
+                "RE_CODEETAPE": this.recupEtape.RE_CODEETAPE,
+                "RQ_CODEREQUETE": recuperation.RQ_CODEREQUETE,
+                  "clsObjetEnvoi": {
+                      "ET_CODEETABLISSEMENT": "",
+                      "AN_CODEANTENNE": "",
+                      "TYPEOPERATION": "3"
+                  }
+              }
+              ]
+          };
+      
+        this.AdminService.AppelServeur(body, Options).subscribe(
+          (success) => {
+            this.tab_enregistrement_traitement = success;
+            this.tab_enregistrement_traitement = this.tab_enregistrement_traitement.pvgMajReqrequeteEtapeResult;
+            this.AdminService.CloseLoader()
+            if (this.tab_enregistrement_traitement.clsResultat.SL_RESULTAT == 'FALSE') {
+              //this.toastr.error(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
+              this.toastr.error(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE, 'error', { positionClass: 'toast-bottom-left'});
+            } else {
+             // this.toastr.success(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
+              this.toastr.success(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE, 'success', { positionClass: 'toast-bottom-left'});
+              this.ViderChamp()
+            }
+          },
+          (error: any) => {
+            this.AdminService.CloseLoader()
+           // this.toastr.warning(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
+            this.toastr.warning(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE, 'warning', { positionClass: 'toast-bottom-left'});
+          }
+        );
+   
+  }
   ViderChamp(){
     for (let index = 0; index < this.formulaire_avis.length; index++) {
       this.formulaire_avis[index].valeur = ""
     }
   }
   ListeRequete() {
-    let Option = 'RequeteClientsClasse.svc/pvgListeReqrequete';
+    var Option = ""
     var body = {}
      if (
       this.recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') 
     ) {
+      Option = 'RequeteClientsClasse.svc/pvgListeReqrequete';
        body = {
         "Objets": [
             {
@@ -711,7 +838,60 @@ export class PlaintesComponent {
             }
         ]
       };
-    }else{
+      this.AdminService.ShowLoader()
+      this.AdminService.AppelServeur(body, Option).subscribe(
+        (success: any) => {
+          this.ListeRetourRequete = success;
+          this.ListeRetourRequete = this.ListeRetourRequete.pvgListeReqrequeteResult;
+          this.AdminService.CloseLoader()
+          if (this.ListeRetourRequete[0].clsResultat.SL_RESULTAT == 'TRUE') {
+           this.statutliste = true
+          } else {
+            this.toastr.info(this.ListeRetourRequete[0].clsResultat.SL_MESSAGE, 'info', { positionClass: 'toast-bottom-left'});
+            this.statutliste = false
+          }
+        },
+        (error) => {
+          this.AdminService.CloseLoader()
+          this.statutliste = false
+          this.toastr.warning(this.ListeRetourRequete[0].clsResultat.SL_MESSAGE, 'warning', { positionClass: 'toast-bottom-left'});
+        }
+      );
+    }else if(this.recupinfo[0].TU_CODETYPEUTILISATEUR == '0001'){
+      Option = 'RequeteClientsClasse.svc/pvgChargerDansDataSetParOperateurs';
+      body = {
+       "Objets": [
+           {
+               "OE_PARAM": ["02",this.recupinfo[0].CU_CODECOMPTEUTULISATEUR],
+               "clsObjetEnvoi": {
+                   "ET_CODEETABLISSEMENT": "",
+                   "AN_CODEANTENNE": "",
+                   "TYPEOPERATION": "01"
+               }
+           }
+       ]
+     };
+     this.AdminService.ShowLoader()
+     this.AdminService.AppelServeur(body, Option).subscribe(
+       (success: any) => {
+         this.ListeRetourRequete = success;
+         this.ListeRetourRequete = this.ListeRetourRequete.pvgChargerDansDataSetParOperateursResult;
+         this.AdminService.CloseLoader()
+         if (this.ListeRetourRequete[0].clsResultat.SL_RESULTAT == 'TRUE') {
+          this.statutliste = true
+         } else {
+           this.toastr.info(this.ListeRetourRequete[0].clsResultat.SL_MESSAGE, 'info', { positionClass: 'toast-bottom-left'});
+           this.statutliste = false
+         }
+       },
+       (error) => {
+         this.AdminService.CloseLoader()
+         this.statutliste = false
+         this.toastr.warning(this.ListeRetourRequete[0].clsResultat.SL_MESSAGE, 'warning', { positionClass: 'toast-bottom-left'});
+       }
+     );
+   }else{
+    Option = 'RequeteClientsClasse.svc/pvgListeReqrequete';
        body = {
         "Objets": [
             {
@@ -724,35 +904,44 @@ export class PlaintesComponent {
             }
         ]
       };
+      this.AdminService.ShowLoader()
+      this.AdminService.AppelServeur(body, Option).subscribe(
+        (success: any) => {
+          this.ListeRetourRequete = success;
+          this.ListeRetourRequete = this.ListeRetourRequete.pvgListeReqrequeteResult;
+          this.AdminService.CloseLoader()
+          if (this.ListeRetourRequete[0].clsResultat.SL_RESULTAT == 'TRUE') {
+           this.statutliste = true
+          } else {
+            this.toastr.info(this.ListeRetourRequete[0].clsResultat.SL_MESSAGE, 'info', { positionClass: 'toast-bottom-left'});
+            this.statutliste = false
+          }
+        },
+        (error) => {
+          this.AdminService.CloseLoader()
+          this.statutliste = false
+          this.toastr.warning(this.ListeRetourRequete[0].clsResultat.SL_MESSAGE, 'warning', { positionClass: 'toast-bottom-left'});
+        }
+      );
     }
     
-    this.AdminService.ShowLoader()
-    this.AdminService.AppelServeur(body, Option).subscribe(
-      (success: any) => {
-        this.ListeRetourRequete = success;
-        this.ListeRetourRequete = this.ListeRetourRequete.pvgListeReqrequeteResult;
-        this.AdminService.CloseLoader()
-        if (this.ListeRetourRequete[0].clsResultat.SL_RESULTAT == 'TRUE') {
-         this.statutliste = true
-        } else {
-          this.toastr.info(this.ListeRetourRequete[0].clsResultat.SL_MESSAGE, 'info', { positionClass: 'toast-bottom-left'});
-          this.statutliste = false
-        }
-      },
-      (error) => {
-        this.AdminService.CloseLoader()
-        this.statutliste = false
-        this.toastr.warning(this.ListeRetourRequete[0].clsResultat.SL_MESSAGE, 'warning', { positionClass: 'toast-bottom-left'});
-      }
-    );
+  
   }
 
   RechercherSelonEcran(){
-    if(this.statutFrmulaire == "ENREGISTREMENT"){
-      this.listeClients();
-    }else{
-
+    if(this.recupinfo[0].TU_CODETYPEUTILISATEUR == '0002'){
+      
     }
+
+    if(this.recupinfo[0].TU_CODETYPEUTILISATEUR != '0002'){
+
+      if(this.statutFrmulaire == "ENREGISTREMENT"){
+        this.listeClients();
+      }else{
+  
+      }
+    }
+    
   }
   listeClients() {
     let Option = 'RequeteClientsClasse.svc/pvgListeUtilisateursRecherche';
@@ -847,5 +1036,9 @@ export class PlaintesComponent {
   ngOnInit(): void {
     this.ComboAgence()
     this.formulaire_plaintes_reclamations[8].valeur = this.recupinfo[0].CU_NOMUTILISATEUR
+    if(this.recupinfo[0].TU_CODETYPEUTILISATEUR == '0002'){
+      this.statutClientExiste = false
+     
+    }
   }
 }

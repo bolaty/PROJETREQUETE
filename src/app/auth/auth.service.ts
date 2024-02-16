@@ -16,7 +16,9 @@ export class AuthService {
   libelleConnexion: any = '';
   tempsRestant: number = 10;
   statusConnect: boolean = false;
-  LienServeur: any ='http://localhost:22248/'; //'http://51.210.111.16:1009/';
+  //LienServeur: any ='http://localhost:22248/'; //LIEN LOCALE
+  LienServeur: any ='http://51.210.111.16:1009/'; //LIEN prod
+ 
   constructor(private http: HttpClient) {
     Network.addListener(
       'networkStatusChange',

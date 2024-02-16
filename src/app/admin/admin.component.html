@@ -141,13 +141,13 @@
             <div data-i18n="Reclamations">Reclamations</div>
           </a>
         </li>
-        <li class="menu-item" routerLink="Relance">
+        <li class="menu-item" routerLink="Relance" *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR != '0002'">
           <a style="cursor: pointer" class="menu-link">
             <i class="menu-icon tf-icons mdi mdi-account-sync"></i>
             <div data-i18n="Relance">Relance</div>
           </a>
         </li>
-        <li class="menu-item" (click)="ChoixCreation('operateur')">
+        <li class="menu-item" (click)="ChoixCreation('operateur')" *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR != '0002'">
           <a style="cursor: pointer" class="menu-link">
             <i class="menu-icon tf-icons mdi mdi-account-sync"></i>
             <div data-i18n="Operateur">Operateur</div>

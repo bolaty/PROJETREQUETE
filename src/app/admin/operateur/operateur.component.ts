@@ -10,6 +10,7 @@ declare var $: any;
   styleUrls: ['./operateur.component.scss']
 })
 export class OperateurComponent {
+  recupinfo: any = JSON.parse(sessionStorage.getItem("infoLogin") || '');
   ecran_affiche: any = sessionStorage.getItem('choix_ecran')
   tab_eng_operateur: any = []
   ListeComboAgence: any = []
@@ -403,7 +404,15 @@ export class OperateurComponent {
                 "TU_CODETYPEUTILISATEUR": "0001",
                 "clsReqmicclient": null,
                 "clsReqmicprospect": null,
-                "clsReqoperateur": null,
+                "clsReqoperateur": {
+                  "OP_CODEOPERATEUR": "",
+                  "OP_CODEOPERATEURZENITH": "dddd",
+                  "AG_CODEAGENCE": this.recupinfo[0].AG_CODEAGENCE,
+                  "PV_CODEPOINTVENTE": "100000001",
+                  "CU_CODECOMPTEUTULISATEUR": this.recupinfo[0].CU_CODECOMPTEUTULISATEUR,
+                  "SR_CODESERVICE": "01",
+                  "OP_DATESAISIE": date,
+              },
                 "clsReqtontineepargnantjournalier": null,
                   "clsObjetEnvoi": {
                       "ET_CODEETABLISSEMENT": "",

@@ -44,8 +44,8 @@
             <table class="table">
               <thead>
                 <tr>
+                  <th>Objet</th>
                   <th>Description</th>
-                  <th>Type plainte/reclamation</th>
                   <th>Statut</th>
                   <th>Actions</th>
                 </tr>
@@ -56,9 +56,9 @@
                     <i
                       class="mdi mdi-wallet-travel mdi-20px text-danger me-3"
                     ></i
-                    ><span class="fw-medium">{{recupinfo.RQ_DESCRIPTIONREQUETE}}</span>
+                    ><span class="fw-medium">{{recupinfo.TR_LIBELLETYEREQUETE}}</span>
                   </td>
-                  <td>{{recupinfo.RQ_OBJETREQUETE}}</td>
+                  <td>{{recupinfo.RQ_DESCRIPTIONREQUETE}}</td>
                   <td>
                     <span *ngIf="statutValreq != 'Cloturée'" class="badge rounded-pill bg-label-primary me-1"
                       >{{ statutValreq }}</span
@@ -81,6 +81,7 @@
                           class="dropdown-item"
                           href="javascript:void(0);"
                           (click)="voirTraitement('Traitement')"
+                          *ngIf="recupinfoconnect[0].TU_CODETYPEUTILISATEUR != '0002'"
                           ><i class="mdi mdi-pencil-outline me-1"></i>
                           Traitement de la requete</a
                         >
@@ -88,6 +89,7 @@
                           class="dropdown-item"
                           href="javascript:void(0);"
                           (click)="ConsultationTraitement('Consultation')"
+                          *ngIf="recupinfoconnect[0].TU_CODETYPEUTILISATEUR == '0002'"
                           ><i class="mdi mdi-progress-clock me-1"></i>
                           Avis</a
                         >

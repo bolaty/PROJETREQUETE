@@ -1,11 +1,16 @@
 import { Component } from '@angular/core';
+import { AdminService } from '../admin.service';
+import { ToastrService } from 'ngx-toastr';
+
 declare var $: any;
+
 @Component({
   selector: 'app-relance',
   templateUrl: './relance.component.html',
   styleUrls: ['./relance.component.scss']
 })
 export class RelanceComponent {
+  recupinfo: any = JSON.parse(sessionStorage.getItem("infoLogin") || '');
   recupclient:any =  [
     {
       "id": 1,
@@ -97,8 +102,162 @@ export class RelanceComponent {
     }
     
   ]
+  recupEtape:any
+  formulaire_attr_reclamations: any = [
+    {
+      id: 'modalOperateur',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'N',
+      label: 'opérateur',
+    },
+    {
+      id: 'modalDuree',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'O',
+      label: 'durée du traitement',
+    },
+    {
+      id: 'modalDureefin',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'O',
+      label: 'durée du traitement',
+    },
+    {
+      id: 'invoice-observation-avis',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'O',
+      label: 'Description',
+    }
+  ];
+  retourRequeteEnregistrement:any=[]
+  ListeRelance:any=[]
+  RecupRelances:any=[]
+  ListeComboEtapes:any=[]
+  ListeComboOperateur:any=[]
+  tab_enregistrement_traitement:any=[]
+  constructor(
+    public AdminService:AdminService,
+    private toastr: ToastrService
+    ) {}
+
+    ComboEtapeParam() {
+      let Option = 'RequeteClientsClasse.svc/pvgListeReqrequeteEtapeParamCombo';
+      let body = {
+          "Objets": [
+              {
+                  "OE_PARAM": [],
+                  "clsObjetEnvoi": {
+                      "ET_CODEETABLISSEMENT": "",
+                      "AN_CODEANTENNE": "",
+                      "TYPEOPERATION": "01"
+                  }
+              }
+          ]
+      };
+      this.AdminService.AppelServeur(body, Option).subscribe(
+        (success: any) => {
+          this.ListeComboEtapes = success;
+          this.ListeComboEtapes = this.ListeComboEtapes.pvgListeReqrequeteEtapeParamComboResult;
+          if (this.ListeComboEtapes[0].clsResultat.SL_RESULTAT == 'TRUE') {
+           this.ComboOperateur()
+          } else {
+          
+          }
+        },
+        (error) => {
+         
+        }
+      );
+    }
+    ComboOperateur() {
+      let Option = 'RequeteClientsClasse.svc/pvgListeUtilisateursCombo';
+      let body = {
+          "Objets": [
+              {
+                  "OE_PARAM": [],
+                  "clsObjetEnvoi": {
+                      "ET_CODEETABLISSEMENT": "",
+                      "AN_CODEANTENNE": "",
+                      "TYPEOPERATION": "01"
+                  }
+              }
+          ]
+      };
+      this.AdminService.AppelServeur(body, Option).subscribe(
+        (success: any) => {
+          this.ListeComboOperateur = success;
+          this.ListeComboOperateur = this.ListeComboOperateur.pvgListeUtilisateursComboResult;
+          if (this.ListeComboOperateur[0].clsResultat.SL_RESULTAT == 'TRUE') {
+           this.ListeDesRelance()
+          } else {
+          
+          }
+        },
+        (error) => {
+         
+        }
+      );
+    }
+
+    ClotureEtape() {
+      var d = new Date()
+      var date = d.getDate() +'-0'+(d.getMonth()+1)+'-'+d.getFullYear()
+      var jour = d.getDate()
+      if(jour < 10){
+        var date = '0'+ d.getDate() +'-0'+(d.getMonth()+1)+'-'+d.getFullYear()
+        console.log(date)
+      }
+      var recuperation = JSON.parse(sessionStorage.getItem("infoReque") || "")
+        let Options =
+          'RequeteClientsClasse.svc/pvgMajReqrequeteEtape'; // le chemin d'appel du service web
+        //objet d'envoi
+        let body = {
+          "Objets": [
+              {
+                "AG_CODEAGENCE": this.recupinfo[0].AG_CODEAGENCE,
+                "AT_DATECLOTUREETAPE": date,
+                "AT_INDEXETAPE": this.recupEtape.RE_CODEETAPE,
+                "RE_CODEETAPE": this.recupEtape.RE_CODEETAPE,
+                "RQ_CODEREQUETE": this.recupEtape.RQ_CODEREQUETE,
+                  "clsObjetEnvoi": {
+                      "ET_CODEETABLISSEMENT": "",
+                      "AN_CODEANTENNE": "",
+                      "TYPEOPERATION": "3"
+                  }
+              }
+              ]
+          };
+      
+        this.AdminService.AppelServeur(body, Options).subscribe(
+          (success) => {
+            this.tab_enregistrement_traitement = success;
+            this.tab_enregistrement_traitement = this.tab_enregistrement_traitement.pvgMajReqrequeteEtapeResult;
+            this.AdminService.CloseLoader()
+            if (this.tab_enregistrement_traitement.clsResultat.SL_RESULTAT == 'FALSE') {
+              //this.toastr.error(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
+              this.toastr.error(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE, 'error', { positionClass: 'toast-bottom-left'});
+            } else {
+             // this.toastr.success(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
+              this.toastr.success(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE, 'success', { positionClass: 'toast-bottom-left'});
+              //this.ViderChamp()
+            }
+          },
+          (error: any) => {
+            this.AdminService.CloseLoader()
+           // this.toastr.warning(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
+            this.toastr.warning(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE, 'warning', { positionClass: 'toast-bottom-left'});
+          }
+        );
+   
+  }
   rowClicked(info: any): void {
-  $("#sendInvoiceOffcanvas").offcanvas('show')
+    this.recupEtape =  this.ListeRelance[info.id]
+   //$("#sendInvoiceOffcanvas").offcanvas('show')
+    $("#addNewAddress").modal("show");
   }
   chargementDate(){
     var pt = this
@@ -113,12 +272,12 @@ export class RelanceComponent {
     
       if (dt_basic_table.length) {
         var dt_basic = dt_basic_table.DataTable({
-          data: pt.recupclient,
+          data: pt.RecupRelances,
           columns: [
-            { data: 'LIBELLE' },  // Colonne "full_name"
+            { data: 'OBJET' },  // Colonne "full_name"
+            { data: 'DESCRIPTION' },  // Colonne "full_name"
             { data: 'NATURE' },  // Colonne "full_name"
-            { data: 'STATUT' },  // Colonne "full_name"
-            { data: 'DATE' },  // Colonne "email"
+            { data: 'OBSERVATIONAGENT' },  // Colonne "email"
           
           ],
           select: {
@@ -191,16 +350,152 @@ export class RelanceComponent {
           ]
         });
         
-        $('div.head-label').html('<h5 class="card-title mb-0">RELANCE</h5>');
+        $('div.head-label').html('<h5 class="card-title mb-0">Liste Operateurs</h5>');
       }
 });
   }
-
+  ListeDesRelance() {
+    let Option = 'RequeteClientsClasse.svc/pvgListeReqrequeteRelance';
+    let body = {
+        "Objets": [
+            {
+                "OE_PARAM": [],
+                "clsObjetEnvoi": {
+                    "ET_CODEETABLISSEMENT": "",
+                    "AN_CODEANTENNE": "",
+                    "TYPEOPERATION": "01"
+                }
+            }
+        ]
+    };
+   // $(".datatables-basic").DataTable().destroy();
+    this.AdminService.AppelServeur(body, Option).subscribe(
+      (success: any) => {
+        this.ListeRelance = success;
+        this.ListeRelance = this.ListeRelance.pvgListeReqrequeteRelanceResult;
+        if (this.ListeRelance[0].clsResultat.SL_RESULTAT == 'TRUE') {
+          this.AdminService.CloseLoader()
+          this.RecupRelances = []
+           var obj = {
+            id:'',
+            OBJET:'',
+            DESCRIPTION:'',
+            NATURE:'',
+            OBSERVATIONAGENT:''
+           }
+           for(let i=0;i<this.ListeRelance.length;i++){
+                obj={
+                  id: i.toString(),
+                  OBJET:this.ListeRelance[i].TR_LIBELLETYEREQUETE,
+                  DESCRIPTION:this.ListeRelance[i].RQ_DESCRIPTIONREQUETE,
+                  NATURE:this.ListeRelance[i].NR_LIBELLENATUREREQUETE,
+                  OBSERVATIONAGENT:this.ListeRelance[i].RQ_OBSERVATIONAGENTTRAITEMENTREQUETE,
+                }
+                this.RecupRelances.push(obj)
+           }
+           this.toastr.success(this.ListeRelance[0].clsResultat.SL_MESSAGE, 'success', { positionClass: 'toast-bottom-left'});
+           this.chargementDate()
+        } else {
+          this.AdminService.CloseLoader()
+          this.toastr.error(this.ListeRelance[0].clsResultat.SL_MESSAGE, 'error', { positionClass: 'toast-bottom-left'});
+          this.RecupRelances = [] 
+        }
+      },
+      (error) => {
+        this.AdminService.CloseLoader()
+         this.toastr.warning(this.ListeRelance[0].clsResultat.SL_MESSAGE, 'warning', { positionClass: 'toast-bottom-left'});
+      }
+    );
+  }
+  EnregistrementRequeteAffectation(tableau_recu: any) {
+    this.AdminService.SecuriteChampObligatoireEtTypeDeDonnee(tableau_recu);
+    this.AdminService.TypeDeDonneeChampNonObligatoire(tableau_recu);
+    if (
+      this.AdminService.statut_traitement == true &&
+      this.AdminService.statut_traitement_champ_non_obligatoire == true
+    ) {
+      if (
+        this.AdminService.ComparerDeuxDates(this.formulaire_attr_reclamations[1].valeur) >
+        this.AdminService.ComparerDeuxDates(
+          this.formulaire_attr_reclamations[2].valeur
+        )
+      ) {
+        $('#' + tableau_recu[1].id).css('background-color', 'MistyRose');
+        $('#' + tableau_recu[2].id).css('background-color', 'MistyRose');
+        this.toastr.error('La date de début ne doit pas être plus grande que la date de fin', 'error', { positionClass: 'toast-bottom-left'});
+      }else{
+        var d = new Date()
+        var date = d.getDate() +'-0'+(d.getMonth()+1)+'-'+d.getFullYear()
+        var jour = d.getDate()
+        if(jour < 10){
+          var date = '0'+ d.getDate() +'-0'+(d.getMonth()+1)+'-'+d.getFullYear()
+          console.log(date)
+        }
+          var recuperation = JSON.parse(sessionStorage.getItem("infoReque") || "")
+          let Options =
+            'RequeteClientsClasse.svc/pvgMajReqrequeteEtape'; // le chemin d'appel du service web
+          //objet d'envoi
+          let body = {
+            "Objets": [
+                {
+                  "AG_CODEAGENCE": this.recupinfo[0].AG_CODEAGENCE,
+                  "AT_DATECLOTUREETAPE": "01/01/1900",
+                  "AT_DATEDEBUTTRAITEMENTETAPE": this.formulaire_attr_reclamations[1].valeur,
+                  "AT_DATEFINTRAITEMENTETAPE": this.formulaire_attr_reclamations[2].valeur,
+                  "AT_DESCRIPTION": this.formulaire_attr_reclamations[3].valeur,
+                  "AT_INDEXETAPE": "0",
+                  "AT_NUMEROORDRE": "0",
+                  "CU_CODECOMPTEUTULISATEURAGENTENCHARGE": this.formulaire_attr_reclamations[0].valeur,
+                  "NS_CODENIVEAUSATISFACTION": "",
+                  "RE_CODEETAPE": this.recupEtape.RE_CODEETAPE,
+                  "RQ_CODEREQUETE": this.recupEtape.RQ_CODEREQUETE,
+                  "RQ_DATESAISIE": date,
+                  "clsObjetEnvoi": {
+                      "ET_CODEETABLISSEMENT": "",
+                      "AN_CODEANTENNE": "",
+                      "TYPEOPERATION": "0"
+                  }
+                }
+                ]
+            };
+          this.AdminService.ShowLoader()
+          this.AdminService.AppelServeur(body, Options).subscribe(
+            (success) => {
+              this.retourRequeteEnregistrement = success;
+              this.retourRequeteEnregistrement = this.retourRequeteEnregistrement.pvgMajReqrequeteEtapeResult;
+              this.AdminService.CloseLoader()
+              if (this.retourRequeteEnregistrement.clsResultat.SL_RESULTAT == 'FALSE') {
+                //this.toastr.error(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE);
+                this.toastr.error(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE, 'error', { positionClass: 'toast-bottom-left'});
+              } else {
+               // this.toastr.success(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE);
+                this.toastr.success(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE, 'success', { positionClass: 'toast-bottom-left'});
+  
+                this.viderChampAff()
+              }
+            },
+            (error: any) => {
+              this.AdminService.CloseLoader()
+             // this.toastr.warning(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE);
+              this.toastr.warning(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE, 'warning', { positionClass: 'toast-bottom-left'});
+            }
+          );
+       
+      }
+     
+    }
+  }
+  selectionEtape(info:any){
+    this.recupEtape = info
+  }
+  viderChampAff(){
+    this.formulaire_attr_reclamations[0].valeur = ""
+    this.formulaire_attr_reclamations[1].valeur = ""
+    this.formulaire_attr_reclamations[2].valeur = ""
+    this.formulaire_attr_reclamations[3].valeur = ""
+   $("#addNewAddress").modal("hide");
+  }
   ngOnInit(): void {
-    var pt = this
-    
-    setTimeout(() => {
-      pt.chargementDate();
-    }, 1000);
+    this.ComboEtapeParam()
   }
 }
