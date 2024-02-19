@@ -62,7 +62,7 @@ export class LoginComponent {
         "Objets": [
             {
                 "OE_PARAM": [
-                    "0002",
+                    "0001",
                     this.formLogin.login,
                     this.formLogin.mdp
                 ],

@@ -757,7 +757,7 @@
                       {{ListRetourRequetes.RQ_DESCRIPTIONREQUETE}}
                     </p>
                     <div class="d-flex align-items-center">
-                      <!--<div class="d-flex align-items-center">
+                      <div class="d-flex align-items-center" *ngIf="!recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')">
                         <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
                           <li
                             data-bs-toggle="tooltip"
@@ -765,41 +765,18 @@
                             data-bs-placement="top"
                             title="Kaith D'souza"
                             class="avatar avatar-sm pull-up">
-                            <img class="rounded-circle" src="../../assets/img/avatars/15.png" alt="Avatar" />
+                            <a href="javascript:;" ><span class="badge bg-label-primary rounded-pill">NIVEAU : {{ListRetourRequetes.RE_LIBELLEETAPE}}</span></a>
                           </li>
-                          <li
-                            data-bs-toggle="tooltip"
-                            data-popup="tooltip-custom"
-                            data-bs-placement="top"
-                            title="John Doe"
-                            class="avatar avatar-sm pull-up">
-                            <img class="rounded-circle" src="../../assets/img/avatars/1.png" alt="Avatar" />
-                          </li>
-                          <li
-                            data-bs-toggle="tooltip"
-                            data-popup="tooltip-custom"
-                            data-bs-placement="top"
-                            title="Alan Walker"
-                            class="avatar avatar-sm pull-up">
-                            <img class="rounded-circle" src="../../assets/img/avatars/16.png" alt="Avatar" />
-                          </li>
-                          <li class="avatar avatar-sm">
-                            <span
-                              class="avatar-initial rounded-circle pull-up bg-lighter text-dark"
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              title="14 more"
-                              >+4</span
-                            >
-                          </li>
+                          
                         </ul>
-                      </div>-->
+                      </div>
                       <div class="ms-auto">
                          <!--<a href="javascript:;" class="me-2"
                           ><span class="badge bg-label-success rounded-pill">Vuejs</span></a
                         >-->
-                        <a href="javascript:;" *ngIf="ListRetourRequetes.RQ_DATECLOTUREREQUETE == '01/01/1900'"><span class="badge bg-label-primary rounded-pill">En cours de traitement</span></a>
-                        <a href="javascript:;" *ngIf="ListRetourRequetes.RQ_DATECLOTUREREQUETE != '01/01/1900'"><span class="badge bg-label-danger rounded-pill">Cloturée</span></a>
+                        <a href="javascript:;" *ngIf="ListRetourRequetes.RQ_DATESAISIEREQUETE != '01/01/1900' && ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE == '01/01/1900' && ListRetourRequetes.RQ_DATECLOTUREREQUETE == '01/01/1900'"><span class="badge bg-label-primary rounded-pill">Plainte enregistrer</span></a>
+                        <a href="javascript:;" *ngIf="ListRetourRequetes.RQ_DATESAISIEREQUETE != '01/01/1900' && ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE != '01/01/1900' && ListRetourRequetes.RQ_DATECLOTUREREQUETE == '01/01/1900'"><span class="badge bg-label-success rounded-pill">En cours de traitement</span></a>
+                        <a href="javascript:;" *ngIf="ListRetourRequetes.RQ_DATESAISIEREQUETE != '01/01/1900' && ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE != '01/01/1900' && ListRetourRequetes.RQ_DATECLOTUREREQUETE != '01/01/1900'"><span class="badge bg-label-danger rounded-pill">Cloturée</span></a>
                       </div>
                     </div>
                   </div>
