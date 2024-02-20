@@ -10,13 +10,11 @@
         Bonjour, comment pouvons-nous vous aider ?
       </h3>
       <p class="text-body text-center mb-0 px-3">
-        trouver rapidement l'aide dont vous
-        avez besoin
+        trouver rapidement l'aide dont vous avez besoin
       </p>
       <div
         class="input-wrapper my-3 input-group input-group-lg input-group-merge px-sm-5"
       >
-       
         <input
           type="text"
           class="form-control"
@@ -27,9 +25,13 @@
           [(ngModel)]="SearchValue"
           *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR != '0002'"
         />
-        <span class="input-group-text" id="basic-addon1" *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR != '0002'" (click)="RechercherSelonEcran()"
-        ><i class="mdi mdi-magnify mdi-20px"></i
-      ></span>
+        <span
+          class="input-group-text"
+          id="basic-addon1"
+          *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR != '0002'"
+          (click)="RechercherSelonEcran()"
+          ><i class="mdi mdi-magnify mdi-20px"></i
+        ></span>
       </div>
     </div>
 
@@ -45,7 +47,11 @@
                 data-bs-target="#payment"
               >
                 <i class="mdi mdi-playlist-edit mdi-24px"></i>
-                <span class="align-middle" (click)="checkStatusForm('Nouvelles')">Nouvelles Plaintes</span>
+                <span
+                  class="align-middle"
+                  (click)="checkStatusForm('Nouvelles')"
+                  >Nouvelles Plaintes</span
+                >
               </button>
             </li>
             <li class="nav-item">
@@ -252,12 +258,12 @@
                                     formulaire_plaintes_reclamations[3].valeur
                                   "
                                 >
-                                <option
-                                 *ngFor="let ListAgence of ListeComboAgence"
-                                  value="{{ ListAgence.AG_CODEAGENCE }}"
-                                >
-                                  {{ ListAgence.AG_RAISONSOCIAL }}
-                                </option>
+                                  <option
+                                    *ngFor="let ListAgence of ListeComboAgence"
+                                    value="{{ ListAgence.AG_CODEAGENCE }}"
+                                  >
+                                    {{ ListAgence.AG_RAISONSOCIAL }}
+                                  </option>
                                 </select>
                               </div>
                             </div>
@@ -374,12 +380,17 @@
                                     formulaire_plaintes_reclamations[5].valeur
                                   "
                                 >
-                                <option
-                                 *ngFor="let ListTypeRequete of this.ListeTypeRequete_1"
-                                  value="{{ ListTypeRequete.TR_CODETYEREQUETE }}"
-                                >
-                                  {{ ListTypeRequete.TR_LIBELLETYEREQUETE }}
-                                </option>
+                                  <option
+                                    *ngFor="
+                                      let ListTypeRequete of this
+                                        .ListeTypeRequete_1
+                                    "
+                                    value="{{
+                                      ListTypeRequete.TR_CODETYEREQUETE
+                                    }}"
+                                  >
+                                    {{ ListTypeRequete.TR_LIBELLETYEREQUETE }}
+                                  </option>
                                 </select>
                               </div>
                             </div>
@@ -415,12 +426,18 @@
                                     formulaire_plaintes_reclamations[7].valeur
                                   "
                                 >
-                                <option
-                                *ngFor="let ListComboModeCollecte of ListeComboModeCollecte"
-                                 value="{{ ListComboModeCollecte.MC_CODEMODECOLLETE }}"
-                                >
-                                  {{ ListComboModeCollecte.MC_LIBELLEMODECOLLETE }}
-                                </option>
+                                  <option
+                                    *ngFor="
+                                      let ListComboModeCollecte of ListeComboModeCollecte
+                                    "
+                                    value="{{
+                                      ListComboModeCollecte.MC_CODEMODECOLLETE
+                                    }}"
+                                  >
+                                    {{
+                                      ListComboModeCollecte.MC_LIBELLEMODECOLLETE
+                                    }}
+                                  </option>
                                 </select>
                               </div>
                             </div>
@@ -488,7 +505,11 @@
                                 <button
                                   type="submit"
                                   class="btn btn-primary me-sm-3 me-1"
-                                  (click)="EnregistrementCompteClient(formulaire_plaintes_reclamations)"
+                                  (click)="
+                                    EnregistrementCompteClient(
+                                      formulaire_plaintes_reclamations
+                                    )
+                                  "
                                 >
                                   Enregistrer
                                 </button>
@@ -520,7 +541,8 @@
                             class="mdi mdi-account-details mdi-20px d-sm-none"
                           ></span
                           ><span class="d-none d-sm-block"
-                            >information sur la plainte de {{ListeClients[0]?.CU_NOMUTILISATEUR}}</span
+                            >information sur la plainte de
+                            {{ ListeClients[0]?.CU_NOMUTILISATEUR }}</span
                           >
                         </button>
                       </li>
@@ -553,12 +575,17 @@
                                     formulaire_plaintes_reclamations[5].valeur
                                   "
                                 >
-                                <option
-                                 *ngFor="let ListTypeRequete of this.ListeTypeRequete_1"
-                                  value="{{ ListTypeRequete.TR_CODETYEREQUETE }}"
-                                >
-                                  {{ ListTypeRequete.TR_LIBELLETYEREQUETE }}
-                                </option>
+                                  <option
+                                    *ngFor="
+                                      let ListTypeRequete of this
+                                        .ListeTypeRequete_1
+                                    "
+                                    value="{{
+                                      ListTypeRequete.TR_CODETYEREQUETE
+                                    }}"
+                                  >
+                                    {{ ListTypeRequete.TR_LIBELLETYEREQUETE }}
+                                  </option>
                                 </select>
                               </div>
                             </div>
@@ -594,12 +621,18 @@
                                     formulaire_plaintes_reclamations[7].valeur
                                   "
                                 >
-                                <option
-                                *ngFor="let ListComboModeCollecte of ListeComboModeCollecte"
-                                 value="{{ ListComboModeCollecte.MC_CODEMODECOLLETE }}"
-                                >
-                                  {{ ListComboModeCollecte.MC_LIBELLEMODECOLLETE }}
-                                </option>
+                                  <option
+                                    *ngFor="
+                                      let ListComboModeCollecte of ListeComboModeCollecte
+                                    "
+                                    value="{{
+                                      ListComboModeCollecte.MC_CODEMODECOLLETE
+                                    }}"
+                                  >
+                                    {{
+                                      ListComboModeCollecte.MC_LIBELLEMODECOLLETE
+                                    }}
+                                  </option>
                                 </select>
                               </div>
                             </div>
@@ -667,7 +700,11 @@
                                 <button
                                   type="submit"
                                   class="btn btn-primary me-sm-3 me-1"
-                                  (click)="EnregistrementRequete(formulaire_plaintes_reclamations)"
+                                  (click)="
+                                    EnregistrementRequete(
+                                      formulaire_plaintes_reclamations
+                                    )
+                                  "
                                 >
                                   Enregistrer
                                 </button>
@@ -704,7 +741,13 @@
             </div>
             <!-- Teams Cards -->
             <div class="row g-4" *ngIf="statutliste">
-              <div class="col-xl-4 col-lg-6 col-md-6" *ngFor="let ListRetourRequetes of ListeRetourRequete;let index = index">
+              <div
+                class="col-xl-4 col-lg-6 col-md-6"
+                *ngFor="
+                  let ListRetourRequetes of ListeRetourRequete;
+                  let index = index
+                "
+              >
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex align-items-center mb-3 pb-1">
@@ -713,9 +756,12 @@
                           <img
                             src="../../assets/img/icons/brands/vue-label.png"
                             alt="Avatar"
-                            class="rounded-circle" />
+                            class="rounded-circle"
+                          />
                         </div>
-                        <div class="me-2 text-heading h6 mb-0">{{ListRetourRequetes.TR_LIBELLETYEREQUETE}}</div>
+                        <div class="me-2 text-heading h6 mb-0">
+                          {{ ListRetourRequetes.TR_LIBELLETYEREQUETE }}
+                        </div>
                       </a>
                       <div class="ms-auto">
                         <ul class="list-inline mb-0 d-flex align-items-center">
@@ -723,7 +769,9 @@
                             <a
                               href="javascript:void(0);"
                               class="d-flex align-self-center btn btn-text-secondary btn-icon rounded-pill"
-                              ><i class="mdi mdi-star-outline mdi-24px text-muted"></i
+                              ><i
+                                class="mdi mdi-star-outline mdi-24px text-muted"
+                              ></i
                             ></a>
                           </li>
                           <li class="list-inline-item">
@@ -732,17 +780,61 @@
                                 type="button"
                                 class="btn btn-text-secondary btn-icon rounded-pill dropdown-toggle hide-arrow p-0"
                                 data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                <i class="mdi mdi-dots-vertical mdi-24px text-muted"></i>
+                                aria-expanded="false"
+                              >
+                                <i
+                                  class="mdi mdi-dots-vertical mdi-24px text-muted"
+                                ></i>
                               </button>
                               <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="javascript:void(0);"     data-bs-toggle="modal" *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR != '0002' && recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')"
-                                  data-bs-target="#addNewAddress2" (click)="recupListe(ListRetourRequetes)"><i class="mdi mdi-account-tag me-1"></i> Avis recevabilité</a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);"     data-bs-toggle="modal" *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR != '0002' && recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')"
-                                  data-bs-target="#addNewAddress" (click)="recupListe(ListRetourRequetes)"><i class="mdi mdi-account-tag me-1"></i> Attribution de
-                                  plainte</a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);" (click)="recupListe(ListRetourRequetes)" routerLink="SuiviRequete"><i class="mdi mdi-animation-outline me-1"></i> Suivi de
-                                  plainte</a></li>
+                                <li>
+                                  <a
+                                    class="dropdown-item"
+                                    href="javascript:void(0);"
+                                    data-bs-toggle="modal"
+                                    *ngIf="
+                                      recupinfo[0].TU_CODETYPEUTILISATEUR !=
+                                        '0002' &&
+                                      recupinfo[0].CU_NOMUTILISATEUR.includes(
+                                        'ADMIN'
+                                      )
+                                    "
+                                    data-bs-target="#addNewAddress2"
+                                    (click)="recupListe(ListRetourRequetes)"
+                                    ><i class="mdi mdi-account-tag me-1"></i>
+                                    Avis recevabilité</a
+                                  >
+                                </li>
+                                <li>
+                                  <a
+                                    class="dropdown-item"
+                                    href="javascript:void(0);"
+                                    data-bs-toggle="modal"
+                                    *ngIf="
+                                      recupinfo[0].TU_CODETYPEUTILISATEUR !=
+                                        '0002' &&
+                                      recupinfo[0].CU_NOMUTILISATEUR.includes(
+                                        'ADMIN'
+                                      )
+                                    "
+                                    data-bs-target="#addNewAddress"
+                                    (click)="recupListe(ListRetourRequetes)"
+                                    ><i class="mdi mdi-account-tag me-1"></i>
+                                    Attribution de plainte</a
+                                  >
+                                </li>
+                                <li>
+                                  <a
+                                    class="dropdown-item"
+                                    href="javascript:void(0);"
+                                    (click)="recupListe(ListRetourRequetes)"
+                                    routerLink="SuiviRequete"
+                                    ><i
+                                      class="mdi mdi-animation-outline me-1"
+                                    ></i>
+                                    Suivi de plainte</a
+                                  >
+                                </li>
                                 <!--<li>
                                   <hr class="dropdown-divider" />
                                 </li>
@@ -754,29 +846,80 @@
                       </div>
                     </div>
                     <p class="mb-3 pb-1">
-                      {{ListRetourRequetes.RQ_DESCRIPTIONREQUETE}}
+                      {{ ListRetourRequetes.RQ_DESCRIPTIONREQUETE }}
                     </p>
                     <div class="d-flex align-items-center">
-                      <div class="d-flex align-items-center" *ngIf="!recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')">
-                        <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
+                      <div
+                        class="d-flex align-items-center"
+                        *ngIf="
+                          !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')
+                        "
+                      >
+                        <ul
+                          class="list-unstyled d-flex align-items-center avatar-group mb-0"
+                        >
                           <li
                             data-bs-toggle="tooltip"
                             data-popup="tooltip-custom"
                             data-bs-placement="top"
                             title="Kaith D'souza"
-                            class="avatar avatar-sm pull-up">
-                            <a href="javascript:;" ><span class="badge bg-label-primary rounded-pill">NIVEAU : {{ListRetourRequetes.RE_LIBELLEETAPE}}</span></a>
+                            class="avatar avatar-sm pull-up"
+                          >
+                            <a href="javascript:;"
+                              ><span class="badge bg-label-primary rounded-pill"
+                                >NIVEAU :
+                                {{ ListRetourRequetes.RE_LIBELLEETAPE }}</span
+                              ></a
+                            >
                           </li>
-                          
                         </ul>
                       </div>
                       <div class="ms-auto">
-                         <!--<a href="javascript:;" class="me-2"
+                        <!--<a href="javascript:;" class="me-2"
                           ><span class="badge bg-label-success rounded-pill">Vuejs</span></a
                         >-->
-                        <a href="javascript:;" *ngIf="ListRetourRequetes.RQ_DATESAISIEREQUETE != '01/01/1900' && ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE == '01/01/1900' && ListRetourRequetes.RQ_DATECLOTUREREQUETE == '01/01/1900'"><span class="badge bg-label-primary rounded-pill">Plainte enregistrer</span></a>
-                        <a href="javascript:;" *ngIf="ListRetourRequetes.RQ_DATESAISIEREQUETE != '01/01/1900' && ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE != '01/01/1900' && ListRetourRequetes.RQ_DATECLOTUREREQUETE == '01/01/1900'"><span class="badge bg-label-success rounded-pill">En cours de traitement</span></a>
-                        <a href="javascript:;" *ngIf="ListRetourRequetes.RQ_DATESAISIEREQUETE != '01/01/1900' && ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE != '01/01/1900' && ListRetourRequetes.RQ_DATECLOTUREREQUETE != '01/01/1900'"><span class="badge bg-label-danger rounded-pill">Cloturée</span></a>
+                        <a
+                          href="javascript:;"
+                          *ngIf="
+                            ListRetourRequetes.RQ_DATESAISIEREQUETE !=
+                              '01/01/1900' &&
+                            ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE ==
+                              '01/01/1900' &&
+                            ListRetourRequetes.RQ_DATECLOTUREREQUETE ==
+                              '01/01/1900'
+                          "
+                          ><span class="badge bg-label-primary rounded-pill"
+                            >Enregistrée</span
+                          ></a
+                        >
+                        <a
+                          href="javascript:;"
+                          *ngIf="
+                            ListRetourRequetes.RQ_DATESAISIEREQUETE !=
+                              '01/01/1900' &&
+                            ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE !=
+                              '01/01/1900' &&
+                            ListRetourRequetes.RQ_DATECLOTUREREQUETE ==
+                              '01/01/1900'
+                          "
+                          ><span class="badge bg-label-success rounded-pill"
+                            >En cours de traitement</span
+                          ></a
+                        >
+                        <a
+                          href="javascript:;"
+                          *ngIf="
+                            ListRetourRequetes.RQ_DATESAISIEREQUETE !=
+                              '01/01/1900' &&
+                            ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE !=
+                              '01/01/1900' &&
+                            ListRetourRequetes.RQ_DATECLOTUREREQUETE !=
+                              '01/01/1900'
+                          "
+                          ><span class="badge bg-label-danger rounded-pill"
+                            >Cloturée</span
+                          ></a
+                        >
                       </div>
                     </div>
                   </div>
@@ -785,9 +928,6 @@
             </div>
             <!--/ Teams Cards -->
           </div>
-        
-       
-      
         </div>
       </div>
       <!-- /FAQ's -->
@@ -809,7 +949,7 @@
 <!-- Content wrapper -->
 <!-- Add New Address Modal -->
 <div class="modal fade" id="addNewAddress" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-lg  modal-add-new-address">
+  <div class="modal-dialog modal-lg modal-add-new-address">
     <div class="modal-content p-3 p-md-5">
       <div class="modal-body p-md-0">
         <button
@@ -820,37 +960,39 @@
         ></button>
         <div class="text-center mb-4">
           <h3 class="address-title mb-2 pb-1">Attribution de la plainte</h3>
-          <p class="address-subtitle">
-            Attribuer une plainte à un opérateur
-          </p>
+          <p class="address-subtitle">Attribuer une plainte à un opérateur</p>
         </div>
-       
-             <!-- Inventory -->
-            <div class="card mb-4">
-              <div class="card-header">
-                <h5 class="card-title mb-0">Niveau de traitement de Plainte</h5>
-                
-              </div>
-              <div class="card-body">
-                <div class="row">
-                  <!-- Navigation -->
-                  <div class="col-12 col-md-4 mx-auto card-separator">
-                    <div
-                      class="d-flex justify-content-between flex-column mb-3 mb-md-0 pe-md-3"
+
+        <!-- Inventory -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="card-title mb-0">Niveau de traitement de Plainte</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <!-- Navigation -->
+              <div class="col-12 col-md-4 mx-auto card-separator">
+                <div
+                  class="d-flex justify-content-between flex-column mb-3 mb-md-0 pe-md-3"
+                >
+                  <ul class="nav nav-align-left nav-pills flex-column">
+                    <li
+                      class="nav-item"
+                      *ngFor="let ListEtapes of ListeComboEtapes; let i = index"
                     >
-                      <ul class="nav nav-align-left nav-pills flex-column">
-                        <li class="nav-item" *ngFor="let ListEtapes of ListeComboEtapes; let i = index">
-                          <button
-                            class="nav-link "
-                            data-bs-toggle="tab"
-                            data-bs-target="#restock"
-                            (click)="selectionEtape(ListEtapes)"
-                          >
-                            <i class="mdi mdi-cube-outline me-2"></i>
-                            <span class="align-middle">{{ListEtapes.RE_LIBELLEETAPE}}</span>
-                          </button>
-                        </li>
-                        <!--<li class="nav-item">
+                      <button
+                        class="nav-link"
+                        data-bs-toggle="tab"
+                        data-bs-target="#restock"
+                        (click)="selectionEtape(ListEtapes)"
+                      >
+                        <i class="mdi mdi-cube-outline me-2"></i>
+                        <span class="align-middle">{{
+                          ListEtapes.RE_LIBELLEETAPE
+                        }}</span>
+                      </button>
+                    </li>
+                    <!--<li class="nav-item">
                           <button
                             class="nav-link"
                             data-bs-toggle="tab"
@@ -890,104 +1032,124 @@
                             <span class="align-middle">Validation</span>
                           </button>
                         </li>-->
-                      </ul>
-                    </div>
-                  </div>
-                  <!-- /Navigation -->
-                  <!-- Options -->
-                  <div class="col-12 col-md-8 pt-4 pt-md-0">
-                    <div class="tab-content p-0 pe-xl-0 ps-md-3">
-                      <!-- Restock Tab -->
-                      <div
-                        class="tab-pane fade show active"
-                        id="restock"
-                        role="tabpanel"
-                      >
-                        <h6 class="text-body">{{recupEtape.RE_LIBELLEETAPE}}</h6>
-                        <div class="alert d-flex align-items-center bg-label-warning mb-0" role="alert">
-                          <i class="mdi mdi-bell-outline me-2"></i>
-                          Voulez-vous Cloturée cette etape ?. &nbsp;&nbsp;
-                          <span class="mdi mdi-cancel bg-label-danger me-2" (click)="ClotureEtape()"></span>
-                        </div><br>
-                        <form id="addNewAddressForm" class="row g-4" onsubmit="return false">
-                          <div class="col-12">
-                            <div class="form-floating form-floating-outline">
-                              <select
-                                id="modalOperateur"
-                                name="modalOperateur"
-                                class="select2 form-select"
-                                data-allow-clear="true"
-                                [(ngModel)]="formulaire_attr_reclamations[0].valeur"
-                              >
-                              <option
-                              *ngFor="let ListComboOperateur of ListeComboOperateur"
-                              value="{{ ListComboOperateur.CU_CODECOMPTEUTULISATEUR }}"
-                              >
-                                {{ ListComboOperateur.CU_NOMUTILISATEUR }}
-                              </option>
-                              </select>
-                              <label for="modalOperateur">Opérateur</label>
-                            </div>
-                          </div>
-                          <div class="col-6">
-                            <div class="form-floating form-floating-outline">
-                              <input
-                                type="text"
-                                id="modalDuree"
-                                name="modalDuree"
-                                class="form-control"
-                                placeholder="Entrez une date"
-                                [(ngModel)]="formulaire_attr_reclamations[1].valeur"
-                              />
-                              <label for="modalDuree">Durée de debut</label>
-                            </div>
-                          </div>
-                          <div class="col-6">
-                            <div class="form-floating form-floating-outline">
-                              <input
-                                type="text"
-                                id="modalDureefin"
-                                name="modalDureefin"
-                                class="form-control"
-                                placeholder="Entrez une date"
-                                [(ngModel)]="formulaire_attr_reclamations[2].valeur"
-                              />
-                              <label for="modalDureefin">Durée de fin</label>
-                            </div>
-                          </div>
-                          <div class="form-floating form-floating-outline mb-4">
-                            <textarea
-                              class="form-control"
-                              name="invoice-observation-avis"
-                              id="invoice-observation-avis"
-                              style="height: 190px"
-                              placeholder="objectif de la tache"
-                              [(ngModel)]="formulaire_attr_reclamations[3].valeur"
-                            ></textarea>
-                            <label for="invoice-observation-avis">Description</label>
-                          </div>
-                          <div class="col-12 text-center">
-                            <button type="submit" class="btn btn-primary me-sm-3 me-1" (click)="EnregistrementRequeteAffectation(formulaire_attr_reclamations)">
-                              Soumettre
-                            </button>
-                            <button
-                              type="reset"
-                              class="btn btn-outline-secondary"
-                             
-                            >
-                              Reinitialiser
-                            </button>
-                          </div>
-                        </form>
-                      </div>
-                     
-                    </div>
-                  </div>
-                  <!-- /Options-->
+                  </ul>
                 </div>
               </div>
+              <!-- /Navigation -->
+              <!-- Options -->
+              <div class="col-12 col-md-8 pt-4 pt-md-0">
+                <div class="tab-content p-0 pe-xl-0 ps-md-3">
+                  <!-- Restock Tab -->
+                  <div
+                    class="tab-pane fade show active"
+                    id="restock"
+                    role="tabpanel"
+                  >
+                    <h6 class="text-body">{{ recupEtape.RE_LIBELLEETAPE }}</h6>
+                    <div
+                      class="alert d-flex align-items-center bg-label-warning mb-0"
+                      role="alert"
+                    >
+                      <i class="mdi mdi-bell-outline me-2"></i>
+                      Voulez-vous Cloturée cette etape ?. &nbsp;&nbsp;
+                      <span
+                        class="mdi mdi-cancel bg-label-danger me-2"
+                        (click)="ClotureEtape()"
+                      ></span>
+                    </div>
+                    <br />
+                    <form
+                      id="addNewAddressForm"
+                      class="row g-4"
+                      onsubmit="return false"
+                    >
+                      <div class="col-12">
+                        <div class="form-floating form-floating-outline">
+                          <select
+                            id="modalOperateur"
+                            name="modalOperateur"
+                            class="select2 form-select"
+                            data-allow-clear="true"
+                            [(ngModel)]="formulaire_attr_reclamations[0].valeur"
+                          >
+                            <option
+                              *ngFor="
+                                let ListComboOperateur of ListeComboOperateur
+                              "
+                              value="{{
+                                ListComboOperateur.CU_CODECOMPTEUTULISATEUR
+                              }}"
+                            >
+                              {{ ListComboOperateur.CU_NOMUTILISATEUR }}
+                            </option>
+                          </select>
+                          <label for="modalOperateur">Opérateur</label>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-floating form-floating-outline">
+                          <input
+                            type="text"
+                            id="modalDuree"
+                            name="modalDuree"
+                            class="form-control"
+                            placeholder="Entrez une date"
+                            [(ngModel)]="formulaire_attr_reclamations[1].valeur"
+                          />
+                          <label for="modalDuree">Durée de debut</label>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-floating form-floating-outline">
+                          <input
+                            type="text"
+                            id="modalDureefin"
+                            name="modalDureefin"
+                            class="form-control"
+                            placeholder="Entrez une date"
+                            [(ngModel)]="formulaire_attr_reclamations[2].valeur"
+                          />
+                          <label for="modalDureefin">Durée de fin</label>
+                        </div>
+                      </div>
+                      <div class="form-floating form-floating-outline mb-4">
+                        <textarea
+                          class="form-control"
+                          name="invoice-observation-avis"
+                          id="invoice-observation-avis"
+                          style="height: 190px"
+                          placeholder="objectif de la tache"
+                          [(ngModel)]="formulaire_attr_reclamations[3].valeur"
+                        ></textarea>
+                        <label for="invoice-observation-avis"
+                          >Description</label
+                        >
+                      </div>
+                      <div class="col-12 text-center">
+                        <button
+                          type="submit"
+                          class="btn btn-primary me-sm-3 me-1"
+                          (click)="
+                            EnregistrementRequeteAffectation(
+                              formulaire_attr_reclamations
+                            )
+                          "
+                        >
+                          Soumettre
+                        </button>
+                        <button type="reset" class="btn btn-outline-secondary">
+                          Reinitialiser
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <!-- /Options-->
             </div>
-            <!-- /Inventory -->
+          </div>
+        </div>
+        <!-- /Inventory -->
       </div>
     </div>
   </div>
@@ -1011,9 +1173,9 @@
             Donner votre avis sur la recevabilité de cette plainte
           </p>
         </div>
-       
+
         <form id="addNewAddressForm" class="row g-4" onsubmit="return false">
-          <div class="col-12" >
+          <div class="col-12">
             <div class="form-floating form-floating-outline">
               <select
                 id="modalOperateur"
@@ -1022,12 +1184,12 @@
                 data-allow-clear="true"
                 [(ngModel)]="formulaire_avis[0].valeur"
               >
-              <option
-              *ngFor="let ListAvisrecevabilit of ListeComboAvisrecevabilite"
-              value="{{ ListAvisrecevabilit.RS_CODESTATUTRECEVABILITE }}"
-              >
-                {{ ListAvisrecevabilit.RS_LIBELLESTATUTRECEVABILITE }}
-              </option>
+                <option
+                  *ngFor="let ListAvisrecevabilit of ListeComboAvisrecevabilite"
+                  value="{{ ListAvisrecevabilit.RS_CODESTATUTRECEVABILITE }}"
+                >
+                  {{ ListAvisrecevabilit.RS_LIBELLESTATUTRECEVABILITE }}
+                </option>
               </select>
               <label for="modalOperateur">Avis</label>
             </div>
@@ -1044,7 +1206,11 @@
             <label for="invoice-observation-avis">Observation</label>
           </div>
           <div class="col-12 text-center">
-            <button type="submit" class="btn btn-primary me-sm-3 me-1" (click)="EnregistrerAvis(formulaire_avis)">
+            <button
+              type="submit"
+              class="btn btn-primary me-sm-3 me-1"
+              (click)="EnregistrerAvis(formulaire_avis)"
+            >
               Soumettre
             </button>
             <button
@@ -1054,7 +1220,8 @@
               aria-label="Close"
             >
               Reinitialiser
-            </button><hr>
+            </button>
+            <hr />
           </div>
         </form>
       </div>
@@ -1062,4 +1229,3 @@
   </div>
 </div>
 <!--/ Add New Address Modal -->
-
