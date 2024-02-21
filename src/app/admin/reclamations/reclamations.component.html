@@ -208,6 +208,7 @@
                                   [(ngModel)]="
                                     formulaire_plaintes_reclamations[1].valeur
                                   "
+                                  (change)="generateLoginAndPassword()"
                                 />
                               </div>
                             </div>
@@ -303,7 +304,7 @@
                               </div>
                             </div>
                           </div>
-                          <div class="col-md-6">
+                         <!--  <div class="col-md-6">
                             <div class="row">
                               <label
                                 class="col-sm-3 col-form-label text-sm-end"
@@ -344,7 +345,7 @@
                                 />
                               </div>
                             </div>
-                          </div>
+                          </div>-->
                         </div>
                       </form>
                     </div>
@@ -739,9 +740,9 @@
                                     data-bs-target="#addNewAddress2" (click)="recupListe(ListRetourRequetes)"><i class="mdi mdi-account-tag me-1"></i> Avis recevabilité</a></li>
                                   <li><a class="dropdown-item" href="javascript:void(0);"     data-bs-toggle="modal" *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR != '0002'"
                                     data-bs-target="#addNewAddress" (click)="recupListe(ListRetourRequetes)"><i class="mdi mdi-account-tag me-1"></i> Attribution de
-                                    plainte</a></li>
+                                    reclamation</a></li>
                                   <li><a class="dropdown-item" href="javascript:void(0);" (click)="recupListe(ListRetourRequetes)" routerLink="SuiviRequete"><i class="mdi mdi-animation-outline me-1"></i> Suivi de
-                                    plainte</a></li>
+                                    reclamation</a></li>
                                   <!--<li>
                                     <hr class="dropdown-divider" />
                                   </li>
@@ -774,7 +775,7 @@
                           >-->
                           <a href="javascript:;" *ngIf="ListRetourRequetes.RQ_DATESAISIEREQUETE != '01/01/1900' && ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE == '01/01/1900' && ListRetourRequetes.RQ_DATECLOTUREREQUETE == '01/01/1900'"><span class="badge bg-label-primary rounded-pill">Plainte enregistrer</span></a>
                         <a href="javascript:;" *ngIf="ListRetourRequetes.RQ_DATESAISIEREQUETE != '01/01/1900' && ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE != '01/01/1900' && ListRetourRequetes.RQ_DATECLOTUREREQUETE == '01/01/1900'"><span class="badge bg-label-success rounded-pill">En cours de traitement</span></a>
-                        <a href="javascript:;" *ngIf="ListRetourRequetes.RQ_DATESAISIEREQUETE != '01/01/1900' && ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE != '01/01/1900' && ListRetourRequetes.RQ_DATECLOTUREREQUETE != '01/01/1900'"><span class="badge bg-label-danger rounded-pill">Cloturée</span></a>
+                        <a href="javascript:;" *ngIf="ListRetourRequetes.RQ_DATECLOTUREREQUETE != '01/01/1900'"><span class="badge bg-label-danger rounded-pill">Cloturée</span></a>
                         </div>
                       </div>
                     </div>
@@ -818,7 +819,7 @@
         <div class="text-center mb-4">
           <h3 class="address-title mb-2 pb-1">Attribution de la reclamation</h3>
           <p class="address-subtitle">
-            Attribuer une plainte à un opérateur
+            Attribuer une reclamation à un opérateur
           </p>
         </div>
        
@@ -935,7 +936,7 @@
                                 placeholder="Entrez une date"
                                 [(ngModel)]="formulaire_attr_reclamations[1].valeur"
                               />
-                              <label for="modalDuree">Durée de debut</label>
+                              <label for="modalDuree">date de debut</label>
                             </div>
                           </div>
                           <div class="col-6">
@@ -948,7 +949,7 @@
                                 placeholder="Entrez une date"
                                 [(ngModel)]="formulaire_attr_reclamations[2].valeur"
                               />
-                              <label for="modalDureefin">Durée de fin</label>
+                              <label for="modalDureefin">date de fin</label>
                             </div>
                           </div>
                           <div class="form-floating form-floating-outline mb-4">
@@ -1002,9 +1003,9 @@
           aria-label="Close"
         ></button>
         <div class="text-center mb-4">
-          <h3 class="address-title mb-2 pb-1">Avis sur la plainte</h3>
+          <h3 class="address-title mb-2 pb-1">Avis sur la reclamation</h3>
           <p class="address-subtitle">
-            Donner votre avis sur la recevabilité de cette plainte
+            Donner votre avis sur la recevabilité de cette reclamation
           </p>
         </div>
        
@@ -1012,11 +1013,12 @@
           <div class="col-12" >
             <div class="form-floating form-floating-outline">
               <select
-                id="modalOperateur"
+                id="avisSatisfaction"
                 name="modalOperateur"
                 class="select2 form-select"
                 data-allow-clear="true"
                 [(ngModel)]="formulaire_avis[0].valeur"
+                (change)="gestionAvisReq()"
               >
               <option
               *ngFor="let ListAvisrecevabilit of ListeComboAvisrecevabilite"
@@ -1025,19 +1027,45 @@
                 {{ ListAvisrecevabilit.RS_LIBELLESTATUTRECEVABILITE }}
               </option>
               </select>
-              <label for="modalOperateur">Avis</label>
+              <label for="avisSatisfaction">Avis</label>
             </div>
           </div>
           <div class="form-floating form-floating-outline mb-4">
             <textarea
               class="form-control"
               name="invoice-observation-avis"
-              id="invoice-observation-avis"
+              id="NoteObservation"
               style="height: 190px"
               placeholder="Observation de l'agent traitant (portant sur la plainte ou la reclamation)"
               [(ngModel)]="formulaire_avis[1].valeur"
             ></textarea>
-            <label for="invoice-observation-avis">Observation</label>
+            <label for="NoteObservation">Observation</label>
+          </div>
+          <div class="col-6" *ngIf="statutDateDebut">
+            <div class="form-floating form-floating-outline">
+              <input
+                type="text"
+                id="dtdedebut"
+                name="datededebut"
+                class="form-control"
+                placeholder="Entrez une date de debut (01-01-2015)"
+                [(ngModel)]="formulaire_avis[2].valeur"
+              />
+              <label for="dtdedebut">Durée de debut</label>
+            </div>
+          </div>
+          <div class="col-6" *ngIf="statutDatefin">
+            <div class="form-floating form-floating-outline">
+              <input
+                type="text"
+                id="dtdefin"
+                name="datedefin"
+                class="form-control"
+                placeholder="Entrez une date de fin (01-01-2015)"
+                [(ngModel)]="formulaire_avis[3].valeur"
+              />
+              <label for="dtdefin">Durée de fin</label>
+            </div>
           </div>
           <div class="col-12 text-center">
             <button type="submit" class="btn btn-primary me-sm-3 me-1" (click)="EnregistrerAvis(formulaire_avis)">

@@ -219,8 +219,8 @@ export class SuiviRequeteComponent {
                     RQ_AFFICHERINFOCLIENT: "O",
                     "RQ_SIGNATURE": this.base64Image,
                     "RQ_SIGNATURE1": "",
-                    "RS_CODESTATUTRECEVABILITE": this.formulaire_suivi[2].valeur,
-                    "SR_CODESERVICE": this.formulaire_suivi[1].valeur,
+                    "RS_CODESTATUTRECEVABILITE": this.recupinfo.RS_CODESTATUTRECEVABILITE,//this.formulaire_suivi[2].valeur,
+                    "SR_CODESERVICE": this.recupinfo.SR_CODESERVICE,//this.formulaire_suivi[1].valeur,
                     "TR_CODETYEREQUETE": this.recupinfo.TR_CODETYEREQUETE,//"00001",
                     "clsObjetEnvoi": {
                         "ET_CODEETABLISSEMENT": "",
@@ -253,6 +253,99 @@ export class SuiviRequeteComponent {
           );
       }
    }
+
+   ValiderTraitement(tableau_recu: any) {
+    this.AdminService.SecuriteChampObligatoireEtTypeDeDonnee(tableau_recu);
+    this.AdminService.TypeDeDonneeChampNonObligatoire(tableau_recu);
+    if (
+      this.AdminService.statut_traitement == true &&
+      this.AdminService.statut_traitement_champ_non_obligatoire == true
+    ) {
+      var d = new Date()
+      var date = d.getDate() +'-0'+(d.getMonth()+1)+'-'+d.getFullYear()
+      var jour = d.getDate()
+      if(jour < 10){
+        var date = '0'+ d.getDate() +'-0'+(d.getMonth()+1)+'-'+d.getFullYear()
+        console.log(date)
+      }
+        let Options =
+          'RequeteClientsClasse.svc/pvgMajReqrequete'; // le chemin d'appel du service web
+        //objet d'envoi
+        let body = {
+          "Objets": [
+              {
+                 /* "AC_CODEACTIONCORRECTIVE": "",
+                  "CU_CODECOMPTEUTULISATEUR": this.recupinfo.CU_CODECOMPTEUTULISATEUR,// this.recupinfo[0].CU_CODECOMPTEUTULISATEUR,//"1",
+                  "CU_CODECOMPTEUTULISATEURAGENTENCHARGE": this.recupinfo.CU_CODECOMPTEUTULISATEURAGENTENCHARGE,//this.formulaire_suivi[8].valeur,
+                  "MC_CODEMODECOLLETE":this.recupinfo.MC_CODEMODECOLLETE,//"01",
+                  "NS_CODENIVEAUSATISFACTION": "",
+                  "RQ_CODEREQUETE": this.recupinfo.RQ_CODEREQUETE,
+                  "RQ_CODEREQUETERELANCEE": "",
+                  "RQ_DATECLOTUREREQUETE": date,
+                  "RQ_DATEDEBUTTRAITEMENTREQUETE": date,
+                  "RQ_DATEFINTRAITEMENTREQUETE": date,
+                  "RQ_DATESAISIEREQUETE": this.recupinfo.RQ_DATESAISIEREQUETE,
+                  "RQ_DATETRANSFERTREQUETE": this.recupinfo.RQ_DATETRANSFERTREQUETE,
+                  "RQ_DELAITRAITEMENTREQUETE": "",
+                  "RQ_DESCRIPTIONREQUETE": this.recupinfo.RQ_DESCRIPTIONREQUETE,//"DESCRIPTION DE LA REQUETE",
+                  "RQ_DUREETRAITEMENTREQUETE": "",
+                  "RQ_LOCALISATIONCLIENT": this.recupinfo.RQ_LOCALISATIONCLIENT,//"LOCALISATION DU CLIENT",
+                  "RQ_NUMERORECOMPTE":this.recupinfo.RQ_NUMERORECOMPTE,//"0",
+                  "RQ_NUMEROREQUETE":this.recupinfo.RQ_NUMEROREQUETE,
+                  "RQ_OBJETREQUETE": this.formulaire_suivi[0].valeur,
+                  "RQ_OBSERVATIONAGENTTRAITEMENTREQUETE": this.formulaire_suivi[3].valeur,
+                  "RQ_OBSERVATIONDELAITRAITEMENTREQUETE": "",
+                  RQ_AFFICHERINFOCLIENT: "O",
+                  "RQ_SIGNATURE": this.base64Image,
+                  "RQ_SIGNATURE1": "",
+                  "RS_CODESTATUTRECEVABILITE": this.recupinfo.RS_CODESTATUTRECEVABILITE,//this.formulaire_suivi[2].valeur,
+                  "SR_CODESERVICE": this.recupinfo.SR_CODESERVICE,//this.formulaire_suivi[1].valeur,
+                  "TR_CODETYEREQUETE": this.recupinfo.TR_CODETYEREQUETE,//"00001",*/
+
+                  "AG_CODEAGENCE": this.recupinfo.AG_CODEAGENCE,
+                  "AT_DATECLOTUREETAPE": date,
+                  "AT_DATEDEBUTTRAITEMENTETAPE": date,
+                  "AT_DATEFINTRAITEMENTETAPE": date,
+                  "AT_DESCRIPTION": this.formulaire_suivi[3].valeur,
+                  "AT_INDEXETAPE": this.recupinfo.AT_INDEXETAPE,//"1",
+                  "AT_NUMEROORDRE": "0",
+                  "CU_CODECOMPTEUTULISATEURAGENTENCHARGE": this.recupinfo.CU_CODECOMPTEUTULISATEURAGENTENCHARGE,//"10000000000000000000000000001",
+                  "NS_CODENIVEAUSATISFACTION": "",
+                  "RE_CODEETAPE": this.recupinfo.RE_CODEETAPE,//"1",
+                  "RQ_CODEREQUETE": this.recupinfo.RQ_CODEREQUETE,
+                  "RQ_DATESAISIE": date,
+                  "clsObjetEnvoi": {
+                      "ET_CODEETABLISSEMENT": "",
+                      "AN_CODEANTENNE": "",
+                      "TYPEOPERATION": "1"
+                  }
+              }
+              ]
+          };
+      
+        this.AdminService.AppelServeur(body, Options).subscribe(
+          (success) => {
+            this.tab_enregistrement_traitement = success;
+            this.tab_enregistrement_traitement = this.tab_enregistrement_traitement.pvgMajReqrequeteResult;
+            this.AdminService.CloseLoader()
+            if (this.tab_enregistrement_traitement.clsResultat.SL_RESULTAT == 'FALSE') {
+              //this.toastr.error(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
+              this.toastr.error(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE, 'error', { positionClass: 'toast-bottom-left'});
+            } else {
+             // this.toastr.success(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
+              this.toastr.success(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE, 'success', { positionClass: 'toast-bottom-left'});
+              this.ViderChamp()
+            }
+          },
+          (error: any) => {
+            this.AdminService.CloseLoader()
+           // this.toastr.warning(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
+            this.toastr.warning(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE, 'warning', { positionClass: 'toast-bottom-left'});
+          }
+        );
+    }
+ }
+
 
    HandleFileInput(event:any) {
     const file = event.target.files[0];
@@ -381,9 +474,23 @@ export class SuiviRequeteComponent {
   }
 
     ngOnInit(): void {
-   this.ComboStatut()
-   this.TestEpateRequete()
-   this.ComboSatisfaction()
-   this.formulaire_suivi[0].valeur =  this.recupinfo.RQ_DESCRIPTIONREQUETE
+      this.ComboStatut()
+      this.TestEpateRequete()
+      this.ComboSatisfaction()
+      this.formulaire_suivi[0].valeur =  this.recupinfo.RQ_DESCRIPTIONREQUETE
+      if(this.recupinfo.RS_CODESTATUTRECEVABILITE == ""){
+        this.toastr.error("l'etude de recevabilié de la requete doit etre faite", 'error', { positionClass: 'toast-bottom-left'});
+        setTimeout(() => {
+          window.location.href = "admin/reclamations/liste"
+        }, 3000);
+      }
+
+      if(this.recupinfo.CU_NOMUTILISATEUR.includes('ADMIN') || this.recupinfo.CU_NOMUTILISATEUR == ""){
+        this.toastr.error("Acces interdit pour un Administrateur", 'error', { positionClass: 'toast-bottom-left'});
+        setTimeout(() => {
+          window.location.href = "admin/reclamations/liste"
+        }, 3000);
+      }
+
     }
 }

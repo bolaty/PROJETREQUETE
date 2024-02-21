@@ -122,14 +122,14 @@ export class ReclamationsComponent {
       type: 'text',
       valeur: '',
       obligatoire: 'O',
-      label: 'durée du traitement',
+      label: 'date debut du etape',
     },
     {
       id: 'modalDureefin',
       type: 'text',
       valeur: '',
       obligatoire: 'O',
-      label: 'durée du traitement',
+      label: 'date fin du etape',
     },
     {
       id: 'invoice-observation-avis',
@@ -141,18 +141,32 @@ export class ReclamationsComponent {
   ];
   formulaire_avis: any = [
     {
-      id: 'offcanvaSatisfaction',
+      id: 'avisSatisfaction',
       type: 'text',
       valeur: '',
-      obligatoire: 'N',
+      obligatoire: 'O',
       label: 'satisfaction',
     },
     {
-      id: 'invoice-observation-avis',
+      id: 'NoteObservation',
       type: 'text',
       valeur: '',
-      obligatoire: 'N',
+      obligatoire: 'O',
       label: 'observation',
+    },
+    {
+      id: 'dtdedebut',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'O',
+      label: 'date debut du reclamation',
+    },
+    {
+      id: 'dtdefin',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'O',
+      label: 'date fin du reclamation',
     },
   ];
   ListeComboAgence:any=[]
@@ -170,6 +184,10 @@ export class ReclamationsComponent {
   statutliste:boolean=false
   SearchValue:any
   statutClientExiste:boolean=true
+  statutDateDebut:boolean=true
+  statutDatefin:boolean=true
+  recupValEtape:any
+  DATECLOTUREAVISREQ:any="01/01/1900"
   statutFrmulaire:string='ENREGISTREMENT'
   constructor(
     public AdminService:AdminService,
@@ -696,31 +714,32 @@ export class ReclamationsComponent {
           "Objets": [
               {
                   "AC_CODEACTIONCORRECTIVE": "",
-                  "CU_CODECOMPTEUTULISATEUR": this.recupinfo.CU_CODECOMPTEUTULISATEUR,// this.recupinfo[0].CU_CODECOMPTEUTULISATEUR,//"1",
-                  "CU_CODECOMPTEUTULISATEURAGENTENCHARGE": this.recupinfo.CU_CODECOMPTEUTULISATEURAGENTENCHARGE,//this.formulaire_suivi[8].valeur,
-                  "MC_CODEMODECOLLETE":this.recupinfo.MC_CODEMODECOLLETE,//"01",
-                  "NS_CODENIVEAUSATISFACTION": this.formulaire_avis[0].valeur,
-                  "RQ_CODEREQUETE": this.recupinfo.RQ_CODEREQUETE,
+                  "CU_CODECOMPTEUTULISATEUR": this.recupValEtape.CU_CODECOMPTEUTULISATEUR,// this.recupinfo[0].CU_CODECOMPTEUTULISATEUR,//"1",
+                  "CU_CODECOMPTEUTULISATEURAGENTENCHARGE": this.recupValEtape.CU_CODECOMPTEUTULISATEURAGENTENCHARGE,//this.formulaire_suivi[8].valeur,
+                  "MC_CODEMODECOLLETE":this.recupValEtape.MC_CODEMODECOLLETE,//"01",
+                  "NS_CODENIVEAUSATISFACTION": this.recupValEtape.NS_CODENIVEAUSATISFACTION,
+                  "RQ_CODEREQUETE": this.recupValEtape.RQ_CODEREQUETE,
                   "RQ_CODEREQUETERELANCEE": "",
-                  "RQ_DATECLOTUREREQUETE": date,
-                  "RQ_DATEDEBUTTRAITEMENTREQUETE": date,
-                  "RQ_DATEFINTRAITEMENTREQUETE": date,
-                  "RQ_DATESAISIEREQUETE": this.recupinfo.RQ_DATESAISIEREQUETE,
-                  "RQ_DATETRANSFERTREQUETE": this.recupinfo.RQ_DATETRANSFERTREQUETE,
+                  "RQ_DATECLOTUREREQUETE": this.formulaire_avis[0].valeur == "01" ? "01/01/1900" : date,
+                  "RQ_DATEDEBUTTRAITEMENTREQUETE": this.formulaire_avis[2].valeur,
+                  "RQ_DATEFINTRAITEMENTREQUETE": this.formulaire_avis[3].valeur,
+                  "RQ_DATESAISIEREQUETE": this.recupValEtape.RQ_DATESAISIEREQUETE,
+                  "RQ_DATETRANSFERTREQUETE": this.recupValEtape.RQ_DATETRANSFERTREQUETE,
                   "RQ_DELAITRAITEMENTREQUETE": "",
-                  "RQ_DESCRIPTIONREQUETE": this.recupinfo.RQ_DESCRIPTIONREQUETE,//"DESCRIPTION DE LA REQUETE",
+                  "RQ_DESCRIPTIONREQUETE": this.recupValEtape.RQ_DESCRIPTIONREQUETE,//"DESCRIPTION DE LA REQUETE",
                   "RQ_DUREETRAITEMENTREQUETE": "",
-                  "RQ_LOCALISATIONCLIENT": this.recupinfo.RQ_LOCALISATIONCLIENT,//"LOCALISATION DU CLIENT",
-                  "RQ_NUMERORECOMPTE":this.recupinfo.RQ_NUMERORECOMPTE,//"0",
-                  "RQ_NUMEROREQUETE":this.recupinfo.RQ_NUMEROREQUETE,
-                  "RQ_OBJETREQUETE": this.recupinfo.RQ_OBJETREQUETE,
-                  "RQ_OBSERVATIONAGENTTRAITEMENTREQUETE":  this.recupinfo.RQ_OBSERVATIONAGENTTRAITEMENTREQUETE,
+                  "RQ_LOCALISATIONCLIENT": this.recupValEtape.RQ_LOCALISATIONCLIENT,//"LOCALISATION DU CLIENT",
+                  "RQ_NUMERORECOMPTE":this.recupValEtape.RQ_NUMERORECOMPTE,//"0",
+                  "RQ_NUMEROREQUETE":this.recupValEtape.RQ_NUMEROREQUETE,
+                  "RQ_OBJETREQUETE": this.recupValEtape.RQ_OBJETREQUETE,
+                  "RQ_OBSERVATIONAGENTTRAITEMENTREQUETE":  this.recupValEtape.RQ_OBSERVATIONAGENTTRAITEMENTREQUETE,
                   "RQ_OBSERVATIONDELAITRAITEMENTREQUETE": this.formulaire_avis[1].valeur,
+                  "RQ_AFFICHERINFOCLIENT": "O",
                   "RQ_SIGNATURE": "",
                   "RQ_SIGNATURE1": "",
                   "RS_CODESTATUTRECEVABILITE": this.formulaire_avis[0].valeur,
-                  "SR_CODESERVICE": this.recupinfo.SR_CODESERVICE.valeur,
-                  "TR_CODETYEREQUETE": this.recupinfo.TR_CODETYEREQUETE,//"00001",
+                  "SR_CODESERVICE": this.recupValEtape.SR_CODESERVICE,
+                  "TR_CODETYEREQUETE": this.recupValEtape.TR_CODETYEREQUETE,//"00001",
                   "clsObjetEnvoi": {
                       "ET_CODEETABLISSEMENT": "",
                       "AN_CODEANTENNE": "",
@@ -751,6 +770,25 @@ export class ReclamationsComponent {
           }
         );
     }
+  }
+
+  gestionAvisReq(){
+    if(this.formulaire_avis[0].valeur== "01"){
+      this.statutDateDebut = true
+      this.statutDatefin = true
+      this.formulaire_avis[2].obligatoire = "O"
+      this.formulaire_avis[3].obligatoire = "O"
+      this.formulaire_avis[2].valeur = ""
+      this.formulaire_avis[3].valeur = ""
+    }else{
+      this.statutDateDebut = false
+      this.statutDatefin = false
+      this.formulaire_avis[2].valeur = "01/01/1900"
+      this.formulaire_avis[3].valeur = "01/01/1900"
+      this.formulaire_avis[2].obligatoire = "N"
+      this.formulaire_avis[3].obligatoire = "N"
+    }
+   
   }
 
   ClotureEtape() {
@@ -926,6 +964,32 @@ export class ReclamationsComponent {
     
   }
 
+
+  generateLoginAndPassword() {
+    const nomPrenoms = this.formulaire_plaintes_reclamations[1].valeur;
+    const login = this.generateLogin(nomPrenoms);
+    const motDePasse = this.generatePassword();
+
+    this.formulaire_plaintes_reclamations[11].valeur = login;
+    this.formulaire_plaintes_reclamations[12].valeur = motDePasse;
+  }
+
+  generateLogin(nomPrenoms: string): string {
+    const login = nomPrenoms.toLowerCase().replace(/[^a-z0-9]/g, '');
+    return login;
+  }
+
+  generatePassword(): string {
+    const length = 8;
+    const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let password = '';
+    for (let i = 0; i < length; i++) {
+      password += charset.charAt(Math.floor(Math.random() * charset.length));
+    }
+    return password;
+  }
+
+
   checkStatusForm(infoEcran:any){
     if(infoEcran == "Liste"){
        this.statutFrmulaire = "LISTE";
@@ -938,6 +1002,7 @@ export class ReclamationsComponent {
 }
   recupListe(info:any){
     sessionStorage.setItem("infoReque", JSON.stringify(info));
+    this.recupValEtape = info;
     if(info.CU_CODECOMPTEUTULISATEUR != "" &&  info.CU_CODECOMPTEUTULISATEURAGENTENCHARGE != ""){
       this.formulaire_attr_reclamations[0].valeur = info.CU_CODECOMPTEUTULISATEURAGENTENCHARGE
     }else{
