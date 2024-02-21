@@ -272,6 +272,12 @@ export class ReclamationsComponent {
         this.ListeComboOperateur = success;
         this.ListeComboOperateur = this.ListeComboOperateur.pvgListeUtilisateursComboResult;
         if (this.ListeComboOperateur[0].clsResultat.SL_RESULTAT == 'TRUE') {
+          for (let i = 0;i<this.ListeComboOperateur.length;i++) {
+            if(this.ListeComboOperateur[i].CU_NOMUTILISATEUR.includes('ADMIN')){
+               this.ListeComboOperateur.splice(i,1);
+               break
+            }
+         }
          this.ComboTypeRequete()
         } else {
         
@@ -618,6 +624,7 @@ export class ReclamationsComponent {
   EnregistrementRequeteAffectation(tableau_recu: any) {
     this.AdminService.SecuriteChampObligatoireEtTypeDeDonnee(tableau_recu);
     this.AdminService.TypeDeDonneeChampNonObligatoire(tableau_recu);
+    var recuperation = JSON.parse(sessionStorage.getItem("infoReque") || "")
     if (
       this.AdminService.statut_traitement == true &&
       this.AdminService.statut_traitement_champ_non_obligatoire == true
@@ -631,6 +638,22 @@ export class ReclamationsComponent {
         $('#' + tableau_recu[1].id).css('background-color', 'MistyRose');
         $('#' + tableau_recu[2].id).css('background-color', 'MistyRose');
         this.toastr.error('La date de début ne doit pas être plus grande que la date de fin', 'error', { positionClass: 'toast-bottom-left'});
+      }else if (
+        this.AdminService.ComparerDeuxDates(recuperation.RQ_DATEDEBUTTRAITEMENTREQUETE) >
+        this.AdminService.ComparerDeuxDates(
+          this.formulaire_attr_reclamations[1].valeur
+        )
+      ) {
+        $('#' + tableau_recu[1].id).css('background-color', 'MistyRose');
+        this.toastr.error("La date de debut d'une étape ne doit pas être inférieur à la date de debut de la reclamation", 'error', { positionClass: 'toast-bottom-left'});
+      }else if (
+        this.AdminService.ComparerDeuxDates(this.formulaire_attr_reclamations[2].valeur) >
+        this.AdminService.ComparerDeuxDates(
+          recuperation.RQ_DATEFINTRAITEMENTREQUETE
+        )
+      ) {
+        $('#' + tableau_recu[2].id).css('background-color', 'MistyRose');
+        this.toastr.error("La date de fin d'une étape ne doit pas être supérieur à la date de fin de la reclamation", 'error', { positionClass: 'toast-bottom-left'});
       }else{
         var d = new Date()
         var date = d.getDate() +'-0'+(d.getMonth()+1)+'-'+d.getFullYear()
@@ -639,7 +662,7 @@ export class ReclamationsComponent {
           var date = '0'+ d.getDate() +'-0'+(d.getMonth()+1)+'-'+d.getFullYear()
           console.log(date)
         }
-          var recuperation = JSON.parse(sessionStorage.getItem("infoReque") || "")
+         
           let Options =
             'RequeteClientsClasse.svc/pvgMajReqrequeteEtape'; // le chemin d'appel du service web
           //objet d'envoi
@@ -678,7 +701,7 @@ export class ReclamationsComponent {
               } else {
                // this.toastr.success(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE);
                 this.toastr.success(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE, 'success', { positionClass: 'toast-bottom-left'});
-  
+                this.ListeRequete()
                 this.viderChampAff()
               }
             },
@@ -761,6 +784,7 @@ export class ReclamationsComponent {
              // this.toastr.success(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
               this.toastr.success(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE, 'success', { positionClass: 'toast-bottom-left'});
               this.ViderChamp()
+              this.ListeRequete()
             }
           },
           (error: any) => {

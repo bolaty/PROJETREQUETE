@@ -99,7 +99,7 @@ export class LoginComponent {
       },(error) => {
         this.AuthService.CloseLoader()
       //  toastr.warning('Veuillez réessayer svp !!!')
-        this.toastr.warning('Veuillez réessayer svp !!!', 'Titre du toast');
+        this.toastr.warning('Veuillez réessayer svp !!!', 'warning');
       }
       );
     }

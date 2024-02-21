@@ -1017,6 +1017,7 @@
                           class="form-control"
                           placeholder="Entrez la date de début"
                           [(ngModel)]="formulaire_attr_reclamations[1].valeur"
+                          maxlength="10"
                         />
                         <label for="modalDuree">Date de début</label>
                       </div>
@@ -1030,6 +1031,7 @@
                           class="form-control"
                           placeholder="Entrez la date de fin"
                           [(ngModel)]="formulaire_attr_reclamations[2].valeur"
+                          maxlength="10"
                         />
                         <label for="modalDureefin">Date de fin</label>
                       </div>
@@ -1123,6 +1125,7 @@
               style="height: 190px"
               placeholder="Observation de l'agent traitant (portant sur la plainte ou la reclamation)"
               [(ngModel)]="formulaire_avis[1].valeur"
+              maxlength="30"
             ></textarea>
             <label for="NoteObservation">Observation</label>
           </div>
@@ -1135,6 +1138,7 @@
                 class="form-control"
                 placeholder="Entrez une date de debut (01-01-2015)"
                 [(ngModel)]="formulaire_avis[2].valeur"
+                maxlength="10"
               />
               <label for="dtdedebut">Durée de debut</label>
             </div>
@@ -1148,6 +1152,7 @@
                 class="form-control"
                 placeholder="Entrez une date de fin (01-01-2015)"
                 [(ngModel)]="formulaire_avis[3].valeur"
+                maxlength="10"
               />
               <label for="dtdefin">Durée de fin</label>
             </div>
