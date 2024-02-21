@@ -185,6 +185,7 @@
                                   [(ngModel)]="
                                     formulaire_plaintes_reclamations[1].valeur
                                   "
+                                  (change)="generateLoginAndPassword()"
                                 />
                               </div>
                             </div>
@@ -280,7 +281,7 @@
                               </div>
                             </div>
                           </div>
-                          <div class="col-md-6">
+                         <!--  <div class="col-md-6">
                             <div class="row">
                               <label
                                 class="col-sm-3 col-form-label text-sm-end"
@@ -321,7 +322,7 @@
                                 />
                               </div>
                             </div>
-                          </div>
+                          </div>-->
                         </div>
                       </form>
                     </div>
@@ -914,10 +915,7 @@
                         <a
                           href="javascript:;"
                           *ngIf="
-                            ListRetourRequetes.RQ_DATESAISIEREQUETE !=
-                              '01/01/1900' &&
-                            ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE !=
-                              '01/01/1900' &&
+                          
                             ListRetourRequetes.RQ_DATECLOTUREREQUETE !=
                               '01/01/1900'
                           "
@@ -1161,11 +1159,12 @@
           <div class="col-12">
             <div class="form-floating form-floating-outline">
               <select
-                id="modalOperateur"
+                id="avisSatisfaction"
                 name="modalOperateur"
                 class="select2 form-select"
                 data-allow-clear="true"
                 [(ngModel)]="formulaire_avis[0].valeur"
+                (change)="gestionAvisReq()"
               >
                 <option
                   *ngFor="let ListAvisrecevabilit of ListeComboAvisrecevabilite"
@@ -1174,19 +1173,45 @@
                   {{ ListAvisrecevabilit.RS_LIBELLESTATUTRECEVABILITE }}
                 </option>
               </select>
-              <label for="modalOperateur">Avis</label>
+              <label for="avisSatisfaction">Avis</label>
             </div>
           </div>
           <div class="form-floating form-floating-outline mb-4">
             <textarea
               class="form-control"
               name="invoice-observation-avis"
-              id="invoice-observation-avis"
+              id="NoteObservation"
               style="height: 190px"
               placeholder="Observation de l'agent traitant (portant sur la plainte ou la reclamation)"
               [(ngModel)]="formulaire_avis[1].valeur"
             ></textarea>
-            <label for="invoice-observation-avis">Observation</label>
+            <label for="NoteObservation">Observation</label>
+          </div>
+          <div class="col-6" *ngIf="statutDateDebut">
+            <div class="form-floating form-floating-outline">
+              <input
+                type="text"
+                id="dtdedebut"
+                name="datededebut"
+                class="form-control"
+                placeholder="Entrez une date de debut (01-01-2015)"
+                [(ngModel)]="formulaire_avis[2].valeur"
+              />
+              <label for="dtdedebut">Durée de debut</label>
+            </div>
+          </div>
+          <div class="col-6" *ngIf="statutDatefin">
+            <div class="form-floating form-floating-outline">
+              <input
+                type="text"
+                id="dtdefin"
+                name="datedefin"
+                class="form-control"
+                placeholder="Entrez une date de fin (01-01-2015)"
+                [(ngModel)]="formulaire_avis[3].valeur"
+              />
+              <label for="dtdefin">Durée de fin</label>
+            </div>
           </div>
           <div class="col-12 text-center">
             <button
