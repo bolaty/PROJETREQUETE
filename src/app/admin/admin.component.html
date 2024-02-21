@@ -129,27 +129,35 @@
         <li class="menu-header fw-medium mt-4">
           <span class="menu-header-text">Menu</span>
         </li>
-        <li class="menu-item" routerLink="plaintes">
+        <!-- <li class="menu-item" routerLink="plaintes">
           <a style="cursor: pointer" class="menu-link">
-            <i class="menu-icon tf-icons mdi mdi-account-question"></i>
+            <span class="menu-icon tf-icons mdi mdi-account-question"></span>
             <div data-i18n="Plaintes">Plaintes</div>
           </a>
-        </li>
+        </li> -->
         <li class="menu-item" routerLink="reclamations">
           <a style="cursor: pointer" class="menu-link">
-            <i class="menu-icon tf-icons mdi mdi-account-sync"></i>
+            <span class="menu-icon tf-icons mdi mdi-alert-circle-check"></span>
             <div data-i18n="Reclamations">Reclamations</div>
           </a>
         </li>
-        <li class="menu-item" routerLink="Relance" *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR != '0002'">
+        <li
+          class="menu-item"
+          routerLink="Relance"
+          *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR != '0002'"
+        >
           <a style="cursor: pointer" class="menu-link">
-            <i class="menu-icon tf-icons mdi mdi-account-sync"></i>
+            <span class="menu-icon tf-icons mdi mdi-reload-alert"></span>
             <div data-i18n="Relance">Relance</div>
           </a>
         </li>
-        <li class="menu-item" (click)="ChoixCreation('operateur')" *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR != '0002'">
+        <li
+          class="menu-item"
+          (click)="ChoixCreation('operateur')"
+          *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR != '0002'"
+        >
           <a style="cursor: pointer" class="menu-link">
-            <i class="menu-icon tf-icons mdi mdi-account-sync"></i>
+            <span class="menu-icon tf-icons mdi mdi-account"></span>
             <div data-i18n="Operateur">Operateur</div>
           </a>
         </li>
@@ -220,36 +228,18 @@
                   <a
                     class="dropdown-item"
                     href="javascript:void(0);"
-                    data-language="en"
-                  >
-                    <span class="align-middle">English</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    class="dropdown-item"
-                    href="javascript:void(0);"
                     data-language="fr"
                   >
-                    <span class="align-middle">French</span>
+                    <span class="align-middle">Français</span>
                   </a>
                 </li>
                 <li>
                   <a
                     class="dropdown-item"
                     href="javascript:void(0);"
-                    data-language="de"
+                    data-language="en"
                   >
-                    <span class="align-middle">German</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    class="dropdown-item"
-                    href="javascript:void(0);"
-                    data-language="pt"
-                  >
-                    <span class="align-middle">Portuguese</span>
+                    <span class="align-middle">Anglais</span>
                   </a>
                 </li>
               </ul>
@@ -305,7 +295,7 @@
               <!-- Quick links  -->
             </li>
 
-            <li
+            <!-- <li
               class="nav-item dropdown-shortcuts navbar-dropdown dropdown me-1 me-xl-0"
             >
               <a
@@ -426,7 +416,7 @@
                   </div>
                 </div>
               </div>
-            </li>
+            </li> -->
             <!-- Quick links -->
 
             <!-- Notification -->
@@ -760,7 +750,9 @@
                         </div>
                       </div>
                       <div class="flex-grow-1">
-                        <h6 class="mb-0">{{recupinfo[0].CU_NOMUTILISATEUR}}</h6>
+                        <h6 class="mb-0">
+                          {{ recupinfo[0].CU_NOMUTILISATEUR }}
+                        </h6>
                         <small class="text-muted">Admin</small>
                       </div>
                     </div>
@@ -775,7 +767,7 @@
                     <span class="align-middle">Mon Profile</span>
                   </a>
                 </li>
-               <!--  <li>
+                <!--  <li>
                   <a class="dropdown-item" style="cursor: pointer">
                     <i class="mdi mdi-cog-outline me-1 mdi-20px"></i>
                     <span class="align-middle">Settings</span>
@@ -873,7 +865,7 @@
                   >MG DIGITAL PLUS</a
                 >
               </div>
-              <div class="d-none d-lg-inline-block">
+              <!-- <div class="d-none d-lg-inline-block">
                 <a
                   href="https://themeselection.com/license/"
                   class="footer-link me-3"
@@ -887,7 +879,7 @@
                   class="footer-link me-3"
                   >Documentation</a
                 >
-              </div>
+              </div> -->
             </div>
           </div>
         </footer>

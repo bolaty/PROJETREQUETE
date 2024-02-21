@@ -6,19 +6,20 @@ declare var $: any;
 declare var feather: any;
 import { from, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
-import  Swal  from "sweetalert2"
-
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  nom_de_la_structure: any = 'REMUCI';
+
   libelleConnexion: any = '';
   tempsRestant: number = 10;
   statusConnect: boolean = false;
-  LienServeur: any ='http://localhost:22248/'; //LIEN LOCALE
+  LienServeur: any = 'http://localhost:22348/'; //LIEN LOCALE
   //LienServeur: any ='http://51.210.111.16:1009/'; //LIEN prod
- 
+
   constructor(private http: HttpClient) {
     Network.addListener(
       'networkStatusChange',
@@ -26,15 +27,14 @@ export class AuthService {
     );
   }
 
-
-  ShowLoader(){
+  ShowLoader() {
     Swal.fire({
-      allowOutsideClick: false
-    })
-    Swal.showLoading()
+      allowOutsideClick: false,
+    });
+    Swal.showLoading();
   }
-  CloseLoader(){
-    Swal.close()
+  CloseLoader() {
+    Swal.close();
   }
   appSet() {
     'use strict';
@@ -81,7 +81,6 @@ export class AuthService {
     feather.replace();
   }
 
-
   async checkNetworkStatus() {
     const status = await Network.getStatus();
 
@@ -100,105 +99,104 @@ export class AuthService {
     }
   }
   // notification pour les erreurs
-    NotificationErreur(message: any) {
-      $.notify(
-        {
-          title: '',
-          message: message,
+  NotificationErreur(message: any) {
+    $.notify(
+      {
+        title: '',
+        message: message,
+      },
+      {
+        type: 'danger',
+        allow_dismiss: false,
+        newest_on_top: false,
+        mouse_over: false,
+        showProgressbar: false,
+        spacing: 0,
+        timer: 2000,
+        placement: {
+          from: 'top',
+          align: 'top right',
         },
-        {
-          type: 'danger',
-          allow_dismiss: false,
-          newest_on_top: false,
-          mouse_over: false,
-          showProgressbar: false,
-          spacing: 0,
-          timer: 2000,
-          placement: {
-            from: 'top',
-            align: 'top right',
-          },
-          offset: {
-            x: 30,
-            y: 15,
-          },
-          delay: 1000,
-          z_index: 10000,
-          animate: {
-            enter: 'tada',
-            exit: '',
-          },
-        }
-      );
-    }
+        offset: {
+          x: 30,
+          y: 15,
+        },
+        delay: 1000,
+        z_index: 10000,
+        animate: {
+          enter: 'tada',
+          exit: '',
+        },
+      }
+    );
+  }
 
-    // notification pour les succes
-    NotificationSucces(message: any) {
-      $.notify(
-        {
-          title: '',
-          message: message,
+  // notification pour les succes
+  NotificationSucces(message: any) {
+    $.notify(
+      {
+        title: '',
+        message: message,
+      },
+      {
+        type: 'success',
+        allow_dismiss: false,
+        newest_on_top: false,
+        mouse_over: false,
+        showProgressbar: false,
+        spacing: 0,
+        timer: 2000,
+        placement: {
+          from: 'top',
+          align: 'top right',
         },
-        {
-          type: 'success',
-          allow_dismiss: false,
-          newest_on_top: false,
-          mouse_over: false,
-          showProgressbar: false,
-          spacing: 0,
-          timer: 2000,
-          placement: {
-            from: 'top',
-            align: 'top right',
-          },
-          offset: {
-            x: 30,
-            y: 15,
-          },
-          delay: 1000,
-          z_index: 10000,
-          animate: {
-            enter: 'pulse',
-            exit: '',
-          },
-        }
-      );
-    }
+        offset: {
+          x: 30,
+          y: 15,
+        },
+        delay: 1000,
+        z_index: 10000,
+        animate: {
+          enter: 'pulse',
+          exit: '',
+        },
+      }
+    );
+  }
 
-    // notification pour les informations de tout genre
-    NotificationInformation(message: any) {
-      $.notify(
-        {
-          title: '',
-          message: message,
+  // notification pour les informations de tout genre
+  NotificationInformation(message: any) {
+    $.notify(
+      {
+        title: '',
+        message: message,
+      },
+      {
+        type: 'dark',
+        allow_dismiss: false,
+        newest_on_top: false,
+        mouse_over: false,
+        showProgressbar: false,
+        spacing: 0,
+        timer: 2000,
+        placement: {
+          from: 'top',
+          align: 'center',
         },
-        {
-          type: 'dark',
-          allow_dismiss: false,
-          newest_on_top: false,
-          mouse_over: false,
-          showProgressbar: false,
-          spacing: 0,
-          timer: 2000,
-          placement: {
-            from: 'top',
-            align: 'center',
-          },
-          offset: {
-            x: 30,
-            y: 15,
-          },
-          delay: 1000,
-          z_index: 10000,
-          animate: {
-            enter: 'animated bounceInRight',
-            exit: '',
-          },
-        }
-      );
-    }
+        offset: {
+          x: 30,
+          y: 15,
+        },
+        delay: 1000,
+        z_index: 10000,
+        animate: {
+          enter: 'animated bounceInRight',
+          exit: '',
+        },
+      }
+    );
+  }
   // **************** SECTION DES NOTIFICATIONS fin
-     
 
   AppelServeur(body: any, chemin_service: any) {
     return from(Network.getStatus()).pipe(
@@ -237,6 +235,5 @@ export class AuthService {
   }
   isLoggedinUser() {
     return !!sessionStorage.getItem('isLoggedIn');
-    
   }
 }

@@ -1,146 +1,144 @@
 <!-- Content -->
 <div class="container-xxl flex-grow-1 container-p-y">
-    <div class="app-ecommerce">
-      <!-- Add Product -->
-      <div
-        class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3"
-      >
-        <div class="d-flex flex-column justify-content-center">
-          <h4 class="mb-1 mt-3">Relance Reclamation / Plainte</h4>
-          <p>Consultation de plainte et Reclamation </p>
-        </div>
+  <div class="app-ecommerce">
+    <!-- Add Product -->
+    <div
+      class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3"
+    >
+      <div class="d-flex flex-column justify-content-center">
+        <h4 class="mb-1 mt-3">Relance des reclamations</h4>
+        <p>Consultation des reclamations</p>
       </div>
-      <!-- Inventory -->
-      <div class="card mb-4">
-        <div class="card-header">
-          <h5 class="card-title mb-0">Liste</h5>
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <!-- Navigation -->
-            <div class="col-12 col-md-12 mx-auto ">
-                <div class="card-header">
+    </div>
+    <!-- Inventory -->
+    <div class="card mb-4">
+      <!-- <div class="card-header">
+        <h5 class="card-title mb-0">Liste des relances</h5>
+      </div> -->
+      <div class="card-body">
+        <div class="row">
+          <!-- Navigation -->
+          <div class="col-12 col-md-12 mx-auto">
+            <!-- <div class="card-header">
                     <h5 class="card-title">Search Filter</h5>
                     <div class="d-flex justify-content-between align-items-center row py-3 gap-3 gap-md-0">
                       <div class="col-md-4 user_role"></div>
                       <div class="col-md-4 user_plan"></div>
                       <div class="col-md-4 user_status"></div>
                     </div>
-                  </div>
-                  <div class="card-datatable table-responsive pt-0">
-                    <table class="datatables-basic table table-bordered" >
-                      <thead style="background-color: #83c5be;">
-                        <tr>
-                          <th>OBJET</th>
-                          <th>DESCRIPTION</th>
-                          <th>NATURE</th>
-                          <th>OBSERVATION AGENT</th>
-                        </tr>
-                      </thead>
-                    </table>
-                  </div>
+                  </div> -->
+            <div class="card-datatable table-responsive pt-0">
+              <table class="datatables-basic table table-bordered">
+                <thead style="background-color: #83c5be">
+                  <tr>
+                    <th>OBJET</th>
+                    <th>DESCRIPTION</th>
+                    <th>NATURE</th>
+                    <th>OBSERVATION AGENT</th>
+                  </tr>
+                </thead>
+              </table>
             </div>
-            <!-- /Navigation -->
-          
           </div>
+          <!-- /Navigation -->
         </div>
       </div>
-      <!-- /Inventory -->
     </div>
+    <!-- /Inventory -->
   </div>
-  <!-- / Content -->
-  
-  <!-- Content -->
-  <div
-      class="offcanvas offcanvas-end"
-      id="sendInvoiceOffcanvas"
-      aria-hidden="true"
-    >
-      <div class="offcanvas-header mb-3">
-        <h5 class="offcanvas-title">Send Invoice</h5>
-        <button
-          type="button"
-          class="btn-close text-reset"
-          data-bs-dismiss="offcanvas"
-          aria-label="Close"
-        ></button>
+</div>
+<!-- / Content -->
+
+<!-- Content -->
+<div
+  class="offcanvas offcanvas-end"
+  id="sendInvoiceOffcanvas"
+  aria-hidden="true"
+>
+  <div class="offcanvas-header mb-3">
+    <h5 class="offcanvas-title">Send Invoice</h5>
+    <button
+      type="button"
+      class="btn-close text-reset"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="offcanvas-body flex-grow-1">
+    <form>
+      <div class="form-floating form-floating-outline mb-4">
+        <input
+          type="text"
+          class="form-control"
+          id="invoice-from"
+          value="shelbyComapny@email.com"
+          placeholder="company@email.com"
+        />
+        <label for="invoice-from">From</label>
       </div>
-      <div class="offcanvas-body flex-grow-1">
-        <form>
-          <div class="form-floating form-floating-outline mb-4">
-            <input
-              type="text"
-              class="form-control"
-              id="invoice-from"
-              value="shelbyComapny@email.com"
-              placeholder="company@email.com"
-            />
-            <label for="invoice-from">From</label>
-          </div>
-          <div class="form-floating form-floating-outline mb-4">
-            <input
-              type="text"
-              class="form-control"
-              id="invoice-to"
-              value="qConsolidated@email.com"
-              placeholder="company@email.com"
-            />
-            <label for="invoice-to">To</label>
-          </div>
-          <div class="form-floating form-floating-outline mb-4">
-            <input
-              type="text"
-              class="form-control"
-              id="invoice-subject"
-              value="Invoice of purchased Admin Templates"
-              placeholder="Invoice regarding goods"
-            />
-            <label for="invoice-subject">Subject</label>
-          </div>
-          <div class="form-floating form-floating-outline mb-4">
-            <textarea
-              class="form-control"
-              name="invoice-message"
-              id="invoice-message"
-              style="height: 190px"
-            >
+      <div class="form-floating form-floating-outline mb-4">
+        <input
+          type="text"
+          class="form-control"
+          id="invoice-to"
+          value="qConsolidated@email.com"
+          placeholder="company@email.com"
+        />
+        <label for="invoice-to">To</label>
+      </div>
+      <div class="form-floating form-floating-outline mb-4">
+        <input
+          type="text"
+          class="form-control"
+          id="invoice-subject"
+          value="Invoice of purchased Admin Templates"
+          placeholder="Invoice regarding goods"
+        />
+        <label for="invoice-subject">Subject</label>
+      </div>
+      <div class="form-floating form-floating-outline mb-4">
+        <textarea
+          class="form-control"
+          name="invoice-message"
+          id="invoice-message"
+          style="height: 190px"
+        >
   Dear Queen Consolidated,
             Thank you for your business, always a pleasure to work with you!
             We have generated a new invoice in the amount of $95.59
             We would appreciate payment of this invoice by 05/11/2021</textarea
-            >
-            <label for="invoice-message">Message</label>
-          </div>
-          <div class="mb-4">
-            <span class="badge bg-label-primary rounded-pill">
-              <i class="mdi mdi-link-variant mdi-14px me-1"></i>
-              <span class="align-middle">Invoice Attached</span>
-            </span>
-          </div>
-          <div class="mb-3 d-flex flex-wrap">
-            <button
-              type="button"
-              class="btn btn-primary me-3"
-              data-bs-dismiss="offcanvas"
-            >
-              Send
-            </button>
-            <button
-              type="button"
-              class="btn btn-outline-secondary"
-              data-bs-dismiss="offcanvas"
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
+        >
+        <label for="invoice-message">Message</label>
       </div>
-    </div>
+      <div class="mb-4">
+        <span class="badge bg-label-primary rounded-pill">
+          <i class="mdi mdi-link-variant mdi-14px me-1"></i>
+          <span class="align-middle">Invoice Attached</span>
+        </span>
+      </div>
+      <div class="mb-3 d-flex flex-wrap">
+        <button
+          type="button"
+          class="btn btn-primary me-3"
+          data-bs-dismiss="offcanvas"
+        >
+          Send
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          data-bs-dismiss="offcanvas"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
 
-
-    <!-- Add New Address Modal -->
+<!-- Add New Address Modal -->
 <div class="modal fade" id="addNewAddress" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-lg  modal-add-new-address">
+  <div class="modal-dialog modal-lg modal-add-new-address">
     <div class="modal-content p-3 p-md-5">
       <div class="modal-body p-md-0">
         <button
@@ -150,174 +148,161 @@
           aria-label="Close"
         ></button>
         <div class="text-center mb-4">
-          <h3 class="address-title mb-2 pb-1">Attribution de la plainte</h3>
+          <h3 class="address-title mb-2 pb-1">Attribution de la reclamation</h3>
           <p class="address-subtitle">
-            Attribuer une plainte à un opérateur
+            Attribuer une reclamation à un opérateur
           </p>
         </div>
-       
-             <!-- Inventory -->
-            <div class="card mb-4">
-              <div class="card-header">
-                <h5 class="card-title mb-0">Niveau de traitement de Plainte</h5>
-              </div>
-              <div class="card-body">
-                <div class="row">
-                  <!-- Navigation -->
-                  <div class="col-12 col-md-4 mx-auto card-separator">
-                    <div
-                      class="d-flex justify-content-between flex-column mb-3 mb-md-0 pe-md-3"
+
+        <!-- Inventory -->
+        <!-- <div class="card mb-4"> -->
+        <!-- <div class="card-header">
+            <h5 class="card-title mb-0">Niveau de traitement de Plainte</h5>
+          </div> -->
+        &#160; &#160; &#160;
+        <div class="card-body">
+          <div class="row">
+            <!-- Navigation -->
+            <div class="col-12 col-md-4 mx-auto card-separator">
+              <div
+                class="d-flex justify-content-between flex-column mb-3 mb-md-0 pe-md-3"
+              >
+                <ul class="nav nav-align-left nav-pills flex-column">
+                  <li
+                    class="nav-item"
+                    *ngFor="let ListEtapes of ListeComboEtapes; let i = index"
+                  >
+                    <button
+                      class="nav-link"
+                      data-bs-toggle="tab"
+                      data-bs-target="#restock"
+                      (click)="selectionEtape(ListEtapes)"
                     >
-                      <ul class="nav nav-align-left nav-pills flex-column">
-                        <li class="nav-item" *ngFor="let ListEtapes of ListeComboEtapes; let i = index">
-                          <button
-                            class="nav-link "
-                            data-bs-toggle="tab"
-                            data-bs-target="#restock"
-                            (click)="selectionEtape(ListEtapes)"
-                          >
-                            <i class="mdi mdi-cube-outline me-2"></i>
-                            <span class="align-middle">{{ListEtapes.RE_LIBELLEETAPE}}</span>
-                          </button>
-                        </li>
-                        <!--<li class="nav-item">
-                          <button
-                            class="nav-link"
-                            data-bs-toggle="tab"
-                            data-bs-target="#shipping"
-                          >
-                            <i class="mdi mdi-car-estate me-2"></i>
-                            <span class="align-middle">Etude</span>
-                          </button>
-                        </li>
-                        <li class="nav-item">
-                          <button
-                            class="nav-link"
-                            data-bs-toggle="tab"
-                            data-bs-target="#global-delivery"
-                          >
-                            <i class="mdi mdi-web me-2"></i>
-                            <span class="align-middle">Traitement</span>
-                          </button>
-                        </li>
-                        <li class="nav-item">
-                          <button
-                            class="nav-link"
-                            data-bs-toggle="tab"
-                            data-bs-target="#attributes"
-                          >
-                            <i class="mdi mdi-link-variant me-2"></i>
-                            <span class="align-middle">verification</span>
-                          </button>
-                        </li>
-                        <li class="nav-item">
-                          <button
-                            class="nav-link"
-                            data-bs-toggle="tab"
-                            data-bs-target="#advanced"
-                          >
-                            <i class="mdi mdi-lock me-2"></i>
-                            <span class="align-middle">Validation</span>
-                          </button>
-                        </li>-->
-                      </ul>
-                    </div>
+                      <i class="mdi mdi-cube-outline me-2"></i>
+                      <span class="align-middle">{{
+                        ListEtapes.RE_LIBELLEETAPE
+                      }}</span>
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!-- /Navigation -->
+            <!-- Options -->
+            <div class="col-12 col-md-8 pt-4 pt-md-0">
+              <div class="tab-content p-0 pe-xl-0 ps-md-3">
+                <!-- Restock Tab -->
+                <div
+                  class="tab-pane fade show active"
+                  id="restock"
+                  role="tabpanel"
+                >
+                  <h6 class="text-body">{{ recupEtape.RE_LIBELLEETAPE }}</h6>
+                  <div
+                    class="alert d-flex align-items-center bg-label-info mb-0"
+                    role="alert"
+                  >
+                    <i class="mdi mdi-bell-outline me-2"></i>
+                    Voulez-vous mettre fin à cette étape afin de l'attribuer à
+                    un autre opérateur ? &#160; &#160; &#160;
+                    <span
+                      class="badge rounded-pill bg-primary"
+                      (click)="ClotureEtape()"
+                      style="cursor: pointer"
+                      >Oui</span
+                    >
                   </div>
-                  <!-- /Navigation -->
-                  <!-- Options -->
-                  <div class="col-12 col-md-8 pt-4 pt-md-0">
-                    <div class="tab-content p-0 pe-xl-0 ps-md-3">
-                      <!-- Restock Tab -->
-                      <div
-                        class="tab-pane fade show active"
-                        id="restock"
-                        role="tabpanel"
-                      >
-                        <h6 class="text-body">{{recupEtape.RE_LIBELLEETAPE}}</h6>
-                        <div class="alert d-flex align-items-center bg-label-warning mb-0" role="alert">
-                          <i class="mdi mdi-bell-outline me-2"></i>
-                          Voulez-vous Cloturée cette etape ?. &nbsp;&nbsp;
-                          <span class="mdi mdi-cancel bg-label-danger me-2" (click)="ClotureEtape()"></span>
-                        </div><br>
-                        <form id="addNewAddressForm" class="row g-4" onsubmit="return false">
-                          <div class="col-12">
-                            <div class="form-floating form-floating-outline">
-                              <select
-                                id="modalOperateur"
-                                name="modalOperateur"
-                                class="select2 form-select"
-                                data-allow-clear="true"
-                                [(ngModel)]="formulaire_attr_reclamations[0].valeur"
-                              >
-                              <option
-                              *ngFor="let ListComboOperateur of ListeComboOperateur"
-                              value="{{ ListComboOperateur.CU_CODECOMPTEUTULISATEUR }}"
-                              >
-                                {{ ListComboOperateur.CU_NOMUTILISATEUR }}
-                              </option>
-                              </select>
-                              <label for="modalOperateur">Opérateur</label>
-                            </div>
-                          </div>
-                          <div class="col-6">
-                            <div class="form-floating form-floating-outline">
-                              <input
-                                type="text"
-                                id="modalDuree"
-                                name="modalDuree"
-                                class="form-control"
-                                placeholder="Entrez une date"
-                                [(ngModel)]="formulaire_attr_reclamations[1].valeur"
-                              />
-                              <label for="modalDuree">Durée de debut</label>
-                            </div>
-                          </div>
-                          <div class="col-6">
-                            <div class="form-floating form-floating-outline">
-                              <input
-                                type="text"
-                                id="modalDureefin"
-                                name="modalDureefin"
-                                class="form-control"
-                                placeholder="Entrez une date"
-                                [(ngModel)]="formulaire_attr_reclamations[2].valeur"
-                              />
-                              <label for="modalDureefin">Durée de fin</label>
-                            </div>
-                          </div>
-                          <div class="form-floating form-floating-outline mb-4">
-                            <textarea
-                              class="form-control"
-                              name="invoice-observation-avis"
-                              id="invoice-observation-avis"
-                              style="height: 190px"
-                              placeholder="objectif de la tache"
-                              [(ngModel)]="formulaire_attr_reclamations[3].valeur"
-                            ></textarea>
-                            <label for="invoice-observation-avis">Description</label>
-                          </div>
-                          <div class="col-12 text-center">
-                            <button type="submit" class="btn btn-primary me-sm-3 me-1" (click)="EnregistrementRequeteAffectation(formulaire_attr_reclamations)">
-                              Soumettre
-                            </button>
-                            <button
-                              type="reset"
-                              class="btn btn-outline-secondary"
-                             
-                            >
-                              Reinitialiser
-                            </button>
-                          </div>
-                        </form>
+                  <br />
+                  <form
+                    id="addNewAddressForm"
+                    class="row g-4"
+                    onsubmit="return false"
+                  >
+                    <div class="col-12">
+                      <div class="form-floating form-floating-outline">
+                        <select
+                          id="modalOperateur"
+                          name="modalOperateur"
+                          class="select2 form-select"
+                          data-allow-clear="true"
+                          [(ngModel)]="formulaire_attr_reclamations[0].valeur"
+                        >
+                          <option
+                            *ngFor="
+                              let ListComboOperateur of ListeComboOperateur
+                            "
+                            value="{{
+                              ListComboOperateur.CU_CODECOMPTEUTULISATEUR
+                            }}"
+                          >
+                            {{ ListComboOperateur.CU_NOMUTILISATEUR }}
+                          </option>
+                        </select>
+                        <label for="modalOperateur">Opérateur</label>
                       </div>
-                     
                     </div>
-                  </div>
-                  <!-- /Options-->
+                    <div class="col-6">
+                      <div class="form-floating form-floating-outline">
+                        <input
+                          type="text"
+                          id="modalDuree"
+                          name="modalDuree"
+                          class="form-control"
+                          placeholder="Entrez la date de début"
+                          [(ngModel)]="formulaire_attr_reclamations[1].valeur"
+                        />
+                        <label for="modalDuree">Date de début</label>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-floating form-floating-outline">
+                        <input
+                          type="text"
+                          id="modalDureefin"
+                          name="modalDureefin"
+                          class="form-control"
+                          placeholder="Entrez la date de fin"
+                          [(ngModel)]="formulaire_attr_reclamations[2].valeur"
+                        />
+                        <label for="modalDureefin">Date de fin</label>
+                      </div>
+                    </div>
+                    <div class="form-floating form-floating-outline mb-4">
+                      <textarea
+                        class="form-control"
+                        name="invoice-observation-avis"
+                        id="invoice-observation-avis"
+                        style="height: 190px"
+                        placeholder="Objectif de la tâche"
+                        [(ngModel)]="formulaire_attr_reclamations[3].valeur"
+                      ></textarea>
+                      <label for="invoice-observation-avis">Description</label>
+                    </div>
+                    <div class="col-12 text-center">
+                      <button
+                        type="submit"
+                        class="btn btn-primary me-sm-3 me-1"
+                        (click)="
+                          EnregistrementRequeteAffectation(
+                            formulaire_attr_reclamations
+                          )
+                        "
+                      >
+                        Soumettre
+                      </button>
+                      <button type="reset" class="btn btn-outline-secondary">
+                        Reinitialiser
+                      </button>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
-            <!-- /Inventory -->
+            <!-- /Options-->
+          </div>
+        </div>
+        <!-- </div> -->
+        <!-- /Inventory -->
       </div>
     </div>
   </div>

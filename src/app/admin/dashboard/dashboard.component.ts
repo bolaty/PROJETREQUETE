@@ -7,7 +7,7 @@ import Chart from 'chart.js/auto';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent {
-  recupinfo: any = JSON.parse(sessionStorage.getItem("infoLogin") || '');
+  recupinfo: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
   public chart_bar: any;
   public chart_pie: any;
   graphe_en_bande: any = [];
@@ -43,13 +43,8 @@ export class DashboardComponent {
     '#FDBBBB',
     '#3BA3E5',
   ];
-  table_id_pie: any = [
-    'MyChartPie1',
-    'MyChartPie2',
-    'MyChartPie3',
-    'MyChartPie4',
-  ];
-  table_id_bar: any = ['MyChartBar1', 'MyChartBar2'];
+  table_id_pie: any = ['MyChartPie3', 'MyChartPie4'];
+  table_id_bar: any = ['MyChartBar2'];
 
   FormationChartPie(id_du_graphe: any) {
     this.chart_pie = new Chart(id_du_graphe, {
@@ -81,7 +76,7 @@ export class DashboardComponent {
         labels: this.tab_intermediaire_cercle_abs, // table_label,
         datasets: [
           {
-            label: 'Adhésion',
+            label: 'En cours de traitement',
             data: this.tab_intermediaire_cercle_ord, // table_data,
             backgroundColor: '#A725A5',
           },
@@ -104,6 +99,5 @@ export class DashboardComponent {
     for (let index = 0; index < this.table_id_bar.length; index++) {
       this.FormationChartBar(this.table_id_bar[index]);
     }
-
   }
 }
