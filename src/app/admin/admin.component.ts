@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from "../auth/auth.service";
 import { Router } from "@angular/router";
+import { AdminService } from './admin.service';
 //declare var $: any; // Si vous utilisez jQuery
 
 @Component({
@@ -10,8 +11,10 @@ import { Router } from "@angular/router";
 })
 export class AdminComponent implements OnInit {
   recupinfo: any = JSON.parse(sessionStorage.getItem("infoLogin") || '');
-
+  ListeNotification:any=[]
+  nombreNotif:any=0
   constructor(
+    public AdminService: AdminService,
     private _router: Router
   ){}
 
@@ -909,9 +912,39 @@ export class AdminComponent implements OnInit {
       this._router.navigate(['/admin/Operateur']);
     }
   }
-
+  Notification() {
+    let Option = 'RequeteClientsClasse.svc/pvgListeSMS';
+    let body = {
+      "Objets": [
+          {
+               "OE_PARAM": [this.recupinfo[0].AG_CODEAGENCE,this.recupinfo[0].CU_CODECOMPTEUTULISATEUR,"0003","N"],
+              "clsObjetEnvoi": {
+                  "ET_CODEETABLISSEMENT": "",
+                  "AN_CODEANTENNE": "",
+                  "TYPEOPERATION": "01"
+              }
+          }
+      ]
+    };
+    this.AdminService.AppelServeur(body, Option).subscribe(
+      (success: any) => {
+        this.ListeNotification = success;
+        this.ListeNotification = this.ListeNotification.pvgListeSMSResult;
+        if (this.ListeNotification[0].clsResultat.SL_RESULTAT == 'TRUE') {
+          this.nombreNotif = this.ListeNotification.length + 1;
+        } else {
+          this.nombreNotif = 0;
+          this.ListeNotification[0].SM_MESSAGE ="Aucune reclamation pour l'instant"
+          this.ListeNotification[0].SM_STATUT = ""
+          this.ListeNotification[0].SM_DATEEMISSIONSMS = ""
+        }
+        
+      }
+    );
+  }
 
   ngOnInit(): void {
+    this.Notification()
     setTimeout(() => {
       this.InitialisationMainJs();
     }, 1000);

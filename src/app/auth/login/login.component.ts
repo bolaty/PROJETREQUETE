@@ -12,6 +12,7 @@ declare var $: any;
 export class LoginComponent {
   formLogin:any={}
   RetoursChargement:any=[]
+  RetoursChargementMdp:any=[]
   formulaire_avis: any = [
     {
       id: 'nom',
@@ -49,6 +50,24 @@ export class LoginComponent {
       label: 'observation',
     }
   ];
+  formulaire_recupMdp: any = [
+    {
+      id: 'EmailRecup',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'O',
+      label: 'Email'
+    },
+    {
+      id: 'LoginRecup',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'O',
+      label: 'Login',
+    },
+    
+  ];
+  
   constructor(
     public _router: Router,
     private toastr: ToastrService,
@@ -103,8 +122,70 @@ export class LoginComponent {
       }
       );
     }
+
+    Recuperation(){
+      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      const phonePattern = /^(0|[0-9]\d*)$/;
+      var statuttest = 'NITELEPHONENIEMAIL'
+      let Options = 'RequeteClientsClasse.svc/pvgPasswordRequest'
+
+      if (emailPattern.test(this.formulaire_recupMdp[0].valeur)) {
+        statuttest = 'OK'
+      } else if (phonePattern.test(this.formulaire_recupMdp[0].valeur)) {
+        statuttest = 'OK'
+      } else {
+        statuttest = 'NITELEPHONENIEMAIL'
+      }
+
+      if(statuttest == 'NITELEPHONENIEMAIL'){
+        this.toastr.error("L'entrée n'est ni un email ni un numéro de téléphone valide", 'error', { positionClass: 'toast-bottom-left'});
+      }else if(this.formulaire_recupMdp[1].valeur == "" || this.formulaire_recupMdp[1].valeur == undefined){
+        this.toastr.error("veuillez renseigner un login svp !!!", 'error', { positionClass: 'toast-bottom-left'});
+      }else{
+          let body = {
+            "Objets": [
+                {
+                    "CU_CONTACT": this.formulaire_recupMdp[0].valeur,
+                    "CU_LOGIN": this.formulaire_recupMdp[1].valeur,
+                    "clsObjetEnvoi": {
+                        "ET_CODEETABLISSEMENT": "",
+                        "AN_CODEANTENNE": "",
+                        "TYPEOPERATION": "0"
+                    }
+                }
+            ]
+          };
+          this.AuthService.ShowLoader()
+     
+          this.AuthService.AppelServeur(body, Options).subscribe((success: any) => {
+            this.RetoursChargementMdp = success
+            this.RetoursChargementMdp = this.RetoursChargementMdp.pvgPasswordRequestResult
+            this.AuthService.CloseLoader()
+            if (this.RetoursChargementMdp[0].clsResultat.SL_RESULTAT == 'FALSE') {
+              this.toastr.error(this.RetoursChargementMdp[0].clsResultat.SL_MESSAGE, 'Echec');
+            }
+              else {
+                this.formulaire_recupMdp[0].valeur = ""
+                this.formulaire_recupMdp[1].valeur = ""
+              this.toastr.success(this.RetoursChargementMdp[0].clsResultat.SL_MESSAGE, 'success');
+              $("#sendInvoiceOffcanvasMotdepasse").offcanvas('hide')
+            }
+          },(error) => {
+            this.AuthService.CloseLoader()
+            this.toastr.warning('Veuillez réessayer svp !!!', 'warning');
+          }
+          );
+      }
+   
+      
+     }
+
     voirTraitement(): void {
       $("#sendInvoiceOffcanvas").offcanvas('show')
+
+    }
+    voirRecuperation(): void {
+      $("#sendInvoiceOffcanvasMotdepasse").offcanvas('show')
 
     }
     ngOnInit(): void {

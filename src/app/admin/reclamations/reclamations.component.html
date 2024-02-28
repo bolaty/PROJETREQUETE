@@ -40,7 +40,7 @@
       <div class="col-lg-3 col-md-4 col-12 mb-md-0 mb-3">
         <div class="d-flex justify-content-between flex-column mb-2 mb-md-0">
           <ul class="nav nav-align-left nav-pills flex-column flex-nowrap">
-            <li class="nav-item">
+            <li class="nav-item" *ngIf="!recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')">
               <button
                 class="nav-link active"
                 data-bs-toggle="tab"
@@ -54,7 +54,7 @@
                 >
               </button>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" *ngIf="!recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')">
               <button
                 class="nav-link"
                 data-bs-toggle="tab"
@@ -65,6 +65,20 @@
                 <span class="align-middle">Liste des reclamations</span>
               </button>
             </li>
+            <li class="nav-item" *ngIf="recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')">
+              <button
+                class="nav-link active"
+                data-bs-toggle="tab"
+                data-bs-target="#delivery"
+                (click)="checkStatusForm('Liste')"
+              >
+                <i class="mdi mdi-dots-vertical mdi-24px"></i>
+                <span class="align-middle">Liste des reclamations</span>
+              </button>
+            </li><!--*ngIf="
+              recupinfo[0].TU_CODETYPEUTILISATEUR !=
+              '0002' && recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')
+            "-->
           </ul>
           <div class="d-none d-md-block">
             <div class="mt-5 text-center">
@@ -82,7 +96,7 @@
       <!-- FAQ's -->
       <div class="col-lg-9 col-md-8 col-12">
         <div class="tab-content p-0">
-          <div class="tab-pane fade show active" id="payment" role="tabpanel">
+          <div class="tab-pane fade show active" id="payment" role="tabpanel" *ngIf="!recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')">
             <div class="d-flex mb-3 gap-3">
               <div class="avatar avatar-md">
                 <div class="avatar-initial bg-label-primary rounded">
@@ -696,7 +710,7 @@
               </div>
             </div>
           </div>
-          <div class="tab-pane fade" id="delivery" role="tabpanel">
+          <div class="tab-pane fade" id="delivery" role="tabpanel" *ngIf="!recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') && recupinfo[0].TU_CODETYPEUTILISATEUR == '0002'">
             <div class="d-flex mb-3 gap-3">
               <div class="avatar avatar-md">
                 <span class="avatar-initial bg-label-primary rounded">
@@ -709,13 +723,64 @@
                 </h5>
                 <span>Consultez vos reclamations</span>
               </div>
+
+              &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+              &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+              &#160;&#160; &#160; &#160;
+
+              <!-- Radio -->
+              <div
+                class="btn-group"
+                role="group"
+                aria-label="Basic radio toggle button group"
+              >
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="btnradio"
+                  id="btnradio1"
+                  [checked]="var_checked_enrg"
+                  (click)="OnChecked('enrg')"
+                />
+                <label class="btn btn-outline-primary" for="btnradio1"
+                  >Enregistrée </label
+                >
+
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="btnradio"
+                  id="btnradio2"
+                  [checked]="var_checked_trai"
+                  (click)="OnChecked('trai')"
+                />
+                <label class="btn btn-outline-primary" for="btnradio2"
+                  >En cours de traitement </label
+                >
+
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="btnradio"
+                  id="btnradio3"
+                  [checked]="var_checked_clo"
+                  (click)="OnChecked('clo')"
+                />
+                <label class="btn btn-outline-primary" for="btnradio3"
+                  >Cloturée </label
+                >
+              </div>
             </div>
+
             <!-- Teams Cards -->
-            <div class="row g-4" *ngIf="statutliste">
+            <div
+              class="row g-4"
+              *ngIf="statutliste && tab_req_afficher.length != 0"
+            >
               <div
                 class="col-xl-4 col-lg-6 col-md-6"
                 *ngFor="
-                  let ListRetourRequetes of ListeRetourRequete;
+                  let ListRetourRequetes of tab_req_afficher;
                   let index = index
                 "
               >
@@ -756,7 +821,9 @@
                                     data-bs-toggle="modal"
                                     *ngIf="
                                       recupinfo[0].TU_CODETYPEUTILISATEUR !=
-                                      '0002'
+                                      '0002' &&
+                                      recupinfo[0].CU_NOMUTILISATEUR.includes(
+                                        'ADMIN')
                                     "
                                     data-bs-target="#addNewAddress2"
                                     (click)="recupListe(ListRetourRequetes)"
@@ -771,7 +838,9 @@
                                     data-bs-toggle="modal"
                                     *ngIf="
                                       recupinfo[0].TU_CODETYPEUTILISATEUR !=
-                                      '0002'
+                                      '0002'  &&
+                                      recupinfo[0].CU_NOMUTILISATEUR.includes(
+                                        'ADMIN')
                                     "
                                     data-bs-target="#addNewAddress"
                                     (click)="recupListe(ListRetourRequetes)"
@@ -785,8 +854,326 @@
                                   <a
                                     class="dropdown-item"
                                     href="javascript:void(0);"
+                                    data-bs-toggle="modal"
+                                    *ngIf="
+                                      recupinfo[0].TU_CODETYPEUTILISATEUR !=
+                                      '0002' && recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')
+                                    "
+                                    data-bs-target="#addNewAddressConsultation"
+                                    (click)="recupListeConsult(ListRetourRequetes)"
+                                    ><i
+                                      class="mdi mdi-account-arrow-right me-1"
+                                    ></i>
+                                    Consultation etape de la reclamation</a
+                                  >
+                                </li>
+                                <li>
+                                  <a
+                                    class="dropdown-item"
+                                    href="javascript:void(0);"
                                     (click)="recupListe(ListRetourRequetes)"
                                     routerLink="SuiviRequete"
+                                    *ngIf="!recupinfo[0].CU_NOMUTILISATEUR.includes(
+                                      'ADMIN')
+                                    "
+                                    ><i
+                                      class="mdi mdi-animation-outline me-1"
+                                    ></i>
+                                    Suivi de reclamation</a
+                                  >
+                                </li>
+                                <!--<li>
+                                    <hr class="dropdown-divider" />
+                                  </li>
+                                  <li><a class="dropdown-item" href="javascript:void(0);">Delete Team</a></li>-->
+                              </ul>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <p class="mb-3 pb-1">
+                      {{ ListRetourRequetes.RQ_DESCRIPTIONREQUETE }}
+                    </p>
+                    <div class="d-flex align-items-center" *ngIf="ListRetourRequetes.RQ_CODEREQUETERELANCEE != ''">
+                      <div
+                        class="d-flex align-items-center"
+                      
+                      >
+                        <ul
+                          class="list-unstyled d-flex align-items-center avatar-group mb-0"
+                        >
+                          <li
+                            data-bs-toggle="tooltip"
+                            data-popup="tooltip-custom"
+                            data-bs-placement="top"
+                            title="Kaith D'souza"
+                            class="avatar avatar-sm pull-up"
+                          >
+                            <a href="javascript:;"
+                              ><span class="badge bg-label-info rounded-pill"
+                                >
+                                relance</span
+                              ></a
+                            >
+                          </li>
+                        </ul>
+                      </div>
+                     
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <div
+                        class="d-flex align-items-center"
+                        *ngIf="
+                          !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')
+                        "
+                      >
+                        <ul
+                          class="list-unstyled d-flex align-items-center avatar-group mb-0"
+                        >
+                          <li
+                            data-bs-toggle="tooltip"
+                            data-popup="tooltip-custom"
+                            data-bs-placement="top"
+                            title="Kaith D'souza"
+                            class="avatar avatar-sm pull-up"
+                          >
+                            <a href="javascript:;"
+                              ><span class="badge bg-label-primary rounded-pill"
+                                >
+                                {{ ListRetourRequetes.RE_LIBELLEETAPE }}</span
+                              ></a
+                            >
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="ms-auto">
+                        <a
+                          href="javascript:;"
+                          *ngIf="
+                            ListRetourRequetes.RQ_DATESAISIEREQUETE !=
+                              '01/01/1900' &&
+                            ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE ==
+                              '01/01/1900' &&
+                            ListRetourRequetes.RQ_DATECLOTUREREQUETE ==
+                              '01/01/1900'
+                          "
+                          ><span class="badge bg-label-primary rounded-pill"
+                            >Enregistrée &nbsp;&nbsp;N° {{ListRetourRequetes.RQ_CODEREQUETE}}</span
+                          ></a
+                        >
+                        <a
+                          href="javascript:;"
+                          *ngIf="
+                            ListRetourRequetes.RQ_DATESAISIEREQUETE !=
+                              '01/01/1900' &&
+                            ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE !=
+                              '01/01/1900' &&
+                            ListRetourRequetes.RQ_DATECLOTUREREQUETE ==
+                              '01/01/1900'
+                          "
+                          ><span class="badge bg-label-success rounded-pill"
+                            >En cours de traitement &nbsp;&nbsp;N° {{ListRetourRequetes.RQ_CODEREQUETE}}</span
+                          ></a
+                        >
+                        <a
+                          href="javascript:;"
+                          *ngIf="
+                          
+                            ListRetourRequetes.RQ_DATECLOTUREREQUETE !=
+                              '01/01/1900' 
+                          "
+                          ><span class="badge bg-label-danger rounded-pill"
+                            >Cloturée &nbsp;&nbsp;N° {{ListRetourRequetes.RQ_CODEREQUETE}}</span
+                          ></a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="row g-4"
+              *ngIf="statutliste && tab_req_afficher.length == 0"
+              style="text-align: center; font-size: 40px; margin-top: 190px"
+            >
+              <!-- <img
+                src="../../assets/img/illustrations/6845147-removebg-preview.png"
+                class="img-fluid w-px-300"
+                alt="not found image"
+              /> -->
+              <p>Aucune reclamation !</p>
+            </div>
+            <!--/ Teams Cards -->
+          </div>
+          <div class="tab-pane fade" id="delivery" role="tabpanel" *ngIf="!recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') && recupinfo[0].TU_CODETYPEUTILISATEUR == '0001'">
+            <div class="d-flex mb-3 gap-3">
+              <div class="avatar avatar-md">
+                <span class="avatar-initial bg-label-primary rounded">
+                  <i class="mdi mdi-dots-vertical mdi-24px"></i>
+                </span>
+              </div>
+              <div>
+                <h5 class="mb-1">
+                  <span class="align-middle">Liste des reclamations</span>
+                </h5>
+                <span>Consultez vos reclamations</span>
+              </div>
+
+              &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+              &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+              &#160;&#160; &#160; &#160;
+
+              <!-- Radio -->
+              <div
+                class="btn-group"
+                role="group"
+                aria-label="Basic radio toggle button group"
+              >
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="btnradio"
+                  id="btnradio1"
+                  [checked]="var_checked_enrg"
+                  (click)="OnChecked('enrg')"
+                />
+                <label class="btn btn-outline-primary" for="btnradio1"
+                  >Enregistrée</label
+                >
+
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="btnradio"
+                  id="btnradio2"
+                  [checked]="var_checked_trai"
+                  (click)="OnChecked('trai')"
+                />
+                <label class="btn btn-outline-primary" for="btnradio2"
+                  >En cours de traitement</label
+                >
+
+               <!--<input
+                  type="radio"
+                  class="btn-check"
+                  name="btnradio"
+                  id="btnradio3"
+                  [checked]="var_checked_clo"
+                  (click)="OnChecked('clo')"
+                />
+                <label class="btn btn-outline-primary" for="btnradio3"
+                  >Cloturée</label
+                >-->
+              </div>
+            </div>
+
+            <!-- Teams Cards -->
+            <div
+              class="row g-4"
+              *ngIf="statutliste && tab_req_afficher.length != 0"
+            >
+              <div
+                class="col-xl-4 col-lg-6 col-md-6"
+                *ngFor="
+                  let ListRetourRequetes of tab_req_afficher;
+                  let index = index
+                "
+              >
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center mb-3 pb-1">
+                      <a href="javascript:;" class="d-flex align-items-center">
+                        <!-- <div class="avatar avatar-sm me-2">
+                          <img
+                            src="../../assets/img/icons/brands/vue-label.png"
+                            alt="Avatar"
+                            class="rounded-circle"
+                          />
+                        </div> -->
+                        <div class="me-2 text-heading h6 mb-0">
+                          {{ ListRetourRequetes.TR_LIBELLETYEREQUETE }}
+                        </div>
+                      </a>
+                      <div class="ms-auto">
+                        <ul class="list-inline mb-0 d-flex align-items-center">
+                          <li class="list-inline-item">
+                            <div class="dropdown">
+                              <button
+                                type="button"
+                                class="btn btn-text-secondary btn-icon rounded-pill dropdown-toggle hide-arrow p-0"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                              >
+                                <i
+                                  class="mdi mdi-dots-vertical mdi-24px text-muted"
+                                ></i>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                  <a
+                                    class="dropdown-item"
+                                    href="javascript:void(0);"
+                                    data-bs-toggle="modal"
+                                    *ngIf="
+                                      recupinfo[0].TU_CODETYPEUTILISATEUR !=
+                                      '0002' &&
+                                      recupinfo[0].CU_NOMUTILISATEUR.includes(
+                                        'ADMIN')
+                                    "
+                                    data-bs-target="#addNewAddress2"
+                                    (click)="recupListe(ListRetourRequetes)"
+                                    ><i class="mdi mdi-account-tag me-1"></i>
+                                    Avis de recevabilité</a
+                                  >
+                                </li>
+                                <li>
+                                  <a
+                                    class="dropdown-item"
+                                    href="javascript:void(0);"
+                                    data-bs-toggle="modal"
+                                    *ngIf="
+                                      recupinfo[0].TU_CODETYPEUTILISATEUR !=
+                                      '0002'  &&
+                                      recupinfo[0].CU_NOMUTILISATEUR.includes(
+                                        'ADMIN')
+                                    "
+                                    data-bs-target="#addNewAddress"
+                                    (click)="recupListe(ListRetourRequetes)"
+                                    ><i
+                                      class="mdi mdi-account-arrow-right me-1"
+                                    ></i>
+                                    Attribution de reclamation</a
+                                  >
+                                </li>
+                                <li>
+                                  <a
+                                    class="dropdown-item"
+                                    href="javascript:void(0);"
+                                    data-bs-toggle="modal"
+                                    *ngIf="
+                                      recupinfo[0].TU_CODETYPEUTILISATEUR !=
+                                      '0002' && recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')
+                                    "
+                                    data-bs-target="#addNewAddressConsultation"
+                                    (click)="recupListeConsult(ListRetourRequetes)"
+                                    ><i
+                                      class="mdi mdi-account-arrow-right me-1"
+                                    ></i>
+                                    Consultation etape de la reclamation</a
+                                  >
+                                </li>
+                                <li>
+                                  <a
+                                    class="dropdown-item"
+                                    href="javascript:void(0);"
+                                    (click)="recupListe(ListRetourRequetes)"
+                                    routerLink="SuiviRequete"
+                                    *ngIf="!recupinfo[0].CU_NOMUTILISATEUR.includes(
+                                      'ADMIN')
+                                    "
                                     ><i
                                       class="mdi mdi-animation-outline me-1"
                                     ></i>
@@ -825,7 +1212,7 @@
                           >
                             <a href="javascript:;"
                               ><span class="badge bg-label-primary rounded-pill"
-                                >NIVEAU :
+                                >
                                 {{ ListRetourRequetes.RE_LIBELLEETAPE }}</span
                               ></a
                             >
@@ -833,9 +1220,6 @@
                         </ul>
                       </div>
                       <div class="ms-auto">
-                        <!--<a href="javascript:;" class="me-2"
-                            ><span class="badge bg-label-success rounded-pill">Vuejs</span></a
-                          >-->
                         <a
                           href="javascript:;"
                           *ngIf="
@@ -843,7 +1227,7 @@
                               '01/01/1900' &&
                             ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE ==
                               '01/01/1900' &&
-                            ListRetourRequetes.RQ_DATECLOTUREREQUETE ==
+                            ListRetourRequetes.AT_DATECLOTUREETAPE ==
                               '01/01/1900'
                           "
                           ><span class="badge bg-label-primary rounded-pill"
@@ -855,31 +1239,396 @@
                           *ngIf="
                             ListRetourRequetes.RQ_DATESAISIEREQUETE !=
                               '01/01/1900' &&
-                            ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE !=
+                            ListRetourRequetes.AT_DATEDEBUTTRAITEMENTETAPE !=
                               '01/01/1900' &&
-                            ListRetourRequetes.RQ_DATECLOTUREREQUETE ==
+                            ListRetourRequetes.AT_DATECLOTUREETAPE ==
                               '01/01/1900'
                           "
                           ><span class="badge bg-label-success rounded-pill"
                             >En cours de traitement</span
                           ></a
                         >
-                        <a
+                        <!--<a
                           href="javascript:;"
                           *ngIf="
                           
-                            ListRetourRequetes.RQ_DATECLOTUREREQUETE !=
+                            ListRetourRequetes.AT_DATECLOTUREETAPE !=
                               '01/01/1900'
                           "
                           ><span class="badge bg-label-danger rounded-pill"
                             >Cloturée</span
                           ></a
-                        >
+                        >-->
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+            </div>
+
+            <div
+              class="row g-4"
+              *ngIf="statutliste && tab_req_afficher.length == 0"
+              style="text-align: center; font-size: 40px; margin-top: 190px"
+            >
+              <!-- <img
+                src="../../assets/img/illustrations/6845147-removebg-preview.png"
+                class="img-fluid w-px-300"
+                alt="not found image"
+              /> -->
+              <p>Aucune reclamation !</p>
+            </div>
+            <!--/ Teams Cards -->
+          </div>
+          <div class="tab-pane fade show active" id="delivery" role="tabpanel" *ngIf="recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')">
+            <div class="d-flex mb-3 gap-3">
+              <div class="avatar avatar-md">
+                <span class="avatar-initial bg-label-primary rounded">
+                  <i class="mdi mdi-dots-vertical mdi-24px"></i>
+                </span>
+              </div>
+              <div>
+                <h5 class="mb-1">
+                  <span class="align-middle">Liste des reclamations</span>
+                </h5>
+                <span>Consultez vos reclamations</span>
+              </div>
+
+              &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+              &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+              &#160;&#160; &#160; &#160;
+
+              <!-- Radio -->
+              <div
+                class="btn-group"
+                role="group"
+                aria-label="Basic radio toggle button group"
+              >
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="btnradio"
+                  id="btnradio1"
+                  [checked]="var_checked_enrg"
+                  (click)="OnChecked('enrg')"
+                />
+                <label class="btn btn-outline-primary" for="btnradio1"
+                  >Enregistrée</label
+                >
+
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="btnradio"
+                  id="btnradio2"
+                  [checked]="var_checked_trai"
+                  (click)="OnChecked('trai')"
+                />
+                <label class="btn btn-outline-primary" for="btnradio2"
+                  >En cours de traitement</label
+                >
+
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="btnradio"
+                  id="btnradio3"
+                  [checked]="var_checked_clo"
+                  (click)="OnChecked('clo')"
+                />
+                <label class="btn btn-outline-primary" for="btnradio3"
+                  >Cloturée</label
+                >
+              </div>
+            </div>
+
+            <!-- Teams Cards -->
+            <div
+              class="row g-4"
+              *ngIf="statutliste && tab_req_afficher.length != 0"
+            >
+              <div
+                class="col-xl-4 col-lg-6 col-md-6"
+                *ngFor="
+                  let ListRetourRequetes of tab_req_afficher;
+                  let index = index
+                "
+              >
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center mb-3 pb-1">
+                      <a href="javascript:;" class="d-flex align-items-center">
+                        <!-- <div class="avatar avatar-sm me-2">
+                          <img
+                            src="../../assets/img/icons/brands/vue-label.png"
+                            alt="Avatar"
+                            class="rounded-circle"
+                          />
+                        </div> -->
+                        <div class="me-2 text-heading h6 mb-0">
+                          {{ ListRetourRequetes.TR_LIBELLETYEREQUETE }}
+                          
+                        </div>
+                      </a>
+                      <div class="ms-auto">
+                        <ul class="list-inline mb-0 d-flex align-items-center">
+                          <li class="list-inline-item">
+                            <div class="dropdown">
+                              <button
+                                type="button"
+                                class="btn btn-text-secondary btn-icon rounded-pill dropdown-toggle hide-arrow p-0"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                              >
+                                <i
+                                  class="mdi mdi-dots-vertical mdi-24px text-muted"
+                                ></i>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                  <a
+                                    class="dropdown-item"
+                                    href="javascript:void(0);"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#addNewAddress2"
+                                    (click)="recupListe(ListRetourRequetes)"
+                                    *ngIf="
+                                      ListRetourRequetes.RQ_DATESAISIEREQUETE !=
+                                        '01/01/1900' &&
+                                      ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE ==
+                                        '01/01/1900' &&
+                                      ListRetourRequetes.RQ_DATECLOTUREREQUETE ==
+                                        '01/01/1900'
+                                    "
+                                    ><i class="mdi mdi-account-tag me-1"></i>
+                                    Avis de recevabilité</a
+                                  >
+                                </li>
+                                <li>
+                                  <a
+                                    class="dropdown-item"
+                                    href="javascript:void(0);"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#addNewAddress"
+                                    (click)="recupListe(ListRetourRequetes)"
+                                    *ngIf="
+                                        ListRetourRequetes.RQ_DATECLOTUREREQUETE ==
+                                          '01/01/1900' && 
+                                           ListRetourRequetes.RS_CODESTATUTRECEVABILITE ==
+                                          '01'
+                                      "
+                                    ><i
+                                      class="mdi mdi-account-arrow-right me-1"
+                                    ></i>
+                                    Attribution de reclamation</a
+                                  >
+                                </li>
+                                <li>
+                                  <a
+                                    class="dropdown-item"
+                                    href="javascript:void(0);"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#addNewAddressConsultation"
+                                    (click)="recupListeConsult(ListRetourRequetes)"
+                                    *ngIf="
+                                      ListRetourRequetes.RQ_DATESAISIEREQUETE !=
+                                        '01/01/1900' &&
+                                      ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE !=
+                                        '01/01/1900' &&
+                                      ListRetourRequetes.RQ_DATECLOTUREREQUETE ==
+                                        '01/01/1900'
+                                    "
+                                    ><i
+                                      class="mdi mdi-account-arrow-right me-1"
+                                    ></i>
+                                    Consultation etape de la reclamation</a
+                                  >
+                                </li>
+                                <li>
+                                  <a
+                                    class="dropdown-item"
+                                    href="javascript:void(0);"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#addNewAddressClotureDefinitive"
+                                    (click)="recupListeCloture(ListRetourRequetes)"
+                                    *ngIf="
+                                        ListRetourRequetes.RQ_DATECLOTUREREQUETE ==
+                                          '01/01/1900' &&
+                                        ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE !=
+                                          '01/01/1900'
+                                      "
+                                    ><i
+                                      class="mdi mdi-account-arrow-right me-1"
+                                    ></i>
+                                    Cloture definitive</a
+                                  >
+                                </li>
+                                <li>
+                                  <a
+                                    class="dropdown-item"
+                                    href="javascript:void(0);"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#addNewAddressAnnulationClotureDefinitive"
+                                    (click)="recupListeCloture(ListRetourRequetes)"
+                                    *ngIf="
+                                      ListRetourRequetes.RQ_DATESAISIEREQUETE !=
+                                        '01/01/1900' &&
+                                      ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE !=
+                                        '01/01/1900' &&
+                                      ListRetourRequetes.RQ_DATECLOTUREREQUETE !=
+                                        '01/01/1900'
+                                    "
+                                    ><i
+                                      class="mdi mdi-account-arrow-right me-1"
+                                    ></i>
+                                    Annulation Cloture definitive </a
+                                  >
+                                </li>
+                               <!-- <li>
+                                  <a
+                                    class="dropdown-item"
+                                    href="javascript:void(0);"
+                                    (click)="recupListe(ListRetourRequetes)"
+                                    routerLink="SuiviRequete"
+                                    *ngIf="
+                                    recupinfo[0].TU_CODETYPEUTILISATEUR !=
+                                    '0001' 
+                                    "
+                                    ><i
+                                      class="mdi mdi-animation-outline me-1"
+                                    ></i>
+                                    Suivi de reclamation</a
+                                  >
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider" />
+                                  </li>
+                                  <li><a class="dropdown-item" href="javascript:void(0);">Delete Team</a></li>-->
+                              </ul>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <p class="mb-3 pb-1">
+                      {{ ListRetourRequetes.RQ_DESCRIPTIONREQUETE }}
+                    </p>
+                    <div class="d-flex align-items-center">
+                      <div
+                        class="d-flex align-items-center"
+                        *ngIf="
+                          !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')
+                        "
+                      >
+                        <ul
+                          class="list-unstyled d-flex align-items-center avatar-group mb-0"
+                        >
+                          <li
+                            data-bs-toggle="tooltip"
+                            data-popup="tooltip-custom"
+                            data-bs-placement="top"
+                            title="Kaith D'souza"
+                            class="avatar avatar-sm pull-up"
+                          >
+                            
+                            <a href="javascript:;"
+                              ><span class="badge bg-label-primary rounded-pill"
+                                >
+                                {{ ListRetourRequetes.RE_LIBELLEETAPE }}</span
+                              ></a
+                            >
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="ms-auto">
+                        <a
+                          href="javascript:;"
+                          *ngIf="
+                            ListRetourRequetes.RQ_DATESAISIEREQUETE !=
+                              '01/01/1900' &&
+                            ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE ==
+                              '01/01/1900' &&
+                            ListRetourRequetes.RQ_DATECLOTUREREQUETE ==
+                              '01/01/1900' && ListRetourRequetes.RS_CODESTATUTRECEVABILITE !='02'
+                          "
+                          ><span class="badge bg-label-primary rounded-pill"
+                            >Enregistrée &nbsp;&nbsp;N° {{ListRetourRequetes.RQ_CODEREQUETE}}</span
+                          ></a
+                        >
+                        <a
+                          href="javascript:;"
+                          *ngIf="
+                            ListRetourRequetes.RQ_DATESAISIEREQUETE !=
+                              '01/01/1900' &&
+                            ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE !=
+                              '01/01/1900' &&
+                            ListRetourRequetes.RQ_DATECLOTUREREQUETE ==
+                              '01/01/1900' && ListRetourRequetes.RS_CODESTATUTRECEVABILITE !='02'
+                          "
+                          ><span class="badge bg-label-success rounded-pill"
+                            >En cours de traitement &nbsp;&nbsp;N° {{ListRetourRequetes.RQ_CODEREQUETE}}</span
+                          ></a
+                        >
+                        <a
+                          href="javascript:;"
+                          *ngIf="ListRetourRequetes.RQ_DATECLOTUREREQUETE !=
+                              '01/01/1900' && ListRetourRequetes.RS_CODESTATUTRECEVABILITE !='02'
+                          "
+                          ><span class="badge bg-label-danger rounded-pill"
+                            >Cloturée &nbsp;&nbsp;N° {{ListRetourRequetes.RQ_CODEREQUETE}}</span
+                          ></a
+                        >
+                        <a
+                          href="javascript:;"
+                          *ngIf="ListRetourRequetes.RS_CODESTATUTRECEVABILITE =='02'"
+                          ><span class="badge bg-label-warning rounded-pill"
+                            >non recevable &nbsp;&nbsp;N° {{ListRetourRequetes.RQ_CODEREQUETE}}</span
+                          ></a
+                        >
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-center" *ngIf="ListRetourRequetes.RQ_CODEREQUETERELANCEE != ''">
+                      <div
+                        class="d-flex align-items-center"
+                      
+                      >
+                        <ul
+                          class="list-unstyled d-flex align-items-center avatar-group mb-0"
+                        >
+                          <li
+                            data-bs-toggle="tooltip"
+                            data-popup="tooltip-custom"
+                            data-bs-placement="top"
+                            title="Kaith D'souza"
+                            class="avatar avatar-sm pull-up"
+                          >
+                            <a href="javascript:;"
+                              ><span class="badge bg-label-info rounded-pill"
+                                >
+                                relance &nbsp;&nbsp;N° {{ListRetourRequetes.RQ_CODEREQUETERELANCEE}}</span
+                              ></a
+                            >
+                          </li>
+                        </ul>
+                      </div>
+                     
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="row g-4"
+              *ngIf="statutliste && tab_req_afficher.length == 0"
+              style="text-align: center; font-size: 40px; margin-top: 190px"
+            >
+              <!-- <img
+                src="../../assets/img/illustrations/6845147-removebg-preview.png"
+                class="img-fluid w-px-300"
+                alt="not found image"
+              /> -->
+              <p>Aucune reclamation !</p>
             </div>
             <!--/ Teams Cards -->
           </div>
@@ -899,7 +1648,6 @@
 
     <!-- /Contact -->
   </div>
-  ai
   <!-- / Content -->
 </div>
 <!-- Content wrapper -->
@@ -944,11 +1692,15 @@
                       data-bs-toggle="tab"
                       data-bs-target="#restock"
                       (click)="selectionEtape(ListEtapes)"
+                     
                     >
                       <i class="mdi mdi-cube-outline me-2"></i>
                       <span class="align-middle">{{
                         ListEtapes.RE_LIBELLEETAPE
-                      }}</span>
+                      }}</span>&#160;&#160;
+                      <span class="badge bg-label-success rounded-pill" *ngIf="ListEtapes.RE_ACTIF == 'N'"
+                            >Attr</span
+                          >
                     </button>
                   </li>
                 </ul>
@@ -1079,6 +1831,226 @@
 <!--/ Add New Address Modal -->
 
 <!-- Add New Address Modal -->
+<div class="modal fade" id="addNewAddressConsultation" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-add-new-address">
+    <div class="modal-content p-3 p-md-5">
+      <div class="modal-body p-md-0">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+        <div class="text-center mb-4">
+          <h3 class="address-title mb-2 pb-1">Consultation Traitement de la reclamation</h3>
+          <p class="address-subtitle">
+            Consultez le niveau d'avancement des étapes
+          </p>
+        </div>
+
+        <!-- Inventory -->
+        <!-- <div class="card mb-4"> -->
+        <!-- <div class="card-header">
+          <h5 class="card-title mb-0">Niveau de traitement de reclamation</h5>
+        </div> -->
+        &#160; &#160; &#160;
+        <div class="card-body">
+          <div class="row">
+            <!-- Navigation -->
+            <div class="col-12 col-md-4 mx-auto card-separator">
+              <div
+                class="d-flex justify-content-between flex-column mb-3 mb-md-0 pe-md-3"
+              >
+                <ul class="nav nav-align-left nav-pills flex-column">
+                  <li
+                    class="nav-item"
+                    *ngFor="let ListEtapes of ListeComboEtapes; let i = index"
+                  >
+                    <button
+                      class="nav-link"
+                      data-bs-toggle="tab"
+                      data-bs-target="#restock"
+                      (click)="selectionEtapeConsultation(ListEtapes)"
+                     
+                    >
+                      <i class="mdi mdi-cube-outline me-2"></i>
+                      <span class="align-middle">{{
+                        ListEtapes.RE_LIBELLEETAPE
+                      }}</span>&#160;&#160;
+                     
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!-- /Navigation -->
+            <!-- Options -->
+            <div class="col-12 col-md-8 pt-4 pt-md-0">
+              <div class="tab-content p-0 pe-xl-0 ps-md-3">
+                <!-- Restock Tab -->
+                <div
+                  class="tab-pane fade show active"
+                  id="restock"
+                  role="tabpanel"
+                >
+                  <h6 class="text-body">{{ recupEtape.RE_LIBELLEETAPE }}</h6>
+                  <div
+                    class="alert d-flex align-items-center bg-label-info mb-0"
+                    role="alert"
+                  >
+                    <i class="mdi mdi-bell-outline me-2"></i>
+                    Consultez les details de cette étape &#160; &#160; &#160;
+                   
+                    >
+                  </div>
+                  <br />
+                  
+                 <div
+                    class="row g-4"
+                    *ngIf="!statutTraitement"
+                    style="text-align: center; font-size: 20px;"
+                  >
+                    <p>Aucun traitement en cours pour l'instant !</p>
+                  </div>
+                  <div class="card-body pt-3 pb-0" *ngIf="statutTraitement">
+                    <ul class="timeline card-timeline mb-0">
+                     
+                      <li class="timeline-item timeline-item-transparent">
+                        <span class="timeline-point timeline-point-primary"></span>
+                        <div class="timeline-event">
+                          <div class="timeline-header mb-2 pb-1">
+                            <h6 class="mb-0">DATE CLOTURE ETAPE</h6>
+                            <small class="text-muted"><span class="badge bg-label-success rounded-pill" 
+                              >new</span
+                            ></small>
+                          </div>
+                          <p class="mb-2">{{ voirlist.AT_DATECLOTUREETAPE }}</p>
+                         
+                        </div>
+                      </li>
+                      <li class="timeline-item timeline-item-transparent">
+                        <span class="timeline-point timeline-point-info"></span>
+                        <div class="timeline-event">
+                          <div class="timeline-header mb-2 pb-1">
+                            <h6 class="mb-0">DATE DEBUT TRAITEMENT ETAPE</h6>
+                            <small class="text-muted"><span class="badge bg-label-success rounded-pill" 
+                              >new</span
+                            ></small>
+                          </div>
+                          <p class="mb-0">{{ voirlist.AT_DATEDEBUTTRAITEMENTETAPE }}</p>
+                        </div>
+                      </li>
+                      <li class="timeline-item timeline-item-transparent">
+                        <span class="timeline-point timeline-point-info"></span>
+                        <div class="timeline-event">
+                          <div class="timeline-header mb-2 pb-1">
+                            <h6 class="mb-0">DATE FIN TRAITEMENT ETAPE</h6>
+                            <small class="text-muted"><span class="badge bg-label-success rounded-pill" 
+                              >new</span
+                            ></small>
+                          </div>
+                          <p class="mb-0">{{ voirlist.AT_DATEFINTRAITEMENTETAPE }}</p>
+                        </div>
+                      </li>
+                      <li class="timeline-item timeline-item-transparent">
+                        <span class="timeline-point timeline-point-info"></span>
+                        <div class="timeline-event">
+                          <div class="timeline-header mb-2 pb-1">
+                            <h6 class="mb-0">DESCRIPTION LORS DE L'ATTRIBUTION</h6>
+                            <small class="text-muted"><span class="badge bg-label-success rounded-pill" 
+                              >new</span
+                            ></small>
+                          </div>
+                          <p class="mb-0">{{ voirlist.AT_DESCRIPTION }}</p>
+                        </div>
+                      </li>
+                      <li class="timeline-item timeline-item-transparent">
+                        <span class="timeline-point timeline-point-info"></span>
+                        <div class="timeline-event">
+                          <div class="timeline-header mb-2 pb-1">
+                            <h6 class="mb-0">OBSERVATION</h6>
+                            <small class="text-muted"><span class="badge bg-label-success rounded-pill" 
+                              >new</span
+                            ></small>
+                          </div>
+                          <p class="mb-0">{{ voirlist.AT_OBSERVATION }}</p>
+                        </div>
+                      </li>
+                      <li class="timeline-item timeline-item-transparent">
+                        <span class="timeline-point timeline-point-info"></span>
+                        <div class="timeline-event">
+                          <div class="timeline-header mb-2 pb-1">
+                            <h6 class="mb-0">OBSERVATION CLOTURE DEFINITIVE</h6>
+                            <small class="text-muted"><span class="badge bg-label-success rounded-pill" 
+                              >new</span
+                            ></small>
+                          </div>
+                          <p class="mb-0">{{ voirlist.RQ_OBSERVATIONCLOTUREDEFINITIVE }}</p>
+                        </div>
+                      </li>
+                      <li class="timeline-item timeline-item-transparent">
+                        <span class="timeline-point timeline-point-info"></span>
+                        <div class="timeline-event">
+                          <div class="timeline-header mb-2 pb-1">
+                            <h6 class="mb-0">OBSERVATION ANNULATION CLOTURE DEFINITIVE</h6>
+                            <small class="text-muted"><span class="badge bg-label-success rounded-pill" 
+                              >new</span
+                            ></small>
+                          </div>
+                          <p class="mb-0">{{ voirlist.RQ_OBSERVATIONANNULATIONCLOTUREDEFINITIVE }}</p>
+                        </div>
+                      </li>
+                      <li class="timeline-item timeline-item-transparent border-transparent">
+                        <span class="timeline-point timeline-point-warning"></span>
+                        <div class="timeline-event pb-1">
+                          <div class="timeline-header mb-2 pb-1">
+                            <h6 class="mb-0">DATE SAISIE RECLAMATION</h6>
+                            <small class="text-muted"><span class="badge bg-label-success rounded-pill" 
+                              >new</span
+                            ></small>
+                          </div>
+                          <p class="text-muted mb-0">{{ voirlist.RQ_DATESAISIE }}</p>
+                        </div>
+                      </li>
+                      <li class="timeline-item timeline-item-transparent">
+                        <span class="timeline-point timeline-point-danger"></span>
+                        <div class="timeline-event">
+                          <div class="timeline-header mb-2 pb-1">
+                            <h6 class="mb-0">DOCUMENT</h6>
+                            <small class="text-muted"><span class="badge bg-label-success rounded-pill" 
+                              >new</span
+                            ></small>
+                          </div>
+                          <div class="d-flex" >
+                            <p class="text-muted mb-0" *ngIf="voirlist.AT_NOMRAPPORT == ''">Aucun document disponible</p>
+                            <a href="{{voirlist.AT_NOMRAPPORT}}" class="me-3" *ngIf="voirlist.AT_NOMRAPPORT != ''">
+                              <img
+                                src="../../assets/img/icons/misc/pdf.png"
+                                alt="PDF image"
+                                width="20"
+                                class="me-1" />
+                              <span class="fw-medium text-body">consulter</span>
+                            </a>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /Options-->
+          </div>
+        </div>
+        <!-- </div> -->
+        <!-- /Inventory -->
+      </div>
+    </div>
+  </div>
+</div>
+<!--/ Add New Address Modal -->
+
+<!-- Add New Address Modal -->
 <div class="modal fade" id="addNewAddress2" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-simple modal-add-new-address">
     <div class="modal-content p-3 p-md-5">
@@ -1125,7 +2097,6 @@
               style="height: 190px"
               placeholder="Observation de l'agent traitant (portant sur la plainte ou la reclamation)"
               [(ngModel)]="formulaire_avis[1].valeur"
-              maxlength="30"
             ></textarea>
             <label for="NoteObservation">Observation</label>
           </div>
@@ -1176,6 +2147,159 @@
             <hr />
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!--/ Add New Address Modal -->
+
+
+<!-- Add New Address Modal -->
+<div class="modal fade" id="addNewAddressClotureDefinitive" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-add-new-address">
+    <div class="modal-content p-3 p-md-5">
+      <div class="modal-body p-md-0">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+        <div class="text-center mb-4">
+          <h3 class="address-title mb-2 pb-1">Cloture Definitive</h3>
+          <p class="address-subtitle">
+           Cloture Definitive
+          </p>
+        </div>
+
+        <!-- Inventory -->
+        <!-- <div class="card mb-4"> -->
+        <!-- <div class="card-header">
+          <h5 class="card-title mb-0">Niveau de traitement de reclamation</h5>
+        </div> -->
+        &#160; &#160; &#160;
+        <div class="card-body">
+          <div class="row">
+             <!-- Connected Accounts -->
+             <div class="card mb-12">
+              <div class="card-header">
+                <h5 class="mb-2">Etapes</h5>
+                <p class="mb-0 text-body">de resolution de la requete</p>
+              </div>
+              <div class="card-body">
+                <div class="d-flex mb-3" *ngFor="let ListEtapes of ListeComboEtapes; let i = index">
+                  <div class="flex-shrink-0">
+                    <img src="../../assets/img/icons/misc/aviato.png" alt="aviato" class="me-3" height="26" />
+                  </div>
+                  <div class="flex-grow-1 row">
+                    <div class="col-9 mb-sm-0 mb-2">
+                      <h6 class="mb-0">{{
+                        ListEtapes.RE_LIBELLEETAPE
+                      }}</h6>
+                    
+                    </div>
+                    <div class="col-3 text-end">
+                      <label class="switch me-0">
+                        <input type="checkbox" class="switch-input" [checked]="ListEtapes.RE_ACTIF === 'O'" (click)="testStatusetape(i)"/>
+                        <span class="switch-toggle-slider">
+                          <span class="switch-on"></span>
+                          <span class="switch-off"></span>
+                        </span>
+                        <span class="switch-label"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <div class="form-floating form-floating-outline mb-4">
+                  <textarea
+                    class="form-control"
+                    name="invoice-observation-avisCloture"
+                    id="invoice-observation-avisCloture"
+                    style="height: 190px"
+                    placeholder="Objectif de la tâche" [(ngModel)]="ObservationsCloture" 
+                  ></textarea>
+                  <label for="invoice-observation-avisCloture">Observation</label>
+                </div>
+                <div class="col-12 text-center">
+                  <button
+                    type="submit"
+                    class="btn btn-primary me-sm-3 me-1" *ngIf="cloture" (click)="ClotureRequetePrincipale()">
+                    Cloture
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- /Connected Accounts -->
+          </div>
+        </div>
+        <!-- </div> -->
+        <!-- /Inventory -->
+      </div>
+    </div>
+  </div>
+</div>
+<!--/ Add New Address Modal -->
+
+
+<!-- Add New Address Modal -->
+<div class="modal fade" id="addNewAddressAnnulationClotureDefinitive" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-add-new-address">
+    <div class="modal-content p-3 p-md-5">
+      <div class="modal-body p-md-0">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+        <div class="text-center mb-4">
+          <h3 class="address-title mb-2 pb-1">Annulation Cloture Definitive</h3>
+          <p class="address-subtitle">
+            Annulation Cloture Definitive
+          </p>
+        </div>
+
+        <!-- Inventory -->
+        <!-- <div class="card mb-4"> -->
+        <!-- <div class="card-header">
+          <h5 class="card-title mb-0">Niveau de traitement de reclamation</h5>
+        </div> -->
+        &#160; &#160; &#160;
+        <div class="card-body">
+          <div class="row">
+            <!-- Connected Accounts -->
+            <div class="card mb-12">
+              <div class="card-header">
+                <h5 class="mb-2">Observations Cloture</h5>
+              </div>
+              <div class="card-body">
+                <div class="form-floating form-floating-outline mb-4">
+                  <textarea
+                    class="form-control"
+                    name="invoice-observation-avisACloture"
+                    id="invoice-observation-avisACloture"
+                    style="height: 190px"
+                    placeholder="Objectif de la tâche"
+                    [(ngModel)]="ObservationsCloture" 
+                  ></textarea>
+                  <label for="invoice-observation-avisACloture">Avis Annulation cloture</label>
+                </div>
+                <div class="col-12 text-center">
+                  <button
+                    type="submit"
+                    class="btn btn-primary me-sm-3 me-1"  (click)="AnnulationClotureRequetePrincipale()">
+                    Annulation Cloture
+                  </button>
+                
+                </div>
+              </div>
+            </div>
+            <!-- /Connected Accounts -->
+          </div>
+        </div>
+        <!-- </div> -->
+        <!-- /Inventory -->
       </div>
     </div>
   </div>

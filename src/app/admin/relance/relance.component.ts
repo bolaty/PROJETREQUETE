@@ -361,11 +361,18 @@ export class RelanceComponent {
     });
   }
   ListeDesRelance() {
+    var d = new Date()
+    var date = d.getDate() +'-0'+(d.getMonth()+1)+'-'+d.getFullYear()
+    var jour = d.getDate()
+    if(jour < 10){
+      var date = '0'+ d.getDate() +'-0'+(d.getMonth()+1)+'-'+d.getFullYear()
+      console.log(date)
+    }
     let Option = 'RequeteClientsClasse.svc/pvgListeReqrequeteRelance';
     let body = {
       Objets: [
         {
-          OE_PARAM: [],
+          OE_PARAM: [date,"01"],
           clsObjetEnvoi: {
             ET_CODEETABLISSEMENT: '',
             AN_CODEANTENNE: '',
@@ -379,6 +386,7 @@ export class RelanceComponent {
       (success: any) => {
         this.ListeRelance = success;
         this.ListeRelance = this.ListeRelance.pvgListeReqrequeteRelanceResult;
+        this.RecupRelances = [];
         if (this.ListeRelance[0].clsResultat.SL_RESULTAT == 'TRUE') {
           this.AdminService.CloseLoader();
           this.RecupRelances = [];
@@ -390,15 +398,18 @@ export class RelanceComponent {
             OBSERVATIONAGENT: '',
           };
           for (let i = 0; i < this.ListeRelance.length; i++) {
-            obj = {
-              id: i.toString(),
-              OBJET: this.ListeRelance[i].TR_LIBELLETYEREQUETE,
-              DESCRIPTION: this.ListeRelance[i].RQ_DESCRIPTIONREQUETE,
-              NATURE: this.ListeRelance[i].NR_LIBELLENATUREREQUETE,
-              OBSERVATIONAGENT:
-                this.ListeRelance[i].RQ_OBSERVATIONAGENTTRAITEMENTREQUETE,
-            };
-            this.RecupRelances.push(obj);
+           // if(this.ListeRelance[i].NR_LIBELLENATUREREQUETE == 'RECLAMATION'){
+              obj = {
+                id: i.toString(),
+                OBJET: this.ListeRelance[i].TR_LIBELLETYEREQUETE,
+                DESCRIPTION: this.ListeRelance[i].RQ_DESCRIPTIONREQUETE,
+                NATURE: this.ListeRelance[i].NR_LIBELLENATUREREQUETE,
+                OBSERVATIONAGENT:
+                  this.ListeRelance[i].RQ_OBSERVATIONAGENTTRAITEMENTREQUETE,
+              };
+              this.RecupRelances.push(obj);
+          //  }
+           
           }
           this.toastr.success(
             this.ListeRelance[0].clsResultat.SL_MESSAGE,
@@ -426,6 +437,99 @@ export class RelanceComponent {
       }
     );
   }
+
+  RelanceRequetePrincipale() {
+   /* if(this.recupinfo.RQ_DATECLOTUREREQUETE == "01/01/1900"){
+      this.toastr.error(
+        "veuillez d'abord cloturé cette relamation",
+        'error',
+        { positionClass: 'toast-bottom-left' }
+      );
+    }else{*/
+      let Options = 'RequeteClientsClasse.svc/pvgMajReqrequete'; // le chemin d'appel du service web
+      //objet d'envoi
+      let body = {
+        Objets: [
+          {
+            "AC_CODEACTIONCORRECTIVE": "",
+            "CU_CODECOMPTEUTULISATEUR": this.recupEtape.CU_CODECOMPTEUTULISATEUR,
+            "CU_CODECOMPTEUTULISATEURAGENTENCHARGE": this.recupEtape.CU_CODECOMPTEUTULISATEURAGENTENCHARGE,
+            "MC_CODEMODECOLLETE":this.recupEtape.MC_CODEMODECOLLETE,
+            "NS_CODENIVEAUSATISFACTION": this.recupEtape.NS_CODENIVEAUSATISFACTION,
+            "RQ_CODEREQUETE": "0",
+            "RQ_CODEREQUETERELANCEE": this.recupEtape.RQ_CODEREQUETE,
+            "RQ_DATECLOTUREREQUETE": "01/01/1900",//this.recupinfo.RQ_DATECLOTUREREQUETE,
+            "RQ_DATEDEBUTTRAITEMENTREQUETE": "01/01/1900",//this.recupinfo.RQ_DATEDEBUTTRAITEMENTREQUETE,
+            "RQ_DATEFINTRAITEMENTREQUETE": "01/01/1900",//this.recupinfo.RQ_DATEFINTRAITEMENTREQUETE,
+            "RQ_DATESAISIEREQUETE": this.recupEtape.RQ_DATESAISIEREQUETE,
+            "RQ_DATETRANSFERTREQUETE": this.recupEtape.RQ_DATETRANSFERTREQUETE,
+            "RQ_DELAITRAITEMENTREQUETE": "",
+            "RQ_DESCRIPTIONREQUETE": this.recupEtape.RQ_DESCRIPTIONREQUETE,
+            "RQ_DUREETRAITEMENTREQUETE": "",
+            "RQ_LOCALISATIONCLIENT": this.recupEtape.RQ_LOCALISATIONCLIENT,
+            "RQ_NUMERORECOMPTE":this.recupEtape.RQ_NUMERORECOMPTE,
+            "RQ_NUMEROREQUETE":this.recupEtape.RQ_NUMEROREQUETE,
+            "RQ_OBJETREQUETE": this.recupEtape.RQ_OBJETREQUETE,
+            "RQ_OBSERVATIONAGENTTRAITEMENTREQUETE": "",// this.recupinfo.RQ_OBSERVATIONAGENTTRAITEMENTREQUETE,
+            "RQ_OBSERVATIONDELAITRAITEMENTREQUETE": "",//this.recupinfo.RQ_OBSERVATIONDELAITRAITEMENTREQUETE,
+            "RQ_AFFICHERINFOCLIENT": "O",
+            "RQ_SIGNATURE": "",
+            "RQ_SIGNATURE1": "",
+            "RS_CODESTATUTRECEVABILITE": "",//this.recupinfo.RS_CODESTATUTRECEVABILITE,
+            "SR_CODESERVICE": this.recupEtape.SR_CODESERVICE,
+            "TR_CODETYEREQUETE": this.recupEtape.TR_CODETYEREQUETE,
+            "RT_CODETYPERELANCE":"02",
+            clsObjetEnvoi: {
+              ET_CODEETABLISSEMENT: '',
+              AN_CODEANTENNE: '',
+              TYPEOPERATION: '8',
+            },
+          },
+        ],
+      };
+  
+      this.AdminService.AppelServeur(body, Options).subscribe(
+        (success) => {
+          this.tab_enregistrement_traitement = success;
+          this.tab_enregistrement_traitement =
+            this.tab_enregistrement_traitement.pvgMajReqrequeteResult;
+          this.AdminService.CloseLoader();
+          if (
+            this.tab_enregistrement_traitement.clsResultat.SL_RESULTAT == 'FALSE'
+          ) {
+            //this.toastr.error(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
+            this.toastr.error(
+              this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE,
+              'error',
+              { positionClass: 'toast-bottom-left' }
+            );
+          } else {
+            // this.toastr.success(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
+            this.ListeDesRelance()
+            this.toastr.success(
+              this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE,
+              'success',
+              { positionClass: 'toast-bottom-left' }
+            );
+            $('#addNewAddress').modal('hide');
+          }
+        },
+        (error: any) => {
+          this.AdminService.CloseLoader();
+          // this.toastr.warning(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
+          this.toastr.warning(
+            this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE,
+            'warning',
+            { positionClass: 'toast-bottom-left' }
+          );
+        }
+      );
+   // }
+  
+
+ 
+}
+
   EnregistrementRequeteAffectation(tableau_recu: any) {
     this.AdminService.SecuriteChampObligatoireEtTypeDeDonnee(tableau_recu);
     this.AdminService.TypeDeDonneeChampNonObligatoire(tableau_recu);

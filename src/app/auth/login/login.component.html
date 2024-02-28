@@ -107,7 +107,7 @@
                 Se souvenir de moi
               </label>
             </div>
-            <a href="auth-forgot-password-cover.html" class="float-end mb-1">
+            <a routerLink="/login" (click)="voirRecuperation()" class="float-end mb-1">
               <span>Mot de passe oublié ?</span>
             </a>
           </div>
@@ -259,6 +259,61 @@
           data-bs-dismiss="offcanvas"
         >
           Annuler
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- / Content -->
+<div
+  class="offcanvas offcanvas-end"
+  id="sendInvoiceOffcanvasMotdepasse"
+  aria-hidden="true"
+>
+  <div class="offcanvas-header mb-3">
+    <h5 class="offcanvas-title">Faire une demande de recupération de mot de passe</h5>
+    <button
+      type="button"
+      class="btn-close text-reset"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+  </div><br><br><br><br><br><br>
+  <div class="offcanvas-body flex-grow-1">
+    <form>
+      <div class="form-floating form-floating-outline mb-4">
+        <div class="form-floating form-floating-outline">
+          <input
+            type="text"
+            id="EmailRecup"
+            name="EmailRecup"
+            class="form-control"
+            placeholder="01 00 00 00 00 ou ....@gmail.com"
+            [(ngModel)]="formulaire_recupMdp[0].valeur"
+          />
+          <label for="EmailRecup">Email ou telephone</label>
+        </div>
+      </div>
+      <div class="form-floating form-floating-outline mb-4">
+        <input
+          class="form-control"
+          type="text"
+          id="LoginRecup"
+          name="LoginRecup"
+          placeholder="LoginRecup"
+          value=""
+          autofocus
+          [(ngModel)]="formulaire_recupMdp[1].valeur"
+        />
+        <label for="LoginRecup">Login</label>
+      </div>
+      <div class="mb-3 d-flex flex-wrap">
+        <button
+          type="button"
+          class="btn btn-primary me-3"
+          (click)="Recuperation()">
+          Enregistrer
         </button>
       </div>
     </form>

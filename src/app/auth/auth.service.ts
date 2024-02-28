@@ -12,13 +12,13 @@ import Swal from 'sweetalert2';
   providedIn: 'root',
 })
 export class AuthService {
-  nom_de_la_structure: any = 'REMUCI';
+  nom_de_la_structure: any = 'REMU-CI';
 
   libelleConnexion: any = '';
   tempsRestant: number = 10;
   statusConnect: boolean = false;
   LienServeur: any = 'http://localhost:22248/'; //LIEN LOCALE
-  //LienServeur: any ='http://51.210.111.16:1009/'; //LIEN prod
+ // LienServeur: any ='http://51.210.111.16:1009/'; //LIEN prod
 
   constructor(private http: HttpClient) {
     Network.addListener(

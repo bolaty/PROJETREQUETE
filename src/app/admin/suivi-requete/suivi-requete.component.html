@@ -47,7 +47,10 @@
                   <th>Objet</th>
                   <th>Description</th>
                   <th>Statut</th>
-                  <th>Actions</th>
+                  <th>Actions &nbsp;<span
+                    class="badge rounded-pill bg-label-primary me-1"
+                    >{{recupinfo.RE_LIBELLEETAPE}} </span
+                  ></th>
                 </tr>
               </thead>
               <tbody class="table-border-bottom-0">
@@ -242,7 +245,7 @@
   aria-hidden="true"
 >
   <div class="offcanvas-header mb-3">
-    <h5 class="offcanvas-title">Traitement</h5>
+    <h5 class="offcanvas-title">{{recupinfo.RE_LIBELLEETAPE}}</h5>
     <button
       type="button"
       class="btn-close text-reset"
@@ -313,7 +316,7 @@
           style="height: 190px"
           placeholder="Observation de l'agent traitant (portant sur la plainte ou la reclamation)"
           [(ngModel)]="formulaire_suivi[3].valeur"
-          maxlength="30"
+          (input)="checkWordCount()"
         ></textarea>
         <label for="invoice-observation">Observation</label>
       </div>
@@ -324,7 +327,7 @@
         </span>
       </div>
       <!-- Multi  -->
-      <div class="col-12 mb-4">
+      <div class="col-12 mb-4" *ngIf="statutDocument">
         <div class="card">
           <div class="card-body">
             <form
@@ -358,7 +361,7 @@
           type="button"
           class="btn btn-primary me-3"
           data-bs-dismiss="offcanvas"
-          (click)="Valider(formulaire_suivi)"
+          (click)="ValiderTraitement(formulaire_suivi)"
         >
           Valider
         </button>
@@ -418,7 +421,6 @@
           style="height: 190px"
           placeholder="Observation de l'agent traitant (portant sur la plainte ou la reclamation)"
           [(ngModel)]="formulaire_avis[1].valeur"
-          maxlength="30"
         ></textarea>
         <label for="invoice-observation-avis">Observation</label>
       </div>
