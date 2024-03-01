@@ -2,15 +2,28 @@
 
 <div class="authentication-wrapper authentication-cover">
   <!-- Logo -->
-  <a href="index.html" class="auth-cover-brand d-flex align-items-center gap-2">
+  <!-- personnalisable -->
+  <a
+    href="index.html"
+    class="auth-cover-brand d-flex align-items-center gap-2"
+    style="margin-top: 70px"
+  >
     <span class="app-brand-logo demo">
       <span style="color: var(--bs-primary)">
         <!-- logo de la structure -->
         <img
-          src="../../assets/img/illustrations/logo_remuci.png"
+          src="../../assets/img/illustrations/logo_remuci-removebg-preview.png"
           alt="tree"
-          height="70"
-          width="70"
+          height="90"
+          width="90"
+          *ngIf="customizer == 'remuci'"
+        />
+        <img
+          src="../../assets/img/illustrations/logo_gesci-removebg-preview.png"
+          alt="tree"
+          height="90"
+          width="90"
+          *ngIf="customizer == 'gesci'"
         />
       </span>
     </span>
@@ -23,9 +36,11 @@
 
   <div class="authentication-inner row m-0">
     <!-- /Left Section -->
+    <!-- personnalisable -->
     <div
       class="d-none d-lg-flex col-lg-7 col-xl-8 align-items-center justify-content-center p-5 pb-2"
       style="background-color: #fff6e7"
+      *ngIf="customizer == 'remuci' && AuthService.user_connecte"
     >
       <div>
         <img
@@ -34,6 +49,49 @@
           alt="auth-model"
           data-app-light-img="illustrations/connexion.jpg"
           data-app-dark-img="illustrations/connexion.jpg"
+        />
+      </div>
+      <img
+        src="../../assets/img/illustrations/auth-cover-mask-light.png"
+        class="scaleX-n1-rtl authentication-image d-none d-lg-block w-75"
+        alt="triangle-bg"
+        data-app-light-img="illustrations/auth-cover-mask-light.png"
+        data-app-dark-img="illustrations/auth-cover-mask-dark.png"
+      />
+    </div>
+    <div
+      class="d-none d-lg-flex col-lg-7 col-xl-8 align-items-center justify-content-center p-5 pb-2"
+      style="background-color: #ffffff"
+      *ngIf="customizer == 'gesci' && AuthService.user_connecte"
+    >
+      <div>
+        <img
+          src="../../assets/img/illustrations/20944013.jpg"
+          class="authentication-image-model d-none d-lg-block"
+          alt="auth-model"
+          data-app-light-img="illustrations/20944013.jpg"
+          data-app-dark-img="illustrations/20944013.jpg"
+        />
+      </div>
+      <img
+        src="../../assets/img/illustrations/auth-cover-mask-light.png"
+        class="scaleX-n1-rtl authentication-image d-none d-lg-block w-75"
+        alt="triangle-bg"
+        data-app-light-img="illustrations/auth-cover-mask-light.png"
+        data-app-dark-img="illustrations/auth-cover-mask-dark.png"
+      />
+    </div>
+    <div
+      class="d-none d-lg-flex col-lg-7 col-xl-8 align-items-center justify-content-center p-5 pb-2"
+      *ngIf="!AuthService.user_connecte"
+    >
+      <div>
+        <img
+          src="../../assets/img/illustrations/boy-with-laptop-light.png"
+          class="authentication-image-model d-none d-lg-block"
+          alt="auth-model"
+          data-app-light-img="illustrations/boy-with-laptop-light.png"
+          data-app-dark-img="illustrations/boy-with-laptop-light.png"
         />
       </div>
       <img
@@ -107,7 +165,11 @@
                 Se souvenir de moi
               </label>
             </div>
-            <a routerLink="/login" (click)="voirRecuperation()" class="float-end mb-1">
+            <a
+              routerLink="/login"
+              (click)="voirRecuperation()"
+              class="float-end mb-1"
+            >
               <span>Mot de passe oublié ?</span>
             </a>
           </div>
@@ -272,14 +334,17 @@
   aria-hidden="true"
 >
   <div class="offcanvas-header mb-3">
-    <h5 class="offcanvas-title">Faire une demande de recupération de mot de passe</h5>
+    <h5 class="offcanvas-title">
+      Faire une demande de recupération de mot de passe
+    </h5>
     <button
       type="button"
       class="btn-close text-reset"
       data-bs-dismiss="offcanvas"
       aria-label="Close"
     ></button>
-  </div><br><br><br><br><br><br>
+  </div>
+  <br /><br /><br /><br /><br /><br />
   <div class="offcanvas-body flex-grow-1">
     <form>
       <div class="form-floating form-floating-outline mb-4">
@@ -312,7 +377,8 @@
         <button
           type="button"
           class="btn btn-primary me-3"
-          (click)="Recuperation()">
+          (click)="Recuperation()"
+        >
           Enregistrer
         </button>
       </div>
