@@ -4,7 +4,16 @@
     <div
       class="faq-header d-flex flex-column justify-content-center align-items-center"
     >
-      <h3 class="text-center text-primary mb-2">
+      <h3
+        class="text-center text-primary mb-2"
+        *ngIf="recupinfoconnect[0].TU_CODETYPEUTILISATEUR != '0002'"
+      >
+        Bonjour, comment pouvons-nous vous aider ?
+      </h3>
+      <h3
+        class="text-center mb-2"
+        *ngIf="recupinfoconnect[0].TU_CODETYPEUTILISATEUR == '0002'"
+      >
         Bonjour, comment pouvons-nous vous aider ?
       </h3>
       <p class="text-body text-center mb-0 px-3">
@@ -47,10 +56,12 @@
                   <th>Objet</th>
                   <th>Description</th>
                   <th>Statut</th>
-                  <th>Actions &nbsp;<span
-                    class="badge rounded-pill bg-label-primary me-1"
-                    >{{recupinfo.RE_LIBELLEETAPE}} </span
-                  ></th>
+                  <th>
+                    Actions &nbsp;<span
+                      class="badge rounded-pill bg-label-primary me-1"
+                      >{{ recupinfo.RE_LIBELLEETAPE }}
+                    </span>
+                  </th>
                 </tr>
               </thead>
               <tbody class="table-border-bottom-0">
@@ -80,7 +91,7 @@
                     <div class="dropdown">
                       <button
                         type="button"
-                        class="btn p-0 dropdown-toggle hide-arrow"
+                        class="bttn btn p-0 dropdown-toggle hide-arrow"
                         data-bs-toggle="dropdown"
                       >
                         <i class="mdi mdi-dots-vertical"></i>
@@ -124,7 +135,7 @@
                     <div class="dropdown">
                       <button
                         type="button"
-                        class="btn p-0 dropdown-toggle hide-arrow"
+                        class="bttn btn p-0 dropdown-toggle hide-arrow"
                         data-bs-toggle="dropdown"
                       >
                         <i class="mdi mdi-dots-vertical"></i>
@@ -163,7 +174,7 @@
                     <div class="dropdown">
                       <button
                         type="button"
-                        class="btn p-0 dropdown-toggle hide-arrow"
+                        class="bttn btn p-0 dropdown-toggle hide-arrow"
                         data-bs-toggle="dropdown"
                       >
                         <i class="mdi mdi-dots-vertical"></i>
@@ -202,7 +213,7 @@
                     <div class="dropdown">
                       <button
                         type="button"
-                        class="btn p-0 dropdown-toggle hide-arrow"
+                        class="bttn btn p-0 dropdown-toggle hide-arrow"
                         data-bs-toggle="dropdown"
                       >
                         <i class="mdi mdi-dots-vertical"></i>
@@ -245,15 +256,15 @@
   aria-hidden="true"
 >
   <div class="offcanvas-header mb-3">
-    <h5 class="offcanvas-title">{{recupinfo.RE_LIBELLEETAPE}}</h5>
+    <h5 class="offcanvas-title">{{ recupinfo.RE_LIBELLEETAPE }}</h5>
     <button
       type="button"
-      class="btn-close text-reset"
+      class="bttn btn-close text-reset"
       data-bs-dismiss="offcanvas"
       aria-label="Close"
     ></button>
   </div>
-   <div class="offcanvas-body flex-grow-1">
+  <div class="offcanvas-body flex-grow-1">
     <form>
       <div class="form-floating form-floating-outline mb-4">
         <input
@@ -359,7 +370,7 @@
       <div class="mb-3 d-flex flex-wrap">
         <button
           type="button"
-          class="btn btn-primary me-3"
+          class="bttn btn btn-primary me-3"
           data-bs-dismiss="offcanvas"
           (click)="ValiderTraitement(formulaire_suivi)"
         >
@@ -367,7 +378,7 @@
         </button>
         <button
           type="button"
-          class="btn btn-outline-secondary"
+          class="bttn btn btn-outline-secondary"
           data-bs-dismiss="offcanvas"
         >
           Annuler
@@ -386,7 +397,7 @@
     <h5 class="offcanvas-title">Consultation et avis</h5>
     <button
       type="button"
-      class="btn-close text-reset"
+      class="bttn btn-close text-reset"
       data-bs-dismiss="offcanvas"
       aria-label="Close"
     ></button>
@@ -427,7 +438,7 @@
       <div class="mb-3 d-flex flex-wrap">
         <button
           type="button"
-          class="btn btn-primary me-3"
+          class="bttn btn btn-primary me-3"
           data-bs-dismiss="offcanvas"
           (click)="EnregistrerAvis(formulaire_avis)"
         >
@@ -435,7 +446,7 @@
         </button>
         <button
           type="button"
-          class="btn btn-outline-secondary"
+          class="bttn btn btn-outline-secondary"
           data-bs-dismiss="offcanvas"
         >
           Annuler

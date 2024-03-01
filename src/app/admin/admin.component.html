@@ -440,7 +440,7 @@
                   <div class="dropdown-header d-flex align-items-center py-3">
                     <h6 class="fw-normal mb-0 me-auto">Notification</h6>
                     <span class="badge rounded-pill bg-label-primary"
-                      >{{nombreNotif}} New</span
+                      >{{ nombreNotif }} New</span
                     >
                   </div>
                 </li>
@@ -448,7 +448,8 @@
                   <ul class="list-group list-group-flush">
                     <li
                       class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read"
-                      *ngFor="let LisNotification of ListeNotification">
+                      *ngFor="let LisNotification of ListeNotification"
+                    >
                       <div class="d-flex align-items-center gap-2">
                         <div class="flex-shrink-0">
                           <div class="avatar me-1">
@@ -461,24 +462,26 @@
                         <div
                           class="d-flex flex-column flex-grow-1 overflow-hidden w-px-250"
                         >
-                          <h6 class="mb-1">{{LisNotification.SM_MESSAGE}}</h6>
-                          <small class="text-truncate text-body"
-                            >{{LisNotification.SM_STATUT}}</small
-                          >
+                          <h6 class="mb-1">{{ LisNotification.SM_MESSAGE }}</h6>
+                          <small class="text-truncate text-body">{{
+                            LisNotification.SM_STATUT
+                          }}</small>
                         </div>
                         <div
                           class="flex-shrink-0 dropdown-notifications-actions"
                         >
-                          <small class="text-muted">{{LisNotification.SM_DATEEMISSIONSMS}}</small>
+                          <small class="text-muted">{{
+                            LisNotification.SM_DATEEMISSIONSMS
+                          }}</small>
                         </div>
                       </div>
                     </li>
                   </ul>
                 </li>
-               <!-- <li class="dropdown-menu-footer border-top p-3">
+                <!-- <li class="dropdown-menu-footer border-top p-3">
                   <a
                     href="javascript:void(0);"
-                    class="btn btn-primary d-flex justify-content-center"
+                    class="bttn btn btn-primary d-flex justify-content-center"
                     >Read all notifications</a
                   >
                 </li>-->

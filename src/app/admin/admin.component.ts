@@ -14,6 +14,7 @@ export class AdminComponent implements OnInit {
   ListeNotification: any = [];
   nombreNotif: any = 0;
   boutons: any = [];
+  libelles: any = [];
 
   constructor(public AdminService: AdminService, private _router: Router) {}
 
@@ -949,16 +950,21 @@ export class AdminComponent implements OnInit {
   ChangementDeCouleur() {
     // selection
     this.boutons = document.getElementsByClassName('bttn');
-    var elmt2 = document.getElementById('Headercolor');
+    this.libelles = document.getElementsByClassName('text_label');
+    // var elmt2 = document.getElementById('Headercolor');
     //@ts-ignore
-    elmt2.style.backgroundColor = this.AdminService.ColorApplication;
+    /* elmt2.style.backgroundColor = this.AdminService.ColorApplication;
     //@ts-ignore
-    elmt2.style.color = this.AdminService.ColorApplicationText;
+    elmt2.style.color = this.AdminService.ColorApplicationText; */
 
     // application
     for (let i = 0; i < this.boutons.length; i++) {
-      this.boutons[i].style.backgroundColor = 'red';
+      this.boutons[i].style.backgroundColor = '#A3C9AA';
       // this.boutons[i].style.color = this.AdminService.ColorApplicationText;
+    }
+    for (let j = 0; j < this.libelles.length; j++) {
+      // this.libelles[j].style.backgroundColor = '#A3C9AA';
+      this.libelles[j].style.color = '#A3C9AA';
     }
   }
 

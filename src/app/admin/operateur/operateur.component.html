@@ -20,7 +20,7 @@
             <div class="button-wrapper">
               <label
                 for="upload"
-                class="btn btn-primary me-2 mb-3"
+                class="bttn btn btn-primary me-2 mb-3"
                 tabindex="0"
               >
                 <span class="d-none d-sm-block">Nouvelle photo</span>
@@ -35,7 +35,7 @@
               </label>
               <button
                 type="button"
-                class="btn btn-outline-danger account-image-reset mb-3"
+                class="bttn btn btn-outline-danger account-image-reset mb-3"
               >
                 <i class="mdi mdi-reload d-block d-sm-none"></i>
                 <span class="d-none d-sm-block">Réinitialiser</span>
@@ -206,14 +206,17 @@
                     <div class="mt-4">
                       <button
                         type="submit"
-                        class="btn btn-primary me-2"
+                        class="bttn btn btn-primary me-2"
                         (click)="
                           EnregistrementCompteOperateur(formulaire_operateur)
                         "
                       >
                         Sauvegarder
                       </button>
-                      <button type="reset" class="btn btn-outline-secondary">
+                      <button
+                        type="reset"
+                        class="bttn btn btn-outline-secondary"
+                      >
                         Réinitialiser
                       </button>
                     </div>
@@ -275,7 +278,7 @@
             <div class="button-wrapper">
               <label
                 for="upload"
-                class="btn btn-primary me-2 mb-3"
+                class="bttn btn btn-primary me-2 mb-3"
                 tabindex="0"
               >
                 <span class="d-none d-sm-block">Nouvelle photo</span>
@@ -290,7 +293,7 @@
               </label>
               <button
                 type="button"
-                class="btn btn-outline-danger account-image-reset mb-3"
+                class="bttn btn btn-outline-danger account-image-reset mb-3"
               >
                 <i class="mdi mdi-reload d-block d-sm-none"></i>
                 <span class="d-none d-sm-block">Réinitialiser</span>
@@ -455,7 +458,7 @@
                           <label for="motdepasse">Mot de passe</label>
                         </div>
                       </div>
-                     <!-- <div class="d-flex mb-3" *ngFor="let ListEtapes of ListeComboEtapes; let i = index">
+                      <!-- <div class="d-flex mb-3" *ngFor="let ListEtapes of ListeComboEtapes; let i = index">
                         <div class="flex-shrink-0">
                           <img src="../../assets/img/icons/misc/aviato.png" alt="aviato" class="me-3" height="26" />
                         </div>
@@ -479,14 +482,17 @@
                     <div class="mt-4">
                       <button
                         type="submit"
-                        class="btn btn-primary me-2"
+                        class="bttn btn btn-primary me-2"
                         (click)="
                           EnregistrementCompteOperateur(formulaire_operateur)
                         "
                       >
                         Sauvegarder
                       </button>
-                      <button type="reset" class="btn btn-outline-secondary">
+                      <button
+                        type="reset"
+                        class="bttn btn btn-outline-secondary"
+                      >
                         Réinitialiser
                       </button>
                     </div>
@@ -517,7 +523,7 @@
     <h5 class="offcanvas-title">Actions</h5>
     <button
       type="button"
-      class="btn-close text-reset"
+      class="bttn btn-close text-reset"
       data-bs-dismiss="offcanvas"
       aria-label="Close"
     ></button>
@@ -555,7 +561,7 @@
       <div class="d-flex justify-content-center">
         <a
           href="javascript:;"
-          class="btn btn-primary me-3"
+          class="bttn btn btn-primary me-3"
           (click)="checkModif()"
           >Modifier</a
         >
@@ -656,7 +662,7 @@
       <div class="mb-3 d-flex flex-wrap">
         <button
           type="button"
-          class="btn btn-primary me-3"
+          class="bttn btn btn-primary me-3"
           data-bs-dismiss="offcanvas"
           (click)="EnregistrementCompteOperateur(formulaire_operateur)"
         >
@@ -664,7 +670,7 @@
         </button>
         <button
           type="button"
-          class="btn btn-outline-secondary"
+          class="bttn btn btn-outline-secondary"
           data-bs-dismiss="offcanvas"
         >
           Annuler
