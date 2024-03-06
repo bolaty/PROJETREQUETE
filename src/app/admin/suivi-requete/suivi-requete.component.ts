@@ -452,6 +452,7 @@ export class SuiviRequeteComponent {
     this.FormObjet = formData;
   }
   //http://51.210.111.16:1009/ lien prod
+  //http://localhost:22248/ lien dev
   SaveRapport() {
     if (
       this.FormObjet == null ||
@@ -464,7 +465,7 @@ export class SuiviRequeteComponent {
     } else {
       this.http
         .post(
-          'http://51.210.111.16:1009/RequeteClientsClasse.svc/pvgpvgMajReqrequeteEtapeUPloadFile',
+          'http://localhost:22248/RequeteClientsClasse.svc/pvgpvgMajReqrequeteEtapeUPloadFile',
           this.FormObjet
         )
         .subscribe(

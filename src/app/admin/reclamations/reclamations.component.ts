@@ -397,6 +397,12 @@ export class ReclamationsComponent {
         this.ListeComboModeCollecte =
           this.ListeComboModeCollecte.pvgReqmodecollecteComboResult;
         if (this.ListeComboModeCollecte[0].clsResultat.SL_RESULTAT == 'TRUE') {
+          this.formulaire_plaintes_reclamations[7].valeur = '';
+          if (this.recupinfo[0].TU_CODETYPEUTILISATEUR == '0002') {
+            this.formulaire_plaintes_reclamations[7].valeur =
+              this.ListeComboModeCollecte[2].MC_CODEMODECOLLETE;
+          }
+
           this.ComboAvisrecevabilite();
         } else {
         }
@@ -458,6 +464,7 @@ export class ReclamationsComponent {
     formData.append('AT_OBSERVATION', '');
     this.FormObjet = formData;
   }
+
   EnregistrementRequete(tableau_recu: any) {
     this.AdminService.SecuriteChampObligatoireEtTypeDeDonnee(tableau_recu);
     this.AdminService.TypeDeDonneeChampNonObligatoire(tableau_recu);
@@ -565,7 +572,7 @@ export class ReclamationsComponent {
               CU_CODECOMPTEUTULISATEUR:
                 this.statutClientExiste == false
                   ? this.ListeClients[0].CU_CODECOMPTEUTULISATEUR
-                  : '', // this.recupinfo[0].CU_CODECOMPTEUTULISATEUR,//"1",
+                  : this.retourRequeteEnregistrement.CU_CODECOMPTEUTULISATEUR, // this.recupinfo[0].CU_CODECOMPTEUTULISATEUR,//"1",
               CU_CODECOMPTEUTULISATEURAGENTENCHARGE: '', //this.formulaire_plaintes_reclamations[8].valeur,
               MC_CODEMODECOLLETE:
                 this.formulaire_plaintes_reclamations[7].valeur, //"01",
@@ -726,7 +733,6 @@ export class ReclamationsComponent {
             );
             this.AdminService.CloseLoader();
           } else {
-            //this.toastr.success(this.retourRequeteEnregistrement[0].clsResultat.SL_MESSAGE, 'Echec');
             this.EnregistrementRequete(this.formulaire_plaintes_reclamations);
           }
         },

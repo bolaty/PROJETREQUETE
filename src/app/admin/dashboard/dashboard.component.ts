@@ -10,6 +10,7 @@ export class DashboardComponent {
   recupinfo: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
   public chart_bar: any;
   public chart_pie: any;
+  tab_session_graph: any = [];
   graphe_en_bande: any = [];
   graphe_circulaire: any = [];
   tab_intermediaire_bande_abs: any = [];
@@ -43,8 +44,13 @@ export class DashboardComponent {
     '#FDBBBB',
     '#3BA3E5',
   ];
-  table_id_pie: any = ['MyChartPie3', 'MyChartPie4'];
-  table_id_bar: any = ['MyChartBar2'];
+  table_id_pie: any = [
+    'MyChartPie3',
+    'MyChartPie4',
+    'MyChartPie33',
+    'MyChartPie44',
+  ];
+  table_id_bar: any = ['MyChartBar2', 'MyChartBar22'];
 
   FormationChartPie(id_du_graphe: any) {
     this.chart_pie = new Chart(id_du_graphe, {
@@ -86,6 +92,74 @@ export class DashboardComponent {
         aspectRatio: 2.5,
       },
     });
+  }
+
+  PrintGraphPie() {
+    this.tab_session_graph = [
+      {
+        tab_intermediaire_cercle_abs_obj: [],
+        tab_intermediaire_cercle_ord_obj: [],
+        type_graphe: 'pie',
+      },
+    ];
+    for (
+      let index = 0;
+      index < this.tab_intermediaire_cercle_abs.length;
+      index++
+    ) {
+      this.tab_session_graph[0].tab_intermediaire_cercle_abs_obj.push(
+        this.tab_intermediaire_cercle_abs[index]
+      );
+    }
+    for (
+      let index = 0;
+      index < this.tab_intermediaire_cercle_ord.length;
+      index++
+    ) {
+      this.tab_session_graph[0].tab_intermediaire_cercle_ord_obj.push(
+        this.tab_intermediaire_cercle_ord[index]
+      );
+    }
+    sessionStorage.setItem(
+      'info_graphe',
+      JSON.stringify(this.tab_session_graph)
+    );
+
+    window.open('/admin/impression', '_blank');
+  }
+
+  PrintGraphBar() {
+    this.tab_session_graph = [
+      {
+        tab_intermediaire_cercle_abs_obj: [],
+        tab_intermediaire_cercle_ord_obj: [],
+        type_graphe: 'bar',
+      },
+    ];
+    for (
+      let index = 0;
+      index < this.tab_intermediaire_cercle_abs.length;
+      index++
+    ) {
+      this.tab_session_graph[0].tab_intermediaire_cercle_abs_obj.push(
+        this.tab_intermediaire_cercle_abs[index]
+      );
+    }
+    for (
+      let index = 0;
+      index < this.tab_intermediaire_cercle_ord.length;
+      index++
+    ) {
+      this.tab_session_graph[0].tab_intermediaire_cercle_ord_obj.push(
+        this.tab_intermediaire_cercle_ord[index]
+      );
+    }
+    sessionStorage.setItem(
+      'info_graphe',
+      JSON.stringify(this.tab_session_graph)
+    );
+
+    window.open('/admin/impression', '_blank');
   }
 
   ngOnInit(): void {

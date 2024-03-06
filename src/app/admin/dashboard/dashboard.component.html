@@ -42,7 +42,7 @@
             <h5 class="card-title m-0 me-2">Reclamations</h5>
             <div class="dropdown">
               <button
-                class="bttn btn p-0"
+                class="btn p-0"
                 type="button"
                 id="transactionID"
                 data-bs-toggle="dropdown"
@@ -146,7 +146,12 @@
       </div>
     </div>
     <!-- Total Earnings -->
-    <div class="col">
+    <div
+      class="col"
+      data-bs-toggle="modal"
+      data-bs-target="#enlargeModal1"
+      style="cursor: pointer"
+    >
       <div class="card">
         <div
           class="card-header d-flex align-items-center justify-content-between"
@@ -161,7 +166,12 @@
     <!--/ Total Earnings -->
 
     <!-- Total Earnings -->
-    <div class="col">
+    <div
+      class="col"
+      data-bs-toggle="modal"
+      data-bs-target="#enlargeModal2"
+      style="cursor: pointer"
+    >
       <div class="card">
         <div
           class="card-header d-flex align-items-center justify-content-between"
@@ -176,7 +186,12 @@
     <!--/ Total Earnings -->
 
     <!-- Total Earnings -->
-    <div class="col">
+    <div
+      class="col"
+      data-bs-toggle="modal"
+      data-bs-target="#enlargeModal3"
+      style="cursor: pointer"
+    >
       <div class="card">
         <div
           class="card-header d-flex align-items-center justify-content-between"
@@ -191,3 +206,111 @@
     <!--/ Total Earnings -->
   </div>
 </div>
+
+<!-- Pricing Modal -->
+<div class="modal fade" id="enlargeModal1" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-simple modal-pricing">
+    <div class="modal-content p-2 p-md-5">
+      <div class="modal-body py-3 py-md-0">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+        <!-- Pricing Plans -->
+        <div class="pb-3 rounded-top">
+          <h3 class="text-center mb-2">Reclamations enregistrées</h3>
+          <p class="text-center pt-1 mb-0"></p>
+
+          <div class="row mx-0 gy-3">
+            <canvas id="MyChartPie33">{{ chart_pie }}</canvas>
+          </div>
+        </div>
+        <!--/ Pricing Plans -->
+        <div class="text-center">
+          <p></p>
+          <a
+            href="javascript:void(0);"
+            class="btn btn-primary"
+            (click)="PrintGraphPie()"
+            >Aperçu</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--/ Pricing Modal -->
+
+<!-- Pricing Modal -->
+<div class="modal fade" id="enlargeModal2" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-simple modal-pricing">
+    <div class="modal-content p-2 p-md-5">
+      <div class="modal-body py-3 py-md-0">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+        <!-- Pricing Plans -->
+        <div class="pb-3 rounded-top">
+          <h3 class="text-center mb-2">Reclamations enregistrées</h3>
+          <p class="text-center pt-1 mb-0"></p>
+
+          <div class="row mx-0 gy-3">
+            <canvas id="MyChartBar22">{{ chart_bar }}</canvas>
+          </div>
+        </div>
+        <!--/ Pricing Plans -->
+        <div class="text-center">
+          <p></p>
+          <a
+            href="javascript:void(0);"
+            class="btn btn-primary"
+            (click)="PrintGraphBar()"
+            >Aperçu</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--/ Pricing Modal -->
+
+<!-- Pricing Modal -->
+<div class="modal fade" id="enlargeModal3" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-simple modal-pricing">
+    <div class="modal-content p-2 p-md-5">
+      <div class="modal-body py-3 py-md-0">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+        <!-- Pricing Plans -->
+        <div class="pb-3 rounded-top">
+          <h3 class="text-center mb-2">Reclamations enregistrées</h3>
+          <p class="text-center pt-1 mb-0"></p>
+
+          <div class="row mx-0 gy-3">
+            <canvas id="MyChartPie44">{{ chart_pie }}</canvas>
+          </div>
+        </div>
+        <!--/ Pricing Plans -->
+        <div class="text-center">
+          <p></p>
+          <a
+            href="javascript:void(0);"
+            class="btn btn-primary"
+            (click)="PrintGraphPie()"
+            >Aperçu</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--/ Pricing Modal -->

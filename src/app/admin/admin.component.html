@@ -167,7 +167,11 @@
             <div data-i18n="Client">Client</div>
           </a>
         </li>-->
-        <li class="menu-item" routerLink="edition">
+        <li
+          class="menu-item"
+          routerLink="edition"
+          *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR != '0002'"
+        >
           <a style="cursor: pointer" class="menu-link">
             <span class="menu-icon tf-icons mdi mdi-file"></span>
             <div data-i18n="Edition">Edition</div>

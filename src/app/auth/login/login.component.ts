@@ -81,8 +81,8 @@ export class LoginComponent {
     let body = {
       Objets: [
         {
-          // OE_PARAM: ['0001', this.formLogin.login, this.formLogin.mdp],
-          OE_PARAM: ['0002', this.formLogin.login, this.formLogin.mdp],
+          // OE_PARAM: ['0001', this.formLogin.login, this.formLogin.mdp], // operateur
+          OE_PARAM: ['0002', this.formLogin.login, this.formLogin.mdp], // client
           clsObjetEnvoi: {
             ET_CODEETABLISSEMENT: '',
             AN_CODEANTENNE: '',

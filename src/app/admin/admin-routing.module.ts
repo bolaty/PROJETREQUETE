@@ -8,6 +8,7 @@ import { EditionsComponent } from './editions/editions.component';
 import { OperateurComponent } from './operateur/operateur.component';
 import { RelanceComponent } from './relance/relance.component';
 import { SuiviRequeteComponent } from './suivi-requete/suivi-requete.component';
+import { PrintPageComponent } from './print-page/print-page.component';
 const routes: Routes = [
   {
     path: '',
@@ -61,6 +62,9 @@ const routes: Routes = [
           },
         ],
       },
+
+      // menu Impression
+      { path: 'impression', component: PrintPageComponent },
     ],
   },
 ];

@@ -29,6 +29,7 @@ import { OperateurComponent } from './operateur/operateur.component';
 import { RelanceComponent } from './relance/relance.component';
 import { SuiviRequeteComponent } from './suivi-requete/suivi-requete.component';
 import { FormsModule } from '@angular/forms';
+import { PrintPageComponent } from './print-page/print-page.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { FormsModule } from '@angular/forms';
     OperateurComponent,
     RelanceComponent,
     SuiviRequeteComponent,
+    PrintPageComponent,
   ],
   imports: [CommonModule, AdminRoutingModule, FormsModule],
 })
