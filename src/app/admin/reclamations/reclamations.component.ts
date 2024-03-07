@@ -13,6 +13,7 @@ declare var $: any;
 })
 export class ReclamationsComponent {
   recupinfo: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
+  maxWords: any = 30;
   base64Image: string = '';
   option_body: any = '';
   background_color: any = [
@@ -222,6 +223,8 @@ export class ReclamationsComponent {
   voirlist: any;
   DATECLOTUREAVISREQ: any = '01/01/1900';
   ObservationsCloture: any = '';
+  long_sentence: boolean = false;
+
   constructor(
     public AdminService: AdminService,
     private toastr: ToastrService
@@ -254,6 +257,7 @@ export class ReclamationsComponent {
       (error) => {}
     );
   }
+
   ComboEtapeParam() {
     let Option = 'RequeteClientsClasse.svc/pvgListeReqrequeteEtapeParamCombo';
     let body = {
@@ -275,12 +279,12 @@ export class ReclamationsComponent {
           this.ListeComboEtapes.pvgListeReqrequeteEtapeParamComboResult;
         if (this.ListeComboEtapes[0].clsResultat.SL_RESULTAT == 'TRUE') {
           this.ComboOperateur();
-        } else {
         }
       },
       (error) => {}
     );
   }
+
   ComboEtapeParamSimple() {
     let Option = 'RequeteClientsClasse.svc/pvgListeReqrequeteEtapeParamCombo';
     let body = {
@@ -300,10 +304,11 @@ export class ReclamationsComponent {
         this.ListeComboEtapes = success;
         this.ListeComboEtapes =
           this.ListeComboEtapes.pvgListeReqrequeteEtapeParamComboResult;
-        if (this.ListeComboEtapes[0].clsResultat.SL_RESULTAT == 'TRUE') {
-          // this.ComboOperateur();
-        } else {
+
+        for (let index = 0; index < this.ListeComboEtapes.length; index++) {
+          this.ListeComboEtapes[index].RE_ACTIF = 'N';
         }
+        this.cloture = false;
       },
       (error) => {}
     );
@@ -901,91 +906,101 @@ export class ReclamationsComponent {
           '0' + d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
         console.log(date);
       }
-      let Options = 'RequeteClientsClasse.svc/pvgMajReqrequete'; // le chemin d'appel du service web
-      //objet d'envoi
-      let body = {
-        Objets: [
-          {
-            AC_CODEACTIONCORRECTIVE: '',
-            CU_CODECOMPTEUTULISATEUR:
-              this.recupValEtape.CU_CODECOMPTEUTULISATEUR, // this.recupinfo[0].CU_CODECOMPTEUTULISATEUR,//"1",
-            CU_CODECOMPTEUTULISATEURAGENTENCHARGE:
-              this.recupValEtape.CU_CODECOMPTEUTULISATEURAGENTENCHARGE, //this.formulaire_suivi[8].valeur,
-            MC_CODEMODECOLLETE: this.recupValEtape.MC_CODEMODECOLLETE, //"01",
-            NS_CODENIVEAUSATISFACTION:
-              this.recupValEtape.NS_CODENIVEAUSATISFACTION,
-            RQ_CODEREQUETE: this.recupValEtape.RQ_CODEREQUETE,
-            RQ_CODEREQUETERELANCEE: '',
-            RQ_DATECLOTUREREQUETE: '01/01/1900',
-            RQ_DATEDEBUTTRAITEMENTREQUETE: this.formulaire_avis[2].valeur,
-            RQ_DATEFINTRAITEMENTREQUETE: this.formulaire_avis[3].valeur,
-            RQ_DATESAISIEREQUETE: this.recupValEtape.RQ_DATESAISIEREQUETE,
-            RQ_DATETRANSFERTREQUETE: this.recupValEtape.RQ_DATETRANSFERTREQUETE,
-            RQ_DELAITRAITEMENTREQUETE: '',
-            RQ_DESCRIPTIONREQUETE: this.recupValEtape.RQ_DESCRIPTIONREQUETE, //"DESCRIPTION DE LA REQUETE",
-            RQ_DUREETRAITEMENTREQUETE: '',
-            RQ_LOCALISATIONCLIENT: this.recupValEtape.RQ_LOCALISATIONCLIENT, //"LOCALISATION DU CLIENT",
-            RQ_NUMERORECOMPTE: this.recupValEtape.RQ_NUMERORECOMPTE, //"0",
-            RQ_NUMEROREQUETE: this.recupValEtape.RQ_NUMEROREQUETE,
-            RQ_OBJETREQUETE: this.recupValEtape.RQ_OBJETREQUETE,
-            RQ_OBSERVATIONAGENTTRAITEMENTREQUETE:
-              this.recupValEtape.RQ_OBSERVATIONAGENTTRAITEMENTREQUETE,
-            RQ_OBSERVATIONDELAITRAITEMENTREQUETE:
-              this.formulaire_avis[1].valeur,
-            RQ_AFFICHERINFOCLIENT: 'O',
-            RQ_SIGNATURE: '',
-            RQ_SIGNATURE1: '',
-            RS_CODESTATUTRECEVABILITE: this.formulaire_avis[0].valeur,
-            SR_CODESERVICE: this.recupValEtape.SR_CODESERVICE,
-            TR_CODETYEREQUETE: this.recupValEtape.TR_CODETYEREQUETE, //"00001",
-            clsObjetEnvoi: {
-              ET_CODEETABLISSEMENT: '',
-              AN_CODEANTENNE: '',
-              TYPEOPERATION: '1',
-            },
-          },
-        ],
-      };
-      this.AdminService.ShowLoader();
-      this.AdminService.AppelServeur(body, Options).subscribe(
-        (success) => {
-          this.tab_enregistrement_traitement = success;
-          this.tab_enregistrement_traitement =
-            this.tab_enregistrement_traitement.pvgMajReqrequeteResult;
-          this.AdminService.CloseLoader();
-          if (
-            this.tab_enregistrement_traitement.clsResultat.SL_RESULTAT ==
-            'FALSE'
-          ) {
-            //this.toastr.error(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
-            this.toastr.error(
-              this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE,
-              'error',
-              { positionClass: 'toast-bottom-left' }
-            );
-          } else {
-            // this.toastr.success(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
 
-            this.ListeRequete();
-            this.toastr.success(
+      if (!this.long_sentence) {
+        let Options = 'RequeteClientsClasse.svc/pvgMajReqrequete'; // le chemin d'appel du service web
+        //objet d'envoi
+        let body = {
+          Objets: [
+            {
+              AC_CODEACTIONCORRECTIVE: '',
+              CU_CODECOMPTEUTULISATEUR:
+                this.recupValEtape.CU_CODECOMPTEUTULISATEUR, // this.recupinfo[0].CU_CODECOMPTEUTULISATEUR,//"1",
+              CU_CODECOMPTEUTULISATEURAGENTENCHARGE:
+                this.recupValEtape.CU_CODECOMPTEUTULISATEURAGENTENCHARGE, //this.formulaire_suivi[8].valeur,
+              MC_CODEMODECOLLETE: this.recupValEtape.MC_CODEMODECOLLETE, //"01",
+              NS_CODENIVEAUSATISFACTION:
+                this.recupValEtape.NS_CODENIVEAUSATISFACTION,
+              RQ_CODEREQUETE: this.recupValEtape.RQ_CODEREQUETE,
+              RQ_CODEREQUETERELANCEE: '',
+              RQ_DATECLOTUREREQUETE: '01/01/1900',
+              RQ_DATEDEBUTTRAITEMENTREQUETE: this.formulaire_avis[2].valeur,
+              RQ_DATEFINTRAITEMENTREQUETE: this.formulaire_avis[3].valeur,
+              RQ_DATESAISIEREQUETE: this.recupValEtape.RQ_DATESAISIEREQUETE,
+              RQ_DATETRANSFERTREQUETE:
+                this.recupValEtape.RQ_DATETRANSFERTREQUETE,
+              RQ_DELAITRAITEMENTREQUETE: '',
+              RQ_DESCRIPTIONREQUETE: this.recupValEtape.RQ_DESCRIPTIONREQUETE, //"DESCRIPTION DE LA REQUETE",
+              RQ_DUREETRAITEMENTREQUETE: '',
+              RQ_LOCALISATIONCLIENT: this.recupValEtape.RQ_LOCALISATIONCLIENT, //"LOCALISATION DU CLIENT",
+              RQ_NUMERORECOMPTE: this.recupValEtape.RQ_NUMERORECOMPTE, //"0",
+              RQ_NUMEROREQUETE: this.recupValEtape.RQ_NUMEROREQUETE,
+              RQ_OBJETREQUETE: this.recupValEtape.RQ_OBJETREQUETE,
+              RQ_OBSERVATIONAGENTTRAITEMENTREQUETE:
+                this.recupValEtape.RQ_OBSERVATIONAGENTTRAITEMENTREQUETE,
+              RQ_OBSERVATIONDELAITRAITEMENTREQUETE:
+                this.formulaire_avis[1].valeur,
+              RQ_AFFICHERINFOCLIENT: 'O',
+              RQ_SIGNATURE: '',
+              RQ_SIGNATURE1: '',
+              RS_CODESTATUTRECEVABILITE: this.formulaire_avis[0].valeur,
+              SR_CODESERVICE: this.recupValEtape.SR_CODESERVICE,
+              TR_CODETYEREQUETE: this.recupValEtape.TR_CODETYEREQUETE, //"00001",
+              clsObjetEnvoi: {
+                ET_CODEETABLISSEMENT: '',
+                AN_CODEANTENNE: '',
+                TYPEOPERATION: '1',
+              },
+            },
+          ],
+        };
+        this.AdminService.ShowLoader();
+        this.AdminService.AppelServeur(body, Options).subscribe(
+          (success) => {
+            this.tab_enregistrement_traitement = success;
+            this.tab_enregistrement_traitement =
+              this.tab_enregistrement_traitement.pvgMajReqrequeteResult;
+            this.AdminService.CloseLoader();
+            if (
+              this.tab_enregistrement_traitement.clsResultat.SL_RESULTAT ==
+              'FALSE'
+            ) {
+              //this.toastr.error(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
+              this.toastr.error(
+                this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE,
+                'error',
+                { positionClass: 'toast-bottom-left' }
+              );
+            } else {
+              // this.toastr.success(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
+
+              this.ListeRequete();
+              this.toastr.success(
+                this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE,
+                'success',
+                { positionClass: 'toast-bottom-left' }
+              );
+              this.ViderChamp();
+              $('#addNewAddress2').modal('hide');
+            }
+          },
+          (error: any) => {
+            this.AdminService.CloseLoader();
+            // this.toastr.warning(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
+            this.toastr.warning(
               this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE,
-              'success',
+              'warning',
               { positionClass: 'toast-bottom-left' }
             );
-            this.ViderChamp();
-            $('#addNewAddress2').modal('hide');
           }
-        },
-        (error: any) => {
-          this.AdminService.CloseLoader();
-          // this.toastr.warning(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
-          this.toastr.warning(
-            this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE,
-            'warning',
-            { positionClass: 'toast-bottom-left' }
-          );
-        }
-      );
+        );
+      } else {
+        this.toastr.error(
+          `Vous avez saisi trop de mots. Veuillez limiter votre saisie à ${this.maxWords} mots.`,
+          'error',
+          { positionClass: 'toast-bottom-left' }
+        );
+      }
     }
   }
 
@@ -1084,6 +1099,7 @@ export class ReclamationsComponent {
       );
     }
   }
+
   ListeConsultationselonEtape() {
     let Option = 'RequeteClientsClasse.svc/pvgListeReqrequeteEtapeConsultation';
     var recuperation = JSON.parse(sessionStorage.getItem('infoReque') || '');
@@ -1104,6 +1120,8 @@ export class ReclamationsComponent {
         this.ListConsultEtapeSelonReq = success;
         this.ListConsultEtapeSelonReq =
           this.ListConsultEtapeSelonReq.pvgListeReqrequeteEtapeConsultationResult;
+
+        this.statutTraitement = false;
         if (
           this.ListConsultEtapeSelonReq[0].clsResultat.SL_RESULTAT == 'TRUE'
         ) {
@@ -1129,8 +1147,6 @@ export class ReclamationsComponent {
               break;
             }
           }
-        } else {
-          this.statutTraitement = false;
         }
       },
       (error) => {
@@ -1138,6 +1154,7 @@ export class ReclamationsComponent {
       }
     );
   }
+
   selectionEtapeConsultation(info: any, index_etape: any) {
     this.recupEtape = info;
 
@@ -1150,14 +1167,17 @@ export class ReclamationsComponent {
 
     this.ListeConsultationselonEtape();
   }
+
   selectionEtape(info: any) {
     this.recupEtape = info;
   }
+
   ViderChamp() {
     for (let index = 0; index < this.formulaire_avis.length; index++) {
       this.formulaire_avis[index].valeur = '';
     }
   }
+
   ListeRequete() {
     var Option = '';
     var body = {};
@@ -1462,6 +1482,8 @@ export class ReclamationsComponent {
         }
       );
     }
+
+    console.log('table_des_requetes', this.tab_req_afficher);
   }
   ListeRequeteold() {
     let Option = 'RequeteClientsClasse.svc/pvgListeReqrequete';
@@ -1711,6 +1733,7 @@ export class ReclamationsComponent {
       }
     );
   }
+
   //RE_ACTIF
   testStatusetape(index: any) {
     var choixetp = true;
@@ -1725,6 +1748,7 @@ export class ReclamationsComponent {
     }
     choixetp == true ? (this.cloture = true) : (this.cloture = false);
   }
+
   // procedure qui permet de filter les requetes selon le statut
   OnChecked(bouton: any) {
     this.tab_req_afficher = [];
@@ -1843,7 +1867,10 @@ export class ReclamationsComponent {
     }
     return password;
   }
+
   recupListeConsult(info: any) {
+    this.statutTraitement = false;
+
     sessionStorage.setItem('infoReque', JSON.stringify(info));
     this.recupValEtape = info;
     if (
@@ -1856,7 +1883,14 @@ export class ReclamationsComponent {
       this.formulaire_attr_reclamations[0].valeur =
         info.CU_CODECOMPTEUTULISATEUR;
     }
-    //this.ComboEtapeParamSimple()
+
+    this.recupEtape = {};
+    this.option_body = document.getElementById('idColor');
+    for (let index = 0; index < this.ListeComboEtapes.length; index++) {
+      this.option_body.style.backgroundColor = '';
+    }
+
+    this.ngOnInit();
   }
 
   recupListeCloture(info: any) {
@@ -1864,6 +1898,7 @@ export class ReclamationsComponent {
     this.recupValEtape = info;
     this.ComboEtapeParamSimple();
   }
+
   recupListe(info: any) {
     sessionStorage.setItem('infoReque', JSON.stringify(info));
     this.ComboReqrequeteselonEtape(info.RQ_CODEREQUETE);
@@ -1947,6 +1982,7 @@ export class ReclamationsComponent {
     this.formulaire_plaintes_reclamations[11].valeur = '';
     this.formulaire_plaintes_reclamations[12].valeur = '';
   }
+
   viderChampAff() {
     this.formulaire_attr_reclamations[0].valeur = '';
     this.formulaire_attr_reclamations[1].valeur = '';
@@ -1954,6 +1990,27 @@ export class ReclamationsComponent {
     this.formulaire_attr_reclamations[3].valeur = '';
     $('#addNewAddress').modal('hide');
   }
+
+  CheckWordCount() {
+    this.formulaire_avis[1].valeur = this.formulaire_avis[1].valeur.trim();
+
+    const words = this.formulaire_avis[1].valeur.split(' ');
+    this.long_sentence = false;
+    if (words.length > this.maxWords) {
+      // this.formulaire_avis[1].valeur = words.slice(0, 30).join(' ');
+      this.long_sentence = true;
+      this.toastr.error(
+        `Vous avez saisi trop de mots. Veuillez limiter votre saisie à ${this.maxWords} mots.`,
+        'error',
+        { positionClass: 'toast-bottom-left' }
+      );
+    }
+  }
+
+  GetInfoClient() {
+    // appeler le service qui va retourner les infos du client
+  }
+
   ngOnInit(): void {
     this.ComboAgence();
     this.formulaire_plaintes_reclamations[8].valeur =

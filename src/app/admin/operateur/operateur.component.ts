@@ -362,6 +362,7 @@ export class OperateurComponent {
       }
     );
   }
+
   EnregistrementCompteOperateur(tableau_recu: any) {
     this.AdminService.SecuriteChampObligatoireEtTypeDeDonnee(tableau_recu);
     this.AdminService.TypeDeDonneeChampNonObligatoire(tableau_recu);
@@ -421,7 +422,7 @@ export class OperateurComponent {
             clsObjetEnvoi: {
               ET_CODEETABLISSEMENT: '',
               AN_CODEANTENNE: '',
-              TYPEOPERATION: this.statuFormulaire == 'MODIFICATION' ? '1' : '0',
+              TYPEOPERATION: this.statuFormulaire == 'MODIFICATION' ? '1' : '4',
             },
           },
         ],

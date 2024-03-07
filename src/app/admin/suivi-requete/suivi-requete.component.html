@@ -44,207 +44,125 @@
         <p>Suivez l'évolution de votre reclamation</p>
       </div>
     </div>
-    <!-- Inventory -->
-    <div class="card mb-4">
-      <div class="row">
-        <!-- Navigation -->
+
+    <!-- Teams Cards -->
+    <div class="row g-4">
+      <div class="col-xl-4 col-lg-6 col-md-6">
         <div class="card">
-          <div class="table-responsive text-nowrap">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Objet</th>
-                  <th>Description</th>
-                  <th>Statut</th>
-                  <th>
-                    Actions &nbsp;<span
-                      class="badge rounded-pill bg-label-primary me-1"
-                      >{{ recupinfo.RE_LIBELLEETAPE }}
-                    </span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="table-border-bottom-0">
-                <tr>
-                  <td>
-                    <i
-                      class="mdi mdi-wallet-travel mdi-20px text-danger me-3"
-                    ></i
-                    ><span class="fw-medium">{{
-                      recupinfo.TR_LIBELLETYEREQUETE
-                    }}</span>
-                  </td>
-                  <td>{{ recupinfo.RQ_DESCRIPTIONREQUETE }}</td>
-                  <td>
-                    <span
-                      *ngIf="statutValreq != 'Cloturée'"
-                      class="badge rounded-pill bg-label-primary me-1"
-                      >{{ statutValreq }}</span
-                    >
-                    <span
-                      *ngIf="statutValreq == 'Cloturée'"
-                      class="badge rounded-pill bg-label-danger me-1"
-                      >{{ statutValreq }}</span
-                    >
-                  </td>
-                  <td>
+          <div class="card-body">
+            <div class="d-flex align-items-center mb-3 pb-1">
+              <a href="javascript:;" class="d-flex align-items-center">
+                <div class="me-2 text-heading h6 mb-0">
+                  {{ recupinfo.TR_LIBELLETYEREQUETE }}
+                </div>
+              </a>
+              <div class="ms-auto">
+                <ul class="list-inline mb-0 d-flex align-items-center">
+                  <li class="list-inline-item">
                     <div class="dropdown">
                       <button
                         type="button"
-                        class="bttn btn p-0 dropdown-toggle hide-arrow"
+                        class="btn btn-text-secondary btn-icon rounded-pill dropdown-toggle hide-arrow p-0"
                         data-bs-toggle="dropdown"
+                        aria-expanded="false"
                       >
-                        <i class="mdi mdi-dots-vertical"></i>
+                        <i
+                          class="mdi mdi-dots-vertical mdi-24px text-muted"
+                        ></i>
                       </button>
-                      <div class="dropdown-menu">
-                        <a
+                      <ul class="dropdown-menu dropdown-menu-end">
+                        <li
                           class="dropdown-item"
                           href="javascript:void(0);"
                           (click)="voirTraitement('Traitement')"
                           *ngIf="
                             recupinfoconnect[0].TU_CODETYPEUTILISATEUR != '0002'
                           "
-                          ><i class="mdi mdi-pencil-outline me-1"></i>
-                          Traitement de la requete</a
+                          style="cursor: pointer"
                         >
-                        <a
+                          <i class="mdi mdi-pencil-outline me-1"></i>
+                          Traitement de la requête
+                        </li>
+                        <li
                           class="dropdown-item"
                           href="javascript:void(0);"
                           (click)="ConsultationTraitement('Consultation')"
                           *ngIf="
                             recupinfoconnect[0].TU_CODETYPEUTILISATEUR == '0002'
                           "
-                          ><i class="mdi mdi-progress-clock me-1"></i> Avis</a
+                          style="cursor: pointer"
                         >
-                      </div>
+                          <i class="mdi mdi-progress-clock me-1"></i> Avis
+                        </li>
+                      </ul>
                     </div>
-                  </td>
-                </tr>
-                <!-- <tr>
-                  <td>
-                    <i class="mdi mdi-basketball mdi-20px text-info me-3"></i
-                    ><span class="fw-medium">Sports Project</span>
-                  </td>
-                  <td>Barry Hunter</td>
-                  <td>
-                    <span class="badge rounded-pill bg-label-success me-1"
-                      >Completed</span
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <p class="mb-3 pb-1">
+              {{ recupinfo.RQ_DESCRIPTIONREQUETE }}
+            </p>
+
+            <div class="d-flex align-items-center">
+              <div class="d-flex align-items-center">
+                <ul
+                  class="list-unstyled d-flex align-items-center avatar-group mb-0"
+                >
+                  <li
+                    data-bs-toggle="tooltip"
+                    data-popup="tooltip-custom"
+                    data-bs-placement="top"
+                    title="Kaith D'souza"
+                    class="avatar avatar-sm pull-up"
+                  >
+                    <a href="javascript:;"
+                      ><span class="badge bg-label-primary rounded-pill">
+                        {{ recupinfo.RE_LIBELLEETAPE }}</span
+                      ></a
                     >
-                  </td>
-                  <td>
-                    <div class="dropdown">
-                      <button
-                        type="button"
-                        class="bttn btn p-0 dropdown-toggle hide-arrow"
-                        data-bs-toggle="dropdown"
-                      >
-                        <i class="mdi mdi-dots-vertical"></i>
-                      </button>
-                      <div class="dropdown-menu">
-                        <a
-                          class="dropdown-item"
-                          href="javascript:void(0);"
-                          (click)="voirTraitement('Traitement')"
-                          ><i class="mdi mdi-pencil-outline me-2"></i>
-                          Traitement de la requete</a
-                        >
-                        <a
-                          class="dropdown-item"
-                          href="javascript:void(0);"
-                          (click)="ConsultationTraitement('Consultation')"
-                          ><i class="mdi mdi-progress-clock me-1"></i>
-                          Consultation de l'etat d'avancement de la requete</a
-                        >
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <i class="mdi mdi-greenhouse mdi-20px text-success me-3"></i
-                    ><span class="fw-medium">Greenhouse Project</span>
-                  </td>
-                  <td>Trevor Baker</td>
-                  <td>
-                    <span class="badge rounded-pill bg-label-info me-1"
-                      >Scheduled</span
-                    >
-                  </td>
-                  <td>
-                    <div class="dropdown">
-                      <button
-                        type="button"
-                        class="bttn btn p-0 dropdown-toggle hide-arrow"
-                        data-bs-toggle="dropdown"
-                      >
-                        <i class="mdi mdi-dots-vertical"></i>
-                      </button>
-                      <div class="dropdown-menu">
-                        <a
-                          class="dropdown-item"
-                          href="javascript:void(0);"
-                          (click)="voirTraitement('Traitement')"
-                          ><i class="mdi mdi-pencil-outline me-2"></i>
-                          Traitement de la requete</a
-                        >
-                        <a
-                          class="dropdown-item"
-                          href="javascript:void(0);"
-                          (click)="ConsultationTraitement('Consultation')"
-                          ><i class="mdi mdi-progress-clock me-1"></i>
-                          Consultation de l'etat d'avancement de la requete</a
-                        >
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <i class="mdi mdi-bank mdi-20px text-primary me-3"></i
-                    ><span class="fw-medium">Bank Project</span>
-                  </td>
-                  <td>Jerry Milton</td>
-                  <td>
-                    <span class="badge rounded-pill bg-label-warning me-1"
-                      >Pending</span
-                    >
-                  </td>
-                  <td>
-                    <div class="dropdown">
-                      <button
-                        type="button"
-                        class="bttn btn p-0 dropdown-toggle hide-arrow"
-                        data-bs-toggle="dropdown"
-                      >
-                        <i class="mdi mdi-dots-vertical"></i>
-                      </button>
-                      <div class="dropdown-menu">
-                        <a
-                          class="dropdown-item"
-                          href="javascript:void(0);"
-                          (click)="voirTraitement('Traitement')"
-                          ><i class="mdi mdi-pencil-outline me-2"></i>
-                          Traitement de la requete</a
-                        >
-                        <a
-                          class="dropdown-item"
-                          href="javascript:void(0);"
-                          (click)="ConsultationTraitement('Consultation')"
-                          ><i class="mdi mdi-progress-clock me-1"></i>
-                          Consultation de l'etat d'avancement de la requete</a
-                        >
-                      </div>
-                    </div>
-                  </td>
-                </tr>-->
-              </tbody>
-            </table>
+                  </li>
+                </ul>
+              </div>
+              <div class="ms-auto">
+                <a
+                  href="javascript:;"
+                  *ngIf="
+                    recupinfo.RQ_DATESAISIEREQUETE != '01/01/1900' &&
+                    recupinfo.RQ_DATEDEBUTTRAITEMENTREQUETE == '01/01/1900' &&
+                    recupinfo.RQ_DATECLOTUREREQUETE == '01/01/1900'
+                  "
+                  ><span class="badge bg-label-primary rounded-pill"
+                    >Enregistrée &nbsp;&nbsp;N°
+                    {{ recupinfo.RQ_CODEREQUETE }}</span
+                  ></a
+                >
+                <a
+                  href="javascript:;"
+                  *ngIf="
+                    recupinfo.RQ_DATESAISIEREQUETE != '01/01/1900' &&
+                    recupinfo.RQ_DATEDEBUTTRAITEMENTREQUETE != '01/01/1900' &&
+                    recupinfo.RQ_DATECLOTUREREQUETE == '01/01/1900'
+                  "
+                  ><span class="badge bg-label-primary rounded-pill"
+                    >En cours de traitement</span
+                  ></a
+                >
+                <a
+                  href="javascript:;"
+                  *ngIf="recupinfo.RQ_DATECLOTUREREQUETE != '01/01/1900'"
+                  ><span class="badge bg-label-danger rounded-pill"
+                    >Cloturée &nbsp;&nbsp;N°
+                    {{ recupinfo.RQ_CODEREQUETE }}</span
+                  ></a
+                >
+              </div>
+            </div>
           </div>
         </div>
-        <!--/ Basic Bootstrap Table -->
       </div>
     </div>
-    <!-- /Inventory -->
+    <!--/ Teams Cards -->
   </div>
 </div>
 <!-- / Content -->
@@ -327,7 +245,7 @@
           style="height: 190px"
           placeholder="Observation de l'agent traitant (portant sur la plainte ou la reclamation)"
           [(ngModel)]="formulaire_suivi[3].valeur"
-          (input)="checkWordCount()"
+          (input)="CheckWordCount()"
         ></textarea>
         <label for="invoice-observation">Observation</label>
       </div>

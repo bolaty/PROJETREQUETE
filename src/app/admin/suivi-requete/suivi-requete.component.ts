@@ -13,6 +13,9 @@ declare var $: any;
   styleUrls: ['./suivi-requete.component.scss'],
 })
 export class SuiviRequeteComponent {
+  // LienServeur: any = 'http://localhost:22248/'; // lien dev
+  LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
+
   recupinfo: any = JSON.parse(sessionStorage.getItem('infoReque') || '');
   recupinfoconnect: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
   statutValreq: any = '';
@@ -124,6 +127,9 @@ export class SuiviRequeteComponent {
         this.ListeComboStatut = success;
         this.ListeComboStatut =
           this.ListeComboStatut.pvgReqstatutrecevabiliteComboResult;
+
+        this.TestEpateRequete();
+
         if (this.ListeComboStatut[0].clsResultat.SL_RESULTAT == 'TRUE') {
         } else {
         }
@@ -175,6 +181,8 @@ export class SuiviRequeteComponent {
     } else {
       this.statutValreq = 'Cloturée';
     }
+
+    this.ComboSatisfaction();
   }
 
   Valider(tableau_recu: any) {
@@ -393,7 +401,8 @@ export class SuiviRequeteComponent {
       );
     }
   }
-  checkWordCount() {
+
+  CheckWordCount() {
     if (
       this.formulaire_suivi[3].valeur == undefined ||
       this.formulaire_suivi[3].valeur == ''
@@ -401,19 +410,6 @@ export class SuiviRequeteComponent {
       this.statutDocument = false;
     } else {
       this.statutDocument = true;
-      this.formulaire_suivi[3].valeur = this.formulaire_suivi[3].valeur.trim();
-      const maxWords = 30;
-      const words = this.formulaire_suivi[3].valeur.split(' ');
-      if (words.length > maxWords) {
-        this.formulaire_suivi[3].valeur = words.slice(0, 30).join(' ');
-        this.toastr.error(
-          `Vous avez saisi trop de mots. Veuillez limiter votre saisie à ${maxWords} mots.`,
-          'error',
-          { positionClass: 'toast-bottom-left' }
-        );
-        //this.formulaire_suivi[3].valeur = this.formulaire_suivi[3].valeur.substring(0, this.formulaire_suivi[3].valeur.lastIndexOf(' '));
-      } else {
-      }
     }
   }
 
@@ -451,8 +447,7 @@ export class SuiviRequeteComponent {
     formData.append('AT_OBSERVATION', this.formulaire_suivi[3].valeur);
     this.FormObjet = formData;
   }
-  //http://51.210.111.16:1009/ lien prod
-  //http://localhost:22248/ lien dev
+
   SaveRapport() {
     if (
       this.FormObjet == null ||
@@ -465,7 +460,7 @@ export class SuiviRequeteComponent {
     } else {
       this.http
         .post(
-          'http://localhost:22248/RequeteClientsClasse.svc/pvgpvgMajReqrequeteEtapeUPloadFile',
+          `${this.LienServeur}RequeteClientsClasse.svc/pvgpvgMajReqrequeteEtapeUPloadFile`,
           this.FormObjet
         )
         .subscribe(
@@ -677,9 +672,10 @@ export class SuiviRequeteComponent {
   }
 
   ngOnInit(): void {
-    this.ComboStatut();
-    this.TestEpateRequete();
-    this.ComboSatisfaction();
+    setTimeout(() => {
+      this.ComboStatut();
+    }, 1000);
+
     this.formulaire_suivi[0].valeur = this.recupinfo.RQ_DESCRIPTIONREQUETE;
     if (this.recupinfo.RS_CODESTATUTRECEVABILITE == '') {
       this.toastr.error(

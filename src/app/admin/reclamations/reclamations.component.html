@@ -1489,6 +1489,7 @@
                                       ListRetourRequetes.RQ_DATECLOTUREREQUETE ==
                                         '01/01/1900'
                                     "
+                                    (click)="GetInfoClient()"
                                   >
                                     <i
                                       class="mdi mdi-book-information-variant me-1"
@@ -1581,6 +1582,52 @@
                                       class="mdi mdi-progress-close me-1"
                                     ></span>
                                     Annulation clôture définitive
+                                  </a>
+                                </li>
+                                <li>
+                                  <a
+                                    class="dropdown-item"
+                                    href="javascript:void(0);"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#addNewAddressAnnulationClotureDefinitive"
+                                    (click)="
+                                      recupListeCloture(ListRetourRequetes)
+                                    "
+                                    *ngIf="
+                                      ListRetourRequetes.RQ_DATESAISIEREQUETE !=
+                                        '01/01/1900' &&
+                                      ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE !=
+                                        '01/01/1900' &&
+                                      ListRetourRequetes.RQ_DATECLOTUREREQUETE !=
+                                        '01/01/1900'
+                                    "
+                                  >
+                                    <span
+                                      class="mdi mdi-bank-transfer-in me-1"
+                                    ></span>
+                                    Transmission à un tribunal
+                                  </a>
+                                </li>
+                                <li>
+                                  <a
+                                    class="dropdown-item"
+                                    href="javascript:void(0);"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#addNewAddressAnnulationClotureDefinitive"
+                                    (click)="
+                                      recupListeCloture(ListRetourRequetes)
+                                    "
+                                    *ngIf="
+                                      ListRetourRequetes.RQ_DATESAISIEREQUETE !=
+                                        '01/01/1900' &&
+                                      ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE !=
+                                        '01/01/1900' &&
+                                      ListRetourRequetes.RQ_DATECLOTUREREQUETE !=
+                                        '01/01/1900'
+                                    "
+                                  >
+                                    <span class="mdi mdi-bank-off me-1"></span>
+                                    Clôture procédure judiciaire
                                   </a>
                                 </li>
                                 <!-- <li>
@@ -1972,11 +2019,6 @@
           </p>
         </div>
 
-        <!-- Inventory -->
-        <!-- <div class="card mb-4"> -->
-        <!-- <div class="card-header">
-          <h5 class="card-title mb-0">Niveau de traitement de reclamation</h5>
-        </div> -->
         &#160; &#160; &#160;
         <div class="card-body">
           <div class="row">
@@ -2214,7 +2256,7 @@
                               <span
                                 class="fw-medium text-body"
                                 style="color: black"
-                                >consulter</span
+                                >Consulter</span
                               >
                             </a>
                           </div>
@@ -2283,6 +2325,7 @@
               style="height: 190px"
               placeholder="Observation de l'agent traitant (portant sur la plainte ou la reclamation)"
               [(ngModel)]="formulaire_avis[1].valeur"
+              (input)="CheckWordCount()"
             ></textarea>
             <label for="NoteObservation">Observation</label>
           </div>
@@ -2360,7 +2403,7 @@
         ></button>
         <div class="text-center mb-4">
           <h3 class="address-title mb-2 pb-1">Clôture définitive</h3>
-          <p class="address-subtitle">Clôturez définitive</p>
+          <p class="address-subtitle">Clôturez définitivement</p>
         </div>
 
         <!-- Inventory -->
@@ -2375,8 +2418,9 @@
             <!-- <div class="card mb-12"> -->
             <div class="card-header">
               <h5 class="mb-2">Etapes</h5>
-              <p class="mb-0 text-body">de resolution de la requete</p>
+              <!-- <p class="mb-0 text-body">de resolution de la requete</p> -->
             </div>
+            &#160; &#160; &#160;
             <div class="card-body">
               <div
                 class="d-flex mb-3"
@@ -2523,7 +2567,9 @@
   aria-labelledby="offcanvasEndLabel"
 >
   <div class="offcanvas-header">
-    <h5 id="offcanvasEndLabel" class="offcanvas-title">Offcanvas End</h5>
+    <h5 id="offcanvasEndLabel" class="offcanvas-title">
+      Informations sur le client
+    </h5>
     <button
       type="button"
       class="btn-close text-reset"
@@ -2539,15 +2585,5 @@
       parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen
       book.
     </p>
-    <button type="button" class="btn btn-primary mb-2 d-grid w-100">
-      Continue
-    </button>
-    <button
-      type="button"
-      class="btn btn-outline-secondary d-grid w-100"
-      data-bs-dismiss="offcanvas"
-    >
-      Cancel
-    </button>
   </div>
 </div>
