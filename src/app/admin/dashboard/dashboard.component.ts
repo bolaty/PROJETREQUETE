@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import Chart from 'chart.js/auto';
+import { LanguageService } from 'src/app/services/language.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,7 +8,10 @@ import Chart from 'chart.js/auto';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent {
+  constructor(public languageService: LanguageService) {}
+
   recupinfo: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
+
   public chart_bar: any;
   public chart_pie: any;
   tab_session_graph: any = [];

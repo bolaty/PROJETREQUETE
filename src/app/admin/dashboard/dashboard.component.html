@@ -5,9 +5,10 @@
       <div class="card">
         <div class="card-body">
           <h4 class="card-title mb-1">
-            Bienvenue {{ recupinfo[0].CU_NOMUTILISATEUR }} ! 🎉
+            {{ languageService.welcome_message }}
+            {{ recupinfo[0].CU_NOMUTILISATEUR }} ! 🎉
           </h4>
-          <p class="pb-0">Consultez les reclamations</p>
+          <p class="pb-0">{{ languageService.welcome_message_sub_title }}</p>
           <!-- <h4 class="text-primary mb-1">0</h4> -->
           <!-- <p class="mb-2 pb-1">100% de l'objectif 🚀</p> -->
           <!-- <a href="javascript:;" class="bttn btn btn-sm btn-primary">Voir plus</a> -->

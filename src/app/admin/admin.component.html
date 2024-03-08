@@ -233,6 +233,7 @@
                     class="dropdown-item"
                     href="javascript:void(0);"
                     data-language="fr"
+                    (click)="LanguageService.changeLanguage('fr')"
                   >
                     <span class="align-middle">Français</span>
                   </a>
@@ -242,8 +243,29 @@
                     class="dropdown-item"
                     href="javascript:void(0);"
                     data-language="en"
+                    (click)="LanguageService.changeLanguage('en')"
                   >
                     <span class="align-middle">Anglais</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="javascript:void(0);"
+                    data-language="de"
+                    (click)="LanguageService.changeLanguage('de')"
+                  >
+                    <span class="align-middle">Allémand</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="javascript:void(0);"
+                    data-language="pt"
+                    (click)="LanguageService.changeLanguage('pt')"
+                  >
+                    <span class="align-middle">Portuguais</span>
                   </a>
                 </li>
               </ul>

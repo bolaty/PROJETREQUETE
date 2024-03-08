@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { AdminService } from './admin.service';
+import { LanguageService } from 'src/app/services/language.service';
 //declare var $: any; // Si vous utilisez jQuery
 
 @Component({
@@ -16,7 +17,11 @@ export class AdminComponent implements OnInit {
   boutons: any = [];
   libelles: any = [];
 
-  constructor(public AdminService: AdminService, private _router: Router) {}
+  constructor(
+    public AdminService: AdminService,
+    private _router: Router,
+    public LanguageService: LanguageService
+  ) {}
 
   Deconnexion() {
     // $.removeCookie('isLoggedIn', { path: '/' });
