@@ -302,6 +302,28 @@
           Annuler
         </button>
       </div>
+
+      <br />
+      <!-- infos sur le client -->
+      <label for="">Information sur le client</label>
+      <div class="card h-100">
+        <div class="row h-100">
+          <div class="col">
+            <div class="card-body ps-sm-3">
+              <p class="mb-0">
+                <strong>Nom et prénoms:</strong>
+                {{ tab_infos_client[0].CU_NOMUTILISATEUR }}
+              </p>
+              <p class="mb-0">
+                <strong>Email:</strong> {{ tab_infos_client[0].CU_EMAIL }}
+              </p>
+              <p class="mb-0">
+                <strong>Contact:</strong> {{ tab_infos_client[0].CU_CONTACT }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </form>
   </div>
 </div>

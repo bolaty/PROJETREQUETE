@@ -15,6 +15,7 @@ export class ReclamationsComponent {
   recupinfo: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
   maxWords: any = 30;
   base64Image: string = '';
+  btn_filter: string = 'enrg';
   option_body: any = '';
   background_color: any = [
     '#FFE6E6',
@@ -205,7 +206,9 @@ export class ReclamationsComponent {
   tab_req_en_cours_trait: any = [];
   tab_req_cloturee: any = [];
   tab_req_afficher: any = [];
+  search_bar: boolean = false;
   statutliste: boolean = false;
+  statut_info_utilisateur: boolean = false;
   SearchValue: any;
   statutClientExiste: boolean = true;
   statutFrmulaire: string = 'ENREGISTREMENT';
@@ -216,6 +219,7 @@ export class ReclamationsComponent {
   statutDatefin: boolean = true;
   recupValEtape: any;
   ListeComboEtapeSelonReq: any = [];
+  tab_infos_client: any = [];
   ListConsultEtapeSelonReq: any = [];
   FormObjet: any;
   statutTraitement: boolean = false;
@@ -1756,6 +1760,7 @@ export class ReclamationsComponent {
     this.var_checked_enrg = '';
     this.var_checked_trai = '';
     this.var_checked_clo = '';
+    this.btn_filter = bouton;
 
     if (bouton == 'enrg') {
       this.var_checked_enrg = 'checked';
@@ -1956,7 +1961,13 @@ export class ReclamationsComponent {
       (error) => {}
     );
   }
-  checkStatusForm(infoEcran: any) {
+  checkStatusForm(infoEcran: any, type_user: any) {
+    if (type_user == 'simple') {
+      this.search_bar = true;
+    } else {
+      this.search_bar = false;
+    }
+
     if (infoEcran == 'Liste') {
       this.statutFrmulaire = 'LISTE';
       this.SearchValue = '';
@@ -2007,8 +2018,78 @@ export class ReclamationsComponent {
     }
   }
 
-  GetInfoClient() {
-    // appeler le service qui va retourner les infos du client
+  GetInfoClient(CU_CODECOMPTEUTULISATEUR: any) {
+    let Option = 'RequeteClientsClasse.svc/pvgInfosDuClient';
+    let body = {
+      Objets: [
+        {
+          OE_PARAM: [CU_CODECOMPTEUTULISATEUR],
+        },
+      ],
+    };
+    this.AdminService.AppelServeur(body, Option).subscribe(
+      (success: any) => {
+        this.statut_info_utilisateur = true;
+        this.tab_infos_client = success;
+        this.tab_infos_client = this.tab_infos_client.pvgInfosDuClientResult;
+        setTimeout(() => {
+          $('#offcanvasEndInfoClient').offcanvas('show');
+        }, 1000);
+        console.log('this.tab_infos_client', this.tab_infos_client);
+      },
+      (error) => {}
+    );
+  }
+
+  FilterTicket(num_ticket: any) {
+    this.tab_req_afficher = [];
+
+    if (num_ticket == '') {
+      if (this.btn_filter == 'enrg') {
+        for (let index = 0; index < this.tab_req_enregistree.length; index++) {
+          this.tab_req_afficher.push(this.tab_req_enregistree[index]);
+        }
+      } else if (this.btn_filter == 'trai') {
+        for (
+          let index = 0;
+          index < this.tab_req_en_cours_trait.length;
+          index++
+        ) {
+          this.tab_req_afficher.push(this.tab_req_en_cours_trait[index]);
+        }
+      } else {
+        for (let index = 0; index < this.tab_req_cloturee.length; index++) {
+          this.tab_req_afficher.push(this.tab_req_cloturee[index]);
+        }
+      }
+    } else {
+      if (this.btn_filter == 'enrg') {
+        for (let index = 0; index < this.tab_req_enregistree.length; index++) {
+          if (num_ticket == this.tab_req_enregistree[index].RQ_CODEREQUETE) {
+            this.tab_req_afficher.push(this.tab_req_enregistree[index]);
+          }
+        }
+        this.SearchValue = '';
+      } else if (this.btn_filter == 'trai') {
+        for (
+          let index = 0;
+          index < this.tab_req_en_cours_trait.length;
+          index++
+        ) {
+          if (num_ticket == this.tab_req_en_cours_trait[index].RQ_CODEREQUETE) {
+            this.tab_req_afficher.push(this.tab_req_en_cours_trait[index]);
+          }
+        }
+        this.SearchValue = '';
+      } else {
+        for (let index = 0; index < this.tab_req_cloturee.length; index++) {
+          if (num_ticket == this.tab_req_cloturee[index].RQ_CODEREQUETE) {
+            this.tab_req_afficher.push(this.tab_req_cloturee[index]);
+          }
+        }
+        this.SearchValue = '';
+      }
+    }
   }
 
   ngOnInit(): void {

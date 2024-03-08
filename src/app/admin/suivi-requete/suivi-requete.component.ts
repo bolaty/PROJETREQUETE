@@ -13,13 +13,14 @@ declare var $: any;
   styleUrls: ['./suivi-requete.component.scss'],
 })
 export class SuiviRequeteComponent {
-  // LienServeur: any = 'http://localhost:22248/'; // lien dev
-  LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
+  LienServeur: any = 'http://localhost:22248/'; // lien dev
+  // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
 
   recupinfo: any = JSON.parse(sessionStorage.getItem('infoReque') || '');
   recupinfoconnect: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
   statutValreq: any = '';
   ListeComboStatut: any = [];
+  tab_infos_client: any = [];
   tab_enregistrement_traitement: any = [];
   ListeComboSatisfaction: any = [];
   recupEnregistrerFichier: any = [];
@@ -105,7 +106,25 @@ export class SuiviRequeteComponent {
   ) {}
 
   voirTraitement(info: any): void {
-    $('#sendInvoiceOffcanvas').offcanvas('show');
+    let Option = 'RequeteClientsClasse.svc/pvgInfosDuClient';
+    let body = {
+      Objets: [
+        {
+          OE_PARAM: [this.recupinfo.CU_CODECOMPTEUTULISATEUR],
+        },
+      ],
+    };
+    this.AdminService.AppelServeur(body, Option).subscribe(
+      (success: any) => {
+        this.tab_infos_client = success;
+        this.tab_infos_client = this.tab_infos_client.pvgInfosDuClientResult;
+        setTimeout(() => {
+          $('#sendInvoiceOffcanvas').offcanvas('show');
+        }, 1000);
+        console.log('this.tab_infos_client', this.tab_infos_client);
+      },
+      (error) => {}
+    );
   }
 
   ComboStatut() {
