@@ -171,7 +171,7 @@ export class EtatSuiviComponent implements OnInit {
           {
             RQ_DATEDEBUT: '15/02/2024',
             RQ_DATEFIN: '16/02/2024',
-            CU_CODECOMPTEUTULISATEUR: '',
+            CU_CODECOMPTEUTULISATEUR: '', // utilisateur connecté
             TYPEETAT: 'TSCLT',
           },
           true

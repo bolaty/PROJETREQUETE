@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AdminService } from '../admin.service';
 import { ToastrService } from 'ngx-toastr';
+import { LanguageService } from 'src/app/services/language.service';
 
 declare var $: any;
 
@@ -158,7 +159,8 @@ export class OperateurComponent {
   statusOrderListe: boolean = false;
   constructor(
     public AdminService: AdminService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public LanguageService: LanguageService
   ) {}
 
   rowClicked(info: any): void {
@@ -267,9 +269,7 @@ export class OperateurComponent {
           ],
         });
 
-        $('div.head-label').html(
-          '<h5 class="card-title mb-0">Liste des opérateurs</h5>'
-        );
+        $('div.head-label').html('<h5 class="card-title mb-0"></h5>');
       }
     });
   }

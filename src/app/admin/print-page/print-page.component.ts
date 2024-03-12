@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import Chart from 'chart.js/auto';
 
 @Component({
@@ -7,6 +7,8 @@ import Chart from 'chart.js/auto';
   styleUrls: ['./print-page.component.scss'],
 })
 export class PrintPageComponent {
+  @ViewChild('printer', { static: false }) content!: ElementRef;
+
   public chart_bar: any;
   public chart_pie: any;
   graphe_en_bande: any = [];
@@ -80,6 +82,10 @@ export class PrintPageComponent {
         aspectRatio: 2.5,
       },
     });
+  }
+
+  printPage() {
+    window.print();
   }
 
   ngOnInit(): void {

@@ -41,12 +41,12 @@ export class EtatSuiviReclamationComponent implements OnInit {
         Objets: [
           {
             OE_PARAM: [
-              '1000',
-              '',
-              '01/01/2000',
-              '01/01/2024',
-              '10000000000000000000000000001',
-              '01',
+              '1000', // agence
+              '01', // nature requete 01
+              '01/01/2000', // date debut
+              '01/01/2024', // date fin
+              '10000000000000000000000000001', // compte utilisateur
+              '01', // type operation
             ],
             clsObjetEnvoi: {
               ET_CODEETABLISSEMENT: '',

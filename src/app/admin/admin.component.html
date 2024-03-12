@@ -108,7 +108,8 @@
         <li class="menu-item active open" routerLink="dashboard">
           <a href="javascript:void(0);" class="menu-link">
             <i class="menu-icon tf-icons mdi mdi-home-outline"></i>
-            <div data-i18n="Dashboards">Dashboards</div>
+            <div>{{ LanguageService.sidebar_menu_5 }}</div>
+            <!-- <div data-i18n="Dashboards">Dashboards</div> -->
             <div class="badge bg-danger rounded-pill ms-auto">5</div>
           </a>
           <!-- <ul class="menu-sub">
@@ -138,7 +139,8 @@
         <li class="menu-item" routerLink="reclamations">
           <a style="cursor: pointer" class="menu-link">
             <span class="menu-icon tf-icons mdi mdi-alert-circle-check"></span>
-            <div data-i18n="Reclamations">Reclamations</div>
+            <div>{{ LanguageService.sidebar_menu_1 }}</div>
+            <!-- <div data-i18n="Reclamations">Reclamations</div> -->
           </a>
         </li>
         <li
@@ -148,7 +150,8 @@
         >
           <a style="cursor: pointer" class="menu-link">
             <span class="menu-icon tf-icons mdi mdi-reload-alert"></span>
-            <div data-i18n="Relance">Relance</div>
+            <div>{{ LanguageService.sidebar_menu_2 }}</div>
+            <!-- <div data-i18n="Relance">Relance</div> -->
           </a>
         </li>
         <li
@@ -158,7 +161,8 @@
         >
           <a style="cursor: pointer" class="menu-link">
             <span class="menu-icon tf-icons mdi mdi-account"></span>
-            <div data-i18n="Operateur">Operateur</div>
+            <div>{{ LanguageService.sidebar_menu_3 }}</div>
+            <!-- <div data-i18n="Operateur">Operateur</div> -->
           </a>
         </li>
         <!--<li class="menu-item" (click)="ChoixCreation('client')">
@@ -174,7 +178,8 @@
         >
           <a style="cursor: pointer" class="menu-link">
             <span class="menu-icon tf-icons mdi mdi-file"></span>
-            <div data-i18n="Edition">Edition</div>
+            <div>{{ LanguageService.sidebar_menu_4 }}</div>
+            <!-- <div data-i18n="Edition">Edition</div> -->
           </a>
         </li>
       </ul>
@@ -210,7 +215,7 @@
               >
                 <i class="mdi mdi-magnify mdi-24px scaleX-n1-rtl"></i>
                 <span class="d-none d-md-inline-block text-muted"
-                  >Rechercher (Ctrl+/)</span
+                  >{{ LanguageService.header_search_bar }} (Ctrl+/)</span
                 >
               </a>
             </div>
@@ -466,7 +471,7 @@
                   <div class="dropdown-header d-flex align-items-center py-3">
                     <h6 class="fw-normal mb-0 me-auto">Notification</h6>
                     <span class="badge rounded-pill bg-label-primary"
-                      >{{ nombreNotif }} New</span
+                      >{{ nombreNotif }} Nouveau</span
                     >
                   </div>
                 </li>
@@ -547,7 +552,26 @@
                         <h6 class="mb-0">
                           {{ recupinfo[0].CU_NOMUTILISATEUR }}
                         </h6>
-                        <small class="text-muted">Admin</small>
+                        <small
+                          class="text-muted"
+                          *ngIf="
+                            recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')
+                          "
+                          >Admin</small
+                        >
+                        <small
+                          class="text-muted"
+                          *ngIf="
+                            !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') &&
+                            recupinfo[0].TU_CODETYPEUTILISATEUR == '0001'
+                          "
+                          >Opérateur</small
+                        >
+                        <small
+                          class="text-muted"
+                          *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR == '0002'"
+                          >Client</small
+                        >
                       </div>
                     </div>
                   </a>
@@ -555,12 +579,12 @@
                 <li>
                   <div class="dropdown-divider my-0"></div>
                 </li>
-                <li>
+                <!-- <li>
                   <a class="dropdown-item" style="cursor: pointer">
                     <i class="mdi mdi-account-outline me-1 mdi-20px"></i>
                     <span class="align-middle">Mon Profile</span>
                   </a>
-                </li>
+                </li> -->
                 <!--  <li>
                   <a class="dropdown-item" style="cursor: pointer">
                     <i class="mdi mdi-cog-outline me-1 mdi-20px"></i>
@@ -647,11 +671,11 @@
                 <!-- <script>
                   document.write(new Date().getFullYear());
                 </script> -->
-                , Conçu avec
+                , {{ LanguageService.footer_1 }}
                 <span class="text-danger"
                   ><i class="tf-icons mdi mdi-heart"></i
                 ></span>
-                par
+                {{ LanguageService.footer_2 }}
                 <a
                   href="http://mgdigitalplus.com/"
                   target="_blank"

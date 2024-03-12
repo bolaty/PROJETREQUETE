@@ -304,9 +304,9 @@
       </div>
 
       <br />
-      <!-- infos sur le client -->
-      <label for="">Information sur le client</label>
-      <div class="card h-100">
+      <!-- Information sur le client -->
+      <label for="" *ngIf="var_off_on == 'O'">Information sur le client</label>
+      <div class="card h-100" *ngIf="var_off_on == 'O'">
         <div class="row h-100">
           <div class="col">
             <div class="card-body ps-sm-3">

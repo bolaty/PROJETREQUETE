@@ -11,13 +11,13 @@
         class="text-center text-primary mb-2"
         *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR != '0002'"
       >
-        Bonjour, comment pouvons-nous vous aider ?
+        {{ LanguageService.reclam_title }} ?
       </h3>
       <h3
         class="text_label text-center mb-2"
         *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR == '0002'"
       >
-        Bonjour, comment pouvons-nous vous aider ?
+        {{ LanguageService.reclam_title }} ?
       </h3>
       <p
         class="text-body text-center mb-0 px-3"
@@ -26,7 +26,7 @@
           recupinfo[0].TU_CODETYPEUTILISATEUR == '0001'
         "
       >
-        Trouvez plus rapidement les clients en les recherchant par leur code
+        {{ LanguageService.reclam_sub_title_list_op }}
       </p>
       <p
         class="text-body text-center mb-0 px-3"
@@ -35,7 +35,7 @@
           recupinfo[0].TU_CODETYPEUTILISATEUR == '0001'
         "
       >
-        Trouvez plus rapidement les tickets en les recherchant par leur numéro
+        {{ LanguageService.reclam_sub_title_op }}
       </p>
       <div
         class="input-wrapper my-3 input-group input-group-lg input-group-merge px-sm-5"
@@ -68,7 +68,7 @@
         <input
           type="text"
           class="form-control"
-          placeholder="N° de ticket"
+          [placeholder]="LanguageService.reclam_placeholder_search_bar_op"
           name="SearchPersonal"
           aria-label="Search"
           aria-describedby="basic-addon1"
@@ -102,11 +102,10 @@
       "
     >
       <h3 class="text-center text-primary mb-2">
-        Bonjour, comment pouvons-nous vous aider ?
+        {{ LanguageService.reclam_title }} ?
       </h3>
       <p class="text-body text-center mb-0 px-3">
-        Trouvez plus rapidement les requetes en les recherchant par leur n° de
-        ticket
+        {{ LanguageService.reclam_sub_title_list_op_2 }}
       </p>
       <div
         class="input-wrapper my-3 input-group input-group-lg input-group-merge px-sm-5"
@@ -148,7 +147,7 @@
                 <span
                   class="align-middle"
                   (click)="checkStatusForm('Nouvelles', '')"
-                  >Nouvelles reclamations</span
+                  >{{ LanguageService.reclam_engr_title }}</span
                 >
               </button>
             </li>
@@ -166,7 +165,9 @@
                 (click)="checkStatusForm('Liste', 'client')"
               >
                 <i class="mdi mdi-dots-vertical mdi-24px"></i>
-                <span class="align-middle">Liste des reclamations</span>
+                <span class="align-middle">{{
+                  LanguageService.reclam_list_title
+                }}</span>
               </button>
             </li>
             <li
@@ -183,7 +184,9 @@
                 (click)="checkStatusForm('Liste', 'simple')"
               >
                 <i class="mdi mdi-dots-vertical mdi-24px"></i>
-                <span class="align-middle">Liste des reclamations</span>
+                <span class="align-middle">{{
+                  LanguageService.reclam_list_title
+                }}</span>
               </button>
             </li>
             <li
@@ -197,7 +200,9 @@
                 (click)="checkStatusForm('Liste', 'admin')"
               >
                 <i class="mdi mdi-dots-vertical mdi-24px"></i>
-                <span class="align-middle">Liste des reclamations</span>
+                <span class="align-middle">{{
+                  LanguageService.reclam_list_title
+                }}</span>
               </button>
             </li>
             <!--*ngIf="
@@ -236,9 +241,11 @@
               </div>
               <div>
                 <h5 class="mb-1">
-                  <span class="align-middle">Nouvelles reclamations</span>
+                  <span class="align-middle">{{
+                    LanguageService.reclam_engr_title
+                  }}</span>
                 </h5>
-                <span>Soumettez-nous votre reclamation</span>
+                <span>{{ LanguageService.reclam_engr_sub_title }}</span>
               </div>
             </div>
             <!-- Form with Tabs -->
@@ -589,7 +596,7 @@
                                 class="dropzone needsclick"
                                 id="dropzone-multi-fichier"
                               >
-                                <div class="dz-message needsclick">
+                                <!-- <div class="dz-message needsclick">
                                   Drop files here or click to upload
                                   <span class="note needsclick"
                                     >(This is just a demo dropzone. Selected
@@ -597,7 +604,7 @@
                                     <span class="fw-medium">not</span>
                                     actually uploaded.)</span
                                   >
-                                </div>
+                                </div> -->
                                 <div class="fallback">
                                   <input
                                     name="file"
@@ -605,7 +612,7 @@
                                     [(ngModel)]="
                                       formulaire_plaintes_reclamations[9].valeur
                                     "
-                                    (change)="handleFileInput($event)"
+                                    (change)="HandleFileInput($event)"
                                   />
                                 </div>
                               </form>
@@ -618,6 +625,7 @@
                           <div class="col-md-6">
                             <div class="row justify-content-end">
                               <div class="col-sm-9">
+                                <!-- Enregistrer -->
                                 <button
                                   type="submit"
                                   class="bttn btn btn-primary me-sm-3 me-1"
@@ -627,13 +635,14 @@
                                     )
                                   "
                                 >
-                                  Enregistrer
+                                  {{ LanguageService.btn_engr }}
                                 </button>
+                                <!-- annuler -->
                                 <button
                                   type="reset"
                                   class="bttn btn btn-outline-secondary"
                                 >
-                                  Annuler
+                                  {{ LanguageService.btn_title_cancel }}
                                 </button>
                               </div>
                             </div>
@@ -784,7 +793,7 @@
                                 class="dropzone needsclick"
                                 id="dropzone-multi-fichier"
                               >
-                                <div class="dz-message needsclick">
+                                <!-- <div class="dz-message needsclick">
                                   Drop files here or click to upload
                                   <span class="note needsclick"
                                     >(This is just a demo dropzone. Selected
@@ -792,7 +801,7 @@
                                     <span class="fw-medium">not</span>
                                     actually uploaded.)</span
                                   >
-                                </div>
+                                </div> -->
                                 <div class="fallback">
                                   <input
                                     name="file"
@@ -800,7 +809,7 @@
                                     [(ngModel)]="
                                       formulaire_plaintes_reclamations[9].valeur
                                     "
-                                    (change)="handleFileInput($event)"
+                                    (change)="HandleFileInput($event)"
                                   />
                                 </div>
                               </form>
@@ -860,9 +869,11 @@
               </div>
               <div>
                 <h5 class="mb-1">
-                  <span class="align-middle">Liste des reclamations</span>
+                  <span class="align-middle">{{
+                    LanguageService.reclam_list_title
+                  }}</span>
                 </h5>
-                <span>Consultez vos reclamations</span>
+                <span>{{ LanguageService.reclam_list_sub_title }}</span>
               </div>
 
               &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
@@ -884,7 +895,7 @@
                   (click)="OnChecked('enrg')"
                 />
                 <label class="bttn btn btn-outline-primary" for="btnradio1"
-                  >Enregistrée
+                  >{{ LanguageService.reclam_list_group_title_1 }}
                 </label>
 
                 <input
@@ -896,7 +907,7 @@
                   (click)="OnChecked('trai')"
                 />
                 <label class="btn btn-outline-primary" for="btnradio2"
-                  >En cours de traitement
+                  >{{ LanguageService.reclam_list_group_title_2 }}
                 </label>
 
                 <input
@@ -908,7 +919,7 @@
                   (click)="OnChecked('clo')"
                 />
                 <label class="bttn btn btn-outline-primary" for="btnradio3"
-                  >Cloturée
+                  >{{ LanguageService.reclam_list_group_title_3 }}
                 </label>
               </div>
             </div>
@@ -970,9 +981,12 @@
                                     data-bs-target="#addNewAddress2"
                                     (click)="recupListe(ListRetourRequetes)"
                                     ><i class="mdi mdi-account-tag me-1"></i>
-                                    Avis de recevabilité</a
+                                    {{
+                                      LanguageService.reclam_action_engr_1
+                                    }}</a
                                   >
                                 </li>
+                                <!-- Attribution de reclamation -->
                                 <li>
                                   <a
                                     class="dropdown-item"
@@ -990,7 +1004,9 @@
                                     ><i
                                       class="mdi mdi-account-arrow-right me-1"
                                     ></i>
-                                    Attribution de reclamation</a
+                                    {{
+                                      LanguageService.reclam_action_encrs_1
+                                    }}</a
                                   >
                                 </li>
                                 <li>
@@ -1108,7 +1124,8 @@
                               '01/01/1900'
                           "
                           ><span class="badge bg-label-primary rounded-pill"
-                            >Enregistrée &nbsp;&nbsp;N°
+                            >{{ LanguageService.reclam_list_group_title_1 }}
+                            &nbsp;&nbsp;N°
                             {{ ListRetourRequetes.RQ_CODEREQUETE }}</span
                           ></a
                         >
@@ -1123,7 +1140,8 @@
                               '01/01/1900'
                           "
                           ><span class="badge bg-label-success rounded-pill"
-                            >En cours de traitement &nbsp;&nbsp;N°
+                            >{{ LanguageService.reclam_list_group_title_2 }}
+                            &nbsp;&nbsp;N°
                             {{ ListRetourRequetes.RQ_CODEREQUETE }}</span
                           ></a
                         >
@@ -1134,7 +1152,8 @@
                             '01/01/1900'
                           "
                           ><span class="badge bg-label-danger rounded-pill"
-                            >Cloturée &nbsp;&nbsp;N°
+                            >{{ LanguageService.reclam_list_group_title_3 }}
+                            &nbsp;&nbsp;N°
                             {{ ListRetourRequetes.RQ_CODEREQUETE }}</span
                           ></a
                         >
@@ -1178,9 +1197,11 @@
               </div>
               <div>
                 <h5 class="mb-1">
-                  <span class="align-middle">Liste des reclamations</span>
+                  <span class="align-middle">{{
+                    LanguageService.reclam_list_title
+                  }}</span>
                 </h5>
-                <span>Consultez vos reclamations</span>
+                <span>{{ LanguageService.reclam_list_sub_title }}</span>
               </div>
 
               &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
@@ -1201,9 +1222,9 @@
                   [checked]="var_checked_enrg"
                   (click)="OnChecked('enrg')"
                 />
-                <label class="bttn btn btn-outline-primary" for="btnradio1"
-                  >Enregistrée</label
-                >
+                <label class="bttn btn btn-outline-primary" for="btnradio1">{{
+                  LanguageService.reclam_list_group_title_1
+                }}</label>
 
                 <input
                   type="radio"
@@ -1213,9 +1234,9 @@
                   [checked]="var_checked_trai"
                   (click)="OnChecked('trai')"
                 />
-                <label class="bttn btn btn-outline-primary" for="btnradio2"
-                  >En cours de traitement</label
-                >
+                <label class="bttn btn btn-outline-primary" for="btnradio2">{{
+                  LanguageService.reclam_list_group_title_2
+                }}</label>
 
                 <!--<input
                   type="radio"
@@ -1281,9 +1302,12 @@
                                     data-bs-target="#addNewAddress2"
                                     (click)="recupListe(ListRetourRequetes)"
                                     ><i class="mdi mdi-account-tag me-1"></i>
-                                    Avis de recevabilité</a
+                                    {{
+                                      LanguageService.reclam_action_engr_1
+                                    }}</a
                                   >
                                 </li>
+                                <!-- Attribution de reclamation -->
                                 <li>
                                   <a
                                     class="dropdown-item"
@@ -1301,7 +1325,9 @@
                                     ><i
                                       class="mdi mdi-account-arrow-right me-1"
                                     ></i>
-                                    Attribution de reclamation</a
+                                    {{
+                                      LanguageService.reclam_action_encrs_1
+                                    }}</a
                                   >
                                 </li>
                                 <li>
@@ -1395,7 +1421,10 @@
                               '01/01/1900'
                           "
                           ><span class="badge bg-label-primary rounded-pill"
-                            >Enregistrée &nbsp;&nbsp;N°{{
+                            >{{
+                              LanguageService.reclam_list_group_title_1
+                            }}
+                            &nbsp;&nbsp;N°{{
                               ListRetourRequetes.RQ_CODEREQUETE
                             }}</span
                           ></a
@@ -1463,9 +1492,11 @@
               </div>
               <div>
                 <h5 class="mb-1">
-                  <span class="align-middle">Liste des reclamations</span>
+                  <span class="align-middle">{{
+                    LanguageService.reclam_list_title
+                  }}</span>
                 </h5>
-                <span>Consultez vos reclamations</span>
+                <span>{{ LanguageService.reclam_list_sub_title }}</span>
               </div>
 
               &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
@@ -1486,9 +1517,9 @@
                   [checked]="var_checked_enrg"
                   (click)="OnChecked('enrg')"
                 />
-                <label class="bttn btn btn-outline-primary" for="btnradio1"
-                  >Enregistrée</label
-                >
+                <label class="bttn btn btn-outline-primary" for="btnradio1">{{
+                  LanguageService.reclam_list_group_title_1
+                }}</label>
 
                 <input
                   type="radio"
@@ -1498,9 +1529,9 @@
                   [checked]="var_checked_trai"
                   (click)="OnChecked('trai')"
                 />
-                <label class="bttn btn btn-outline-primary" for="btnradio2"
-                  >En cours de traitement</label
-                >
+                <label class="bttn btn btn-outline-primary" for="btnradio2">{{
+                  LanguageService.reclam_list_group_title_2
+                }}</label>
 
                 <input
                   type="radio"
@@ -1510,9 +1541,9 @@
                   [checked]="var_checked_clo"
                   (click)="OnChecked('clo')"
                 />
-                <label class="bttn btn btn-outline-primary" for="btnradio3"
-                  >Cloturée</label
-                >
+                <label class="bttn btn btn-outline-primary" for="btnradio3">{{
+                  LanguageService.reclam_list_group_title_3
+                }}</label>
               </div>
             </div>
 
@@ -1574,7 +1605,9 @@
                                         '01/01/1900'
                                     "
                                     ><i class="mdi mdi-account-tag me-1"></i>
-                                    Avis de recevabilité</a
+                                    {{
+                                      LanguageService.reclam_action_engr_1
+                                    }}</a
                                   >
                                 </li>
                                 <li>
@@ -1598,9 +1631,12 @@
                                     <i
                                       class="mdi mdi-book-information-variant me-1"
                                     ></i>
-                                    Infos du client</a
+                                    {{
+                                      LanguageService.reclam_action_engr_2
+                                    }}</a
                                   >
                                 </li>
+                                <!-- Attribution de reclamation -->
                                 <li>
                                   <a
                                     class="dropdown-item"
@@ -1617,9 +1653,12 @@
                                     ><i
                                       class="mdi mdi-account-arrow-right me-1"
                                     ></i>
-                                    Attribution de reclamation</a
+                                    {{
+                                      LanguageService.reclam_action_encrs_1
+                                    }}</a
                                   >
                                 </li>
+                                <!-- Consultation étape de la reclamation -->
                                 <li>
                                   <a
                                     class="dropdown-item"
@@ -1641,7 +1680,9 @@
                                     <i
                                       class="mdi mdi-format-list-bulleted-square me-1"
                                     ></i>
-                                    Consultation étape de la reclamation</a
+                                    {{
+                                      LanguageService.reclam_action_encrs_2
+                                    }}</a
                                   >
                                 </li>
                                 <li>
@@ -1661,9 +1702,12 @@
                                     "
                                   >
                                     <i class="mdi mdi-close-box me-1"></i>
-                                    Clôture définitive</a
+                                    {{
+                                      LanguageService.reclam_action_encrs_3
+                                    }}</a
                                   >
                                 </li>
+                                <!-- Annulation clôture définitive -->
                                 <li>
                                   <a
                                     class="dropdown-item"
@@ -1685,17 +1729,48 @@
                                     <span
                                       class="mdi mdi-progress-close me-1"
                                     ></span>
-                                    Annulation clôture définitive
+                                    {{ LanguageService.reclam_action_clo_1 }}
                                   </a>
                                 </li>
+
+                                <!-- Consultation étape de la reclamation -->
                                 <li>
                                   <a
                                     class="dropdown-item"
                                     href="javascript:void(0);"
                                     data-bs-toggle="modal"
-                                    data-bs-target="#addNewAddressAnnulationClotureDefinitive"
+                                    data-bs-target="#addNewAddressConsultation"
                                     (click)="
-                                      recupListeCloture(ListRetourRequetes)
+                                      recupListeConsult(ListRetourRequetes)
+                                    "
+                                    *ngIf="
+                                      ListRetourRequetes.RQ_DATESAISIEREQUETE !=
+                                        '01/01/1900' &&
+                                      ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE !=
+                                        '01/01/1900' &&
+                                      ListRetourRequetes.RQ_DATECLOTUREREQUETE !=
+                                        '01/01/1900'
+                                    "
+                                  >
+                                    <i
+                                      class="mdi mdi-format-list-bulleted-square me-1"
+                                    ></i>
+                                    {{
+                                      LanguageService.reclam_action_encrs_2
+                                    }}</a
+                                  >
+                                </li>
+
+                                <!-- Transmission à un tribunal -->
+                                <li>
+                                  <a
+                                    class="dropdown-item"
+                                    href="javascript:void(0);"
+                                    (click)="
+                                      recup_elem_tribunal(
+                                        ListRetourRequetes,
+                                        'T'
+                                      )
                                     "
                                     *ngIf="
                                       ListRetourRequetes.RQ_DATESAISIEREQUETE !=
@@ -1709,17 +1784,20 @@
                                     <span
                                       class="mdi mdi-bank-transfer-in me-1"
                                     ></span>
-                                    Transmission à un tribunal
+                                    {{ LanguageService.reclam_action_clo_2 }}
                                   </a>
                                 </li>
+
+                                <!-- Clôture procédure judiciaire -->
                                 <li>
                                   <a
                                     class="dropdown-item"
                                     href="javascript:void(0);"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#addNewAddressAnnulationClotureDefinitive"
                                     (click)="
-                                      recupListeCloture(ListRetourRequetes)
+                                      recup_elem_tribunal(
+                                        ListRetourRequetes,
+                                        'C'
+                                      )
                                     "
                                     *ngIf="
                                       ListRetourRequetes.RQ_DATESAISIEREQUETE !=
@@ -1731,7 +1809,7 @@
                                     "
                                   >
                                     <span class="mdi mdi-bank-off me-1"></span>
-                                    Clôture procédure judiciaire
+                                    {{ LanguageService.reclam_action_clo_3 }}
                                   </a>
                                 </li>
                                 <!-- <li>
@@ -1803,7 +1881,8 @@
                             ListRetourRequetes.RS_CODESTATUTRECEVABILITE != '02'
                           "
                           ><span class="badge bg-label-primary rounded-pill"
-                            >Enregistrée &nbsp;&nbsp;N°
+                            >{{ LanguageService.reclam_list_group_title_1 }}
+                            &nbsp;&nbsp;N°
                             {{ ListRetourRequetes.RQ_CODEREQUETE }}</span
                           ></a
                         >
@@ -1819,7 +1898,8 @@
                             ListRetourRequetes.RS_CODESTATUTRECEVABILITE != '02'
                           "
                           ><span class="badge bg-label-success rounded-pill"
-                            >En cours de traitement &nbsp;&nbsp;N°
+                            >{{ LanguageService.reclam_list_group_title_2 }}
+                            &nbsp;&nbsp;N°
                             {{ ListRetourRequetes.RQ_CODEREQUETE }}</span
                           ></a
                         >
@@ -1831,7 +1911,8 @@
                             ListRetourRequetes.RS_CODESTATUTRECEVABILITE != '02'
                           "
                           ><span class="badge bg-label-danger rounded-pill"
-                            >Cloturée &nbsp;&nbsp;N°
+                            >{{ LanguageService.reclam_list_group_title_3 }}
+                            &nbsp;&nbsp;N°
                             {{ ListRetourRequetes.RQ_CODEREQUETE }}</span
                           ></a
                         >
@@ -1917,6 +1998,7 @@
   <div class="modal-dialog modal-lg modal-add-new-address">
     <div class="modal-content p-3 p-md-5">
       <div class="modal-body p-md-0">
+        <!-- Attribution de la reclamation -->
         <button
           type="button"
           class="btn-close"
@@ -1924,9 +2006,11 @@
           aria-label="Close"
         ></button>
         <div class="text-center mb-4">
-          <h3 class="address-title mb-2 pb-1">Attribution de la reclamation</h3>
+          <h3 class="address-title mb-2 pb-1">
+            {{ LanguageService.attr_reclam_title }}
+          </h3>
           <p class="address-subtitle">
-            Attribuer une reclamtion à un opérateur
+            {{ LanguageService.attr_reclam_sub_title }}
           </p>
         </div>
 
@@ -1980,13 +2064,13 @@
                     role="alert"
                   >
                     <i class="mdi mdi-bell-outline me-2"></i>
-                    Voulez-vous mettre fin à cette étape afin de l'attribuer à
-                    un autre opérateur ? &#160; &#160; &#160;
+                    {{ LanguageService.attr_reclam_message_1 }} ? &#160; &#160;
+                    &#160;
                     <span
                       class="badge rounded-pill bg-primary"
                       (click)="ClotureEtape()"
                       style="cursor: pointer"
-                      >Oui</span
+                      >{{ LanguageService.attr_reclam_message_1_btn }}</span
                     >
                   </div>
                   <br />
@@ -2015,7 +2099,9 @@
                             {{ ListComboOperateur.CU_NOMUTILISATEUR }}
                           </option>
                         </select>
-                        <label for="modalOperateur">Opérateur</label>
+                        <label for="modalOperateur">{{
+                          LanguageService.attr_chmp_title_1
+                        }}</label>
                       </div>
                     </div>
                     <div class="col-6">
@@ -2025,12 +2111,16 @@
                           id="modalDuree"
                           name="modalDuree"
                           class="form-control"
-                          placeholder="Entrez la date de début"
+                          [placeholder]="
+                            LanguageService.chmp_date_start_placeholder
+                          "
                           [(ngModel)]="formulaire_attr_reclamations[1].valeur"
                           maxlength="10"
                           (input)="AdminService.SaisieDateAuto('modalDuree')"
                         />
-                        <label for="modalDuree">Date de début</label>
+                        <label for="modalDuree">{{
+                          LanguageService.chmp_date_start
+                        }}</label>
                       </div>
                     </div>
                     <div class="col-6">
@@ -2040,12 +2130,16 @@
                           id="modalDureefin"
                           name="modalDureefin"
                           class="form-control"
-                          placeholder="Entrez la date de fin"
+                          [placeholder]="
+                            LanguageService.chmp_date_end_placeholder
+                          "
                           [(ngModel)]="formulaire_attr_reclamations[2].valeur"
                           maxlength="10"
                           (input)="AdminService.SaisieDateAuto('modalDureefin')"
                         />
-                        <label for="modalDureefin">Date de fin</label>
+                        <label for="modalDureefin">{{
+                          LanguageService.chmp_date_end
+                        }}</label>
                       </div>
                     </div>
                     <div class="form-floating form-floating-outline mb-4">
@@ -2054,21 +2148,29 @@
                         name="invoice-observation-avis"
                         id="invoice-observation-avis"
                         style="height: 190px"
-                        placeholder="Objectif de la tâche"
+                        [placeholder]="LanguageService.placeholder_description"
                         [(ngModel)]="formulaire_attr_reclamations[3].valeur"
                       ></textarea>
-                      <label for="invoice-observation-avis">Description</label>
+                      <label for="invoice-observation-avis">{{
+                        LanguageService.attr_chmp_title_2
+                      }}</label>
                     </div>
 
+                    <!-- L'opérateur peut-il voir les infos sur le client -->
                     <div class="flex-grow-1 row">
                       <div class="col-9 mb-sm-0 mb-2">
                         <h6 class="mb-0" style="font-size: 14px">
-                          L'opérateur peut-il voir les infos sur le client ?
+                          {{ LanguageService.attr_reclam_message_2 }} ?
                         </h6>
                       </div>
                       <div class="col-3 text-end">
                         <label class="switch me-0">
-                          <input type="checkbox" class="switch-input" />
+                          <input
+                            type="checkbox"
+                            class="switch-input"
+                            [checked]="var_off_on === 'O'"
+                            (click)="AuthorizationCustomerInformation()"
+                          />
                           <span class="switch-toggle-slider">
                             <span class="switch-on"></span>
                             <span class="switch-off"></span>
@@ -2079,6 +2181,7 @@
                     </div>
 
                     <div class="col-12 text-center">
+                      <!-- soumettre -->
                       <button
                         type="submit"
                         class="bttn btn btn-primary me-sm-3 me-1"
@@ -2088,13 +2191,13 @@
                           )
                         "
                       >
-                        Soumettre
+                        {{ LanguageService.btn_title_submit }}
                       </button>
                       <button
                         type="reset"
                         class="bttn btn btn-outline-secondary"
                       >
-                        Reinitialiser
+                        {{ LanguageService.btn_title_reset }}
                       </button>
                     </div>
                   </form>
@@ -2128,12 +2231,14 @@
           data-bs-dismiss="modal"
           aria-label="Close"
         ></button>
+        <!-- Consultation traitement de la reclamation -->
         <div class="text-center mb-4">
           <h3 class="address-title mb-2 pb-1">
-            Consultation traitement de la reclamation
+            {{ LanguageService.consult_trai_title }}
           </h3>
+          <!-- Consultez le niveau d'avancement des étapes -->
           <p class="address-subtitle">
-            Consultez le niveau d'avancement des étapes
+            {{ LanguageService.consult_trai_sub_title }}
           </p>
         </div>
 
@@ -2182,7 +2287,8 @@
                     role="alert"
                   >
                     <i class="mdi mdi-bell-outline me-2"></i>
-                    Consultez les details de cette étape &#160; &#160; &#160; >
+                    {{ LanguageService.consult_trai_message }} &#160; &#160;
+                    &#160; >
                   </div>
                   <br />
 
@@ -2191,7 +2297,7 @@
                     *ngIf="!statutTraitement"
                     style="text-align: center; font-size: 20px"
                   >
-                    <p>Aucun traitement en cours pour l'instant !</p>
+                    <p>{{ LanguageService.consult_trai_message_empty }} !</p>
                   </div>
                   <div class="card-body pt-3 pb-0" *ngIf="statutTraitement">
                     <ul class="timeline card-timeline mb-0">
@@ -2201,7 +2307,9 @@
                         ></span>
                         <div class="timeline-event">
                           <div class="timeline-header mb-2 pb-1">
-                            <h6 class="mb-0">DATE CLOTURE ETAPE</h6>
+                            <h6 class="mb-0">
+                              {{ LanguageService.step_treatment_1 }}
+                            </h6>
                             <small class="text-muted"
                               ><span class="badge bg-label-success rounded-pill"
                                 >new</span
@@ -2221,7 +2329,9 @@
                         <span class="timeline-point timeline-point-info"></span>
                         <div class="timeline-event">
                           <div class="timeline-header mb-2 pb-1">
-                            <h6 class="mb-0">DATE DEBUT TRAITEMENT ETAPE</h6>
+                            <h6 class="mb-0">
+                              {{ LanguageService.step_treatment_2 }}
+                            </h6>
                             <small class="text-muted"
                               ><span class="badge bg-label-success rounded-pill"
                                 >new</span
@@ -2237,7 +2347,9 @@
                         <span class="timeline-point timeline-point-info"></span>
                         <div class="timeline-event">
                           <div class="timeline-header mb-2 pb-1">
-                            <h6 class="mb-0">DATE FIN TRAITEMENT ETAPE</h6>
+                            <h6 class="mb-0">
+                              {{ LanguageService.step_treatment_3 }}
+                            </h6>
                             <small class="text-muted"
                               ><span class="badge bg-label-success rounded-pill"
                                 >new</span
@@ -2254,7 +2366,7 @@
                         <div class="timeline-event">
                           <div class="timeline-header mb-2 pb-1">
                             <h6 class="mb-0">
-                              DESCRIPTION LORS DE L'ATTRIBUTION
+                              {{ LanguageService.step_treatment_4 }}
                             </h6>
                             <small class="text-muted"
                               ><span class="badge bg-label-success rounded-pill"
@@ -2271,7 +2383,9 @@
                         <span class="timeline-point timeline-point-info"></span>
                         <div class="timeline-event">
                           <div class="timeline-header mb-2 pb-1">
-                            <h6 class="mb-0">OBSERVATION</h6>
+                            <h6 class="mb-0">
+                              {{ LanguageService.step_treatment_5 }}
+                            </h6>
                             <small class="text-muted"
                               ><span class="badge bg-label-success rounded-pill"
                                 >new</span
@@ -2287,7 +2401,9 @@
                         <span class="timeline-point timeline-point-info"></span>
                         <div class="timeline-event">
                           <div class="timeline-header mb-2 pb-1">
-                            <h6 class="mb-0">OBSERVATION CLOTURE DEFINITIVE</h6>
+                            <h6 class="mb-0">
+                              {{ LanguageService.step_treatment_6 }}
+                            </h6>
                             <small class="text-muted"
                               ><span class="badge bg-label-success rounded-pill"
                                 >new</span
@@ -2304,7 +2420,7 @@
                         <div class="timeline-event">
                           <div class="timeline-header mb-2 pb-1">
                             <h6 class="mb-0">
-                              OBSERVATION ANNULATION CLOTURE DEFINITIVE
+                              {{ LanguageService.step_treatment_7 }}
                             </h6>
                             <small class="text-muted"
                               ><span class="badge bg-label-success rounded-pill"
@@ -2327,7 +2443,9 @@
                         ></span>
                         <div class="timeline-event pb-1">
                           <div class="timeline-header mb-2 pb-1">
-                            <h6 class="mb-0">DATE SAISIE RECLAMATION</h6>
+                            <h6 class="mb-0">
+                              {{ LanguageService.step_treatment_8 }}
+                            </h6>
                             <small class="text-muted"
                               ><span class="badge bg-label-success rounded-pill"
                                 >new</span
@@ -2345,7 +2463,9 @@
                         ></span>
                         <div class="timeline-event">
                           <div class="timeline-header mb-2 pb-1">
-                            <h6 class="mb-0">DOCUMENT</h6>
+                            <h6 class="mb-0">
+                              {{ LanguageService.step_treatment_9 }}
+                            </h6>
                             <small class="text-muted"
                               ><span class="badge bg-label-success rounded-pill"
                                 >new</span
@@ -2371,10 +2491,11 @@
                                 width="20"
                                 class="me-1"
                               />
+                              <!-- Consulter -->
                               <span
                                 class="fw-medium text-body"
                                 style="color: black"
-                                >Consulter</span
+                                >{{ LanguageService.btn_consult }}</span
                               >
                             </a>
                           </div>
@@ -2408,9 +2529,11 @@
           aria-label="Close"
         ></button>
         <div class="text-center mb-4">
-          <h3 class="address-title mb-2 pb-1">Avis sur la reclamation</h3>
+          <h3 class="address-title mb-2 pb-1">
+            {{ LanguageService.avis_recev_title }}
+          </h3>
           <p class="address-subtitle">
-            Donner votre avis sur la recevabilité de cette reclamation
+            {{ LanguageService.avis_recev_sub_title }}
           </p>
         </div>
 
@@ -2432,7 +2555,9 @@
                   {{ ListAvisrecevabilit.RS_LIBELLESTATUTRECEVABILITE }}
                 </option>
               </select>
-              <label for="avisSatisfaction">Avis</label>
+              <label for="avisSatisfaction">{{
+                LanguageService.avis_recev_chmp_title_1
+              }}</label>
             </div>
           </div>
           <div class="form-floating form-floating-outline">
@@ -2441,11 +2566,15 @@
               name="invoice-observation-avis"
               id="NoteObservation"
               style="height: 190px"
-              placeholder="Observation de l'agent traitant (portant sur la plainte ou la reclamation)"
+              [placeholder]="
+                LanguageService.avis_recev_chmp_title_2_placeholder
+              "
               [(ngModel)]="formulaire_avis[1].valeur"
               (input)="CheckWordCount()"
             ></textarea>
-            <label for="NoteObservation">Observation</label>
+            <label for="NoteObservation">{{
+              LanguageService.chmp_observation
+            }}</label>
           </div>
           <div class="col-6" *ngIf="statutDateDebut">
             <div class="form-floating form-floating-outline">
@@ -2454,12 +2583,14 @@
                 id="dtdedebut"
                 name="datededebut"
                 class="form-control"
-                placeholder="Entrez une date de debut (01-01-2015)"
+                [placeholder]="LanguageService.chmp_date_start_placeholder"
                 [(ngModel)]="formulaire_avis[2].valeur"
                 maxlength="10"
                 (input)="AdminService.SaisieDateAuto('dtdedebut')"
               />
-              <label for="dtdedebut">Durée de debut</label>
+              <label for="dtdedebut">{{
+                LanguageService.chmp_date_start
+              }}</label>
             </div>
           </div>
           <div class="col-6" *ngIf="statutDatefin">
@@ -2469,12 +2600,12 @@
                 id="dtdefin"
                 name="datedefin"
                 class="form-control"
-                placeholder="Entrez une date de fin (01-01-2015)"
+                [placeholder]="LanguageService.chmp_date_end_placeholder"
                 [(ngModel)]="formulaire_avis[3].valeur"
                 maxlength="10"
                 (input)="AdminService.SaisieDateAuto('dtdefin')"
               />
-              <label for="dtdefin">Durée de fin</label>
+              <label for="dtdefin">{{ LanguageService.chmp_date_end }}</label>
             </div>
           </div>
 
@@ -2485,7 +2616,7 @@
               class="bttn btn btn-primary me-sm-3 me-1"
               (click)="EnregistrerAvis(formulaire_avis)"
             >
-              Soumettre
+              {{ LanguageService.btn_title_submit }}
             </button>
             <button
               type="reset"
@@ -2493,7 +2624,7 @@
               data-bs-dismiss="modal"
               aria-label="Close"
             >
-              Reinitialiser
+              {{ LanguageService.btn_title_reset }}
             </button>
           </div>
         </form>
@@ -2520,8 +2651,12 @@
           aria-label="Close"
         ></button>
         <div class="text-center mb-4">
-          <h3 class="address-title mb-2 pb-1">Clôture définitive</h3>
-          <p class="address-subtitle">Clôturez définitivement</p>
+          <h3 class="address-title mb-2 pb-1">
+            {{ LanguageService.clo_def_title }}
+          </h3>
+          <p class="address-subtitle">
+            {{ LanguageService.clo_def_sub_title }}
+          </p>
         </div>
 
         <!-- Inventory -->
@@ -2535,7 +2670,7 @@
             <!-- Connected Accounts -->
             <!-- <div class="card mb-12"> -->
             <div class="card-header">
-              <h5 class="mb-2">Etapes</h5>
+              <h5 class="mb-2">{{ LanguageService.clo_def_title_step }}</h5>
               <!-- <p class="mb-0 text-body">de resolution de la requete</p> -->
             </div>
             &#160; &#160; &#160;
@@ -2580,10 +2715,12 @@
                   name="invoice-observation-avisCloture"
                   id="invoice-observation-avisCloture"
                   style="height: 190px"
-                  placeholder="Objectif de la tâche"
+                  [placeholder]="LanguageService.placeholder_description"
                   [(ngModel)]="ObservationsCloture"
                 ></textarea>
-                <label for="invoice-observation-avisCloture">Observation</label>
+                <label for="invoice-observation-avisCloture">{{
+                  LanguageService.chmp_observation
+                }}</label>
               </div>
               <div class="col-12 text-center">
                 <button
@@ -2592,7 +2729,7 @@
                   *ngIf="cloture"
                   (click)="ClotureRequetePrincipale()"
                 >
-                  Cloturer
+                  {{ LanguageService.btn_title_to_enclose }}
                 </button>
               </div>
             </div>
@@ -2625,8 +2762,12 @@
           aria-label="Close"
         ></button>
         <div class="text-center mb-4">
-          <h3 class="address-title mb-2 pb-1">Annulation clôture définitive</h3>
-          <p class="address-subtitle">Annulation clôture définitive</p>
+          <h3 class="address-title mb-2 pb-1">
+            {{ LanguageService.ann_clo_def_title }}
+          </h3>
+          <p class="address-subtitle">
+            {{ LanguageService.ann_clo_def_sub_title }}
+          </p>
         </div>
 
         <!-- Inventory -->
@@ -2639,9 +2780,9 @@
           <div class="row">
             <!-- Connected Accounts -->
             <!-- <div class="card mb-12"> -->
-            <div class="card-header">
+            <!-- <div class="card-header">
               <h5 class="mb-2">Observations clôture</h5>
-            </div>
+            </div> -->
             <div class="card-body">
               <div class="form-floating form-floating-outline mb-4">
                 <textarea
@@ -2649,12 +2790,12 @@
                   name="invoice-observation-avisACloture"
                   id="invoice-observation-avisACloture"
                   style="height: 190px"
-                  placeholder="Objectif de la tâche"
+                  [placeholder]="LanguageService.placeholder_description"
                   [(ngModel)]="ObservationsCloture"
                 ></textarea>
-                <label for="invoice-observation-avisACloture"
-                  >Avis annulation clôture</label
-                >
+                <label for="invoice-observation-avisACloture">{{
+                  LanguageService.ann_clo_def_chmp_title
+                }}</label>
               </div>
               <div class="col-12 text-center">
                 <button
@@ -2662,7 +2803,231 @@
                   class="bttn btn btn-primary me-sm-3 me-1"
                   (click)="AnnulationClotureRequetePrincipale()"
                 >
-                  Annulation clôture
+                  {{ LanguageService.ann_clo_def_btn_title }}
+                </button>
+              </div>
+            </div>
+            <!-- </div> -->
+            <!-- /Connected Accounts -->
+          </div>
+        </div>
+        <!-- </div> -->
+        <!-- /Inventory -->
+      </div>
+    </div>
+  </div>
+</div>
+<!--/ Add New Address Modal -->
+
+<!-- Add New Address Modal transmission a un tribunal -->
+<div
+  class="modal fade"
+  id="transmissionauntribunal"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-add-new-address">
+    <div class="modal-content p-3 p-md-5">
+      <div class="modal-body p-md-0">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+        <div class="text-center mb-4">
+          <h3 class="address-title mb-2 pb-1">Transmission a un tribunal</h3>
+          <p class="address-subtitle">Transmettez a un tribunal</p>
+        </div>
+
+        <!-- Inventory -->
+        <!-- <div class="card mb-4"> -->
+        <!-- <div class="card-header">
+          <h5 class="card-title mb-0">Niveau de traitement de reclamation</h5>
+        </div> -->
+        &#160; &#160; &#160;
+        <div class="card-body">
+          <div class="row">
+            <!-- Connected Accounts -->
+            <!-- <div class="card mb-12"> -->
+            <!-- <div class="card-header">
+              <h5 class="mb-2">Observations clôture</h5>
+            </div> -->
+            <div class="card-body">
+              <div class="form-floating form-floating-outline mb-4">
+                <textarea
+                  class="form-control"
+                  name="invoice-observation-avisACloture"
+                  id="invoice-observation-avisACloture"
+                  style="height: 190px"
+                  [placeholder]="LanguageService.placeholder_description"
+                  [(ngModel)]="modal_transmission_tribunal[0].valeur"
+                ></textarea>
+                <label for="invoice-observation-avisACloture">{{
+                  LanguageService.ann_clo_def_chmp_title
+                }}</label>
+              </div>
+              <div class="form-floating form-floating-outline mb-4">
+                <input
+                  type="text"
+                  name="num-cpte-clt"
+                  id="formtabs-num-cpte-clt"
+                  class="form-control"
+                  placeholder="Montant du contentieux"
+                  [(ngModel)]="modal_transmission_tribunal[1].valeur"
+                />
+              </div>
+
+              <!-- Multi  -->
+              <div class="col-12 mb-6">
+                <!-- <div class="card"> -->
+                <div class="card-body">
+                  <form
+                    action="/upload"
+                    class="dropzone needsclick"
+                    id="dropzone-multi-fichier"
+                  >
+                    <!-- <div class="dz-message needsclick">
+                      Drop files here or click to upload
+                      <span class="note needsclick"
+                        >(This is just a demo dropzone. Selected
+                        files are
+                        <span class="fw-medium">not</span>
+                        actually uploaded.)</span
+                      >
+                    </div> -->
+                    <div class="fallback">
+                      <input
+                        name="file"
+                        type="file"
+                        (change)="HandleFileInputContentieux($event)"
+                      />
+                    </div>
+                  </form>
+                </div>
+                <!-- </div> -->
+              </div>
+              <!-- Multi  -->
+              &#160; &#160;
+              <div class="col-12 text-center">
+                <button
+                  type="submit"
+                  class="bttn btn btn-primary me-sm-3 me-1"
+                  (click)="TransmissionTribunal()"
+                >
+                  Transmission
+                </button>
+              </div>
+            </div>
+            <!-- </div> -->
+            <!-- /Connected Accounts -->
+          </div>
+        </div>
+        <!-- </div> -->
+        <!-- /Inventory -->
+      </div>
+    </div>
+  </div>
+</div>
+<!--/ Add New Address Modal -->
+
+<!-- Add New Address Modal cloture procedure judiciaire-->
+<div
+  class="modal fade"
+  id="clotureprocedurejudiciaire"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-add-new-address">
+    <div class="modal-content p-3 p-md-5">
+      <div class="modal-body p-md-0">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+        <div class="text-center mb-4">
+          <h3 class="address-title mb-2 pb-1">Cloture procedure judiciaire</h3>
+          <p class="address-subtitle">Cloturez la procedure</p>
+        </div>
+
+        <!-- Inventory -->
+        <!-- <div class="card mb-4"> -->
+        <!-- <div class="card-header">
+          <h5 class="card-title mb-0">Niveau de traitement de reclamation</h5>
+        </div> -->
+        &#160; &#160; &#160;
+        <div class="card-body">
+          <div class="row">
+            <!-- Connected Accounts -->
+            <!-- <div class="card mb-12"> -->
+            <!-- <div class="card-header">
+              <h5 class="mb-2">Observations clôture</h5>
+            </div> -->
+            <div class="card-body">
+              <div class="form-floating form-floating-outline mb-4">
+                <textarea
+                  class="form-control"
+                  name="invoice-observation-avisACloture"
+                  id="invoice-observation-avisACloture"
+                  style="height: 190px"
+                  [placeholder]="LanguageService.placeholder_description"
+                  [(ngModel)]="modal_cloture_procedure[0].valeur"
+                ></textarea>
+                <label for="invoice-observation-avisACloture">{{
+                  LanguageService.ann_clo_def_chmp_title
+                }}</label>
+              </div>
+              <div class="form-floating form-floating-outline mb-4">
+                <input
+                  type="text"
+                  name="num-cpte-clt"
+                  id="formtabs-num-cpte-clt"
+                  class="form-control"
+                  placeholder="Montant du contentieux"
+                  [(ngModel)]="modal_cloture_procedure[1].valeur"
+                />
+              </div>
+
+              <!-- Multi  -->
+              <div class="col-12 mb-6">
+                <!-- <div class="card"> -->
+                <div class="card-body">
+                  <form
+                    action="/upload"
+                    class="dropzone needsclick"
+                    id="dropzone-multi-fichier"
+                  >
+                    <!-- <div class="dz-message needsclick">
+                          Drop files here or click to upload
+                          <span class="note needsclick"
+                            >(This is just a demo dropzone. Selected
+                            files are
+                            <span class="fw-medium">not</span>
+                            actually uploaded.)</span
+                          >
+                        </div> -->
+                    <div class="fallback">
+                      <input
+                        name="file"
+                        type="file"
+                        (change)="HandleFileInputContentieuxCloture($event)"
+                      />
+                    </div>
+                  </form>
+                </div>
+                <!-- </div> -->
+              </div>
+              <!-- Multi  -->
+              &#160; &#160;
+              <div class="col-12 text-center">
+                <button
+                  type="submit"
+                  class="bttn btn btn-primary me-sm-3 me-1"
+                  (click)="ClotureProcedure(code_contentieux)"
+                >
+                  Cloture
                 </button>
               </div>
             </div>
@@ -2687,7 +3052,7 @@
 >
   <div class="offcanvas-header">
     <h5 id="offcanvasEndLabel" class="offcanvas-title">
-      Informations sur le client
+      {{ LanguageService.info_cli_title }}
     </h5>
     <button
       type="button"
@@ -2699,7 +3064,7 @@
   <div class="offcanvas-body my-auto mx-0 flex-grow-0">
     <strong
       ><label for="" style="color: black; font-size: large"
-        >Nom et prénoms:
+        >{{ LanguageService.info_cli_sub_title_1 }}:
       </label></strong
     >
     <p class="text-center">
@@ -2707,13 +3072,13 @@
     </p>
     <strong
       ><label for="" style="color: black; font-size: large"
-        >Email:
+        >{{ LanguageService.info_cli_sub_title_2 }}:
       </label></strong
     >
     <p class="text-center">{{ tab_infos_client[0].CU_EMAIL }}</p>
     <strong
       ><label for="" style="color: black; font-size: large"
-        >Contact:
+        >{{ LanguageService.info_cli_sub_title_3 }}:
       </label></strong
     >
     <p class="text-center">{{ tab_infos_client[0].CU_CONTACT }}</p>

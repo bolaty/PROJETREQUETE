@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LanguageService } from 'src/app/services/language.service';
 
 @Component({
   selector: 'app-editions',
@@ -8,6 +9,8 @@ import { Component } from '@angular/core';
 export class EditionsComponent {
   affichage_etat: boolean = true;
   invoice_label: any = '';
+
+  constructor(public LanguageService: LanguageService) {}
 
   SelectInvoice(etat: any) {
     this.invoice_label = etat;

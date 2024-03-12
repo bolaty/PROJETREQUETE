@@ -19,11 +19,13 @@ export class SuiviRequeteComponent {
   recupinfo: any = JSON.parse(sessionStorage.getItem('infoReque') || '');
   recupinfoconnect: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
   statutValreq: any = '';
+  var_off_on: any = 'N';
   ListeComboStatut: any = [];
   tab_infos_client: any = [];
   tab_enregistrement_traitement: any = [];
   ListeComboSatisfaction: any = [];
   recupEnregistrerFichier: any = [];
+  ListeComboEtapeSelonReq: any = [];
   FormObjet: any;
   statutDocument: boolean = false;
   base64Image: string = '';
@@ -176,6 +178,7 @@ export class SuiviRequeteComponent {
         this.ListeComboSatisfaction = success;
         this.ListeComboSatisfaction =
           this.ListeComboSatisfaction.pvgReqniveausatisfactionComboResult;
+        this.ComboReqrequeteselonEtape(this.recupinfo.RQ_CODEREQUETE);
         if (this.ListeComboSatisfaction[0].clsResultat.SL_RESULTAT == 'TRUE') {
         } else {
         }
@@ -194,6 +197,7 @@ export class SuiviRequeteComponent {
       );
     }
   }
+
   TestEpateRequete() {
     if (this.recupinfo.RQ_DATECLOTUREREQUETE == '01/01/1900') {
       this.statutValreq = 'En cours de traitement';
@@ -474,7 +478,7 @@ export class SuiviRequeteComponent {
       this.FormObjet == ''
     ) {
       this.AdminService.NotificationErreur(
-        'il faut selectionner un document svp.!!!'
+        'Veuillez selectionner un document !'
       );
     } else {
       this.http
@@ -687,6 +691,51 @@ export class SuiviRequeteComponent {
           { positionClass: 'toast-bottom-left' }
         );
       }
+    );
+  }
+
+  ComboReqrequeteselonEtape(info: any) {
+    let Option = 'RequeteClientsClasse.svc/pvgListeReqrequeteEtapeparRequete';
+    let body = {
+      Objets: [
+        {
+          OE_PARAM: [info],
+          clsObjetEnvoi: {
+            ET_CODEETABLISSEMENT: '',
+            AN_CODEANTENNE: '',
+            TYPEOPERATION: '01',
+          },
+        },
+      ],
+    };
+    this.AdminService.AppelServeur(body, Option).subscribe(
+      (success: any) => {
+        this.ListeComboEtapeSelonReq = success;
+        this.ListeComboEtapeSelonReq =
+          this.ListeComboEtapeSelonReq.pvgListeReqrequeteEtapeparRequeteResult;
+
+        console.log(
+          'this.ListeComboEtapeSelonReq',
+          this.ListeComboEtapeSelonReq
+        );
+        if (this.ListeComboEtapeSelonReq[0].clsResultat.SL_RESULTAT == 'TRUE') {
+          this.var_off_on = 'N';
+          for (
+            let index = 0;
+            index < this.ListeComboEtapeSelonReq.length;
+            index++
+          ) {
+            if (
+              this.ListeComboEtapeSelonReq[index].RQ_CODEREQUETE ==
+              this.recupinfo.RQ_CODEREQUETE
+            ) {
+              this.var_off_on = this.ListeComboEtapeSelonReq[index].AT_ACTIF;
+              break;
+            }
+          }
+        }
+      },
+      (error) => {}
     );
   }
 

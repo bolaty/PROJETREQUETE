@@ -7,7 +7,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="card mb-4">
-        <h4 class="card-header">Création d'un opérateur</h4>
+        <h4 class="card-header">{{ LanguageService.op_title }}</h4>
         <!-- Account -->
         <!-- <div class="card-body">
           <div class="d-flex align-items-start align-items-sm-center gap-4">
@@ -64,7 +64,9 @@
                     >
                       <!-- <i class="mdi mdi-cube-outline me-2"></i> -->
                       <span class="mdi mdi-plus-circle-outline me-2"></span>
-                      <span class="align-middle">Nouveau</span>
+                      <span class="align-middle">{{
+                        LanguageService.op_btn_title_1
+                      }}</span>
                     </button>
                   </li>
                   <li class="nav-item">
@@ -75,7 +77,9 @@
                       (click)="ListeOperateurs()"
                     >
                       <i class="mdi mdi-list-box-outline me-2"></i>
-                      <span class="align-middle">Liste</span>
+                      <span class="align-middle">{{
+                        LanguageService.op_btn_title_2
+                      }}</span>
                     </button>
                   </li>
                 </ul>
@@ -91,7 +95,9 @@
                   id="restock"
                   role="tabpanel"
                 >
-                  <h6 class="text-body">Nouveau</h6>
+                  <h6 class="text-body">
+                    {{ LanguageService.op_btn_title_1 }}
+                  </h6>
                   <form
                     id="formAccountSettings"
                     method="POST"
@@ -105,12 +111,14 @@
                             type="text"
                             id="nom"
                             name="nom"
-                            placeholder="Nom"
+                            [placeholder]="LanguageService.op_chmp_title_1"
                             value=""
                             autofocus
                             [(ngModel)]="formulaire_operateur[0].valeur"
                           />
-                          <label for="nom">Nom</label>
+                          <label for="nom">{{
+                            LanguageService.op_chmp_title_1
+                          }}</label>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -121,10 +129,12 @@
                             name="prenoms"
                             id="prenoms"
                             value=""
-                            placeholder="Prénoms"
+                            [placeholder]="LanguageService.op_chmp_title_2"
                             [(ngModel)]="formulaire_operateur[1].valeur"
                           />
-                          <label for="prenoms">Prénoms</label>
+                          <label for="prenoms">{{
+                            LanguageService.op_chmp_title_2
+                          }}</label>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -138,7 +148,9 @@
                             placeholder="mail@example.com"
                             [(ngModel)]="formulaire_operateur[2].valeur"
                           />
-                          <label for="email">E-mail</label>
+                          <label for="email">{{
+                            LanguageService.op_chmp_title_3
+                          }}</label>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -148,7 +160,6 @@
                             name="agence"
                             class="select2 form-select"
                             data-allow-clear="true"
-                            placeholder="Agence"
                             [(ngModel)]="formulaire_operateur[3].valeur"
                           >
                             <option
@@ -158,7 +169,9 @@
                               {{ ListAgence.AG_RAISONSOCIAL }}
                             </option>
                           </select>
-                          <label for="agence">Agence</label>
+                          <label for="agence">{{
+                            LanguageService.op_chmp_title_4
+                          }}</label>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -172,7 +185,9 @@
                               placeholder="01 00 00 00 00"
                               [(ngModel)]="formulaire_operateur[4].valeur"
                             />
-                            <label for="telephone">Numéro de téléphone</label>
+                            <label for="telephone">{{
+                              LanguageService.op_chmp_title_5
+                            }}</label>
                           </div>
                         </div>
                       </div>
@@ -183,10 +198,12 @@
                             class="form-control"
                             id="login"
                             name="login"
-                            placeholder="Login"
+                            [placeholder]="LanguageService.op_chmp_title_6"
                             [(ngModel)]="formulaire_operateur[5].valeur"
                           />
-                          <label for="login">Login</label>
+                          <label for="login">{{
+                            LanguageService.op_chmp_title_6
+                          }}</label>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -196,10 +213,12 @@
                             type="text"
                             id="motdepasse"
                             name="motdepasse"
-                            placeholder="Mot de passe"
+                            [placeholder]="LanguageService.op_chmp_title_7"
                             [(ngModel)]="formulaire_operateur[6].valeur"
                           />
-                          <label for="motdepasse">Mot de passe</label>
+                          <label for="motdepasse">{{
+                            LanguageService.op_chmp_title_7
+                          }}</label>
                         </div>
                       </div>
                     </div>
@@ -211,13 +230,13 @@
                           EnregistrementCompteOperateur(formulaire_operateur)
                         "
                       >
-                        Sauvegarder
+                        {{ LanguageService.op_btn_engr_1 }}
                       </button>
                       <button
                         type="reset"
                         class="bttn btn btn-outline-secondary"
                       >
-                        Réinitialiser
+                        {{ LanguageService.op_btn_engr_2 }}
                       </button>
                     </div>
                   </form>
@@ -238,10 +257,10 @@
                     <table class="datatables-basic table table-bordered">
                       <thead style="background-color: #83c5be">
                         <tr>
-                          <th>NOM</th>
-                          <th>CONTACT</th>
-                          <th>LOGIN</th>
-                          <th>MOTDEPASSE</th>
+                          <th>{{ LanguageService.op_table_title_1 }}</th>
+                          <th>{{ LanguageService.op_table_title_2 }}</th>
+                          <th>{{ LanguageService.op_table_title_3 }}</th>
+                          <th>{{ LanguageService.op_table_title_4 }}</th>
                         </tr>
                       </thead>
                     </table>
@@ -320,7 +339,9 @@
                       data-bs-target="#restock"
                     >
                       <i class="mdi mdi-cube-outline me-2"></i>
-                      <span class="align-middle">Nouveau</span>
+                      <span class="align-middle">{{
+                        LanguageService.op_btn_title_1
+                      }}</span>
                     </button>
                   </li>
                   <li class="nav-item">
@@ -330,7 +351,9 @@
                       data-bs-target="#shipping"
                     >
                       <i class="mdi mdi-car-estate me-2"></i>
-                      <span class="align-middle">Liste</span>
+                      <span class="align-middle">{{
+                        LanguageService.op_btn_title_2
+                      }}</span>
                     </button>
                   </li>
                 </ul>
@@ -346,7 +369,9 @@
                   id="restock"
                   role="tabpanel"
                 >
-                  <h6 class="text-body">Nouveau</h6>
+                  <h6 class="text-body">
+                    {{ LanguageService.op_btn_title_1 }}
+                  </h6>
                   <form
                     id="formAccountSettings"
                     method="POST"
@@ -360,12 +385,14 @@
                             type="text"
                             id="nom"
                             name="nom"
-                            placeholder="Nom"
+                            [placeholder]="LanguageService.op_chmp_title_1"
                             value=""
                             autofocus
                             [(ngModel)]="formulaire_operateur[0].valeur"
                           />
-                          <label for="nom">Nom</label>
+                          <label for="nom">{{
+                            LanguageService.op_chmp_title_1
+                          }}</label>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -376,10 +403,12 @@
                             name="prenoms"
                             id="prenoms"
                             value=""
-                            placeholder="Prénoms"
+                            [placeholder]="LanguageService.op_chmp_title_2"
                             [(ngModel)]="formulaire_operateur[1].valeur"
                           />
-                          <label for="prenoms">Prénoms</label>
+                          <label for="prenoms">{{
+                            LanguageService.op_chmp_title_2
+                          }}</label>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -393,7 +422,9 @@
                             placeholder="mail@example.com"
                             [(ngModel)]="formulaire_operateur[2].valeur"
                           />
-                          <label for="email">E-mail</label>
+                          <label for="email">{{
+                            LanguageService.op_chmp_title_3
+                          }}</label>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -413,7 +444,9 @@
                               {{ ListAgence.AG_RAISONSOCIAL }}
                             </option>
                           </select>
-                          <label for="agence">Agence</label>
+                          <label for="agence">{{
+                            LanguageService.op_chmp_title_4
+                          }}</label>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -427,7 +460,9 @@
                               placeholder="01 00 00 00 00"
                               [(ngModel)]="formulaire_operateur[4].valeur"
                             />
-                            <label for="telephone">Numéro de téléphone</label>
+                            <label for="telephone">{{
+                              LanguageService.op_chmp_title_5
+                            }}</label>
                           </div>
                           <span class="input-group-text">CIV (+225)</span>
                         </div>
@@ -439,10 +474,12 @@
                             class="form-control"
                             id="login"
                             name="login"
-                            placeholder="Login"
+                            [placeholder]="LanguageService.op_chmp_title_6"
                             [(ngModel)]="formulaire_operateur[5].valeur"
                           />
-                          <label for="login">Login</label>
+                          <label for="login">{{
+                            LanguageService.op_chmp_title_6
+                          }}</label>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -452,10 +489,12 @@
                             type="text"
                             id="motdepasse"
                             name="motdepasse"
-                            placeholder="Mot de passe"
+                            [placeholder]="LanguageService.op_chmp_title_7"
                             [(ngModel)]="formulaire_operateur[6].valeur"
                           />
-                          <label for="motdepasse">Mot de passe</label>
+                          <label for="motdepasse">{{
+                            LanguageService.op_chmp_title_7
+                          }}</label>
                         </div>
                       </div>
                       <!-- <div class="d-flex mb-3" *ngFor="let ListEtapes of ListeComboEtapes; let i = index">
@@ -487,20 +526,22 @@
                           EnregistrementCompteOperateur(formulaire_operateur)
                         "
                       >
-                        Sauvegarder
+                        {{ LanguageService.op_btn_engr_1 }}
                       </button>
                       <button
                         type="reset"
                         class="bttn btn btn-outline-secondary"
                       >
-                        Réinitialiser
+                        {{ LanguageService.op_btn_engr_2 }}
                       </button>
                     </div>
                   </form>
                 </div>
                 <!-- Shipping Tab -->
                 <div class="tab-pane fade" id="shipping" role="tabpanel">
-                  <h6 class="text-body">Liste</h6>
+                  <h6 class="text-body">
+                    {{ LanguageService.op_btn_title_2 }}
+                  </h6>
                 </div>
               </div>
             </div>
@@ -533,28 +574,28 @@
     <div class="info-container" *ngIf="statusOrderListe">
       <ul class="list-unstyled mb-4">
         <li class="mb-3">
-          <span class="h6">Nom :</span>
+          <span class="h6">{{ LanguageService.op_chmp_title_1 }} : </span>
           <span>{{ voirlist.CU_NOMUTILISATEUR }}</span>
         </li>
         <li class="mb-3">
-          <span class="h6">Status:</span>
+          <span class="h6">{{ LanguageService.op_plus_status }}: </span>
           <span class="badge bg-label-success rounded-pill">Actif</span>
         </li>
         <li class="mb-3">
-          <span class="h6">E-mail:</span>
+          <span class="h6">{{ LanguageService.op_chmp_title_3 }}: </span>
           <span>{{ voirlist.CU_EMAIL }}</span>
         </li>
 
         <li class="mb-3">
-          <span class="h6">Contact:</span>
+          <span class="h6">{{ LanguageService.info_cli_sub_title_3 }}: </span>
           <span>{{ voirlist.CU_CONTACT }}</span>
         </li>
         <li class="mb-3">
-          <span class="h6">Login:</span>
+          <span class="h6">{{ LanguageService.op_chmp_title_6 }}: </span>
           <span>{{ voirlist.CU_LOGIN }}</span>
         </li>
         <li class="mb-3">
-          <span class="h6">Mot de passe:</span>
+          <span class="h6">{{ LanguageService.op_chmp_title_7 }}: </span>
           <span>{{ voirlist.CU_MOTDEPASSE }}</span>
         </li>
       </ul>
@@ -563,7 +604,7 @@
           href="javascript:;"
           class="bttn btn btn-primary me-3"
           (click)="checkModif()"
-          >Modifier</a
+          >{{ LanguageService.btn_title_to_modify }}</a
         >
       </div>
     </div>
@@ -574,12 +615,12 @@
           type="text"
           id="nom"
           name="nom"
-          placeholder="Nom"
+          [placeholder]="LanguageService.op_chmp_title_1"
           value=""
           autofocus
           [(ngModel)]="formulaire_operateur[0].valeur"
         />
-        <label for="nom">Nom</label>
+        <label for="nom">{{ LanguageService.op_chmp_title_1 }}</label>
       </div>
       <div class="form-floating form-floating-outline mb-4">
         <input
@@ -588,10 +629,10 @@
           name="prenoms"
           id="prenoms"
           value=""
-          placeholder="Prénoms"
+          [placeholder]="LanguageService.op_chmp_title_2"
           [(ngModel)]="formulaire_operateur[1].valeur"
         />
-        <label for="prenoms">Prénoms</label>
+        <label for="prenoms">{{ LanguageService.op_chmp_title_2 }}</label>
       </div>
       <div class="form-floating form-floating-outline mb-4">
         <input
@@ -603,7 +644,7 @@
           placeholder="mail@example.com"
           [(ngModel)]="formulaire_operateur[2].valeur"
         />
-        <label for="email">E-mail</label>
+        <label for="email">{{ LanguageService.op_chmp_title_3 }}</label>
       </div>
       <div class="form-floating form-floating-outline mb-4">
         <select
@@ -621,7 +662,7 @@
             {{ ListAgence.AG_RAISONSOCIAL }}
           </option>
         </select>
-        <label for="agence">Agence</label>
+        <label for="agence">{{ LanguageService.op_chmp_title_4 }}</label>
       </div>
       <div class="form-floating form-floating-outline mb-4">
         <div class="form-floating form-floating-outline">
@@ -633,7 +674,7 @@
             placeholder="01 00 00 00 00"
             [(ngModel)]="formulaire_operateur[4].valeur"
           />
-          <label for="telephone">Numéro de téléphone</label>
+          <label for="telephone">{{ LanguageService.op_chmp_title_5 }}</label>
         </div>
       </div>
       <div class="form-floating form-floating-outline mb-4">
@@ -642,10 +683,10 @@
           class="form-control"
           id="login"
           name="login"
-          placeholder="Login"
+          [placeholder]="LanguageService.op_chmp_title_6"
           [(ngModel)]="formulaire_operateur[5].valeur"
         />
-        <label for="login">Login</label>
+        <label for="login">{{ LanguageService.op_chmp_title_6 }}</label>
       </div>
       <div class="form-floating form-floating-outline mb-4">
         <input
@@ -657,7 +698,7 @@
           placeholder="mail@example.com"
           [(ngModel)]="formulaire_operateur[2].valeur"
         />
-        <label for="email">E-mail</label>
+        <label for="email">{{ LanguageService.op_chmp_title_3 }}</label>
       </div>
       <div class="mb-3 d-flex flex-wrap">
         <button
@@ -666,14 +707,14 @@
           data-bs-dismiss="offcanvas"
           (click)="EnregistrementCompteOperateur(formulaire_operateur)"
         >
-          Soumettre
+          {{ LanguageService.btn_title_submit }}
         </button>
         <button
           type="button"
           class="bttn btn btn-outline-secondary"
           data-bs-dismiss="offcanvas"
         >
-          Annuler
+          {{ LanguageService.btn_title_cancel }}
         </button>
       </div>
     </form>
