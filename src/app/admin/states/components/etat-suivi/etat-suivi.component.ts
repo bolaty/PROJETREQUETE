@@ -20,8 +20,8 @@ import { map } from 'rxjs';
 export class EtatSuiviComponent implements OnInit {
   @ViewChild('content', { static: false }) content!: ElementRef;
 
-  // LienServeur: any = 'http://localhost:22248/'; // lien dev
-  LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
+  LienServeur: any = 'http://localhost:22248/'; // lien dev
+  // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
 
   APP_URL: any = `${this.LienServeur}RequeteClientsClasse.svc/pvgTableauDeBord`;
 

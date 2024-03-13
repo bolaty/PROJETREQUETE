@@ -966,6 +966,7 @@
                                 ></i>
                               </button>
                               <ul class="dropdown-menu dropdown-menu-end">
+                                <!-- Avis de recevabilité -->
                                 <li>
                                   <a
                                     class="dropdown-item"
@@ -1287,6 +1288,7 @@
                                 ></i>
                               </button>
                               <ul class="dropdown-menu dropdown-menu-end">
+                                <!-- Avis de recevabilité -->
                                 <li>
                                   <a
                                     class="dropdown-item"
@@ -1589,6 +1591,7 @@
                                 ></i>
                               </button>
                               <ul class="dropdown-menu dropdown-menu-end">
+                                <!-- Avis de recevabilité -->
                                 <li>
                                   <a
                                     class="dropdown-item"
@@ -1610,6 +1613,8 @@
                                     }}</a
                                   >
                                 </li>
+
+                                <!-- infos du client -->
                                 <li>
                                   <a
                                     class="dropdown-item"
@@ -1636,6 +1641,37 @@
                                     }}</a
                                   >
                                 </li>
+
+                                <!-- Consultation étape de la reclamation - cas relance -->
+                                <li>
+                                  <a
+                                    class="dropdown-item"
+                                    href="javascript:void(0);"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#addNewAddressConsultation"
+                                    (click)="
+                                      recupListeConsult(ListRetourRequetes)
+                                    "
+                                    *ngIf="
+                                      ListRetourRequetes.RQ_DATESAISIEREQUETE !=
+                                        '01/01/1900' &&
+                                      ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE ==
+                                        '01/01/1900' &&
+                                      ListRetourRequetes.RQ_DATECLOTUREREQUETE ==
+                                        '01/01/1900' &&
+                                      ListRetourRequetes.RQ_CODEREQUETERELANCEE !=
+                                        ''
+                                    "
+                                  >
+                                    <i
+                                      class="mdi mdi-format-list-bulleted-square me-1"
+                                    ></i>
+                                    {{
+                                      LanguageService.reclam_action_encrs_2
+                                    }}</a
+                                  >
+                                </li>
+
                                 <!-- Attribution de reclamation -->
                                 <li>
                                   <a
@@ -1658,6 +1694,7 @@
                                     }}</a
                                   >
                                 </li>
+
                                 <!-- Consultation étape de la reclamation -->
                                 <li>
                                   <a
@@ -1685,6 +1722,8 @@
                                     }}</a
                                   >
                                 </li>
+
+                                <!-- Clôture définitive -->
                                 <li>
                                   <a
                                     class="dropdown-item"
@@ -1707,6 +1746,7 @@
                                     }}</a
                                   >
                                 </li>
+
                                 <!-- Annulation clôture définitive -->
                                 <li>
                                   <a
@@ -1998,7 +2038,6 @@
   <div class="modal-dialog modal-lg modal-add-new-address">
     <div class="modal-content p-3 p-md-5">
       <div class="modal-body p-md-0">
-        <!-- Attribution de la reclamation -->
         <button
           type="button"
           class="btn-close"
@@ -2006,6 +2045,7 @@
           aria-label="Close"
         ></button>
         <div class="text-center mb-4">
+          <!-- Attribution de la reclamation -->
           <h3 class="address-title mb-2 pb-1">
             {{ LanguageService.attr_reclam_title }}
           </h3>
@@ -2529,9 +2569,11 @@
           aria-label="Close"
         ></button>
         <div class="text-center mb-4">
+          <!-- Avis sur la reclamation -->
           <h3 class="address-title mb-2 pb-1">
             {{ LanguageService.avis_recev_title }}
           </h3>
+          <!-- Donner votre avis sur la recevabilité de cette reclamation -->
           <p class="address-subtitle">
             {{ LanguageService.avis_recev_sub_title }}
           </p>
@@ -2609,8 +2651,28 @@
             </div>
           </div>
 
+          <div
+            class="col-sm-12 col-lg-12 mb-4"
+            *ngIf="consultation_doc"
+            (click)="ConsulterPJ()"
+            style="cursor: pointer"
+          >
+            <div class="card bg-primary text-white text-center p-3">
+              <figure class="mb-0">
+                <blockquote class="blockquote">
+                  <p>Consultez la pièce jointe</p>
+                </blockquote>
+                <figcaption class="blockquote-footer mb-0 text-white">
+                  {{ recupValEtape.RQ_NOMRAPPORT }}
+                  <!-- <cite title="Source Title">Source Title</cite> -->
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+
           <div class="col-12 text-center">
             <hr />
+            <!-- Soumettre -->
             <button
               type="submit"
               class="bttn btn btn-primary me-sm-3 me-1"
@@ -2618,6 +2680,8 @@
             >
               {{ LanguageService.btn_title_submit }}
             </button>
+
+            <!-- Reinitialiser -->
             <button
               type="reset"
               class="bttn btn btn-outline-secondary"
@@ -2651,9 +2715,11 @@
           aria-label="Close"
         ></button>
         <div class="text-center mb-4">
+          <!-- Clôture définitive -->
           <h3 class="address-title mb-2 pb-1">
             {{ LanguageService.clo_def_title }}
           </h3>
+          <!-- Clôturez définitivement -->
           <p class="address-subtitle">
             {{ LanguageService.clo_def_sub_title }}
           </p>
@@ -2723,6 +2789,7 @@
                 }}</label>
               </div>
               <div class="col-12 text-center">
+                <!-- cloturer -->
                 <button
                   type="submit"
                   class="bttn btn btn-primary me-sm-3 me-1"

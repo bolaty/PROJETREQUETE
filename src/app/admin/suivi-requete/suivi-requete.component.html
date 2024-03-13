@@ -74,7 +74,7 @@
                         <li
                           class="dropdown-item"
                           href="javascript:void(0);"
-                          (click)="voirTraitement('Traitement')"
+                          (click)="voirTraitement1()"
                           *ngIf="
                             recupinfoconnect[0].TU_CODETYPEUTILISATEUR != '0002'
                           "
@@ -249,12 +249,20 @@
         ></textarea>
         <label for="invoice-observation">Observation</label>
       </div>
-      <div class="mb-4">
+      <div
+        class="mb-4"
+        *ngIf="afficher_doc"
+        (click)="AfficherFichier()"
+        style="cursor: pointer"
+      >
         <span class="badge bg-label-primary rounded-pill">
-          <i class="mdi mdi-link-variant mdi-14px me-1"></i>
-          <span class="align-middle">Fichier joint</span>
+          <i class="mdi mdi-file-eye-outline mdi-14px me-1"></i>
+          <span class="align-middle"
+            >Afficher le fichier joint à la requete</span
+          >
         </span>
       </div>
+
       <!-- Multi  -->
       <div class="col-12 mb-4" *ngIf="statutDocument">
         <div class="card">

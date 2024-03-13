@@ -13,8 +13,8 @@ declare var $: any;
   styleUrls: ['./suivi-requete.component.scss'],
 })
 export class SuiviRequeteComponent {
-  // LienServeur: any = 'http://localhost:22248/'; // lien dev
-  LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
+  LienServeur: any = 'http://localhost:22248/'; // lien dev
+  // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
 
   recupinfo: any = JSON.parse(sessionStorage.getItem('infoReque') || '');
   recupinfoconnect: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
@@ -28,6 +28,7 @@ export class SuiviRequeteComponent {
   ListeComboEtapeSelonReq: any = [];
   FormObjet: any;
   statutDocument: boolean = false;
+  afficher_doc: boolean = false;
   base64Image: string = '';
   tab_service: any = [
     {
@@ -107,7 +108,13 @@ export class SuiviRequeteComponent {
     private toastr: ToastrService
   ) {}
 
-  voirTraitement(info: any): void {
+  voirTraitement1() {
+    if (this.recupinfo.RQ_NOMRAPPORT != '') this.afficher_doc = true;
+    else this.afficher_doc = false;
+    $('#sendInvoiceOffcanvas').offcanvas('show');
+  }
+
+  voirTraitement() {
     let Option = 'RequeteClientsClasse.svc/pvgInfosDuClient';
     let body = {
       Objets: [
@@ -120,9 +127,7 @@ export class SuiviRequeteComponent {
       (success: any) => {
         this.tab_infos_client = success;
         this.tab_infos_client = this.tab_infos_client.pvgInfosDuClientResult;
-        setTimeout(() => {
-          $('#sendInvoiceOffcanvas').offcanvas('show');
-        }, 1000);
+
         console.log('this.tab_infos_client', this.tab_infos_client);
       },
       (error) => {}
@@ -739,9 +744,17 @@ export class SuiviRequeteComponent {
     );
   }
 
+  AfficherFichier() {
+    window.open(
+      `${this.recupinfo.RQ_LIENRAPPORT}${this.recupinfo.RQ_NOMRAPPORT}`,
+      '_blank'
+    );
+  }
+
   ngOnInit(): void {
     setTimeout(() => {
       this.ComboStatut();
+      this.voirTraitement();
     }, 1000);
 
     this.formulaire_suivi[0].valeur = this.recupinfo.RQ_DESCRIPTIONREQUETE;
