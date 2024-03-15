@@ -251,7 +251,7 @@
             <!-- Form with Tabs -->
             <div class="row">
               <div class="col">
-                <h6 class="mt-4">Formulaire</h6>
+                <h6 class="mt-4">{{ LanguageService.form }}</h6>
                 <div class="card mb-3">
                   <div class="card-header" *ngIf="statutClientExiste">
                     <ul class="nav nav-tabs" role="tablist">
@@ -266,9 +266,9 @@
                           <span
                             class="mdi mdi-account mdi-20px d-sm-none"
                           ></span
-                          ><span class="d-none d-sm-block"
-                            >information personnelle</span
-                          >
+                          ><span class="d-none d-sm-block">{{
+                            LanguageService.info_perso
+                          }}</span>
                         </button>
                       </li>
                       <li class="nav-item">
@@ -282,9 +282,9 @@
                           <span
                             class="mdi mdi-account-details mdi-20px d-sm-none"
                           ></span
-                          ><span class="d-none d-sm-block"
-                            >information sur la reclamation</span
-                          >
+                          ><span class="d-none d-sm-block">{{
+                            LanguageService.reclam_engr_bloc_title_2
+                          }}</span>
                         </button>
                       </li>
                     </ul>
@@ -304,7 +304,7 @@
                               <label
                                 class="col-sm-3 col-form-label text-sm-end"
                                 for="formtabs-first-name"
-                                >Numero de compte client</label
+                                >{{ LanguageService.num_cpte_client }}</label
                               >
                               <div class="col-sm-9">
                                 <input
@@ -325,7 +325,9 @@
                               <label
                                 class="col-sm-3 col-form-label text-sm-end"
                                 for="formtabs-last-name"
-                                >Nom et prénoms</label
+                                >{{
+                                  LanguageService.info_cli_sub_title_1
+                                }}</label
                               >
                               <div class="col-sm-9">
                                 <input
@@ -333,7 +335,9 @@
                                   name="nom-prenoms"
                                   id="formtabs-nom-prenoms"
                                   class="form-control"
-                                  placeholder="Entrez votre nom et vos prénoms"
+                                  [placeholder]="
+                                    LanguageService.placeholder_nom_prenoms
+                                  "
                                   [(ngModel)]="
                                     formulaire_plaintes_reclamations[1].valeur
                                   "
@@ -347,7 +351,7 @@
                               <label
                                 class="col-sm-3 col-form-label text-sm-end"
                                 for="formtabs-phone"
-                                >Téléphone</label
+                                >{{ LanguageService.chmp_telephone }}</label
                               >
                               <div class="col-sm-9">
                                 <input
@@ -369,7 +373,7 @@
                               <label
                                 class="col-sm-3 col-form-label text-sm-end"
                                 for="formtabs-country"
-                                >Agence</label
+                                >{{ LanguageService.op_chmp_title_4 }}</label
                               >
                               <div class="col-sm-9">
                                 <select
@@ -396,7 +400,7 @@
                               <label
                                 class="col-sm-3 col-form-label text-sm-end"
                                 for="formtabs-last-Localisation"
-                                >Localisation</label
+                                >{{ LanguageService.chmp_locate }}</label
                               >
                               <div class="col-sm-9">
                                 <input
@@ -417,7 +421,7 @@
                               <label
                                 class="col-sm-3 col-form-label text-sm-end"
                                 for="formtabs-last-Email"
-                                >Email</label
+                                >{{ LanguageService.op_chmp_title_3 }}</label
                               >
                               <div class="col-sm-9">
                                 <input
@@ -433,48 +437,6 @@
                               </div>
                             </div>
                           </div>
-                          <!--  <div class="col-md-6">
-                            <div class="row">
-                              <label
-                                class="col-sm-3 col-form-label text-sm-end"
-                                for="formtabs-last-Login"
-                                >Login</label
-                              >
-                              <div class="col-sm-9">
-                                <input
-                                  type="text"
-                                  name="Login"
-                                  id="formtabs-Login"
-                                  class="form-control"
-                                  placeholder="Login"
-                                  [(ngModel)]="
-                                    formulaire_plaintes_reclamations[11].valeur
-                                  "
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="row">
-                              <label
-                                class="col-sm-3 col-form-label text-sm-end"
-                                for="formtabs-last-passe"
-                                >Mot de passe</label
-                              >
-                              <div class="col-sm-9">
-                                <input
-                                  type="text"
-                                  name="passe"
-                                  id="formtabs-passe"
-                                  class="form-control"
-                                  placeholder="Mot de passe"
-                                  [(ngModel)]="
-                                    formulaire_plaintes_reclamations[12].valeur
-                                  "
-                                />
-                              </div>
-                            </div>
-                          </div>-->
                         </div>
                       </form>
                     </div>
@@ -491,7 +453,7 @@
                               <label
                                 class="col col-form-label text-sm-end"
                                 for="formtabs-country"
-                                >Type de reclamation</label
+                                >{{ LanguageService.type_reclam }}</label
                               >
                               <div class="col">
                                 <select
@@ -528,16 +490,16 @@
                                 formulaire_plaintes_reclamations[6].valeur
                               "
                             ></textarea>
-                            <label for="invoice-message"
-                              >Description de la reclamation</label
-                            >
+                            <label for="invoice-message">{{
+                              LanguageService.descript_reclam
+                            }}</label>
                           </div>
                           <div class="col-md-6">
                             <div class="row">
                               <label
                                 class="col-sm-3 col-form-label text-sm-end"
                                 for="formtabs-country"
-                                >Mode de collecte</label
+                                >{{ LanguageService.mode_collecte }}</label
                               >
                               <div class="col-sm-9">
                                 <select
@@ -570,7 +532,7 @@
                               <label
                                 class="col-sm-3 col-form-label text-sm-end"
                                 for="formtabs-username"
-                                >Nom agent</label
+                                >{{ LanguageService.chmp_nom_agent }}</label
                               >
                               <div class="col-sm-9">
                                 <input
@@ -662,11 +624,12 @@
                           role="tab"
                           aria-selected="false"
                         >
+                          <!-- information sur la reclamation de -->
                           <span
                             class="mdi mdi-account-details mdi-20px d-sm-none"
                           ></span
                           ><span class="d-none d-sm-block"
-                            >information sur la reclamation de
+                            >{{ LanguageService.reclam_engr_bloc_title }}
                             {{ ListeClients[0]?.CU_NOMUTILISATEUR }}</span
                           >
                         </button>
@@ -688,7 +651,7 @@
                               <label
                                 class="col-sm-3 col-form-label text-sm-end"
                                 for="formtabs-country"
-                                >Type de reclamation</label
+                                >{{ LanguageService.type_reclam }}</label
                               >
                               <div class="col-sm-9">
                                 <select
@@ -725,16 +688,16 @@
                                 formulaire_plaintes_reclamations[6].valeur
                               "
                             ></textarea>
-                            <label for="invoice-message"
-                              >Description de la reclamation</label
-                            >
+                            <label for="invoice-message">{{
+                              LanguageService.descript_reclam
+                            }}</label>
                           </div>
                           <div class="col-md-6">
                             <div class="row">
                               <label
                                 class="col-sm-3 col-form-label text-sm-end"
                                 for="formtabs-country"
-                                >Mode de collecte</label
+                                >{{ LanguageService.mode_collecte }}</label
                               >
                               <div class="col-sm-9">
                                 <select
@@ -762,28 +725,7 @@
                               </div>
                             </div>
                           </div>
-                          <!-- <div class="col-md-6">
-                            <div class="row">
-                              <label
-                                class="col-sm-3 col-form-label text-sm-end"
-                                for="formtabs-username"
-                                >Nom agent</label
-                              >
-                              <div class="col-sm-9">
-                                <input
-                                  type="text"
-                                  name="nom-agent"
-                                  id="formtabs-nom-agent"
-                                  class="form-control"
-                                  placeholder="Entrez un nom"
-                                  [(ngModel)]="
-                                    formulaire_plaintes_reclamations[8].valeur
-                                  "
-                                  readonly=""
-                                />
-                              </div>
-                            </div>
-                          </div> -->
+
                           <!-- Multi  -->
                           <div class="col-12 mb-6">
                             <!-- <div class="card"> -->
@@ -831,13 +773,13 @@
                                     )
                                   "
                                 >
-                                  Enregistrer
+                                  {{ LanguageService.btn_engr }}
                                 </button>
                                 <button
                                   type="reset"
                                   class="bttn btn btn-outline-secondary"
                                 >
-                                  Annuler
+                                  {{ LanguageService.btn_title_cancel }}
                                 </button>
                               </div>
                             </div>
@@ -910,6 +852,7 @@
                   >{{ LanguageService.reclam_list_group_title_2 }}
                 </label>
 
+                <!-- cloturée -->
                 <input
                   type="radio"
                   class="btn-check"
@@ -1046,7 +989,7 @@
                                     ><i
                                       class="mdi mdi-animation-outline me-1"
                                     ></i>
-                                    Suivi de reclamation</a
+                                    {{ LanguageService.suivi_reclam }}</a
                                   >
                                 </li>
                                 <!--<li>
@@ -1079,7 +1022,7 @@
                           >
                             <a href="javascript:;"
                               ><span class="badge bg-label-info rounded-pill">
-                                relance</span
+                                {{ LanguageService.sidebar_menu_2 }}</span
                               ></a
                             >
                           </li>
@@ -1146,6 +1089,7 @@
                             {{ ListRetourRequetes.RQ_CODEREQUETE }}</span
                           ></a
                         >
+                        <!-- cloturée -->
                         <a
                           href="javascript:;"
                           *ngIf="
@@ -1368,7 +1312,7 @@
                                     ><i
                                       class="mdi mdi-animation-outline me-1"
                                     ></i>
-                                    Suivi de reclamation</a
+                                    {{ LanguageService.suivi_reclam }}</a
                                   >
                                 </li>
                                 <!--<li>
@@ -1723,6 +1667,32 @@
                                   >
                                 </li>
 
+                                <!-- infos du client -->
+                                <li>
+                                  <a
+                                    class="dropdown-item"
+                                    href="javascript:void(0);"
+                                    *ngIf="
+                                      ListRetourRequetes.RQ_DATECLOTUREREQUETE ==
+                                        '01/01/1900' &&
+                                      ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE !=
+                                        '01/01/1900'
+                                    "
+                                    (click)="
+                                      GetInfoClient(
+                                        ListRetourRequetes.CU_CODECOMPTEUTULISATEUR
+                                      )
+                                    "
+                                  >
+                                    <i
+                                      class="mdi mdi-book-information-variant me-1"
+                                    ></i>
+                                    {{
+                                      LanguageService.reclam_action_engr_2
+                                    }}</a
+                                  >
+                                </li>
+
                                 <!-- Clôture définitive -->
                                 <li>
                                   <a
@@ -1801,6 +1771,34 @@
                                   >
                                 </li>
 
+                                <!-- infos du client -->
+                                <li>
+                                  <a
+                                    class="dropdown-item"
+                                    href="javascript:void(0);"
+                                    *ngIf="
+                                      ListRetourRequetes.RQ_DATESAISIEREQUETE !=
+                                        '01/01/1900' &&
+                                      ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE !=
+                                        '01/01/1900' &&
+                                      ListRetourRequetes.RQ_DATECLOTUREREQUETE !=
+                                        '01/01/1900'
+                                    "
+                                    (click)="
+                                      GetInfoClient(
+                                        ListRetourRequetes.CU_CODECOMPTEUTULISATEUR
+                                      )
+                                    "
+                                  >
+                                    <i
+                                      class="mdi mdi-book-information-variant me-1"
+                                    ></i>
+                                    {{
+                                      LanguageService.reclam_action_engr_2
+                                    }}</a
+                                  >
+                                </li>
+
                                 <!-- Transmission à un tribunal -->
                                 <li>
                                   <a
@@ -1865,7 +1863,7 @@
                                     ><i
                                       class="mdi mdi-animation-outline me-1"
                                     ></i>
-                                    Suivi de reclamation</a
+                                    {{ LanguageService.suivi_reclam }}</a
                                   >
                                 </li>
                                 <li>
@@ -1943,6 +1941,7 @@
                             {{ ListRetourRequetes.RQ_CODEREQUETE }}</span
                           ></a
                         >
+                        <!-- cloturée -->
                         <a
                           href="javascript:;"
                           *ngIf="
@@ -1985,7 +1984,8 @@
                           >
                             <a href="javascript:;"
                               ><span class="badge bg-label-info rounded-pill">
-                                relance &nbsp;&nbsp;N°
+                                {{ LanguageService.sidebar_menu_2 }}
+                                &nbsp;&nbsp;N°
                                 {{
                                   ListRetourRequetes.RQ_CODEREQUETERELANCEE
                                 }}</span
@@ -2044,6 +2044,7 @@
           data-bs-dismiss="modal"
           aria-label="Close"
         ></button>
+
         <div class="text-center mb-4">
           <!-- Attribution de la reclamation -->
           <h3 class="address-title mb-2 pb-1">
@@ -2053,6 +2054,13 @@
             {{ LanguageService.attr_reclam_sub_title }}
           </p>
         </div>
+
+        <p class="card-text" style="text-align: center">
+          Début de la requete :
+          {{ recupValEtape.RQ_DATEDEBUTTRAITEMENTREQUETE }} - Fin de la requete
+          {{ recupValEtape.RQ_DATEFINTRAITEMENTREQUETE }}
+        </p>
+        <br />
 
         &#160; &#160; &#160;
         <div class="card-body">
@@ -2099,9 +2107,12 @@
                   role="tabpanel"
                 >
                   <h6 class="text-body">{{ recupEtape.RE_LIBELLEETAPE }}</h6>
+
+                  <!-- Voulez-vous mettre fin à cette étape afin de l'attribuer à un autre opérateur -->
                   <div
                     class="alert d-flex align-items-center bg-label-info mb-0"
                     role="alert"
+                    *ngIf="recupEtape.RE_ACTIF == 'N'"
                   >
                     <i class="mdi mdi-bell-outline me-2"></i>
                     {{ LanguageService.attr_reclam_message_1 }} ? &#160; &#160;

@@ -1,8 +1,15 @@
-<button (click)="printPage()" class="btn btn-primary hide-on-print">
+<button
+  (click)="printPage()"
+  id="printButton"
+  class="btn btn-primary hide-on-print"
+>
   Imprimer
 </button>
 
 <div class="content" #printer>
+  <span
+    ><strong>{{ recup_info_graphe[0].titre_graphe }}</strong></span
+  >&#160; &#160;
   <canvas id="MyChartPie3" *ngIf="recup_info_graphe[0].type_graphe == 'pie'">{{
     chart_pie
   }}</canvas>

@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import Chart from 'chart.js/auto';
+import { AdminService } from '../admin.service';
 
 @Component({
   selector: 'app-print-page',
@@ -8,6 +9,8 @@ import Chart from 'chart.js/auto';
 })
 export class PrintPageComponent {
   @ViewChild('printer', { static: false }) content!: ElementRef;
+
+  constructor(public AdminService: AdminService) {}
 
   public chart_bar: any;
   public chart_pie: any;
@@ -92,6 +95,8 @@ export class PrintPageComponent {
     console.log('recup_info_graphe', this.recup_info_graphe);
 
     setTimeout(() => {
+      this.AdminService.showMenu = true;
+
       if (this.recup_info_graphe[0].type_graphe == 'pie') {
         for (let index = 0; index < this.table_id_pie.length; index++) {
           this.FormationChartPie(

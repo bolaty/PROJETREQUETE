@@ -1,6 +1,9 @@
 <!-- Content -->
 
-<div class="authentication-wrapper authentication-cover">
+<div
+  class="authentication-wrapper authentication-cover"
+  *ngIf="!temps_de_latence"
+>
   <!-- Logo -->
   <!-- personnalisable -->
   <a
@@ -385,3 +388,10 @@
     </form>
   </div>
 </div>
+
+<!-- personnalisable -->
+<body>
+  <div class="loader" *ngIf="temps_de_latence">
+    <div class="inner_loader"></div>
+  </div>
+</body>

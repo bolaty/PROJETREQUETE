@@ -4,6 +4,7 @@ import { AdminService } from '../admin.service';
 
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
+import { LanguageService } from 'src/app/services/language.service';
 
 declare var $: any;
 
@@ -13,8 +14,8 @@ declare var $: any;
   styleUrls: ['./suivi-requete.component.scss'],
 })
 export class SuiviRequeteComponent {
-  LienServeur: any = 'http://localhost:22248/'; // lien dev
-  // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
+  // LienServeur: any = 'http://localhost:22248/'; // lien dev
+  LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
 
   recupinfo: any = JSON.parse(sessionStorage.getItem('infoReque') || '');
   recupinfoconnect: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
@@ -104,6 +105,7 @@ export class SuiviRequeteComponent {
 
   constructor(
     public AdminService: AdminService,
+    public LanguageService: LanguageService,
     private http: HttpClient,
     private toastr: ToastrService
   ) {}

@@ -13,8 +13,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AdminService {
   // ***************** SECTION DES LIENS debut
-  LienServeur: any = 'http://localhost:22248/'; // lien dev
-  // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
+  // LienServeur: any = 'http://localhost:22248/'; // lien dev
+  LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
 
   // ***************** SECTION DES LIENS fin
 
@@ -24,6 +24,9 @@ export class AdminService {
     mois_date: '',
     jour_date: '',
   };
+  variable_1: any;
+  variable_2: any;
+  showMenu: boolean = false;
   statut_traitement: boolean = false;
   champ_a_renseigner: any = [];
   tab_type_de_donnee: any = [];

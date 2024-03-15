@@ -940,8 +940,23 @@ export class AdminComponent implements OnInit {
     this.AdminService.AppelServeur(body, Option).subscribe((success: any) => {
       this.ListeNotification = success;
       this.ListeNotification = this.ListeNotification.pvgListeSMSResult;
+      console.log('this.ListeNotification', this.ListeNotification);
       if (this.ListeNotification[0].clsResultat.SL_RESULTAT == 'TRUE') {
         this.nombreNotif = this.ListeNotification.length + 1;
+
+        // formater les dates
+        for (let index = 0; index < this.ListeNotification.length; index++) {
+          // SM_DATEEMISSIONSMS
+          this.AdminService.variable_1 =
+            this.ListeNotification[index].SM_DATEEMISSIONSMS.split(':');
+          this.AdminService.variable_2 = this.AdminService.variable_1[0].substr(
+            0,
+            10
+          );
+
+          this.ListeNotification[index].SM_DATEEMISSIONSMS =
+            this.AdminService.variable_2;
+        }
       } else {
         this.nombreNotif = 0;
         this.ListeNotification[0].SM_MESSAGE =
@@ -971,6 +986,10 @@ export class AdminComponent implements OnInit {
       // this.libelles[j].style.backgroundColor = '#A3C9AA';
       this.libelles[j].style.color = '#A3C9AA';
     }
+  }
+
+  AllerAuSuivi() {
+    window.location.href = '/admin/reclamations/liste/SuiviRequete';
   }
 
   ngOnInit(): void {

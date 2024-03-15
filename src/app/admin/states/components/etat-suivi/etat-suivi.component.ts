@@ -9,6 +9,7 @@ import {
   barChartOptions,
 } from '../../utils/bar-chart.utils';
 import { map } from 'rxjs';
+import { ajustLibelle } from '../../utils/libelle.utils';
 
 // const APP_URL = "http://51.210.111.16:1009/RequeteClientsClasse.svc/pvgTableauDeBord";
 
@@ -20,20 +21,30 @@ import { map } from 'rxjs';
 export class EtatSuiviComponent implements OnInit {
   @ViewChild('content', { static: false }) content!: ElementRef;
 
-  LienServeur: any = 'http://localhost:22248/'; // lien dev
-  // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
+  // LienServeur: any = 'http://localhost:22248/'; // lien dev
+  LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
 
   APP_URL: any = `${this.LienServeur}RequeteClientsClasse.svc/pvgTableauDeBord`;
 
   data: any;
   chartOptionsSatisfaction: Partial<ChartOptions>;
-  chartOptionsFrequencePlaintes: Partial<ChartOptions>;
   chartOptionsSituationPlaintes: Partial<ChartOptions>;
   chartOptionsNaturePlaintes: Partial<ChartOptions>;
   chartOptionsClientInsatisfait: Partial<ChartOptions>;
   chartOptionsDelaiPlaintes: Partial<ChartOptionsPie>;
 
   dataSatisfaction: any;
+  colors: string[] = [
+    '#5B9BD5',
+    '#ED7D31',
+    '#A5A5A5',
+    '#5B9BD5',
+    '#ED7D31',
+    '#A5A5A5',
+    '#5B9BD5',
+    '#ED7D31',
+    '#A5A5A5',
+  ];
 
   constructor(
     private apiService: ApiService,
@@ -56,42 +67,23 @@ export class EtatSuiviComponent implements OnInit {
         ['Taux de', 'satisfaction en %'],
       ]
     );
-    this.chartOptionsFrequencePlaintes = barChartOptions(
-      'Fréquence de reception des plaintes',
-      [
-        {
-          name: 'Valeur',
-          data: [5, 10, 23, 60, 40, 30, 50],
-          color: '#5B9BD5',
-        },
-      ],
 
-      [
-        ['Nombre de plaintes', 'reçues avec 01 à 07', "jours d'écart"],
-        ['Nombre de plaintes', 'reçues avec 08 à 14', "jours d'écart"],
-        ['Nombre de plaintes', 'reçues avec 14 à 21', "jours d'écart"],
-        ['Nombre de plaintes', 'reçues avec 22 à 31', "jours d'écart"],
-        ['Nombre de plaintes', 'reçues avec 01 à 03', "mois d'écart"],
-        ['Nombre de plaintes', 'reçues avec 03 à 06', "mois d'écart"],
-        ['Nombre de plaintes', 'reçues avec 06 à 12', "mois d'écart"],
-      ]
-    );
     this.chartOptionsSituationPlaintes = barChartOptions(
       'situation des plaintes des plaintes (reçus, traitées, non traitées)',
       [
         {
           name: 'Valeur',
-          data: [4, 10, 25, 39, 40, 50],
+          data: [0, 0, 0, 0, 0, 0],
           color: '#5B9BD5',
         },
         {
           name: 'Valeur',
-          data: [3, 6, 23, 37, 38, 47],
+          data: [0, 0, 0, 0, 0, 0],
           color: '#ED7D31',
         },
         {
           name: 'Valeur',
-          data: [1, 4, 2, 2, 2, 3],
+          data: [0, 0, 0, 0, 0, 0],
           color: '#A5A5A5',
         },
       ],
@@ -104,12 +96,17 @@ export class EtatSuiviComponent implements OnInit {
         'Cette année',
       ]
     );
+    this.chartOptionsDelaiPlaintes = PieChartOptions(
+      'Taux de satisfaction des plaignants',
+      [0, 0],
+      [['Nombre de plaintes traitées'], ['Avis client favorable']]
+    );
     this.chartOptionsNaturePlaintes = barChartOptions(
-      'Natureet type des plaintes les plus recurrentes',
+      'Nature et type des plaintes les plus recurrentes',
       [
         {
           name: 'Valeur',
-          data: [20, 30, 25],
+          data: [0, 0, 0],
           color: '#5B9BD5',
         },
       ],
@@ -143,23 +140,6 @@ export class EtatSuiviComponent implements OnInit {
       true,
       true
     );
-
-    this.chartOptionsDelaiPlaintes = PieChartOptions(
-      'Taux de satisfaction des plaignants',
-      [
-        {
-          name: 'Valeur',
-          data: [100, 60, 40, 60],
-          color: '#5B9BD5',
-        },
-      ],
-      [
-        ['Nombre de', 'plaintes traitées'],
-        ['Avis client', 'favorable'],
-        ['Avis client', 'non favorable'],
-        ['Taux de', 'satisfaction en %'],
-      ]
-    );
   }
 
   ngOnInit(): void {
@@ -171,37 +151,68 @@ export class EtatSuiviComponent implements OnInit {
           {
             RQ_DATEDEBUT: '15/02/2024',
             RQ_DATEFIN: '16/02/2024',
-            CU_CODECOMPTEUTULISATEUR: '', // utilisateur connecté
+            CU_CODECOMPTEUTULISATEUR: '',
             TYPEETAT: 'TSCLT',
           },
           true
         )
         .pipe(
           map((res: any) => {
-            const data = res.pvgTableauDeBordResult[0];
+            const data = res.pvgTableauDeBordResult;
+            const ts = data.clsTableauDeBordTauxSatisfactions[0];
+            const sp = data.clsTableauDeBordSituationPlaintes;
+            const dt = data.clsTableauDeBordDelaiTraiPlaintes;
+            const natP = data.clsTableauDeBordNatPlainteRecurs;
+            const refP = data.clsTableauDeBordNbrePlainterefs;
             return {
-              LIBELLERUBRIQUE: data.LIBELLERUBRIQUE,
-              DATA: [
-                data.TOTALPLAINTETRAITES,
-                data.AVISCLIENTFAVORABLE,
-                data.AVISCLIENTNONFAVORABLE,
-                parseInt(data.TOTALPLAINTETRAITES) > 0
-                  ? (parseInt(data.AVISCLIENTFAVORABLE) /
-                      parseInt(data.TOTALPLAINTETRAITES)) *
-                    100
-                  : 0,
-              ],
+              TAUXSATISFACTION: {
+                LIBELLERUBRIQUE: ts.LIBELLERUBRIQUE,
+                DATA: [
+                  ts.TOTALPLAINTETRAITES,
+                  ts.AVISCLIENTFAVORABLE,
+                  ts.AVISCLIENTNONFAVORABLE,
+                  parseInt(ts.TOTALPLAINTETRAITES) > 0
+                    ? (parseInt(ts.AVISCLIENTFAVORABLE) /
+                        parseInt(ts.TOTALPLAINTETRAITES)) *
+                      100
+                    : 0,
+                ],
+              },
+              SITUATIONPLAINTES: {
+                LIBELLES: sp.map((e: any) => e.LIBELLERUBRIQUE),
+                TOTALPLAINTERECUES: sp.map((e: any) => e.TOTALPLAINTERECUES),
+                TOTALPLAINTETRAITES: sp.map((e: any) => e.TOTALPLAINTETRAITES),
+                TOTALPLAINTENONTRAITES: sp.map(
+                  (e: any) => e.TOTALPLAINTERECUES - e.TOTALPLAINTETRAITES
+                ),
+              },
+              DELAITRAITEMENT: {
+                LIBELLES: dt.map((e: any) => e.LIBELLERUBRIQUE),
+                NOMBRE: dt.map((e: any) => e.NOMBRE),
+              },
+              NATUREPLAINTES: {
+                LIBELLES: natP.map((e: any) => ajustLibelle(e.LIBELLERUBRIQUE)),
+                LIBELLESTOSHOW: natP.map((e: any) => e.LIBELLERUBRIQUE),
+                NOMBRE: natP.map((e: any) => e.NOMBRE),
+              },
+              REFPLAINTES: refP.map((e: any, i: number) => {
+                return {
+                  name: e.LIBELLERUBRIQUE,
+                  data: [e.NOMBRE],
+                  color: this.colors[i],
+                };
+              }),
             };
           })
         )
         .subscribe((data: any) => {
-          this.dataSatisfaction = data;
+          this.data = data;
           this.chartOptionsSatisfaction = barChartOptions(
-            this.dataSatisfaction.LIBELLERUBRIQUE,
+            data.TAUXSATISFACTION.LIBELLERUBRIQUE,
             [
               {
                 name: 'Valeur',
-                data: this.dataSatisfaction.DATA,
+                data: data.TAUXSATISFACTION.DATA,
                 color: '#5B9BD5',
               },
             ],
@@ -211,6 +222,53 @@ export class EtatSuiviComponent implements OnInit {
               ['Avis client', 'non favorable'],
               ['Taux de', 'satisfaction en %'],
             ]
+          );
+
+          this.chartOptionsSituationPlaintes = barChartOptions(
+            'situation des plaintes des plaintes (reçus, traitées, non traitées)',
+            [
+              {
+                name: 'Valeur',
+                data: data.SITUATIONPLAINTES.TOTALPLAINTERECUES,
+                color: '#5B9BD5',
+              },
+              {
+                name: 'Valeur',
+                data: data.SITUATIONPLAINTES.TOTALPLAINTETRAITES,
+                color: '#ED7D31',
+              },
+              {
+                name: 'Valeur',
+                data: data.SITUATIONPLAINTES.TOTALPLAINTENONTRAITES,
+                color: '#A5A5A5',
+              },
+            ],
+            data.SITUATIONPLAINTES.LIBELLES
+          );
+
+          this.chartOptionsDelaiPlaintes = PieChartOptions(
+            'Taux de satisfaction des plaignants',
+            data.DELAITRAITEMENT.NOMBRE,
+            data.DELAITRAITEMENT.LIBELLES
+          );
+          this.chartOptionsNaturePlaintes = barChartOptions(
+            'Nature et type des plaintes les plus recurrentes',
+            [
+              {
+                name: 'Valeur',
+                data: data.NATUREPLAINTES.NOMBRE,
+                color: '#5B9BD5',
+              },
+            ],
+
+            data.NATUREPLAINTES.LIBELLES
+          );
+          this.chartOptionsClientInsatisfait = barChartOptions(
+            'Nombre de clients insatisfaits ayant reformulé leur plainte',
+            data.REFPLAINTES,
+            [],
+            true,
+            true
           );
         });
     });

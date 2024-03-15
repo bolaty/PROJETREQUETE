@@ -7,7 +7,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LanguageService {
   private currentLang: string = 'fr';
-  private translations: any = {};
+  public translations: any = {};
+  langue_en_cours: any = 'fr';
   // language
   welcome_message: string = '';
   welcome_message_sub_title: string = '';
@@ -42,8 +43,30 @@ export class LanguageService {
   reclam_placeholder_search_bar_op: string = '';
   reclam_list_title: string = '';
   reclam_engr_title: string = '';
+  reclam_engr_bloc_title: string = '';
+  reclam_engr_bloc_title_2: string = '';
+  type_reclam: string = '';
+  mode_collecte: string = '';
+  descript_reclam: string = '';
+  suivi_reclam: string = '';
+  suivi_reclam_sub_tutle: string = '';
+  traitement_requete: string = '';
+  champ_obj_title: string = '';
+  fichier_joint_req: string = '';
+  btn_valider: string = '';
+  info_sur_client_title: string = '';
+  consult_avis: string = '';
+  form: string = '';
+  info_perso: string = '';
+  num_cpte_client: string = '';
+  placeholder_nom_prenoms: string = '';
+  chmp_telephone: string = '';
+  chmp_locate: string = '';
+  chmp_nom_agent: string = '';
+  champ_satisfaction_title: string = '';
   reclam_engr_sub_title: string = '';
   reclam_list_sub_title: string = '';
+  Preview: string = '';
   reclam_list_group_title_1: string = '';
   reclam_list_group_title_2: string = '';
   reclam_list_group_title_3: string = '';
@@ -143,6 +166,7 @@ export class LanguageService {
 
   public setLanguage(lang: string): void {
     this.currentLang = lang;
+    this.langue_en_cours = lang;
     this.loadTranslations();
   }
 
@@ -166,8 +190,25 @@ export class LanguageService {
     );
   }
 
+  public loadTranslations_2(current_lang: any): void {
+    this.http.get(`assets/i18n/${current_lang}.json`).subscribe(
+      (translations: any) => {
+        return (this.translations = translations);
+
+        // this.updateTranslations();
+      },
+      (error) => {
+        console.error(
+          `Failed to load translations for ${this.currentLang}.`,
+          error
+        );
+      }
+    );
+  }
+
   // language
   changeLanguage(lang: string): void {
+    this.langue_en_cours = lang;
     this.setLanguage(lang);
     // this.updateTranslations();
   }
@@ -227,9 +268,37 @@ export class LanguageService {
       'reclam_placeholder_search_bar_op'
     );
     this.reclam_engr_title = this.getTranslation('reclam_engr_title');
+    this.reclam_engr_bloc_title = this.getTranslation('reclam_engr_bloc_title');
+    this.reclam_engr_bloc_title_2 = this.getTranslation(
+      'reclam_engr_bloc_title_2'
+    );
+    this.type_reclam = this.getTranslation('type_reclam');
+    this.mode_collecte = this.getTranslation('mode_collecte');
+    this.descript_reclam = this.getTranslation('descript_reclam');
+    this.suivi_reclam = this.getTranslation('suivi_reclam');
+    this.suivi_reclam_sub_tutle = this.getTranslation('suivi_reclam_sub_tutle');
+    this.traitement_requete = this.getTranslation('traitement_requete');
+    this.champ_obj_title = this.getTranslation('champ_obj_title');
+    this.fichier_joint_req = this.getTranslation('fichier_joint_req');
+    this.btn_valider = this.getTranslation('btn_valider');
+    this.info_sur_client_title = this.getTranslation('info_sur_client_title');
+    this.consult_avis = this.getTranslation('consult_avis');
+    this.form = this.getTranslation('form');
+    this.info_perso = this.getTranslation('info_perso');
+    this.num_cpte_client = this.getTranslation('num_cpte_client');
+    this.placeholder_nom_prenoms = this.getTranslation(
+      'placeholder_nom_prenoms'
+    );
+    this.chmp_telephone = this.getTranslation('chmp_telephone');
+    this.chmp_locate = this.getTranslation('chmp_locate');
+    this.chmp_nom_agent = this.getTranslation('chmp_nom_agent');
+    this.champ_satisfaction_title = this.getTranslation(
+      'champ_satisfaction_title'
+    );
     this.reclam_engr_sub_title = this.getTranslation('reclam_engr_sub_title');
     this.reclam_list_title = this.getTranslation('reclam_list_title');
     this.reclam_list_sub_title = this.getTranslation('reclam_list_sub_title');
+    this.Preview = this.getTranslation('Preview');
     this.reclam_list_group_title_1 = this.getTranslation(
       'reclam_list_group_title_1'
     );

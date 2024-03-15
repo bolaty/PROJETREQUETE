@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { LanguageService } from 'src/app/services/language.service';
+import { AdminService } from '../admin.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,7 +9,10 @@ import { LanguageService } from 'src/app/services/language.service';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent {
-  constructor(public languageService: LanguageService) {}
+  constructor(
+    public languageService: LanguageService,
+    public AdminService: AdminService
+  ) {}
 
   recupinfo: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
 
@@ -98,12 +102,13 @@ export class DashboardComponent {
     });
   }
 
-  PrintGraphPie() {
+  PrintGraphPie(titre_graphe: any) {
     this.tab_session_graph = [
       {
         tab_intermediaire_cercle_abs_obj: [],
         tab_intermediaire_cercle_ord_obj: [],
         type_graphe: 'pie',
+        titre_graphe: titre_graphe,
       },
     ];
     for (
@@ -124,6 +129,7 @@ export class DashboardComponent {
         this.tab_intermediaire_cercle_ord[index]
       );
     }
+
     sessionStorage.setItem(
       'info_graphe',
       JSON.stringify(this.tab_session_graph)
@@ -132,12 +138,13 @@ export class DashboardComponent {
     window.open('/admin/impression', '_blank');
   }
 
-  PrintGraphBar() {
+  PrintGraphBar(titre_graphe: any) {
     this.tab_session_graph = [
       {
         tab_intermediaire_cercle_abs_obj: [],
         tab_intermediaire_cercle_ord_obj: [],
         type_graphe: 'bar',
+        titre_graphe: titre_graphe,
       },
     ];
     for (
@@ -158,6 +165,7 @@ export class DashboardComponent {
         this.tab_intermediaire_cercle_ord[index]
       );
     }
+
     sessionStorage.setItem(
       'info_graphe',
       JSON.stringify(this.tab_session_graph)

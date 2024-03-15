@@ -15,6 +15,7 @@ export class LoginComponent {
   RetoursChargementMdp: any = [];
   tab_valeur_de_decision: any = [];
   customizer: any;
+  temps_de_latence: boolean = true;
   formulaire_avis: any = [
     {
       id: 'nom',
@@ -97,7 +98,9 @@ export class LoginComponent {
       (success: any) => {
         this.RetoursChargement = success;
         this.RetoursChargement = this.RetoursChargement.pvgLoginResult;
+        console.log('RetoursChargement', this.RetoursChargement);
         this.AuthService.CloseLoader();
+
         if (this.RetoursChargement[0].clsResultat.SL_RESULTAT == 'FALSE') {
           // toastr.error(this.RetoursChargement[0].clsResultat.SL_MESSAGE, "Succès")
           this.toastr.error(
@@ -105,19 +108,39 @@ export class LoginComponent {
             'Echec'
           );
         } else {
-          this.toastr.success(
-            this.RetoursChargement[0].clsResultat.SL_MESSAGE,
-            'success'
-          );
+          if (this.RetoursChargement[0].TU_CODETYPEUTILISATEUR == '0001') {
+            if (this.RetoursChargement[0].CU_NOMBRECONNECTION == '0') {
+              window.location.href = '/auth/changePassword';
+            } else {
+              this.toastr.success(
+                this.RetoursChargement[0].clsResultat.SL_MESSAGE,
+                'success'
+              );
 
-          sessionStorage.setItem('isLoggedIn', 'true');
-          this.formLogin.login = '';
-          this.formLogin.mdp = '';
-          sessionStorage.setItem(
-            'infoLogin',
-            JSON.stringify(this.RetoursChargement)
-          );
-          window.location.href = '/admin';
+              sessionStorage.setItem('isLoggedIn', 'true');
+              this.formLogin.login = '';
+              this.formLogin.mdp = '';
+              sessionStorage.setItem(
+                'infoLogin',
+                JSON.stringify(this.RetoursChargement)
+              );
+              window.location.href = '/admin';
+            }
+          } else {
+            this.toastr.success(
+              this.RetoursChargement[0].clsResultat.SL_MESSAGE,
+              'success'
+            );
+
+            sessionStorage.setItem('isLoggedIn', 'true');
+            this.formLogin.login = '';
+            this.formLogin.mdp = '';
+            sessionStorage.setItem(
+              'infoLogin',
+              JSON.stringify(this.RetoursChargement)
+            );
+            window.location.href = '/admin';
+          }
         }
       },
       (error) => {
@@ -229,6 +252,7 @@ export class LoginComponent {
           sessionStorage.getItem('info_de_decision') || ''
         );
 
+        // personnalisable
         switch (this.customizer) {
           case 'remuci':
             this.AuthService.nom_de_la_structure = 'REMU-CI';
@@ -242,6 +266,7 @@ export class LoginComponent {
             break;
         }
 
+        this.temps_de_latence = false;
         console.log('tab_valeur_de_decision', this.tab_valeur_de_decision);
       },
       (error) => {}

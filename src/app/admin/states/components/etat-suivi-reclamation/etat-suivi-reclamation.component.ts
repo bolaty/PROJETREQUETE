@@ -14,8 +14,8 @@ import { DateService } from 'src/app/services/date.service';
 export class EtatSuiviReclamationComponent implements OnInit {
   @ViewChild('contentEtatSuivi', { static: false }) content!: ElementRef;
 
-  LienServeur: any = 'http://localhost:22248/'; // lien dev
-  // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
+  // LienServeur: any = 'http://localhost:22248/'; // lien dev
+  LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
 
   APP_URL: any = `${this.LienServeur}RequeteClientsClasse.svc/pvgListeReqrequeteBCAO`;
 
@@ -41,12 +41,12 @@ export class EtatSuiviReclamationComponent implements OnInit {
         Objets: [
           {
             OE_PARAM: [
-              '1000', // agence
-              '01', // nature requete 01
-              '01/01/2000', // date debut
-              '01/01/2024', // date fin
-              '10000000000000000000000000001', // compte utilisateur
-              '01', // type operation
+              '1000',
+              '',
+              '01/01/2000',
+              '01/01/2024',
+              '10000000000000000000000000001',
+              '01',
             ],
             clsObjetEnvoi: {
               ET_CODEETABLISSEMENT: '',

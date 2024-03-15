@@ -8,18 +8,18 @@
         class="text-center text-primary mb-2"
         *ngIf="recupinfoconnect[0].TU_CODETYPEUTILISATEUR != '0002'"
       >
-        Bonjour, comment pouvons-nous vous aider ?
+        {{ LanguageService.reclam_title }} ?
       </h3>
       <h3
         class="text-center mb-2"
         *ngIf="recupinfoconnect[0].TU_CODETYPEUTILISATEUR == '0002'"
       >
-        Bonjour, comment pouvons-nous vous aider ?
+        {{ LanguageService.reclam_title }} ?
       </h3>
-      <p class="text-body text-center mb-0 px-3">
+      <!-- <p class="text-body text-center mb-0 px-3">
         ou choisissez une catégorie pour trouver rapidement l'aide dont vous
         avez besoin
-      </p>
+      </p> -->
       <div
         class="input-wrapper my-3 input-group input-group-lg input-group-merge px-sm-5"
       >
@@ -40,8 +40,8 @@
       class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3"
     >
       <div class="d-flex flex-column justify-content-center">
-        <h4 class="mb-1 mt-3">Suivi de la reclamation</h4>
-        <p>Suivez l'évolution de votre reclamation</p>
+        <h4 class="mb-1 mt-3">{{ LanguageService.suivi_reclam }}</h4>
+        <p>{{ LanguageService.suivi_reclam_sub_tutle }}</p>
       </div>
     </div>
 
@@ -81,7 +81,7 @@
                           style="cursor: pointer"
                         >
                           <i class="mdi mdi-pencil-outline me-1"></i>
-                          Traitement de la requête
+                          {{ LanguageService.traitement_requete }}
                         </li>
                         <li
                           class="dropdown-item"
@@ -92,7 +92,8 @@
                           "
                           style="cursor: pointer"
                         >
-                          <i class="mdi mdi-progress-clock me-1"></i> Avis
+                          <i class="mdi mdi-progress-clock me-1"></i>
+                          {{ LanguageService.avis_recev_chmp_title_1 }}
                         </li>
                       </ul>
                     </div>
@@ -133,8 +134,10 @@
                     recupinfo.RQ_DATECLOTUREREQUETE == '01/01/1900'
                   "
                   ><span class="badge bg-label-primary rounded-pill"
-                    >Enregistrée &nbsp;&nbsp;N°
-                    {{ recupinfo.RQ_CODEREQUETE }}</span
+                    >{{
+                      LanguageService.reclam_list_group_title_1
+                    }}
+                    &nbsp;&nbsp;N° {{ recupinfo.RQ_CODEREQUETE }}</span
                   ></a
                 >
                 <a
@@ -144,16 +147,18 @@
                     recupinfo.RQ_DATEDEBUTTRAITEMENTREQUETE != '01/01/1900' &&
                     recupinfo.RQ_DATECLOTUREREQUETE == '01/01/1900'
                   "
-                  ><span class="badge bg-label-primary rounded-pill"
-                    >En cours de traitement</span
-                  ></a
+                  ><span class="badge bg-label-primary rounded-pill">{{
+                    LanguageService.reclam_list_group_title_2
+                  }}</span></a
                 >
                 <a
                   href="javascript:;"
                   *ngIf="recupinfo.RQ_DATECLOTUREREQUETE != '01/01/1900'"
                   ><span class="badge bg-label-danger rounded-pill"
-                    >Cloturée &nbsp;&nbsp;N°
-                    {{ recupinfo.RQ_CODEREQUETE }}</span
+                    >{{
+                      LanguageService.reclam_list_group_title_3
+                    }}
+                    &nbsp;&nbsp;N° {{ recupinfo.RQ_CODEREQUETE }}</span
                   ></a
                 >
               </div>
@@ -195,59 +200,23 @@
           [(ngModel)]="formulaire_suivi[0].valeur"
           readonly
         />
-        <label for="offcanvasObjet">Objet</label>
+        <label for="offcanvasObjet">{{
+          LanguageService.champ_obj_title
+        }}</label>
       </div>
-      <!--<div class="form-floating form-floating-outline mb-4">
-        <div class="form-floating form-floating-outline">
-          <select
-            id="offCanvasService"
-            name="offCanvasService"
-            class="select2 form-select"
-            data-allow-clear="true"
-            [(ngModel)]="formulaire_suivi[2].valeur"
-          >
-            <option value="">Selectionner</option>
-            <option
-              *ngFor="let ListeComboService of tab_service"
-              value="{{ ListeComboService.CODESERVICE }}"
-            >
-              {{ ListeComboService.LIBELLE }}
-            </option>
-          </select>
-          <label for="offCanvasService">Service</label>
-        </div>
-      </div>
-      <div class="form-floating form-floating-outline mb-4">
-        <div class="form-floating form-floating-outline">
-          <select
-            id="offCanvasStatut"
-            name="offCanvasStatut"
-            class="select2 form-select"
-            data-allow-clear="true"
-            [(ngModel)]="formulaire_suivi[2].valeur"
-          >
-            <option value="">Selectionner</option>
-            <option
-              *ngFor="let ListeComboStatut of ListeComboStatut"
-              value="{{ ListeComboStatut.RS_CODESTATUTRECEVABILITE }}"
-            >
-              {{ ListeComboStatut.RS_LIBELLESTATUTRECEVABILITE }}
-            </option>
-          </select>
-          <label for="offCanvasStatut">Statut</label>
-        </div>
-      </div>-->
       <div class="form-floating form-floating-outline mb-4">
         <textarea
           class="form-control"
           name="invoice-observation"
           id="invoice-observation"
           style="height: 190px"
-          placeholder="Observation de l'agent traitant (portant sur la plainte ou la reclamation)"
+          [placeholder]="LanguageService.avis_recev_chmp_title_2_placeholder"
           [(ngModel)]="formulaire_suivi[3].valeur"
           (input)="CheckWordCount()"
         ></textarea>
-        <label for="invoice-observation">Observation</label>
+        <label for="invoice-observation">{{
+          LanguageService.chmp_observation
+        }}</label>
       </div>
       <div
         class="mb-4"
@@ -257,9 +226,9 @@
       >
         <span class="badge bg-label-primary rounded-pill">
           <i class="mdi mdi-file-eye-outline mdi-14px me-1"></i>
-          <span class="align-middle"
-            >Afficher le fichier joint à la requete</span
-          >
+          <span class="align-middle">{{
+            LanguageService.fichier_joint_req
+          }}</span>
         </span>
       </div>
 
@@ -300,33 +269,37 @@
           data-bs-dismiss="offcanvas"
           (click)="ValiderTraitement(formulaire_suivi)"
         >
-          Valider
+          {{ LanguageService.btn_valider }}
         </button>
         <button
           type="button"
           class="bttn btn btn-outline-secondary"
           data-bs-dismiss="offcanvas"
         >
-          Annuler
+          {{ LanguageService.btn_title_cancel }}
         </button>
       </div>
 
       <br />
       <!-- Information sur le client -->
-      <label for="" *ngIf="var_off_on == 'O'">Information sur le client</label>
+      <label for="" *ngIf="var_off_on == 'O'">{{
+        LanguageService.info_sur_client_title
+      }}</label>
       <div class="card h-100" *ngIf="var_off_on == 'O'">
         <div class="row h-100">
           <div class="col">
             <div class="card-body ps-sm-3">
               <p class="mb-0">
-                <strong>Nom et prénoms:</strong>
+                <strong>{{ LanguageService.info_cli_sub_title_1 }}:</strong>
                 {{ tab_infos_client[0].CU_NOMUTILISATEUR }}
               </p>
               <p class="mb-0">
-                <strong>Email:</strong> {{ tab_infos_client[0].CU_EMAIL }}
+                <strong>{{ LanguageService.info_cli_sub_title_2 }}:</strong>
+                {{ tab_infos_client[0].CU_EMAIL }}
               </p>
               <p class="mb-0">
-                <strong>Contact:</strong> {{ tab_infos_client[0].CU_CONTACT }}
+                <strong>{{ LanguageService.info_cli_sub_title_3 }}:</strong>
+                {{ tab_infos_client[0].CU_CONTACT }}
               </p>
             </div>
           </div>
@@ -342,7 +315,7 @@
   aria-hidden="true"
 >
   <div class="offcanvas-header mb-3">
-    <h5 class="offcanvas-title">Consultation et avis</h5>
+    <h5 class="offcanvas-title">{{ LanguageService.consult_avis }}</h5>
     <button
       type="button"
       class="bttn btn-close text-reset"
@@ -369,7 +342,9 @@
               {{ ListeComboSatisfaction.NS_LIBELLENIVEAUSATISFACTION }}
             </option>
           </select>
-          <label for="offcanvaSatisfaction">Satisfaction</label>
+          <label for="offcanvaSatisfaction">{{
+            LanguageService.champ_satisfaction_title
+          }}</label>
         </div>
       </div>
       <div class="form-floating form-floating-outline mb-4">
@@ -378,10 +353,12 @@
           name="invoice-observation-avis"
           id="invoice-observation-avis"
           style="height: 190px"
-          placeholder="Observation de l'agent traitant (portant sur la plainte ou la reclamation)"
+          [placeholder]="LanguageService.avis_recev_chmp_title_2_placeholder"
           [(ngModel)]="formulaire_avis[1].valeur"
         ></textarea>
-        <label for="invoice-observation-avis">Observation</label>
+        <label for="invoice-observation-avis">{{
+          LanguageService.chmp_observation
+        }}</label>
       </div>
       <div class="mb-3 d-flex flex-wrap">
         <button
@@ -390,14 +367,14 @@
           data-bs-dismiss="offcanvas"
           (click)="EnregistrerAvis(formulaire_avis)"
         >
-          Enregistrer
+          {{ LanguageService.btn_engr }}
         </button>
         <button
           type="button"
           class="bttn btn btn-outline-secondary"
           data-bs-dismiss="offcanvas"
         >
-          Annuler
+          {{ LanguageService.btn_title_cancel }}
         </button>
       </div>
     </form>

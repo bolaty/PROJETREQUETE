@@ -13,8 +13,8 @@ declare var $: any;
   styleUrls: ['./reclamations.component.scss'],
 })
 export class ReclamationsComponent {
-  LienServeur: any = 'http://localhost:22248/'; // lien dev
-  // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
+  // LienServeur: any = 'http://localhost:22248/'; // lien dev
+  LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
 
   recupinfo: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
   maxWords: any = 30;
@@ -24,6 +24,7 @@ export class ReclamationsComponent {
   btn_filter: string = 'enrg';
   option_body: any = '';
   doc_decode: any = '';
+  objet_langue: any = '';
   type_doc_decode: any = '';
   background_color: any = [
     '#FFE6E6',
@@ -270,7 +271,7 @@ export class ReclamationsComponent {
   valeur_authorization: any = '';
   statutDateDebut: boolean = true;
   statutDatefin: boolean = true;
-  recupValEtape: any;
+  recupValEtape: any = '';
   var_off_on: any = 'N';
   ListeComboEtapeSelonReq: any = [];
   tab_infos_client: any = [];
@@ -337,6 +338,7 @@ export class ReclamationsComponent {
         this.ListeComboEtapes = success;
         this.ListeComboEtapes =
           this.ListeComboEtapes.pvgListeReqrequeteEtapeParamComboResult;
+        console.log('this.ListeComboEtapes', this.ListeComboEtapes);
         if (this.ListeComboEtapes[0].clsResultat.SL_RESULTAT == 'TRUE') {
           this.ComboOperateur();
         }
@@ -1361,7 +1363,6 @@ export class ReclamationsComponent {
     }
   }
 
-  // laaa
   ListeConsultationselonEtape() {
     let Option = 'RequeteClientsClasse.svc/pvgListeReqrequeteEtapeConsultation';
     var recuperation = JSON.parse(sessionStorage.getItem('infoReque') || '');
@@ -1437,7 +1438,6 @@ export class ReclamationsComponent {
     this.ListeConsultationselonEtape();
   }
 
-  // laaa
   SelectionEtapeConsultationHistoCloture(info: any, index_etape: any) {
     this.recupEtape = info;
 
@@ -2296,6 +2296,14 @@ export class ReclamationsComponent {
       for (let index = 0; index < this.tab_req_enregistree.length; index++) {
         this.tab_req_afficher.push(this.tab_req_enregistree[index]);
       }
+
+      for (let index = 0; index < this.tab_req_afficher.length; index++) {
+        // verifier la langue en cours
+        this.tab_req_afficher[index].TR_LIBELLETYEREQUETE = this.Translate(
+          this.tab_req_afficher[index].TR_LIBELLETYEREQUETE,
+          this.LanguageService.langue_en_cours
+        );
+      }
     } else if (bouton == 'trai') {
       this.var_checked_trai = 'checked';
       for (let index = 0; index < this.tab_req_en_cours_trait.length; index++) {
@@ -2306,6 +2314,19 @@ export class ReclamationsComponent {
       for (let index = 0; index < this.tab_req_cloturee.length; index++) {
         this.tab_req_afficher.push(this.tab_req_cloturee[index]);
       }
+    }
+  }
+
+  Translate(key: any, targetLanguage: any) {
+    if (
+      this.LanguageService.translations &&
+      key in this.LanguageService.translations
+    ) {
+      return this.LanguageService.translations[key];
+    } else {
+      // Si la traduction pour le texte demandé dans la langue cible n'est pas trouvée,
+      // vous pouvez renvoyer le texte original ou une indication que la traduction est manquante.
+      return key;
     }
   }
 
@@ -2462,7 +2483,6 @@ export class ReclamationsComponent {
     else this.consultation_doc = false;
   }
 
-  // laaa
   ListeConsultationHistorique(list_step: any) {
     var Option = '';
     var body = {};
