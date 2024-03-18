@@ -1,11 +1,16 @@
 // language.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LanguageService {
+  // Déclarez votre variable BehaviorSubject
+  private maVariableSubject: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
   private currentLang: string = 'fr';
   public translations: any = {};
   langue_en_cours: any = 'fr';
@@ -70,6 +75,7 @@ export class LanguageService {
   reclam_list_group_title_1: string = '';
   reclam_list_group_title_2: string = '';
   reclam_list_group_title_3: string = '';
+  reclam_list_group_title_4: string = '';
   reclam_action_engr_1: string = '';
   reclam_action_engr_2: string = '';
   reclam_action_encrs_1: string = '';
@@ -178,6 +184,8 @@ export class LanguageService {
     this.http.get(`assets/i18n/${this.currentLang}.json`).subscribe(
       (translations: any) => {
         this.translations = translations;
+
+        this.setMaVariable(true);
 
         this.updateTranslations();
       },
@@ -308,6 +316,9 @@ export class LanguageService {
     this.reclam_list_group_title_3 = this.getTranslation(
       'reclam_list_group_title_3'
     );
+    this.reclam_list_group_title_4 = this.getTranslation(
+      'reclam_list_group_title_4'
+    );
     this.reclam_action_engr_1 = this.getTranslation('reclam_action_engr_1');
     this.reclam_action_engr_2 = this.getTranslation('reclam_action_engr_2');
     this.reclam_action_encrs_1 = this.getTranslation('reclam_action_encrs_1');
@@ -412,4 +423,14 @@ export class LanguageService {
     this.btn_engr = this.getTranslation('btn_engr');
   }
   // language
+
+  // Méthode pour modifier la variable
+  setMaVariable(value: boolean): void {
+    this.maVariableSubject.next(value);
+  }
+
+  // Méthode pour obtenir le flux observable de la variable
+  getMaVariableObservable(): Observable<boolean> {
+    return this.maVariableSubject.asObservable();
+  }
 }

@@ -4,6 +4,7 @@ import { AdminService } from '../admin.service';
 import { ToastrService } from 'ngx-toastr';
 import { LanguageService } from 'src/app/services/language.service';
 import { HttpClient } from '@angular/common/http';
+import { Subscription } from 'rxjs';
 
 declare var $: any;
 
@@ -13,8 +14,10 @@ declare var $: any;
   styleUrls: ['./reclamations.component.scss'],
 })
 export class ReclamationsComponent {
-  // LienServeur: any = 'http://localhost:22248/'; // lien dev
-  LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
+  LienServeur: any = 'http://localhost:22248/'; // lien dev
+  // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
+
+  maVariableSubscription?: Subscription;
 
   recupinfo: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
   maxWords: any = 30;
@@ -259,6 +262,7 @@ export class ReclamationsComponent {
   tab_req_cloturee: any = [];
   tab_req_afficher: any = [];
   search_bar: boolean = false;
+  afficher_tri: boolean = false;
   consultation_doc: boolean = false;
   statutliste: boolean = false;
   statut_info_utilisateur: boolean = false;
@@ -283,6 +287,7 @@ export class ReclamationsComponent {
   DATECLOTUREAVISREQ: any = '01/01/1900';
   ObservationsCloture: any = '';
   long_sentence: boolean = false;
+  show_loader: boolean = false;
 
   constructor(
     public AdminService: AdminService,
@@ -311,6 +316,15 @@ export class ReclamationsComponent {
         this.ListeComboAgence = success;
         this.ListeComboAgence = this.ListeComboAgence.pvgReqAgenceComboResult;
         if (this.ListeComboAgence[0].clsResultat.SL_RESULTAT == 'TRUE') {
+          // traduction combo agence
+          for (let index = 0; index < this.ListeComboAgence.length; index++) {
+            this.ListeComboAgence[index].AG_RAISONSOCIAL_TRANSLATE =
+              this.Translate(
+                this.ListeComboAgence[index].AG_RAISONSOCIAL,
+                this.LanguageService.langue_en_cours
+              );
+          }
+
           this.ComboEtapeParam();
         } else {
         }
@@ -436,6 +450,16 @@ export class ReclamationsComponent {
               this.ListeTypeRequete_1.push(this.ListeTypeRequete[i]);
             }
           }
+
+          for (let index = 0; index < this.ListeTypeRequete_1.length; index++) {
+            // verifier la langue en cours
+            this.ListeTypeRequete_1[index].TR_LIBELLETYEREQUETE_TRANSLATE =
+              this.Translate(
+                this.ListeTypeRequete_1[index].TR_LIBELLETYEREQUETE,
+                this.LanguageService.langue_en_cours
+              );
+          }
+
           this.ComboModeCollecte();
         } else {
         }
@@ -468,6 +492,19 @@ export class ReclamationsComponent {
           if (this.recupinfo[0].TU_CODETYPEUTILISATEUR == '0002') {
             this.formulaire_plaintes_reclamations[7].valeur =
               this.ListeComboModeCollecte[2].MC_CODEMODECOLLETE;
+          }
+
+          for (
+            let index = 0;
+            index < this.ListeComboModeCollecte.length;
+            index++
+          ) {
+            // verifier la langue en cours
+            this.ListeComboModeCollecte[index].MC_LIBELLEMODECOLLETE_TRANSLATE =
+              this.Translate(
+                this.ListeComboModeCollecte[index].MC_LIBELLEMODECOLLETE,
+                this.LanguageService.langue_en_cours
+              );
           }
 
           this.ComboAvisrecevabilite();
@@ -1418,14 +1455,17 @@ export class ReclamationsComponent {
             }
           }
         }
+        this.show_loader = false;
       },
       (error) => {
+        this.show_loader = false;
         this.statutTraitement = false;
       }
     );
   }
 
   selectionEtapeConsultation(info: any, index_etape: any) {
+    this.show_loader = true;
     this.recupEtape = info;
 
     this.option_body = document.getElementById('idColor');
@@ -1536,6 +1576,62 @@ export class ReclamationsComponent {
             this.var_checked_trai = '';
             this.var_checked_clo = '';
 
+            // traduction :: traduction de chaque bloc
+            for (
+              let index = 0;
+              index < this.tab_req_enregistree.length;
+              index++
+            ) {
+              // verifier la langue en cours
+              this.tab_req_enregistree[index].TR_LIBELLETYEREQUETE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_enregistree[index].TR_LIBELLETYEREQUETE,
+                  this.LanguageService.langue_en_cours
+                );
+
+              this.tab_req_enregistree[index].RE_LIBELLEETAPE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_enregistree[index].RE_LIBELLEETAPE,
+                  this.LanguageService.langue_en_cours
+                );
+            }
+
+            for (
+              let index = 0;
+              index < this.tab_req_en_cours_trait.length;
+              index++
+            ) {
+              // verifier la langue en cours
+              this.tab_req_en_cours_trait[
+                index
+              ].TR_LIBELLETYEREQUETE_TRANSLATE = this.Translate(
+                this.tab_req_en_cours_trait[index].TR_LIBELLETYEREQUETE,
+                this.LanguageService.langue_en_cours
+              );
+
+              this.tab_req_en_cours_trait[index].RE_LIBELLEETAPE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_en_cours_trait[index].RE_LIBELLEETAPE,
+                  this.LanguageService.langue_en_cours
+                );
+            }
+
+            for (let index = 0; index < this.tab_req_cloturee.length; index++) {
+              // verifier la langue en cours
+              this.tab_req_cloturee[index].TR_LIBELLETYEREQUETE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_cloturee[index].TR_LIBELLETYEREQUETE,
+                  this.LanguageService.langue_en_cours
+                );
+
+              this.tab_req_cloturee[index].RE_LIBELLEETAPE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_cloturee[index].RE_LIBELLEETAPE,
+                  this.LanguageService.langue_en_cours
+                );
+            }
+            // traduction
+
             // initialisation de l'affichage sur les requetes enregistrée
             this.tab_req_afficher = [];
             for (
@@ -1545,6 +1641,8 @@ export class ReclamationsComponent {
             ) {
               this.tab_req_afficher.push(this.tab_req_enregistree[index]);
             }
+
+            this.afficher_tri = true;
           } else {
             this.toastr.info(
               this.ListeRetourRequete[0].clsResultat.SL_MESSAGE,
@@ -1552,11 +1650,13 @@ export class ReclamationsComponent {
               { positionClass: 'toast-bottom-left' }
             );
             this.statutliste = false;
+            this.afficher_tri = false;
           }
         },
         (error) => {
           this.AdminService.CloseLoader();
           this.statutliste = false;
+          this.afficher_tri = false;
           this.toastr.warning(
             this.ListeRetourRequete[0].clsResultat.SL_MESSAGE,
             'warning',
@@ -1636,6 +1736,62 @@ export class ReclamationsComponent {
             this.var_checked_trai = '';
             this.var_checked_clo = '';
 
+            // traduction :: traduction de chaque bloc
+            for (
+              let index = 0;
+              index < this.tab_req_enregistree.length;
+              index++
+            ) {
+              // verifier la langue en cours
+              this.tab_req_enregistree[index].TR_LIBELLETYEREQUETE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_enregistree[index].TR_LIBELLETYEREQUETE,
+                  this.LanguageService.langue_en_cours
+                );
+
+              this.tab_req_enregistree[index].RE_LIBELLEETAPE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_enregistree[index].RE_LIBELLEETAPE,
+                  this.LanguageService.langue_en_cours
+                );
+            }
+
+            for (
+              let index = 0;
+              index < this.tab_req_en_cours_trait.length;
+              index++
+            ) {
+              // verifier la langue en cours
+              this.tab_req_en_cours_trait[
+                index
+              ].TR_LIBELLETYEREQUETE_TRANSLATE = this.Translate(
+                this.tab_req_en_cours_trait[index].TR_LIBELLETYEREQUETE,
+                this.LanguageService.langue_en_cours
+              );
+
+              this.tab_req_en_cours_trait[index].RE_LIBELLEETAPE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_en_cours_trait[index].RE_LIBELLEETAPE,
+                  this.LanguageService.langue_en_cours
+                );
+            }
+
+            for (let index = 0; index < this.tab_req_cloturee.length; index++) {
+              // verifier la langue en cours
+              this.tab_req_cloturee[index].TR_LIBELLETYEREQUETE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_cloturee[index].TR_LIBELLETYEREQUETE,
+                  this.LanguageService.langue_en_cours
+                );
+
+              this.tab_req_cloturee[index].RE_LIBELLEETAPE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_cloturee[index].RE_LIBELLEETAPE,
+                  this.LanguageService.langue_en_cours
+                );
+            }
+            // traduction
+
             // initialisation de l'affichage sur les requetes enregistrée
             this.tab_req_afficher = [];
             for (
@@ -1645,6 +1801,8 @@ export class ReclamationsComponent {
             ) {
               this.tab_req_afficher.push(this.tab_req_enregistree[index]);
             }
+
+            this.afficher_tri = true;
           } else {
             this.toastr.info(
               this.ListeRetourRequete[0].clsResultat.SL_MESSAGE,
@@ -1652,11 +1810,13 @@ export class ReclamationsComponent {
               { positionClass: 'toast-bottom-left' }
             );
             this.statutliste = false;
+            this.afficher_tri = false;
           }
         },
         (error) => {
           this.AdminService.CloseLoader();
           this.statutliste = false;
+          this.afficher_tri = false;
           this.toastr.warning(
             this.ListeRetourRequete[0].clsResultat.SL_MESSAGE,
             'warning',
@@ -1736,6 +1896,62 @@ export class ReclamationsComponent {
             this.var_checked_trai = '';
             this.var_checked_clo = '';
 
+            // traduction :: traduction de chaque bloc
+            for (
+              let index = 0;
+              index < this.tab_req_enregistree.length;
+              index++
+            ) {
+              // verifier la langue en cours
+              this.tab_req_enregistree[index].TR_LIBELLETYEREQUETE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_enregistree[index].TR_LIBELLETYEREQUETE,
+                  this.LanguageService.langue_en_cours
+                );
+
+              this.tab_req_enregistree[index].RE_LIBELLEETAPE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_enregistree[index].RE_LIBELLEETAPE,
+                  this.LanguageService.langue_en_cours
+                );
+            }
+
+            for (
+              let index = 0;
+              index < this.tab_req_en_cours_trait.length;
+              index++
+            ) {
+              // verifier la langue en cours
+              this.tab_req_en_cours_trait[
+                index
+              ].TR_LIBELLETYEREQUETE_TRANSLATE = this.Translate(
+                this.tab_req_en_cours_trait[index].TR_LIBELLETYEREQUETE,
+                this.LanguageService.langue_en_cours
+              );
+
+              this.tab_req_en_cours_trait[index].RE_LIBELLEETAPE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_en_cours_trait[index].RE_LIBELLEETAPE,
+                  this.LanguageService.langue_en_cours
+                );
+            }
+
+            for (let index = 0; index < this.tab_req_cloturee.length; index++) {
+              // verifier la langue en cours
+              this.tab_req_cloturee[index].TR_LIBELLETYEREQUETE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_cloturee[index].TR_LIBELLETYEREQUETE,
+                  this.LanguageService.langue_en_cours
+                );
+
+              this.tab_req_cloturee[index].RE_LIBELLEETAPE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_cloturee[index].RE_LIBELLEETAPE,
+                  this.LanguageService.langue_en_cours
+                );
+            }
+            // traduction
+
             // initialisation de l'affichage sur les requetes enregistrée
             this.tab_req_afficher = [];
             for (
@@ -1745,6 +1961,8 @@ export class ReclamationsComponent {
             ) {
               this.tab_req_afficher.push(this.tab_req_enregistree[index]);
             }
+
+            this.afficher_tri = true;
           } else {
             this.toastr.info(
               this.ListeRetourRequete[0].clsResultat.SL_MESSAGE,
@@ -1752,11 +1970,13 @@ export class ReclamationsComponent {
               { positionClass: 'toast-bottom-left' }
             );
             this.statutliste = false;
+            this.afficher_tri = false;
           }
         },
         (error) => {
           this.AdminService.CloseLoader();
           this.statutliste = false;
+          this.afficher_tri = false;
           this.toastr.warning(
             this.ListeRetourRequete[0].clsResultat.SL_MESSAGE,
             'warning',
@@ -2297,13 +2517,13 @@ export class ReclamationsComponent {
         this.tab_req_afficher.push(this.tab_req_enregistree[index]);
       }
 
-      for (let index = 0; index < this.tab_req_afficher.length; index++) {
+      /* for (let index = 0; index < this.tab_req_afficher.length; index++) {
         // verifier la langue en cours
         this.tab_req_afficher[index].TR_LIBELLETYEREQUETE = this.Translate(
           this.tab_req_afficher[index].TR_LIBELLETYEREQUETE,
           this.LanguageService.langue_en_cours
         );
-      }
+      } */
     } else if (bouton == 'trai') {
       this.var_checked_trai = 'checked';
       for (let index = 0; index < this.tab_req_en_cours_trait.length; index++) {
@@ -2694,6 +2914,7 @@ export class ReclamationsComponent {
     if (infoEcran == 'Liste') {
       this.statutFrmulaire = 'LISTE';
       this.SearchValue = '';
+      this.afficher_tri = false;
       this.ListeRequete();
     } else {
       this.statutFrmulaire = 'ENREGISTREMENT';
@@ -2822,6 +3043,89 @@ export class ReclamationsComponent {
     );
   }
 
+  // Fonction à exécuter lorsque la variable change
+  ObserveChangeForTranslate(): void {
+    // traduction :: traduction de chaque bloc de la liste de reclamation
+    for (let index = 0; index < this.tab_req_enregistree.length; index++) {
+      // verifier la langue en cours
+      this.tab_req_enregistree[index].TR_LIBELLETYEREQUETE_TRANSLATE =
+        this.Translate(
+          this.tab_req_enregistree[index].TR_LIBELLETYEREQUETE,
+          this.LanguageService.langue_en_cours
+        );
+
+      this.tab_req_enregistree[index].RE_LIBELLEETAPE_TRANSLATE =
+        this.Translate(
+          this.tab_req_enregistree[index].RE_LIBELLEETAPE,
+          this.LanguageService.langue_en_cours
+        );
+    }
+
+    for (let index = 0; index < this.tab_req_en_cours_trait.length; index++) {
+      // verifier la langue en cours
+      this.tab_req_en_cours_trait[index].TR_LIBELLETYEREQUETE_TRANSLATE =
+        this.Translate(
+          this.tab_req_en_cours_trait[index].TR_LIBELLETYEREQUETE,
+          this.LanguageService.langue_en_cours
+        );
+
+      this.tab_req_en_cours_trait[index].RE_LIBELLEETAPE_TRANSLATE =
+        this.Translate(
+          this.tab_req_en_cours_trait[index].RE_LIBELLEETAPE,
+          this.LanguageService.langue_en_cours
+        );
+    }
+
+    for (let index = 0; index < this.tab_req_cloturee.length; index++) {
+      // verifier la langue en cours
+      this.tab_req_cloturee[index].TR_LIBELLETYEREQUETE_TRANSLATE =
+        this.Translate(
+          this.tab_req_cloturee[index].TR_LIBELLETYEREQUETE,
+          this.LanguageService.langue_en_cours
+        );
+
+      this.tab_req_cloturee[index].RE_LIBELLEETAPE_TRANSLATE = this.Translate(
+        this.tab_req_cloturee[index].RE_LIBELLEETAPE,
+        this.LanguageService.langue_en_cours
+      );
+    }
+
+    // traduction combo agence
+    for (let index = 0; index < this.ListeComboAgence.length; index++) {
+      this.ListeComboAgence[index].AG_RAISONSOCIAL_TRANSLATE = this.Translate(
+        this.ListeComboAgence[index].AG_RAISONSOCIAL,
+        this.LanguageService.langue_en_cours
+      );
+    }
+
+    // traduction combo type de reclamation
+    for (let index = 0; index < this.ListeTypeRequete_1.length; index++) {
+      // verifier la langue en cours
+      this.ListeTypeRequete_1[index].TR_LIBELLETYEREQUETE_TRANSLATE =
+        this.Translate(
+          this.ListeTypeRequete_1[index].TR_LIBELLETYEREQUETE,
+          this.LanguageService.langue_en_cours
+        );
+    }
+
+    // traduction du combo mode de collecte
+    for (let index = 0; index < this.ListeComboModeCollecte.length; index++) {
+      // verifier la langue en cours
+      this.ListeComboModeCollecte[index].MC_LIBELLEMODECOLLETE_TRANSLATE =
+        this.Translate(
+          this.ListeComboModeCollecte[index].MC_LIBELLEMODECOLLETE,
+          this.LanguageService.langue_en_cours
+        );
+    }
+
+    // traduction
+  }
+
+  ngOnDestroy(): void {
+    // Assurez-vous de vous désabonner pour éviter les fuites de mémoire
+    this.maVariableSubscription?.unsubscribe();
+  }
+
   ngOnInit(): void {
     this.ComboAgence();
     this.formulaire_plaintes_reclamations[8].valeur =
@@ -2829,5 +3133,16 @@ export class ReclamationsComponent {
     if (this.recupinfo[0].TU_CODETYPEUTILISATEUR == '0002') {
       this.statutClientExiste = false;
     }
+
+    // Abonnez-vous au flux observable dans le service
+    this.maVariableSubscription =
+      this.LanguageService.getMaVariableObservable().subscribe(
+        (value: boolean) => {
+          // Votre fonction à exécuter lorsque la variable change
+          if (value) {
+            this.ObserveChangeForTranslate();
+          }
+        }
+      );
   }
 }
