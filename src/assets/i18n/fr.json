@@ -178,7 +178,7 @@
   "header_brightness_btn_sub_title_3": "Système",
   "header_notification_btn_title": "Notification",
   "header_notification_nbre_title": "Nouveau",
-  "header_notification_empty": "Aucune reclamation pour l'instant",
+  "Aucune reclamation pour l'instant": "Aucune reclamation pour l'instant",
   "header_disconnection": "Deconnexion",
   "header_badge_1": "Opérateur",
   "header_badge_2": "Client",
@@ -325,5 +325,12 @@
   "ETUDE": "ETUDE",
   "TRAITEMENT": "TRAITEMENT",
   "VERIFICATION": "VERIFICATION",
-  "VALIDATION": "VALIDATION"
+  "VALIDATION": "VALIDATION",
+  "select_title": "Selectionnez",
+  "Satisfait": "Satisfait",
+  "Non satisfait ": "Non satisfait",
+  "Neutre": "Neutre",
+  "theme_choose_1": "Light Mode",
+  "theme_choose_2": "Dark Mode",
+  "theme_choose_3": "System Mode"
 }

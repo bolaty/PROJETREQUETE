@@ -32,7 +32,7 @@ export class LanguageService {
   header_brightness_btn_sub_title_3: string = '';
   header_notification_btn_title: string = '';
   header_notification_nbre_title: string = '';
-  header_notification_empty: string = '';
+  // header_notification_empty: string = '';
   header_disconnection: string = '';
   header_badge_1: string = '';
   header_badge_2: string = '';
@@ -65,6 +65,7 @@ export class LanguageService {
   info_perso: string = '';
   num_cpte_client: string = '';
   placeholder_nom_prenoms: string = '';
+  select_title: string = '';
   chmp_telephone: string = '';
   chmp_locate: string = '';
   chmp_nom_agent: string = '';
@@ -253,9 +254,9 @@ export class LanguageService {
     this.header_notification_nbre_title = this.getTranslation(
       'header_notification_nbre_title'
     );
-    this.header_notification_empty = this.getTranslation(
+    /*  this.header_notification_empty = this.getTranslation(
       'header_notification_empty'
-    );
+    ); */
     this.header_disconnection = this.getTranslation('header_disconnection');
     this.header_badge_1 = this.getTranslation('header_badge_1');
     this.header_badge_2 = this.getTranslation('header_badge_2');
@@ -297,6 +298,7 @@ export class LanguageService {
     this.placeholder_nom_prenoms = this.getTranslation(
       'placeholder_nom_prenoms'
     );
+    this.select_title = this.getTranslation('select_title');
     this.chmp_telephone = this.getTranslation('chmp_telephone');
     this.chmp_locate = this.getTranslation('chmp_locate');
     this.chmp_nom_agent = this.getTranslation('chmp_nom_agent');

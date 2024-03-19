@@ -13,8 +13,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AdminService {
   // ***************** SECTION DES LIENS debut
-  LienServeur: any = 'http://localhost:22248/'; // lien dev
-  // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
+  // LienServeur: any = 'http://localhost:22248/'; // lien dev
+  LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
 
   // ***************** SECTION DES LIENS fin
 

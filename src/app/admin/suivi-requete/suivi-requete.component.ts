@@ -6,6 +6,8 @@ import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
 import { LanguageService } from 'src/app/services/language.service';
 
+import { Subscription } from 'rxjs';
+
 declare var $: any;
 
 @Component({
@@ -14,8 +16,10 @@ declare var $: any;
   styleUrls: ['./suivi-requete.component.scss'],
 })
 export class SuiviRequeteComponent {
-  LienServeur: any = 'http://localhost:22248/'; // lien dev
-  // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
+  // LienServeur: any = 'http://localhost:22248/'; // lien dev
+  LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
+
+  maVariableSubscription?: Subscription;
 
   recupinfo: any = JSON.parse(sessionStorage.getItem('infoReque') || '');
   recupinfoconnect: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
@@ -186,7 +190,21 @@ export class SuiviRequeteComponent {
         this.ListeComboSatisfaction =
           this.ListeComboSatisfaction.pvgReqniveausatisfactionComboResult;
         this.ComboReqrequeteselonEtape(this.recupinfo.RQ_CODEREQUETE);
+        console.log('this.ListeComboSatisfaction', this.ListeComboSatisfaction);
         if (this.ListeComboSatisfaction[0].clsResultat.SL_RESULTAT == 'TRUE') {
+          // traduction combo satisfaction
+          for (
+            let index = 0;
+            index < this.ListeComboSatisfaction.length;
+            index++
+          ) {
+            this.ListeComboSatisfaction[
+              index
+            ].NS_LIBELLENIVEAUSATISFACTION_TRANSLATE = this.Translate(
+              this.ListeComboSatisfaction[index].NS_LIBELLENIVEAUSATISFACTION,
+              this.LanguageService.langue_en_cours
+            );
+          }
         } else {
         }
       },
@@ -753,6 +771,37 @@ export class SuiviRequeteComponent {
     );
   }
 
+  // Fonction à exécuter lorsque la variable change
+  ObserveChangeForTranslate(): void {
+    // traduction combo satisfaction
+    for (let index = 0; index < this.ListeComboSatisfaction.length; index++) {
+      this.ListeComboSatisfaction[
+        index
+      ].NS_LIBELLENIVEAUSATISFACTION_TRANSLATE = this.Translate(
+        this.ListeComboSatisfaction[index].NS_LIBELLENIVEAUSATISFACTION,
+        this.LanguageService.langue_en_cours
+      );
+    }
+  }
+
+  ngOnDestroy(): void {
+    // Assurez-vous de vous désabonner pour éviter les fuites de mémoire
+    this.maVariableSubscription?.unsubscribe();
+  }
+
+  Translate(key: any, targetLanguage: any) {
+    if (
+      this.LanguageService.translations &&
+      key in this.LanguageService.translations
+    ) {
+      return this.LanguageService.translations[key];
+    } else {
+      // Si la traduction pour le texte demandé dans la langue cible n'est pas trouvée,
+      // vous pouvez renvoyer le texte original ou une indication que la traduction est manquante.
+      return key;
+    }
+  }
+
   ngOnInit(): void {
     setTimeout(() => {
       this.ComboStatut();
@@ -762,7 +811,7 @@ export class SuiviRequeteComponent {
     this.formulaire_suivi[0].valeur = this.recupinfo.RQ_DESCRIPTIONREQUETE;
     if (this.recupinfo.RS_CODESTATUTRECEVABILITE == '') {
       this.toastr.error(
-        "l'etude de recevabilié de la requete doit etre faite",
+        "L'étude de recevabilité de la requete doit etre faite",
         'error',
         { positionClass: 'toast-bottom-left' }
       );
@@ -772,12 +821,23 @@ export class SuiviRequeteComponent {
     }
 
     if (this.recupinfo.CU_NOMUTILISATEUR.includes('ADMIN')) {
-      this.toastr.error('Acces interdit pour un Administrateur', 'error', {
+      this.toastr.error('Acces interdit pour un administrateur', 'error', {
         positionClass: 'toast-bottom-left',
       });
       setTimeout(() => {
         window.location.href = 'admin/reclamations/liste';
       }, 3000);
     }
+
+    // Abonnez-vous au flux observable dans le service
+    this.maVariableSubscription =
+      this.LanguageService.getMaVariableObservable().subscribe(
+        (value: boolean) => {
+          // Votre fonction à exécuter lorsque la variable change
+          if (value) {
+            this.ObserveChangeForTranslate();
+          }
+        }
+      );
   }
 }

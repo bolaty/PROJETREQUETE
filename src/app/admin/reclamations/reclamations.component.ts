@@ -14,8 +14,8 @@ declare var $: any;
   styleUrls: ['./reclamations.component.scss'],
 })
 export class ReclamationsComponent {
-  LienServeur: any = 'http://localhost:22248/'; // lien dev
-  // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
+  // LienServeur: any = 'http://localhost:22248/'; // lien dev
+  LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
 
   maVariableSubscription?: Subscription;
 
@@ -1327,7 +1327,7 @@ export class ReclamationsComponent {
       this.recupEtape.RE_CODEETAPE == '' ||
       this.recupEtape.RE_CODEETAPE == undefined
     ) {
-      this.toastr.error('veuillez selectionner une étape svp !!!', 'error', {
+      this.toastr.error('Veuillez selectionner une étape !', 'error', {
         positionClass: 'toast-bottom-left',
       });
     } else {
@@ -1403,25 +1403,54 @@ export class ReclamationsComponent {
   ListeConsultationselonEtape() {
     let Option = 'RequeteClientsClasse.svc/pvgListeReqrequeteEtapeConsultation';
     var recuperation = JSON.parse(sessionStorage.getItem('infoReque') || '');
-    let body = {
-      Objets: [
-        {
-          // OE_PARAM: ['1000', recuperation.RQ_CODEREQUETE, '', '', '01'],
-          OE_PARAM: [
-            this.recupinfo[0].AG_CODEAGENCE,
-            recuperation.RQ_CODEREQUETE,
-            '',
-            '',
-            '01',
-          ],
-          clsObjetEnvoi: {
-            ET_CODEETABLISSEMENT: '',
-            AN_CODEANTENNE: '',
-            TYPEOPERATION: '01',
+
+    let body;
+
+    if (
+      recuperation.RQ_CODEREQUETERELANCEE != '' &&
+      recuperation.RQ_DATESAISIEREQUETE != '01/01/1900' &&
+      recuperation.RQ_DATEDEBUTTRAITEMENTREQUETE == '01/01/1900' &&
+      recuperation.RQ_DATECLOTUREREQUETE == '01/01/1900'
+    ) {
+      body = {
+        Objets: [
+          {
+            OE_PARAM: [
+              this.recupinfo[0].AG_CODEAGENCE,
+              recuperation.RQ_CODEREQUETERELANCEE,
+              '',
+              '',
+              '01',
+            ],
+            clsObjetEnvoi: {
+              ET_CODEETABLISSEMENT: '',
+              AN_CODEANTENNE: '',
+              TYPEOPERATION: '01',
+            },
           },
-        },
-      ],
-    };
+        ],
+      };
+    } else {
+      body = {
+        Objets: [
+          {
+            OE_PARAM: [
+              this.recupinfo[0].AG_CODEAGENCE,
+              recuperation.RQ_CODEREQUETE,
+              '',
+              '',
+              '01',
+            ],
+            clsObjetEnvoi: {
+              ET_CODEETABLISSEMENT: '',
+              AN_CODEANTENNE: '',
+              TYPEOPERATION: '01',
+            },
+          },
+        ],
+      };
+    }
+
     this.AdminService.AppelServeur(body, Option).subscribe(
       (success: any) => {
         this.ListConsultEtapeSelonReq = success;

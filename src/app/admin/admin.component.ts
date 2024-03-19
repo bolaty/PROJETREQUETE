@@ -3,6 +3,7 @@ import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { AdminService } from './admin.service';
 import { LanguageService } from 'src/app/services/language.service';
+import { Subscription } from 'rxjs';
 //declare var $: any; // Si vous utilisez jQuery
 
 @Component({
@@ -16,6 +17,7 @@ export class AdminComponent implements OnInit {
   nombreNotif: any = 0;
   boutons: any = [];
   libelles: any = [];
+  maVariableSubscription?: Subscription;
 
   constructor(
     public AdminService: AdminService,
@@ -275,12 +277,14 @@ export class AdminComponent implements OnInit {
 
         const styleSwitcherIcon = styleSwitcher.querySelector('i');
 
+        //@ts-ignore
+        var pointer = this;
         if (storedStyle === 'light') {
           //@ts-ignore
           styleSwitcherIcon.classList.add('mdi-weather-sunny');
           //@ts-ignore
           new bootstrap.Tooltip(styleSwitcherIcon, {
-            title: 'Light Mode',
+            title: pointer.LanguageService.header_brightness_btn_title,
             fallbackPlacements: ['bottom'],
           });
         } else if (storedStyle === 'dark') {
@@ -288,7 +292,7 @@ export class AdminComponent implements OnInit {
           styleSwitcherIcon.classList.add('mdi-weather-night');
           //@ts-ignore
           new bootstrap.Tooltip(styleSwitcherIcon, {
-            title: 'Dark Mode',
+            title: pointer.LanguageService.header_brightness_btn_title,
             fallbackPlacements: ['bottom'],
           });
         } else {
@@ -296,7 +300,7 @@ export class AdminComponent implements OnInit {
           styleSwitcherIcon.classList.add('mdi-monitor');
           //@ts-ignore
           new bootstrap.Tooltip(styleSwitcherIcon, {
-            title: 'System Mode',
+            title: pointer.LanguageService.header_brightness_btn_title,
             fallbackPlacements: ['bottom'],
           });
         }
@@ -918,6 +922,7 @@ export class AdminComponent implements OnInit {
       this._router.navigate(['/admin/Operateur']);
     }
   }
+
   Notification() {
     let Option = 'RequeteClientsClasse.svc/pvgListeSMS';
     let body = {
@@ -960,11 +965,33 @@ export class AdminComponent implements OnInit {
       } else {
         this.nombreNotif = 0;
         this.ListeNotification[0].SM_MESSAGE =
-          "Aucune reclamation pour l'instant";
+          "Aucune reclamation pour l'instant"; // this.LanguageService.header_notification_empty //Aucune reclamation pour l'instant;
+
+        // traduction message notif
+        for (let index = 0; index < this.ListeNotification.length; index++) {
+          this.ListeNotification[index].SM_MESSAGE_TRANSLATE = this.Translate(
+            this.ListeNotification[index].SM_MESSAGE,
+            this.LanguageService.langue_en_cours
+          );
+        }
+
         this.ListeNotification[0].SM_STATUT = '';
         this.ListeNotification[0].SM_DATEEMISSIONSMS = '';
       }
     });
+  }
+
+  Translate(key: any, targetLanguage: any) {
+    if (
+      this.LanguageService.translations &&
+      key in this.LanguageService.translations
+    ) {
+      return this.LanguageService.translations[key];
+    } else {
+      // Si la traduction pour le texte demandé dans la langue cible n'est pas trouvée,
+      // vous pouvez renvoyer le texte original ou une indication que la traduction est manquante.
+      return key;
+    }
   }
 
   ChangementDeCouleur() {
@@ -992,6 +1019,22 @@ export class AdminComponent implements OnInit {
     window.location.href = '/admin/reclamations/liste/SuiviRequete';
   }
 
+  // Fonction à exécuter lorsque la variable change
+  ObserveChangeForTranslate(): void {
+    // traduction message notif
+    for (let index = 0; index < this.ListeNotification.length; index++) {
+      this.ListeNotification[index].SM_MESSAGE_TRANSLATE = this.Translate(
+        this.ListeNotification[index].SM_MESSAGE,
+        this.LanguageService.langue_en_cours
+      );
+    }
+  }
+
+  ngOnDestroy(): void {
+    // Assurez-vous de vous désabonner pour éviter les fuites de mémoire
+    this.maVariableSubscription?.unsubscribe();
+  }
+
   ngOnInit(): void {
     this.Notification();
     setTimeout(() => {
@@ -1003,5 +1046,16 @@ export class AdminComponent implements OnInit {
     stop = setInterval(function () {
       pointer.ChangementDeCouleur();
     }, 1000);
+
+    // Abonnez-vous au flux observable dans le service
+    this.maVariableSubscription =
+      this.LanguageService.getMaVariableObservable().subscribe(
+        (value: boolean) => {
+          // Votre fonction à exécuter lorsque la variable change
+          if (value) {
+            this.ObserveChangeForTranslate();
+          }
+        }
+      );
   }
 }

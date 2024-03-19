@@ -296,7 +296,10 @@
                     data-theme="light"
                   >
                     <span class="align-middle"
-                      ><i class="mdi mdi-weather-sunny me-2"></i>Light</span
+                      ><i class="mdi mdi-weather-sunny me-2"></i
+                      >{{
+                        LanguageService.header_brightness_btn_sub_title_1
+                      }}</span
                     >
                   </a>
                 </li>
@@ -307,7 +310,10 @@
                     data-theme="dark"
                   >
                     <span class="align-middle"
-                      ><i class="mdi mdi-weather-night me-2"></i>Dark</span
+                      ><i class="mdi mdi-weather-night me-2"></i
+                      >{{
+                        LanguageService.header_brightness_btn_sub_title_2
+                      }}</span
                     >
                   </a>
                 </li>
@@ -318,7 +324,10 @@
                     data-theme="system"
                   >
                     <span class="align-middle"
-                      ><i class="mdi mdi-monitor me-2"></i>System</span
+                      ><i class="mdi mdi-monitor me-2"></i
+                      >{{
+                        LanguageService.header_brightness_btn_sub_title_3
+                      }}</span
                     >
                   </a>
                 </li>
@@ -471,9 +480,12 @@
               <ul class="dropdown-menu dropdown-menu-end py-0">
                 <li class="dropdown-menu-header border-bottom">
                   <div class="dropdown-header d-flex align-items-center py-3">
-                    <h6 class="fw-normal mb-0 me-auto">Notification</h6>
+                    <h6 class="fw-normal mb-0 me-auto">
+                      {{ LanguageService.header_notification_btn_title }}
+                    </h6>
                     <span class="badge rounded-pill bg-label-primary"
-                      >{{ nombreNotif }} Nouveau</span
+                      >{{ nombreNotif }}
+                      {{ LanguageService.header_notification_nbre_title }}</span
                     >
                   </div>
                 </li>
@@ -496,7 +508,9 @@
                         <div
                           class="d-flex flex-column flex-grow-1 overflow-hidden w-px-250"
                         >
-                          <h6 class="mb-1">{{ LisNotification.SM_MESSAGE }}</h6>
+                          <h6 class="mb-1">
+                            {{ LisNotification.SM_MESSAGE_TRANSLATE }}
+                          </h6>
                           <small class="text-truncate text-body">{{
                             LisNotification.SM_STATUT
                           }}</small>
@@ -551,6 +565,7 @@
                           />
                         </div>
                       </div>
+
                       <div class="flex-grow-1">
                         <h6 class="mb-0">
                           {{ recupinfo[0].CU_NOMUTILISATEUR }}
@@ -568,12 +583,12 @@
                             !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') &&
                             recupinfo[0].TU_CODETYPEUTILISATEUR == '0001'
                           "
-                          >Opérateur</small
+                          >{{ LanguageService.header_badge_1 }}</small
                         >
                         <small
                           class="text-muted"
                           *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR == '0002'"
-                          >Client</small
+                          >{{ LanguageService.header_badge_2 }}</small
                         >
                       </div>
                     </div>
@@ -582,47 +597,7 @@
                 <li>
                   <div class="dropdown-divider my-0"></div>
                 </li>
-                <!-- <li>
-                  <a class="dropdown-item" style="cursor: pointer">
-                    <i class="mdi mdi-account-outline me-1 mdi-20px"></i>
-                    <span class="align-middle">Mon Profile</span>
-                  </a>
-                </li> -->
-                <!--  <li>
-                  <a class="dropdown-item" style="cursor: pointer">
-                    <i class="mdi mdi-cog-outline me-1 mdi-20px"></i>
-                    <span class="align-middle">Settings</span>
-                  </a>
-                </li>
-                <li>
-                  <a class="dropdown-item" style="cursor: pointer">
-                    <span class="d-flex align-items-center align-middle">
-                      <i
-                        class="flex-shrink-0 mdi mdi-credit-card-outline me-1 mdi-20px"
-                      ></i>
-                      <span class="flex-grow-1 align-middle ms-1">Billing</span>
-                      <span
-                        class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20"
-                        >4</span
-                      >
-                    </span>
-                  </a>
-                </li>
-                <li>
-                  <div class="dropdown-divider"></div>
-                </li>
-                <li>
-                  <a class="dropdown-item" style="cursor: pointer">
-                    <i class="mdi mdi-help-circle-outline me-1 mdi-20px"></i>
-                    <span class="align-middle">FAQ</span>
-                  </a>
-                </li>
-                <li>
-                  <a class="dropdown-item" style="cursor: pointer">
-                    <i class="mdi mdi-currency-usd me-1 mdi-20px"></i>
-                    <span class="align-middle">Pricing</span>
-                  </a>
-                </li>-->
+
                 <li>
                   <div class="dropdown-divider my-1"></div>
                 </li>
@@ -634,7 +609,9 @@
                     (click)="Deconnexion()"
                   >
                     <i class="mdi mdi-logout me-1 mdi-20px"></i>
-                    <span class="align-middle">Deconnexion</span>
+                    <span class="align-middle">{{
+                      LanguageService.header_disconnection
+                    }}</span>
                   </a>
                 </li>
               </ul>
