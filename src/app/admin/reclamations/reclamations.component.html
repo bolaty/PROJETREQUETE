@@ -43,7 +43,7 @@
         <input
           type="text"
           class="form-control"
-          placeholder="Code du client"
+          [placeholder]="LanguageService.search_placeholder_code_client"
           name="SearchPersonal"
           aria-label="Search"
           aria-describedby="basic-addon1"
@@ -61,6 +61,7 @@
           "
           id="basic-addon1"
           (click)="RechercherSelonEcran()"
+          style="cursor: pointer"
           ><i class="mdi mdi-magnify mdi-20px"></i
         ></span>
 
@@ -1405,9 +1406,7 @@
                               '01/01/1900'
                           "
                           ><span class="badge bg-label-success rounded-pill"
-                            >{{
-                              LanguageService.reclam_list_group_title_4
-                            }}
+                            >{{ LanguageService.reclam_list_group_title_4 }}
                             &nbsp;&nbsp;N°
                             {{ ListRetourRequetes.RQ_CODEREQUETE }}</span
                           ></a

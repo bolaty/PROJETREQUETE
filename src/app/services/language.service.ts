@@ -165,6 +165,7 @@ export class LanguageService {
   ann_clo_def_btn_title: string = '';
   btn_consult: string = '';
   btn_engr: string = '';
+  search_placeholder_code_client: string = '';
 
   constructor(private http: HttpClient) {
     this.setLanguage('fr'); // Set default language
@@ -423,6 +424,9 @@ export class LanguageService {
     this.ann_clo_def_btn_title = this.getTranslation('ann_clo_def_btn_title');
     this.btn_consult = this.getTranslation('btn_consult');
     this.btn_engr = this.getTranslation('btn_engr');
+    this.search_placeholder_code_client = this.getTranslation(
+      'search_placeholder_code_client'
+    );
   }
   // language
 

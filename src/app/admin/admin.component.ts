@@ -1030,6 +1030,18 @@ export class AdminComponent implements OnInit {
     }
   }
 
+  RecupScreen() {
+    var stat = screen.width;
+    console.log('stat', stat);
+    if (stat > 1179) {
+      this.AdminService.for_phone = false;
+      console.log('this.AdminService.for_phone', this.AdminService.for_phone);
+    } else {
+      this.AdminService.for_phone = true;
+      console.log('this.AdminService.for_phone', this.AdminService.for_phone);
+    }
+  }
+
   ngOnDestroy(): void {
     // Assurez-vous de vous désabonner pour éviter les fuites de mémoire
     this.maVariableSubscription?.unsubscribe();
@@ -1057,5 +1069,11 @@ export class AdminComponent implements OnInit {
           }
         }
       );
+
+    let pointer2 = this;
+    let stop2;
+    stop2 = setInterval(function () {
+      pointer2.RecupScreen();
+    }, 5000);
   }
 }

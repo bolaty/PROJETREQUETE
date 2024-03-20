@@ -14,8 +14,8 @@ declare var $: any;
   styleUrls: ['./reclamations.component.scss'],
 })
 export class ReclamationsComponent {
-  // LienServeur: any = 'http://localhost:22248/'; // lien dev
-  LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
+  LienServeur: any = 'http://localhost:22248/'; // lien dev
+  // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
 
   maVariableSubscription?: Subscription;
 
@@ -2590,26 +2590,48 @@ export class ReclamationsComponent {
       }
     }
   }
+
   listeClients() {
     let Option = 'RequeteClientsClasse.svc/pvgListeUtilisateursRecherche';
 
-    if (this.SearchValue == undefined) {
-      this.toastr.error('veuillez renseigner un numero client svp', 'error', {
-        positionClass: 'toast-bottom-left',
-      });
+    if (this.SearchValue == undefined || this.SearchValue == '') {
+      this.toastr.error(
+        'Veuillez renseigner un code ou un téléphone',
+        'error',
+        {
+          positionClass: 'toast-bottom-left',
+        }
+      );
     } else {
-      let body = {
-        Objets: [
-          {
-            OE_PARAM: ['0002', this.SearchValue, '', '', '01'],
-            clsObjetEnvoi: {
-              ET_CODEETABLISSEMENT: '',
-              AN_CODEANTENNE: '',
-              TYPEOPERATION: '01',
+      let body;
+      if (this.SearchValue.substr(0, 1) === '0') {
+        body = {
+          Objets: [
+            {
+              OE_PARAM: ['0002', '', this.SearchValue, '', '01'],
+              clsObjetEnvoi: {
+                ET_CODEETABLISSEMENT: '',
+                AN_CODEANTENNE: '',
+                TYPEOPERATION: '01',
+              },
             },
-          },
-        ],
-      };
+          ],
+        };
+      } else {
+        body = {
+          Objets: [
+            {
+              OE_PARAM: ['0002', this.SearchValue, '', '', '01'],
+              clsObjetEnvoi: {
+                ET_CODEETABLISSEMENT: '',
+                AN_CODEANTENNE: '',
+                TYPEOPERATION: '01',
+              },
+            },
+          ],
+        };
+      }
+
       // $(".datatables-basic").DataTable().destroy();
       this.AdminService.AppelServeur(body, Option).subscribe(
         (success: any) => {

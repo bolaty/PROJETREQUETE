@@ -450,6 +450,7 @@ export class OperateurComponent {
             for (let index = 0; index < tableau_recu.length; index++) {
               tableau_recu[index].valeur = '';
             }
+            this.ListeOperateurs();
             this.AdminService.CloseLoader();
           }
         },
