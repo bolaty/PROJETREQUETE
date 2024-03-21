@@ -43,6 +43,7 @@ export class AdminService {
   statusConnect: boolean = false;
   choix_de_l_ecran: any = '';
   for_phone: boolean = false;
+  showMenuMobile: boolean = false;
 
   constructor(private http: HttpClient, private toastr: ToastrService) {
     Network.addListener(

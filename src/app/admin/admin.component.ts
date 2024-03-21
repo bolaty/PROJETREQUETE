@@ -1042,12 +1042,22 @@ export class AdminComponent implements OnInit {
     }
   }
 
+  TestMobile() {
+    this.AdminService.showMenuMobile = false;
+  }
+  TestMobile2() {
+    this.AdminService.showMenuMobile = true;
+  }
+
   ngOnDestroy(): void {
     // Assurez-vous de vous désabonner pour éviter les fuites de mémoire
     this.maVariableSubscription?.unsubscribe();
   }
 
   ngOnInit(): void {
+    if (!this.AdminService.for_phone) {
+      this.AdminService.showMenuMobile = false;
+    }
     this.Notification();
     setTimeout(() => {
       this.InitialisationMainJs();

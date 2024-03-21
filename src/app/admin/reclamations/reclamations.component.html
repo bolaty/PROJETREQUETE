@@ -811,7 +811,11 @@
               recupinfo[0].TU_CODETYPEUTILISATEUR == '0002'
             "
           >
-            <div class="d-flex mb-3 gap-3">
+            <!-- affichage web -->
+            <div
+              class="d-flex mb-3 gap-3"
+              *ngIf="afficher_tri && !AdminService.for_phone"
+            >
               <div class="avatar avatar-md">
                 <span class="avatar-initial bg-label-primary rounded">
                   <i class="mdi mdi-dots-vertical mdi-24px"></i>
@@ -874,6 +878,63 @@
                 <label class="bttn btn btn-outline-primary" for="btnradio3"
                   >{{ LanguageService.reclam_list_group_title_3 }}
                 </label>
+              </div>
+            </div>
+
+            <!-- affichage mobile -->
+            <div
+              class="d-flex mb-5 gap-3"
+              style="height: 50px"
+              *ngIf="afficher_tri && AdminService.for_phone"
+            >
+              <div class="avatar avatar-md">
+                <span class="avatar-initial bg-label-primary rounded">
+                  <i class="mdi mdi-dots-vertical mdi-24px"></i>
+                </span>
+              </div>
+              <div>
+                <!-- Liste des reclamations -->
+                <h5 class="mb-1">
+                  <span class="align-middle">{{
+                    LanguageService.reclam_list_title
+                  }}</span>
+                </h5>
+                <span>{{ LanguageService.reclam_list_sub_title }}</span>
+              </div>
+
+              &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+              &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+              &#160;&#160; &#160; &#160;
+
+              <!-- Radio -->
+              <div
+                class="btn-toolbar demo-inline-spacing"
+                role="toolbar"
+                aria-label="Toolbar with button groups"
+              >
+                <div class="btn-group" role="group" aria-label="First group">
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    (click)="OnChecked('enrg')"
+                  >
+                    <i class="mdi mdi-alert-circle-check mdi-24px"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    (click)="OnChecked('trai')"
+                  >
+                    <i class="mdi mdi-account-reactivate-outline mdi-24px"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    (click)="OnChecked('clo')"
+                  >
+                    <i class="mdi mdi-alert-circle-check-outline mdi-24px"></i>
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -1148,7 +1209,11 @@
               recupinfo[0].TU_CODETYPEUTILISATEUR == '0001'
             "
           >
-            <div class="d-flex mb-3 gap-3">
+            <!-- affichage web -->
+            <div
+              class="d-flex mb-3 gap-3"
+              *ngIf="afficher_tri && !AdminService.for_phone"
+            >
               <div class="avatar avatar-md">
                 <span class="avatar-initial bg-label-primary rounded">
                   <i class="mdi mdi-dots-vertical mdi-24px"></i>
@@ -1173,7 +1238,6 @@
                 class="bttn btn-group"
                 role="group"
                 aria-label="Basic radio toggle button group"
-                *ngIf="afficher_tri"
               >
                 <input
                   type="radio"
@@ -1210,6 +1274,63 @@
                 <label class="bttn btn btn-outline-primary" for="btnradio3"
                   >Cloturée</label
                 >-->
+              </div>
+            </div>
+
+            <!-- affichage mobile -->
+            <div
+              class="d-flex mb-5 gap-3"
+              style="height: 50px"
+              *ngIf="afficher_tri && AdminService.for_phone"
+            >
+              <div class="avatar avatar-md">
+                <span class="avatar-initial bg-label-primary rounded">
+                  <i class="mdi mdi-dots-vertical mdi-24px"></i>
+                </span>
+              </div>
+              <div>
+                <!-- Liste des reclamations -->
+                <h5 class="mb-1">
+                  <span class="align-middle">{{
+                    LanguageService.reclam_list_title
+                  }}</span>
+                </h5>
+                <span>{{ LanguageService.reclam_list_sub_title }}</span>
+              </div>
+
+              &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+              &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+              &#160;&#160; &#160; &#160;
+
+              <!-- Radio -->
+              <div
+                class="btn-toolbar demo-inline-spacing"
+                role="toolbar"
+                aria-label="Toolbar with button groups"
+              >
+                <div class="btn-group" role="group" aria-label="First group">
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    (click)="OnChecked('enrg')"
+                  >
+                    <i class="mdi mdi-alert-circle-check mdi-24px"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    (click)="OnChecked('trai')"
+                  >
+                    <i class="mdi mdi-account-reactivate-outline mdi-24px"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    (click)="OnChecked('clo')"
+                  >
+                    <i class="mdi mdi-alert-circle-check-outline mdi-24px"></i>
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -1451,7 +1572,11 @@
             role="tabpanel"
             *ngIf="recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')"
           >
-            <div class="d-flex mb-3 gap-3">
+            <!-- affichage web -->
+            <div
+              class="d-flex mb-3 gap-3"
+              *ngIf="afficher_tri && !AdminService.for_phone"
+            >
               <div class="avatar avatar-md">
                 <span class="avatar-initial bg-label-primary rounded">
                   <i class="mdi mdi-dots-vertical mdi-24px"></i>
@@ -1476,7 +1601,6 @@
                 class="bttn btn-group"
                 role="group"
                 aria-label="Basic radio toggle button group"
-                *ngIf="afficher_tri"
               >
                 <input
                   type="radio"
@@ -1513,6 +1637,62 @@
                 <label class="bttn btn btn-outline-primary" for="btnradio3">{{
                   LanguageService.reclam_list_group_title_3
                 }}</label>
+              </div>
+            </div>
+
+            <!-- affichage mobile -->
+            <div
+              class="d-flex mb-5 gap-3"
+              style="height: 50px"
+              *ngIf="afficher_tri && AdminService.for_phone"
+            >
+              <div class="avatar avatar-md">
+                <span class="avatar-initial bg-label-primary rounded">
+                  <i class="mdi mdi-dots-vertical mdi-24px"></i>
+                </span>
+              </div>
+              <div>
+                <!-- Liste des reclamations -->
+                <h5 class="mb-1">
+                  <span class="align-middle">{{
+                    LanguageService.reclam_list_title
+                  }}</span>
+                </h5>
+                <span>{{ LanguageService.reclam_list_sub_title }}</span>
+              </div>
+
+              &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+              &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+              &#160;&#160; &#160; &#160;
+
+              <div
+                class="btn-toolbar demo-inline-spacing"
+                role="toolbar"
+                aria-label="Toolbar with button groups"
+              >
+                <div class="btn-group" role="group" aria-label="First group">
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    (click)="OnChecked('enrg')"
+                  >
+                    <i class="mdi mdi-alert-circle-check mdi-24px"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    (click)="OnChecked('trai')"
+                  >
+                    <i class="mdi mdi-account-reactivate-outline mdi-24px"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    (click)="OnChecked('clo')"
+                  >
+                    <i class="mdi mdi-alert-circle-check-outline mdi-24px"></i>
+                  </button>
+                </div>
               </div>
             </div>
 
