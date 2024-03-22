@@ -7,7 +7,11 @@ import { Injectable } from '@angular/core';
 export class ApiService {
   constructor(private http: HttpClient) {}
   private BASE_URL = 'http://51.210.111.16:1006';
-  postData(url: string, data: any, fullUrl: boolean = false) {
+
+  LienServeur: any = 'http://localhost:22248/'; // lien dev
+  // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
+
+  /* postData(url: string, data: any, fullUrl: boolean = false) {
     const headers = new HttpHeaders({
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -15,7 +19,18 @@ export class ApiService {
     return this.http.post(fullUrl ? url : this.formatUrl(url), data, {
       headers,
     });
+  } */
+
+  postData(url: string, data: any) {
+    const headers = new HttpHeaders({
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    });
+    return this.http.post(url, data, {
+      headers,
+    });
   }
+
   getData(url: string, data: any, fullUrl: boolean = false) {
     const headers = new HttpHeaders({
       Accept: 'application/json',
@@ -25,6 +40,6 @@ export class ApiService {
   }
 
   formatUrl(url: string): string {
-    return this.BASE_URL + url;
+    return this.LienServeur + url;
   }
 }

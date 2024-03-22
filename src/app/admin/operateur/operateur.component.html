@@ -281,280 +281,114 @@
   class="container-xxl flex-grow-1 container-p-y"
   *ngIf="ecran_affiche == 'client'"
 >
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card mb-4">
-        <h4 class="card-header">Details du client</h4>
-        <!-- Account -->
-        <!-- <div class="card-body">
-          <div class="d-flex align-items-start align-items-sm-center gap-4">
-            <img
-              src="../../assets/img/avatars/1.png"
-              alt="user-avatar"
-              class="d-block w-px-120 h-px-120 rounded"
-              id="uploadedAvatar"
-            />
-            <div class="button-wrapper">
-              <label
-                for="upload"
-                class="bttn btn btn-primary me-2 mb-3"
-                tabindex="0"
-              >
-                <span class="d-none d-sm-block">Nouvelle photo</span>
-                <i class="mdi mdi-tray-arrow-up d-block d-sm-none"></i>
-                <input
-                  type="file"
-                  id="upload"
-                  class="account-file-input"
-                  hidden
-                  accept="image/png, image/jpeg"
-                />
-              </label>
-              <button
-                type="button"
-                class="bttn btn btn-outline-danger account-image-reset mb-3"
-              >
-                <i class="mdi mdi-reload d-block d-sm-none"></i>
-                <span class="d-none d-sm-block">Réinitialiser</span>
-              </button>
+  <!-- Content wrapper -->
+  <div class="content-wrapper">
+    <!-- Content -->
 
-              <div class="text-muted small">
-                JPG, GIF ou PNG autorisés. Taille maximale de 800K
-              </div>
-            </div>
-          </div>
-        </div> -->
-        <div class="card-body pt-2 mt-1">
-          <div class="row">
-            <!-- Navigation -->
-            <div class="col-12 col-md-4 mx-auto card-separator">
-              <div
-                class="d-flex justify-content-between flex-column mb-3 mb-md-0 pe-md-3"
-              >
-                <ul class="nav nav-align-left nav-pills flex-column">
-                  <li class="nav-item">
-                    <button
-                      class="nav-link active"
-                      data-bs-toggle="tab"
-                      data-bs-target="#restock"
-                    >
-                      <i class="mdi mdi-cube-outline me-2"></i>
-                      <span class="align-middle">{{
-                        LanguageService.op_btn_title_1
-                      }}</span>
-                    </button>
-                  </li>
-                  <li class="nav-item">
-                    <button
-                      class="nav-link"
-                      data-bs-toggle="tab"
-                      data-bs-target="#shipping"
-                    >
-                      <i class="mdi mdi-car-estate me-2"></i>
-                      <span class="align-middle">{{
-                        LanguageService.op_btn_title_2
-                      }}</span>
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <!-- /Navigation -->
-            <!-- Options -->
-            <div class="col-12 col-md-8 pt-4 pt-md-0">
-              <div class="tab-content p-0 pe-xl-0 ps-md-3">
-                <!-- Restock Tab -->
-                <div
-                  class="tab-pane fade show active"
-                  id="restock"
-                  role="tabpanel"
-                >
-                  <h6 class="text-body">
-                    {{ LanguageService.op_btn_title_1 }}
-                  </h6>
-                  <form
-                    id="formAccountSettings"
-                    method="POST"
-                    onsubmit="return false"
-                  >
-                    <div class="row mt-2 gy-4">
-                      <div class="col-md-6">
-                        <div class="form-floating form-floating-outline">
-                          <input
-                            class="form-control"
-                            type="text"
-                            id="nom"
-                            name="nom"
-                            [placeholder]="LanguageService.op_chmp_title_1"
-                            value=""
-                            autofocus
-                            [(ngModel)]="formulaire_operateur[0].valeur"
-                          />
-                          <label for="nom">{{
-                            LanguageService.op_chmp_title_1
-                          }}</label>
-                        </div>
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <!-- cas de la consultation de la liste en tant que simple operateur -->
+      <div
+        class="faq-header d-flex flex-column justify-content-center align-items-center"
+      >
+        <h3 class="text-center text-primary mb-2">
+          {{ LanguageService.reclam_title }} ?
+        </h3>
+        <p class="text-body text-center mb-0 px-3">
+          {{ LanguageService.reclam_sub_title_list_op_2 }}
+        </p>
+        <div
+          class="input-wrapper my-3 input-group input-group-lg input-group-merge px-sm-5"
+        >
+          <input
+            type="text"
+            class="form-control"
+            placeholder="N° du ticket"
+            name="SearchPersonal"
+            aria-label="Search"
+            aria-describedby="basic-addon1"
+            [(ngModel)]="search_bar"
+          />
+          <span
+            class="input-group-text"
+            id="basic-addon1"
+            (click)="FilterTicket(search_bar)"
+            style="cursor: pointer"
+            ><i class="mdi mdi-magnify mdi-20px"></i
+          ></span>
+        </div>
+      </div>
+      &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+      &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+      &#160;
+      <!-- FAQ's -->
+
+      <div class="tab-content p-0">
+        <!-- Teams Cards -->
+        <!-- User List Style -->
+        <small class="text-light fw-medium" *ngIf="tab_list_client"
+          >Liste des clients</small
+        >
+        <div class="demo-inline-spacing mt-3" *ngIf="tab_list_client">
+          <div class="list-group">
+            <div
+              class="list-group-item list-group-item-action d-flex align-items-center cursor-pointer"
+              *ngFor="let item of tab_list_client"
+            >
+              <img
+                src="../../assets/img/avatars/2.png"
+                alt="User Image"
+                class="rounded-circle me-3 w-px-50"
+              />
+              <div class="w-100">
+                <div class="d-flex justify-content-between">
+                  <div class="user-info">
+                    <h6 class="mb-1">{{ item.CU_NOMUTILISATEUR }}</h6>
+                    <div class="d-flex align-items-center">
+                      <div class="user-status me-2 d-flex align-items-center">
+                        <span class="badge badge-dot bg-success me-1"></span>
+                        <small>{{ item.CU_CONTACT }}</small>
                       </div>
-                      <div class="col-md-6">
-                        <div class="form-floating form-floating-outline">
-                          <input
-                            class="form-control"
-                            type="text"
-                            name="prenoms"
-                            id="prenoms"
-                            value=""
-                            [placeholder]="LanguageService.op_chmp_title_2"
-                            [(ngModel)]="formulaire_operateur[1].valeur"
-                          />
-                          <label for="prenoms">{{
-                            LanguageService.op_chmp_title_2
-                          }}</label>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-floating form-floating-outline">
-                          <input
-                            class="form-control"
-                            type="text"
-                            id="email"
-                            name="email"
-                            value=""
-                            placeholder="mail@example.com"
-                            [(ngModel)]="formulaire_operateur[2].valeur"
-                          />
-                          <label for="email">{{
-                            LanguageService.op_chmp_title_3
-                          }}</label>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-floating form-floating-outline">
-                          <select
-                            id="agence"
-                            name="agence"
-                            class="select2 form-select"
-                            data-allow-clear="true"
-                            placeholder="Agence"
-                            [(ngModel)]="formulaire_operateur[3].valeur"
-                          >
-                            <option
-                              *ngFor="let ListAgence of ListeComboAgence"
-                              value="{{ ListAgence.AG_CODEAGENCE }}"
-                            >
-                              {{ ListAgence.AG_RAISONSOCIAL }}
-                            </option>
-                          </select>
-                          <label for="agence">{{
-                            LanguageService.op_chmp_title_4
-                          }}</label>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="input-group input-group-merge">
-                          <div class="form-floating form-floating-outline">
-                            <input
-                              type="text"
-                              id="telephone"
-                              name="telephone"
-                              class="form-control"
-                              placeholder="2250100000000"
-                              [(ngModel)]="formulaire_operateur[4].valeur"
-                            />
-                            <label for="telephone">{{
-                              LanguageService.op_chmp_title_5
-                            }}</label>
-                          </div>
-                          <span class="input-group-text">CIV (+225)</span>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-floating form-floating-outline">
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="login"
-                            name="login"
-                            [placeholder]="LanguageService.op_chmp_title_6"
-                            [(ngModel)]="formulaire_operateur[5].valeur"
-                          />
-                          <label for="login">{{
-                            LanguageService.op_chmp_title_6
-                          }}</label>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-floating form-floating-outline">
-                          <input
-                            class="form-control"
-                            type="text"
-                            id="motdepasse"
-                            name="motdepasse"
-                            [placeholder]="LanguageService.op_chmp_title_7"
-                            [(ngModel)]="formulaire_operateur[6].valeur"
-                          />
-                          <label for="motdepasse">{{
-                            LanguageService.op_chmp_title_7
-                          }}</label>
-                        </div>
-                      </div>
-                      <!-- <div class="d-flex mb-3" *ngFor="let ListEtapes of ListeComboEtapes; let i = index">
-                        <div class="flex-shrink-0">
-                          <img src="../../assets/img/icons/misc/aviato.png" alt="aviato" class="me-3" height="26" />
-                        </div>
-                        <div class="flex-grow-1 row">
-                          <div class="col-9 mb-sm-0 mb-2">
-                            <h6 class="mb-0">Droit de creation de reclamation</h6>
-                          </div>
-                          <div class="col-3 text-end">
-                            <label class="switch me-0">
-                              <input type="checkbox" class="switch-input" [checked]="ListEtapes.RE_ACTIF === 'O'" (click)="testStatusetape(i)"/>
-                              <span class="switch-toggle-slider">
-                                <span class="switch-on"></span>
-                                <span class="switch-off"></span>
-                              </span>
-                              <span class="switch-label"></span>
-                            </label>
-                          </div>
-                        </div>
-                      </div>-->
+                      <small class="text-muted ms-1">{{ item.CU_EMAIL }}</small>
                     </div>
-                    <div class="mt-4">
-                      <button
-                        type="submit"
-                        class="bttn btn btn-primary me-2"
-                        (click)="
-                          EnregistrementCompteOperateur(formulaire_operateur)
-                        "
-                      >
-                        {{ LanguageService.op_btn_engr_1 }}
-                      </button>
-                      <button
-                        type="reset"
-                        class="bttn btn btn-outline-secondary"
-                      >
-                        {{ LanguageService.op_btn_engr_2 }}
-                      </button>
-                    </div>
-                  </form>
-                </div>
-                <!-- Shipping Tab -->
-                <div class="tab-pane fade" id="shipping" role="tabpanel">
-                  <h6 class="text-body">
-                    {{ LanguageService.op_btn_title_2 }}
-                  </h6>
+                  </div>
+                  <div class="add-btn" (click)="ModifyInfoClient(item)">
+                    <button class="btn btn-primary btn-sm">Modifier</button>
+                  </div>
                 </div>
               </div>
             </div>
-            <!-- /Options-->
           </div>
         </div>
-        <!-- /Account -->
+        <!--/ User List Style -->
+
+        <div
+          class="row g-4"
+          style="text-align: center; font-size: 40px; margin-top: 190px"
+          *ngIf="!tab_list_client"
+        >
+          <p>Aucune client !</p>
+        </div>
+        <!--/ Teams Cards -->
       </div>
+      <!-- /FAQ's -->
+
+      <!-- Contact -->
+      <div class="row mt-5">
+        <div class="col-12 text-center mb-4">
+          <div class="badge bg-label-primary rounded-pill"></div>
+          <h5 class="my-3"></h5>
+          <p></p>
+        </div>
+      </div>
+
+      <!-- /Contact -->
     </div>
+    <!-- / Content -->
   </div>
+  <!-- Content wrapper -->
 </div>
-<!-- / Content -->
 <!-- Content -->
+
 <div
   class="offcanvas offcanvas-end"
   id="sendInvoiceOffcanvas"
@@ -706,6 +540,96 @@
           class="bttn btn btn-primary me-3"
           data-bs-dismiss="offcanvas"
           (click)="EnregistrementCompteOperateur(formulaire_operateur)"
+        >
+          {{ LanguageService.btn_title_submit }}
+        </button>
+        <button
+          type="button"
+          class="bttn btn btn-outline-secondary"
+          data-bs-dismiss="offcanvas"
+        >
+          {{ LanguageService.btn_title_cancel }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div
+  class="offcanvas offcanvas-end"
+  id="modifInfoClienOffcanvas"
+  aria-hidden="true"
+>
+  <div class="offcanvas-header mb-3">
+    <h5 class="offcanvas-title">Actions</h5>
+    <button
+      type="button"
+      class="bttn btn-close text-reset"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="offcanvas-body flex-grow-1">
+    <form>
+      <div class="form-floating form-floating-outline mb-4">
+        <input
+          class="form-control"
+          type="text"
+          id="nomEtPrenoms"
+          name="nomEtPrenoms"
+          [placeholder]="LanguageService.info_cli_sub_title_1"
+          value=""
+          autofocus
+          [(ngModel)]="formulaire_client[0].valeur"
+        />
+        <label for="nomEtPrenoms">{{
+          LanguageService.info_cli_sub_title_1
+        }}</label>
+      </div>
+      <div class="form-floating form-floating-outline mb-4">
+        <input
+          class="form-control"
+          type="text"
+          name="telephone"
+          id="telephone"
+          value=""
+          [placeholder]="LanguageService.chmp_telephone"
+          [(ngModel)]="formulaire_client[1].valeur"
+        />
+        <label for="telephone">{{ LanguageService.chmp_telephone }}</label>
+      </div>
+      <!-- <div class="form-floating form-floating-outline mb-4">
+        <input
+          class="form-control"
+          type="text"
+          id="localisation"
+          name="localisation"
+          value=""
+          [placeholder]="LanguageService.chmp_locate"
+          [(ngModel)]="formulaire_client[2].valeur"
+        />
+        <label for="localisation">{{ LanguageService.chmp_locate }}</label>
+      </div> -->
+      <div class="form-floating form-floating-outline mb-4">
+        <div class="form-floating form-floating-outline">
+          <input
+            type="text"
+            id="email"
+            name="email"
+            class="form-control"
+            [placeholder]="LanguageService.op_chmp_title_3"
+            [(ngModel)]="formulaire_client[3].valeur"
+          />
+          <label for="email">{{ LanguageService.op_chmp_title_3 }}</label>
+        </div>
+      </div>
+
+      <div class="mb-3 d-flex flex-wrap">
+        <button
+          type="button"
+          class="bttn btn btn-primary me-3"
+          data-bs-dismiss="offcanvas"
+          (click)="EnregistrementCompteClient(formulaire_client)"
         >
           {{ LanguageService.btn_title_submit }}
         </button>

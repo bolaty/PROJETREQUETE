@@ -30,7 +30,7 @@
               <ul class="nav nav-align-left nav-pills flex-column">
                 <li class="nav-item">
                   <button
-                    class="nav-link active"
+                    class="nav-link {{ active }}"
                     data-bs-toggle="tab"
                     data-bs-target="#etat_bceao"
                     (click)="SelectInvoice('bceao')"
@@ -63,24 +63,27 @@
                 id="etat_bceao"
                 role="tabpanel"
               >
-                <h6 class="text-body">Options</h6>
-                <div class="row mb-3 g-3">
+                <h6 class="text-body" *ngIf="affiche_option">Options</h6>
+                <div class="row mb-3 g-3" *ngIf="affiche_option">
                   <!-- agence -->
                   <div
                     class="form-floating form-floating-outline col-12 col-sm-8 col-lg-12 col-xxl-8"
                   >
                     <select
                       class="form-select"
-                      id="basic-default-country"
+                      id="idAgence"
                       required
                       [(ngModel)]="formulaire_edition_1[0].valeur"
                     >
                       <option value="">Selectionnez une agence</option>
-                      <option value="Option 1">Option 1</option>
-                      <option value="Option 2">Option 2</option>
-                      <option value="Option 3">Option 3</option>
+                      <option
+                        *ngFor="let item_agence of tab_agence"
+                        value="{{ item_agence.AG_CODEAGENCE }}"
+                      >
+                        {{ item_agence.AG_RAISONSOCIAL_TRANSLATE }}
+                      </option>
                     </select>
-                    <label for="basic-default-country">Agence</label>
+                    <label for="idAgence">Agence</label>
                   </div>
 
                   <!-- bouton de confirmation -->
@@ -101,53 +104,70 @@
                   >
                     <select
                       class="form-select"
-                      id="basic-default-country"
+                      id="idExercice"
                       required
                       [(ngModel)]="formulaire_edition_1[1].valeur"
                     >
-                      <option value="">Selectionnez une agence</option>
-                      <option value="Option 1">Option 1</option>
-                      <option value="Option 2">Option 2</option>
-                      <option value="Option 3">Option 3</option>
+                      <option value="">Selectionnez un exercice</option>
+                      <option
+                        *ngFor="let item_exercice of tab_exercice"
+                        value="{{ item_exercice.EX_EXERCICE }}"
+                      >
+                        {{ item_exercice.EX_EXERCICE }}
+                      </option>
                     </select>
-                    <label for="basic-default-country">Exercice</label>
+                    <label for="idExercice">Exercice</label>
                   </div>
+
                   <!-- periodicité -->
                   <div
                     class="form-floating form-floating-outline col-12 col-sm-8 col-lg-12 col-xxl-8"
                   >
                     <select
                       class="form-select"
-                      id="basic-default-country"
+                      id="idPeriodicite"
                       required
                       (change)="
                         ListeComboPeriode(formulaire_edition_1[2].valeur)
                       "
                       [(ngModel)]="formulaire_edition_1[2].valeur"
                     >
-                      <option value="">Selectionnez une agence</option>
-                      <option value="Option 1">Option 1</option>
-                      <option value="Option 2">Option 2</option>
-                      <option value="Option 3">Option 3</option>
+                      <option value="">Selectionnez une periodicité</option>
+                      <option
+                        *ngFor="let item_periodicite of tab_periodicite"
+                        value="{{ item_periodicite.PE_CODEPERIODICITE }}"
+                      >
+                        {{ item_periodicite.PE_LIBELLE }}
+                      </option>
                     </select>
-                    <label for="basic-default-country">Périodicité</label>
+                    <label for="idPeriodicite">Périodicité</label>
                   </div>
+
                   <!-- periode -->
                   <div
                     class="form-floating form-floating-outline col-12 col-sm-8 col-lg-12 col-xxl-8"
                   >
                     <select
                       class="form-select"
-                      id="basic-default-country"
+                      id="idPeriode"
                       required
+                      (change)="
+                        ChangeDate(
+                          formulaire_edition_1[2].valeur,
+                          formulaire_edition_1[3].valeur
+                        )
+                      "
                       [(ngModel)]="formulaire_edition_1[3].valeur"
                     >
                       <option value="">Selectionnez une agence</option>
-                      <option value="Option 1">Option 1</option>
-                      <option value="Option 2">Option 2</option>
-                      <option value="Option 3">Option 3</option>
+                      <option
+                        *ngFor="let item_periode of tab_periode"
+                        value="{{ item_periode.MO_CODEMOIS }}"
+                      >
+                        {{ item_periode.MO_LIBELLE }}
+                      </option>
                     </select>
-                    <label for="basic-default-country">Période</label>
+                    <label for="idPeriode">Période</label>
                   </div>
 
                   <!-- date de debut -->
@@ -156,28 +176,29 @@
                       <input
                         type="text"
                         class="form-control"
-                        id="ecommerce-product-stock"
+                        id="idDateDebut"
                         placeholder="Entrez une option"
                         name="quantity"
                         aria-label="Quantity"
                         [(ngModel)]="formulaire_edition_1[4].valeur"
                       />
-                      <label for="ecommerce-product-stock">Date de début</label>
+                      <label for="idDateDebut">Date de début</label>
                     </div>
                   </div>
+
                   <!-- date de fin -->
                   <div class="col-12 col-sm-8 col-lg-12 col-xxl-8">
                     <div class="form-floating form-floating-outline">
                       <input
                         type="text"
                         class="form-control"
-                        id="ecommerce-product-stock"
+                        id="idDateFin"
                         placeholder="Entrez une option"
                         name="quantity"
                         aria-label="Quantity"
                         [(ngModel)]="formulaire_edition_1[5].valeur"
                       />
-                      <label for="ecommerce-product-stock">Date de fin</label>
+                      <label for="idDateFin">Date de fin</label>
                     </div>
                   </div>
                 </div>
@@ -189,24 +210,27 @@
                 id="etat_statistique"
                 role="tabpanel"
               >
-                <h6 class="text-body">Options</h6>
-                <div class="row mb-3 g-3">
+                <h6 class="text-body" *ngIf="affiche_option">Options</h6>
+                <div class="row mb-3 g-3" *ngIf="affiche_option">
                   <!-- agence -->
                   <div
                     class="form-floating form-floating-outline col-12 col-sm-8 col-lg-12 col-xxl-8"
                   >
                     <select
                       class="form-select"
-                      id="basic-default-country"
+                      id="idAgence"
                       required
                       [(ngModel)]="formulaire_edition_2[0].valeur"
                     >
                       <option value="">Selectionnez une agence</option>
-                      <option value="Option 1">Option 1</option>
-                      <option value="Option 2">Option 2</option>
-                      <option value="Option 3">Option 3</option>
+                      <option
+                        *ngFor="let item_agence of tab_agence"
+                        value="{{ item_agence.AG_CODEAGENCE }}"
+                      >
+                        {{ item_agence.AG_RAISONSOCIAL_TRANSLATE }}
+                      </option>
                     </select>
-                    <label for="basic-default-country">Agence</label>
+                    <label for="idAgence">Agence</label>
                   </div>
 
                   <!-- bouton de confirmation -->
@@ -227,16 +251,19 @@
                   >
                     <select
                       class="form-select"
-                      id="basic-default-country"
+                      id="idExercice"
                       required
                       [(ngModel)]="formulaire_edition_2[1].valeur"
                     >
                       <option value="">Selectionnez une agence</option>
-                      <option value="Option 1">Option 1</option>
-                      <option value="Option 2">Option 2</option>
-                      <option value="Option 3">Option 3</option>
+                      <option
+                        *ngFor="let item_exercice of tab_exercice"
+                        value="{{ item_exercice.EX_EXERCICE }}"
+                      >
+                        {{ item_exercice.EX_EXERCICE }}
+                      </option>
                     </select>
-                    <label for="basic-default-country">Exercice</label>
+                    <label for="idExercice">Exercice</label>
                   </div>
                   <!-- periodicité -->
                   <div
@@ -244,7 +271,7 @@
                   >
                     <select
                       class="form-select"
-                      id="basic-default-country"
+                      id="idPeriodicite"
                       required
                       [(ngModel)]="formulaire_edition_2[2].valeur"
                       (change)="
@@ -252,11 +279,14 @@
                       "
                     >
                       <option value="">Selectionnez une agence</option>
-                      <option value="Option 1">Option 1</option>
-                      <option value="Option 2">Option 2</option>
-                      <option value="Option 3">Option 3</option>
+                      <option
+                        *ngFor="let item_periodicite of tab_periodicite"
+                        value="{{ item_periodicite.PE_CODEPERIODICITE }}"
+                      >
+                        {{ item_periodicite.PE_LIBELLE }}
+                      </option>
                     </select>
-                    <label for="basic-default-country">Périodicité</label>
+                    <label for="idPeriodicite">Périodicité</label>
                   </div>
                   <!-- periode -->
                   <div
@@ -264,16 +294,25 @@
                   >
                     <select
                       class="form-select"
-                      id="basic-default-country"
+                      id="idPeriode"
                       required
+                      (change)="
+                        ChangeDate(
+                          formulaire_edition_2[2].valeur,
+                          formulaire_edition_2[3].valeur
+                        )
+                      "
                       [(ngModel)]="formulaire_edition_2[3].valeur"
                     >
-                      <option value="">Selectionnez une agence</option>
-                      <option value="Option 1">Option 1</option>
-                      <option value="Option 2">Option 2</option>
-                      <option value="Option 3">Option 3</option>
+                      <option value="">Selectionnez une période</option>
+                      <option
+                        *ngFor="let item_periode of tab_periode"
+                        value="{{ item_periode.MO_CODEMOIS }}"
+                      >
+                        {{ item_periode.MO_LIBELLE }}
+                      </option>
                     </select>
-                    <label for="basic-default-country">Période</label>
+                    <label for="idPeriode">Période</label>
                   </div>
 
                   <!-- date de debut -->
@@ -282,28 +321,29 @@
                       <input
                         type="text"
                         class="form-control"
-                        id="ecommerce-product-stock"
+                        id="idDateDebut"
                         placeholder="Entrez une option"
                         name="quantity"
                         aria-label="Quantity"
                         [(ngModel)]="formulaire_edition_2[4].valeur"
                       />
-                      <label for="ecommerce-product-stock">Date de début</label>
+                      <label for="idDateDebut">Date de début</label>
                     </div>
                   </div>
+
                   <!-- date de fin -->
                   <div class="col-12 col-sm-8 col-lg-12 col-xxl-8">
                     <div class="form-floating form-floating-outline">
                       <input
                         type="text"
                         class="form-control"
-                        id="ecommerce-product-stock"
+                        id="idDateFin"
                         placeholder="Entrez une option"
                         name="quantity"
                         aria-label="Quantity"
                         [(ngModel)]="formulaire_edition_2[5].valeur"
                       />
-                      <label for="ecommerce-product-stock">Date de fin</label>
+                      <label for="idDateFin">Date de fin</label>
                     </div>
                   </div>
                 </div>

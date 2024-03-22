@@ -16,6 +16,9 @@ export class OperateurComponent {
   tab_eng_operateur: any = [];
   ListeComboAgence: any = [];
   ListeOperateur: any = [];
+  tab_list_client: any = [];
+  tab_enrg_cpte_client: any = [];
+  search_bar: any = '';
   formulaire_operateur: any = [
     {
       id: 'nom',
@@ -67,6 +70,38 @@ export class OperateurComponent {
       label: 'mot de passe',
     },
   ];
+
+  formulaire_client: any = [
+    {
+      id: 'nomEtPrenoms',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'O',
+      label: 'nom et prénoms',
+    },
+    {
+      id: 'telephone',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'O',
+      label: 'téléphone',
+    },
+    {
+      id: 'localisation',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'O',
+      label: 'localisation',
+    },
+    {
+      id: 'email',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'O',
+      label: 'email',
+    },
+  ];
+
   RecupOerateurs: any = [];
   voirlist: any;
   recupclient: any = [
@@ -292,10 +327,38 @@ export class OperateurComponent {
       (success: any) => {
         this.ListeComboAgence = success;
         this.ListeComboAgence = this.ListeComboAgence.pvgReqAgenceComboResult;
+
+        this.ListeDesClients();
+
         if (this.ListeComboAgence[0].clsResultat.SL_RESULTAT == 'TRUE') {
           //  this.ComboOperateur()
         } else {
         }
+      },
+      (error) => {}
+    );
+  }
+
+  ListeDesClients() {
+    let Option = 'RequeteClientsClasse.svc/pvgInsertIntoDatasetListeClient';
+
+    let body = {
+      Objets: [
+        {
+          OE_PARAM: [],
+          clsObjetEnvoi: {
+            ET_CODEETABLISSEMENT: '',
+            AN_CODEANTENNE: '',
+            TYPEOPERATION: '01',
+          },
+        },
+      ],
+    };
+
+    this.AdminService.AppelServeur(body, Option).subscribe(
+      (success: any) => {
+        this.tab_list_client = success;
+        console.log('tab_list_client', this.tab_list_client);
       },
       (error) => {}
     );
@@ -459,6 +522,110 @@ export class OperateurComponent {
           // this.toastr.warning(this.tab_eng_operateur.clsResultat.SL_MESSAGE);
           this.toastr.warning(
             this.tab_eng_operateur.clsResultat.SL_MESSAGE,
+            'warning',
+            { positionClass: 'toast-bottom-left' }
+          );
+        }
+      );
+    }
+  }
+
+  FilterTicket(phone_client: any) {}
+
+  ModifyInfoClient(le_client: any) {
+    this.formulaire_client[0].valeur = le_client.CU_NOMUTILISATEUR;
+    this.formulaire_client[1].valeur = le_client.CU_CONTACT;
+    this.formulaire_client[2].valeur = '';
+    this.formulaire_client[3].valeur = le_client.CU_EMAIL;
+    $('#modifInfoClienOffcanvas').offcanvas('show');
+  }
+
+  EnregistrementCompteClient(tableau_recu: any) {
+    this.AdminService.SecuriteChampObligatoireEtTypeDeDonnee(tableau_recu);
+    this.AdminService.TypeDeDonneeChampNonObligatoire(tableau_recu);
+    if (
+      this.AdminService.statut_traitement == true &&
+      this.AdminService.statut_traitement_champ_non_obligatoire == true
+    ) {
+      var d = new Date();
+      var date =
+        d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
+      var jour = d.getDate();
+      if (jour < 10) {
+        var date =
+          '0' + d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
+        console.log(date);
+      }
+      let Options = 'RequeteClientsClasse.svc/pvgMajUtilisateurs'; // le chemin d'appel du service web
+      //objet d'envoi
+      let body = {
+        Objets: [
+          {
+            AG_CODEAGENCE: this.recupinfo[0].AG_CODEAGENCE, // this.formulaire_plaintes_reclamations[3].valeur,
+            CU_ADRESSEGEOGRAPHIQUEUTILISATEUR: '.',
+            CU_CLESESSION: '',
+            CU_CODECOMPTEUTULISATEUR: '',
+            CU_CONTACT: this.formulaire_client[1].valeur, //"2250747839553",
+            CU_DATECLOTURE: '01/01/1900',
+            CU_DATECREATION: date, //"01/01/1900",
+            CU_DATEPIECE: '01/01/1900',
+            CU_EMAIL: this.formulaire_client[4].valeur, // "d.baz1008@gmail.com",
+            CU_LOGIN: '', //"d.baz1008@gmail.com",
+            CU_MOTDEPASSE: '', //"2250747839553",
+            CU_NOMBRECONNECTION: '0',
+            CU_NOMUTILISATEUR: this.formulaire_client[0].valeur, //"bolaty",
+            CU_NUMEROPIECE: 'XXXX',
+            CU_NUMEROUTILISATEUR: '',
+            CU_TOKEN: '',
+            PI_CODEPIECE: '00001',
+            TU_CODETYPEUTILISATEUR: '0002',
+            clsReqmicclient: {
+              OP_CODEOPERATEUR: '',
+              OP_CODEOPERATEURZENITH: 'dddd',
+              AG_CODEAGENCE: this.recupinfo[0].AG_CODEAGENCE,
+              PV_CODEPOINTVENTE: '100000001',
+              CU_CODECOMPTEUTULISATEUR:
+                this.recupinfo[0].CU_CODECOMPTEUTULISATEUR,
+              SR_CODESERVICE: '01',
+              OP_DATESAISIE: date,
+            },
+            clsReqmicprospect: null,
+            clsReqoperateur: null,
+            clsReqtontineepargnantjournalier: null,
+            clsObjetEnvoi: {
+              ET_CODEETABLISSEMENT: '',
+              AN_CODEANTENNE: '',
+              TYPEOPERATION: '1',
+            },
+          },
+        ],
+      };
+      this.AdminService.ShowLoader();
+      this.AdminService.AppelServeur(body, Options).subscribe(
+        (success) => {
+          this.tab_enrg_cpte_client = success;
+          this.tab_enrg_cpte_client =
+            this.tab_enrg_cpte_client.pvgMajUtilisateursResult;
+          if (this.tab_enrg_cpte_client.clsResultat.SL_RESULTAT == 'FALSE') {
+            this.AdminService.CloseLoader();
+            this.toastr.error(
+              this.tab_enrg_cpte_client.clsResultat.SL_MESSAGE,
+              'error',
+              { positionClass: 'toast-bottom-left' }
+            );
+          } else {
+            this.AdminService.CloseLoader();
+            this.toastr.error(
+              this.tab_enrg_cpte_client.clsResultat.SL_MESSAGE,
+              'error',
+              { positionClass: 'toast-bottom-left' }
+            );
+          }
+        },
+        (error: any) => {
+          this.AdminService.CloseLoader();
+          this.toastr.warning(
+            this.tab_enrg_cpte_client.clsResultat.SL_MESSAGE,
             'warning',
             { positionClass: 'toast-bottom-left' }
           );

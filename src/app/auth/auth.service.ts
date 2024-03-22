@@ -19,7 +19,7 @@ export class AuthService {
   statusConnect: boolean = false;
   LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
-  user_connecte: boolean = true; // true designe la connexion d'un operateur et false celui d'un client // personnalisable
+  user_connecte: boolean = false; // true designe la connexion d'un operateur et false celui d'un client // personnalisable
 
   constructor(private http: HttpClient) {
     Network.addListener(

@@ -10,6 +10,8 @@ import {
 } from '../../utils/bar-chart.utils';
 import { map } from 'rxjs';
 import { ajustLibelle } from '../../utils/libelle.utils';
+import { JsonPipe } from '@angular/common';
+import { AdminService } from 'src/app/admin/admin.service';
 
 // const APP_URL = "http://51.210.111.16:1009/RequeteClientsClasse.svc/pvgTableauDeBord";
 
@@ -25,6 +27,8 @@ export class EtatSuiviComponent implements OnInit {
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
 
   APP_URL: any = `${this.LienServeur}RequeteClientsClasse.svc/pvgTableauDeBord`;
+  info_session: any = JSON.parse(sessionStorage.getItem('info_etat') || '');
+  info_connexion: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
 
   data: any;
   chartOptionsSatisfaction: Partial<ChartOptions>;
@@ -49,7 +53,8 @@ export class EtatSuiviComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private dateService: DateService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public AdminService: AdminService
   ) {
     this.chartOptionsSatisfaction = barChartOptions(
       'Taux de satisfaction des plaignants',
@@ -143,19 +148,19 @@ export class EtatSuiviComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.AdminService.showMenu = true;
+
     this.route.queryParams.subscribe((params) => {
       const paramName = params['paramName'];
       this.apiService
-        .postData(
-          this.APP_URL,
-          {
-            RQ_DATEDEBUT: '15/02/2024',
-            RQ_DATEFIN: '16/02/2024',
-            CU_CODECOMPTEUTULISATEUR: '',
-            TYPEETAT: 'TSCLT',
-          },
-          true
-        )
+        .postData(this.APP_URL, {
+          AG_CODEAGENCE: this.info_connexion[0].AG_CODEAGENCE,
+          RQ_DATEDEBUT: this.info_session[4].valeur,
+          RQ_DATEFIN: this.info_session[5].valeur,
+          CU_CODECOMPTEUTULISATEUR:
+            this.info_connexion[0].CU_CODECOMPTEUTULISATEUR,
+          TYPEETAT: 'TSCLT',
+        })
         .pipe(
           map((res: any) => {
             const data = res.pvgTableauDeBordResult;

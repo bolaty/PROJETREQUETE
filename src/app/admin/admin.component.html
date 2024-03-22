@@ -168,12 +168,19 @@
             <!-- <div data-i18n="Operateur">Operateur</div> -->
           </a>
         </li>
-        <!--<li class="menu-item" (click)="ChoixCreation('client')">
+        <li
+          class="menu-item"
+          (click)="ChoixCreation('client')"
+          *ngIf="
+            recupinfo[0].TU_CODETYPEUTILISATEUR != '0002' &&
+            !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')
+          "
+        >
           <a style="cursor: pointer" class="menu-link">
             <i class="menu-icon tf-icons mdi mdi-account-sync"></i>
             <div data-i18n="Client">Client</div>
           </a>
-        </li>-->
+        </li>
         <li
           class="menu-item"
           routerLink="edition"

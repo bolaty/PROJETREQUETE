@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AdminService } from 'src/app/admin/admin.service';
 import { ApiService } from 'src/app/services/api.service';
 import { DateService } from 'src/app/services/date.service';
 
@@ -23,6 +24,8 @@ export class EtatSuiviReclamationComponent implements OnInit {
   postData: any;
   SEMESTER_BEGIN: any;
   SEMESTER_END: any;
+  info_session: any = JSON.parse(sessionStorage.getItem('info_etat') || '');
+  info_connexion: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
 
   get currentDate(): string {
     return this.formatDate('/Date(' + Date.now() + ')/', true);
@@ -31,22 +34,25 @@ export class EtatSuiviReclamationComponent implements OnInit {
   constructor(
     private dateService: DateService,
     private route: ActivatedRoute,
-    private apiService: ApiService
+    private apiService: ApiService,
+    public AdminService: AdminService
   ) {}
 
   ngOnInit(): void {
+    this.AdminService.showMenu = true;
+
     this.route.queryParams.subscribe((params) => {
       const paramName = params['paramName'];
       this.postData = {
         Objets: [
           {
             OE_PARAM: [
-              '1000',
+              this.info_session[0].valeur, // agence
               '',
-              '01/01/2000',
-              '01/01/2024',
-              '10000000000000000000000000001',
-              '01',
+              this.info_session[4].valeur, // date de debut
+              this.info_session[5].valeur, // date de fin
+              this.info_connexion[0].CU_CODECOMPTEUTULISATEUR, // session de connexion • code utilisateur
+              '01', // type operation
             ],
             clsObjetEnvoi: {
               ET_CODEETABLISSEMENT: '',
