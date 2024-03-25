@@ -33,6 +33,7 @@ import { PrintPageComponent } from './print-page/print-page.component';
 import { EtatSuiviComponent } from './states/components/etat-suivi/etat-suivi.component';
 import { EtatSuiviReclamationComponent } from './states/components/etat-suivi-reclamation/etat-suivi-reclamation.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { FrequenceReceptionReclamComponent } from './states/components/frequence-reception-reclam/frequence-reception-reclam.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     PrintPageComponent,
     EtatSuiviComponent,
     EtatSuiviReclamationComponent,
+    FrequenceReceptionReclamComponent,
   ],
   imports: [CommonModule, AdminRoutingModule, FormsModule, NgApexchartsModule],
 })

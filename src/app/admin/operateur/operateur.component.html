@@ -294,7 +294,7 @@
           {{ LanguageService.reclam_title }} ?
         </h3>
         <p class="text-body text-center mb-0 px-3">
-          {{ LanguageService.reclam_sub_title_list_op_2 }}
+          {{ LanguageService.reclam_sub_title_list_op }}
         </p>
         <div
           class="input-wrapper my-3 input-group input-group-lg input-group-merge px-sm-5"
@@ -302,7 +302,7 @@
           <input
             type="text"
             class="form-control"
-            placeholder="N° du ticket"
+            [placeholder]="LanguageService.search_placeholder_code_client"
             name="SearchPersonal"
             aria-label="Search"
             aria-describedby="basic-addon1"
@@ -311,7 +311,7 @@
           <span
             class="input-group-text"
             id="basic-addon1"
-            (click)="FilterTicket(search_bar)"
+            (click)="RechercherClient(search_bar)"
             style="cursor: pointer"
             ><i class="mdi mdi-magnify mdi-20px"></i
           ></span>
@@ -325,10 +325,15 @@
       <div class="tab-content p-0">
         <!-- Teams Cards -->
         <!-- User List Style -->
-        <small class="text-light fw-medium" *ngIf="tab_list_client"
+        <small
+          class="text-light fw-medium"
+          *ngIf="tab_list_client && affiche_liste_client"
           >Liste des clients</small
         >
-        <div class="demo-inline-spacing mt-3" *ngIf="tab_list_client">
+        <div
+          class="demo-inline-spacing mt-3"
+          *ngIf="tab_list_client && affiche_liste_client"
+        >
           <div class="list-group">
             <div
               class="list-group-item list-group-item-action d-flex align-items-center cursor-pointer"
@@ -360,13 +365,12 @@
           </div>
         </div>
         <!--/ User List Style -->
-
         <div
           class="row g-4"
           style="text-align: center; font-size: 40px; margin-top: 190px"
-          *ngIf="!tab_list_client"
+          *ngIf="!affiche_liste_client"
         >
-          <p>Aucune client !</p>
+          <p>Aucun client !</p>
         </div>
         <!--/ Teams Cards -->
       </div>

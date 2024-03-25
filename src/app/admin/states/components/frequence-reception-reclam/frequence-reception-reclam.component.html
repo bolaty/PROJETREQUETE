@@ -1,0 +1,59 @@
+<button (click)="PrintPage()" class="btn btn-primary hide-on-print">
+  Imprimer
+</button>
+<div class="content" #contentEtatSuivi>
+  <div class="row">
+    <div class="col-12 text-center">
+      FREQUENCE DE RECEPTION DES RECLAMATIONS PAR CLIENT DU
+      {{ info_session[4].valeur }} au {{ info_session[5].valeur }}
+    </div>
+    <!--     <div class="col-12 my-2">
+      <div class="my-2"><u>Pays : </u> {{ data?.PY_LIBELLE }}</div>
+      <div class="my-2">
+        <u>Etablissement declarant : </u>{{ data?.AG_RAISONSOCIAL }}
+      </div>
+      <div class="my-2">
+        <u>Semestre:</u> {{ SEMESTER_BEGIN }} - {{ SEMESTER_END }}
+      </div>
+    </div> -->
+    <div class="col-12 my-3">
+      <table>
+        <!-- <thead class="border-top table-light"> -->
+        <thead>
+          <tr>
+            <th>Client</th>
+            <th>Fréquence</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of tab_retour">
+            <td>{{ item?.CU_NOMUTILISATEUR }}</td>
+            <td>{{ item?.NOMBRE }}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td class="text-end fw-bold fs-5">Total</td>
+            <td class="text-end fw-bold fs-5">{{ total }}</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <!--     <div class="col-12" style="font-size: 12px">
+      <div class="my-1">
+        <u
+          >Nombre de réclamations faisant l'objet de contentieux pendants devant
+          les tribunaux:</u
+        >
+        {{ data?.RQ_NOMBRETOTALCONTENTIEUX }}
+      </div>
+      <div class="my-1">
+        <u
+          >Montant total des réclamations faisant l'objet de contentieux
+          pendants devant les tribunaux:</u
+        >
+        {{ data?.RQ_MONTANTTOTALCONTENTIEUX }}
+      </div>
+    </div> -->
+  </div>
+</div>

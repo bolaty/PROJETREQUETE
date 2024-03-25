@@ -114,6 +114,50 @@ export class EditionsComponent {
       label: 'date de fin',
     },
   ];
+  formulaire_edition_3: any = [
+    {
+      id: 'idAgence',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'O',
+      label: 'agence',
+    },
+    {
+      id: 'idExercice',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'O',
+      label: 'exercice',
+    },
+    {
+      id: 'idPeriodicite',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'O',
+      label: 'périodicité',
+    },
+    {
+      id: 'idPeriode',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'O',
+      label: 'période',
+    },
+    {
+      id: 'idDateDebut',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'O',
+      label: 'date de début',
+    },
+    {
+      id: 'idDateFin',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'O',
+      label: 'date de fin',
+    },
+  ];
 
   constructor(
     public LanguageService: LanguageService,
@@ -283,12 +327,24 @@ export class EditionsComponent {
 
             this.formulaire_edition_2[4].valeur = '';
             this.formulaire_edition_2[5].valeur = '';
+            this.formulaire_edition_3[4].valeur = '';
+            this.formulaire_edition_3[5].valeur = '';
           } else if (this.invoice_label == 'statistique') {
             this.formulaire_edition_2[4].valeur = this.tab_date[0].MO_DATEDEBUT;
             this.formulaire_edition_2[5].valeur = this.tab_date[0].MO_DATEFIN;
 
             this.formulaire_edition_1[4].valeur = '';
             this.formulaire_edition_1[5].valeur = '';
+            this.formulaire_edition_3[4].valeur = '';
+            this.formulaire_edition_3[5].valeur = '';
+          } else if (this.invoice_label == 'frequence') {
+            this.formulaire_edition_3[4].valeur = this.tab_date[0].MO_DATEDEBUT;
+            this.formulaire_edition_3[5].valeur = this.tab_date[0].MO_DATEFIN;
+
+            this.formulaire_edition_1[4].valeur = '';
+            this.formulaire_edition_1[5].valeur = '';
+            this.formulaire_edition_2[4].valeur = '';
+            this.formulaire_edition_2[5].valeur = '';
           }
         } else {
           if (this.invoice_label == 'bceao') {
@@ -299,6 +355,8 @@ export class EditionsComponent {
 
             this.formulaire_edition_2[4].valeur = '';
             this.formulaire_edition_2[5].valeur = '';
+            this.formulaire_edition_3[4].valeur = '';
+            this.formulaire_edition_3[5].valeur = '';
           } else if (this.invoice_label == 'statistique') {
             this.formulaire_edition_2[4].valeur =
               this.info_connexion[0].JT_DATEJOURNEETRAVAIL;
@@ -307,6 +365,16 @@ export class EditionsComponent {
 
             this.formulaire_edition_1[4].valeur = '';
             this.formulaire_edition_1[5].valeur = '';
+            this.formulaire_edition_3[4].valeur = '';
+            this.formulaire_edition_3[5].valeur = '';
+          } else if (this.invoice_label == 'frequence') {
+            this.formulaire_edition_3[4].valeur = this.tab_date[0].MO_DATEDEBUT;
+            this.formulaire_edition_3[5].valeur = this.tab_date[0].MO_DATEFIN;
+
+            this.formulaire_edition_1[4].valeur = '';
+            this.formulaire_edition_1[5].valeur = '';
+            this.formulaire_edition_2[4].valeur = '';
+            this.formulaire_edition_2[5].valeur = '';
           }
         }
       },
@@ -400,6 +468,45 @@ export class EditionsComponent {
           JSON.stringify(this.formulaire_edition_2)
         );
         window.open('/admin/etat-suivi', '_blank');
+      }
+    } else if (this.invoice_label == 'frequence') {
+      var test = 0;
+      for (let index = 0; index < this.formulaire_edition_3.length; index++) {
+        if (this.formulaire_edition_3[index].valeur == '') {
+          test = 1;
+
+          break;
+        }
+      }
+
+      if (test == 1) {
+        for (let index = 0; index < this.formulaire_edition_3.length; index++) {
+          if (this.formulaire_edition_3[index].valeur == '') {
+            $(`#${this.formulaire_edition_3[index].id}`).css(
+              'background-color',
+              'MistyRose'
+            );
+          } else {
+            $(`#${this.formulaire_edition_3[index].id}`).css(
+              'background-color',
+              'white'
+            );
+          }
+        }
+
+        this.toastr.error(
+          'Veuillez renseigner les champs obligatoire',
+          'error',
+          {
+            positionClass: 'toast-bottom-left',
+          }
+        );
+      } else {
+        sessionStorage.setItem(
+          'info_etat',
+          JSON.stringify(this.formulaire_edition_3)
+        );
+        window.open('/admin/frequence-reception', '_blank');
       }
     }
   }

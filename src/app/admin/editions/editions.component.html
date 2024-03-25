@@ -50,6 +50,19 @@
                     <span class="align-middle">Etat statistique</span>
                   </button>
                 </li>
+                <li class="nav-item">
+                  <button
+                    class="nav-link"
+                    data-bs-toggle="tab"
+                    data-bs-target="#etat_frequence"
+                    (click)="SelectInvoice('frequence')"
+                  >
+                    <i class="mdi mdi-cube-outline me-2"></i>
+                    <span class="align-middle"
+                      >Fréquence de réception des reclamations</span
+                    >
+                  </button>
+                </li>
               </ul>
             </div>
           </div>
@@ -342,6 +355,151 @@
                         name="quantity"
                         aria-label="Quantity"
                         [(ngModel)]="formulaire_edition_2[5].valeur"
+                      />
+                      <label for="idDateFin">Date de fin</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- etat frequence -->
+              <div
+                class="tab-pane fade show"
+                id="etat_frequence"
+                role="tabpanel"
+              >
+                <h6 class="text-body" *ngIf="affiche_option">Options</h6>
+                <div class="row mb-3 g-3" *ngIf="affiche_option">
+                  <!-- agence -->
+                  <div
+                    class="form-floating form-floating-outline col-12 col-sm-8 col-lg-12 col-xxl-8"
+                  >
+                    <select
+                      class="form-select"
+                      id="idAgence"
+                      required
+                      [(ngModel)]="formulaire_edition_3[0].valeur"
+                    >
+                      <option value="">Selectionnez une agence</option>
+                      <option
+                        *ngFor="let item_agence of tab_agence"
+                        value="{{ item_agence.AG_CODEAGENCE }}"
+                      >
+                        {{ item_agence.AG_RAISONSOCIAL_TRANSLATE }}
+                      </option>
+                    </select>
+                    <label for="idAgence">Agence</label>
+                  </div>
+
+                  <!-- bouton de confirmation -->
+                  <div class="col-6 col-sm-4 d-grid col-lg-6 col-xxl-4">
+                    <button
+                      class="bttn btn btn-primary btn-lg"
+                      (click)="ConfirmationOptions('')"
+                    >
+                      <i class="mdi mdi-check me-2"></i
+                      >{{ LanguageService.edit_btn_confirm }}
+                    </button>
+                  </div>
+                  <!-- bouton de confirmation -->
+
+                  <!-- exercice -->
+                  <div
+                    class="form-floating form-floating-outline col-12 col-sm-8 col-lg-12 col-xxl-8"
+                  >
+                    <select
+                      class="form-select"
+                      id="idExercice"
+                      required
+                      [(ngModel)]="formulaire_edition_3[1].valeur"
+                    >
+                      <option value="">Selectionnez une agence</option>
+                      <option
+                        *ngFor="let item_exercice of tab_exercice"
+                        value="{{ item_exercice.EX_EXERCICE }}"
+                      >
+                        {{ item_exercice.EX_EXERCICE }}
+                      </option>
+                    </select>
+                    <label for="idExercice">Exercice</label>
+                  </div>
+                  <!-- periodicité -->
+                  <div
+                    class="form-floating form-floating-outline col-12 col-sm-8 col-lg-12 col-xxl-8"
+                  >
+                    <select
+                      class="form-select"
+                      id="idPeriodicite"
+                      required
+                      [(ngModel)]="formulaire_edition_3[2].valeur"
+                      (change)="
+                        ListeComboPeriode(formulaire_edition_3[2].valeur)
+                      "
+                    >
+                      <option value="">Selectionnez une agence</option>
+                      <option
+                        *ngFor="let item_periodicite of tab_periodicite"
+                        value="{{ item_periodicite.PE_CODEPERIODICITE }}"
+                      >
+                        {{ item_periodicite.PE_LIBELLE }}
+                      </option>
+                    </select>
+                    <label for="idPeriodicite">Périodicité</label>
+                  </div>
+                  <!-- periode -->
+                  <div
+                    class="form-floating form-floating-outline col-12 col-sm-8 col-lg-12 col-xxl-8"
+                  >
+                    <select
+                      class="form-select"
+                      id="idPeriode"
+                      required
+                      (change)="
+                        ChangeDate(
+                          formulaire_edition_3[2].valeur,
+                          formulaire_edition_3[3].valeur
+                        )
+                      "
+                      [(ngModel)]="formulaire_edition_3[3].valeur"
+                    >
+                      <option value="">Selectionnez une période</option>
+                      <option
+                        *ngFor="let item_periode of tab_periode"
+                        value="{{ item_periode.MO_CODEMOIS }}"
+                      >
+                        {{ item_periode.MO_LIBELLE }}
+                      </option>
+                    </select>
+                    <label for="idPeriode">Période</label>
+                  </div>
+
+                  <!-- date de debut -->
+                  <div class="col-12 col-sm-8 col-lg-12 col-xxl-8">
+                    <div class="form-floating form-floating-outline">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="idDateDebut"
+                        placeholder="Entrez une option"
+                        name="quantity"
+                        aria-label="Quantity"
+                        [(ngModel)]="formulaire_edition_3[4].valeur"
+                      />
+                      <label for="idDateDebut">Date de début</label>
+                    </div>
+                  </div>
+
+                  <!-- date de fin -->
+                  <div class="col-12 col-sm-8 col-lg-12 col-xxl-8">
+                    <div class="form-floating form-floating-outline">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="idDateFin"
+                        placeholder="Entrez une option"
+                        name="quantity"
+                        aria-label="Quantity"
+                        [(ngModel)]="formulaire_edition_3[5].valeur"
                       />
                       <label for="idDateFin">Date de fin</label>
                     </div>

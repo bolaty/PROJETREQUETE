@@ -262,7 +262,7 @@
                     <span class="align-middle">Anglais</span>
                   </a>
                 </li>
-                <li>
+                <!--  <li>
                   <a
                     class="dropdown-item"
                     href="javascript:void(0);"
@@ -281,7 +281,7 @@
                   >
                     <span class="align-middle">Portuguais</span>
                   </a>
-                </li>
+                </li> -->
               </ul>
             </li>
             <!--/ Language -->
@@ -502,6 +502,7 @@
                     <li
                       class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read"
                       *ngFor="let LisNotification of ListeNotification"
+                      (click)="AllerAuSuivi(LisNotification)"
                     >
                       <div class="d-flex align-items-center gap-2">
                         <div class="flex-shrink-0">
@@ -518,9 +519,9 @@
                           <h6 class="mb-1">
                             {{ LisNotification.SM_MESSAGE_TRANSLATE }}
                           </h6>
-                          <small class="text-truncate text-body">{{
+                          <!--  <small class="text-truncate text-body">{{
                             LisNotification.SM_STATUT
-                          }}</small>
+                          }}</small> -->
                         </div>
                         <div
                           class="flex-shrink-0 dropdown-notifications-actions"

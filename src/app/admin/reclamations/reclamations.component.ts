@@ -14,8 +14,8 @@ declare var $: any;
   styleUrls: ['./reclamations.component.scss'],
 })
 export class ReclamationsComponent {
-  LienServeur: any = 'http://localhost:22248/'; // lien dev
-  // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
+  // LienServeur: any = 'http://localhost:22248/'; // lien dev
+  LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
 
   maVariableSubscription?: Subscription;
 
@@ -2605,6 +2605,7 @@ export class ReclamationsComponent {
     } else {
       let body;
       if (this.SearchValue.substr(0, 1) === '0') {
+        // dans le cas d'une recherche avec numero de telephone
         body = {
           Objets: [
             {
@@ -2618,6 +2619,7 @@ export class ReclamationsComponent {
           ],
         };
       } else {
+        // dans le cas d'une recherche avec code client
         body = {
           Objets: [
             {

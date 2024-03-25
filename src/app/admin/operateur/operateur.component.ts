@@ -18,7 +18,9 @@ export class OperateurComponent {
   ListeOperateur: any = [];
   tab_list_client: any = [];
   tab_enrg_cpte_client: any = [];
+  ListeClients: any = [];
   search_bar: any = '';
+  item_client: any = {};
   formulaire_operateur: any = [
     {
       id: 'nom',
@@ -90,7 +92,7 @@ export class OperateurComponent {
       id: 'localisation',
       type: 'text',
       valeur: '',
-      obligatoire: 'O',
+      obligatoire: 'N',
       label: 'localisation',
     },
     {
@@ -192,6 +194,8 @@ export class OperateurComponent {
   ];
   statuFormulaire: any = 'ENREGISTREMENT';
   statusOrderListe: boolean = false;
+  affiche_liste_client: boolean = false;
+
   constructor(
     public AdminService: AdminService,
     private toastr: ToastrService,
@@ -203,6 +207,7 @@ export class OperateurComponent {
     this.statusOrderListe = true;
     this.voirlist = this.ListeOperateur[info.id];
   }
+
   checkModif() {
     this.statusOrderListe = false;
     this.statuFormulaire = 'MODIFICATION';
@@ -214,6 +219,7 @@ export class OperateurComponent {
     this.formulaire_operateur[5].valeur = this.voirlist.CU_LOGIN;
     this.formulaire_operateur[6].valeur = this.voirlist.CU_MOTDEPASSE;
   }
+
   chargementDate() {
     var pt = this;
     $(function () {
@@ -340,6 +346,7 @@ export class OperateurComponent {
   }
 
   ListeDesClients() {
+    this.AdminService.ShowLoader();
     let Option = 'RequeteClientsClasse.svc/pvgInsertIntoDatasetListeClient';
 
     let body = {
@@ -359,8 +366,17 @@ export class OperateurComponent {
       (success: any) => {
         this.tab_list_client = success;
         console.log('tab_list_client', this.tab_list_client);
+        if (this.tab_list_client[0].SL_RESULTAT == 'TRUE') {
+          this.affiche_liste_client = true;
+          this.AdminService.CloseLoader();
+        } else {
+          this.affiche_liste_client = false;
+          this.AdminService.CloseLoader();
+        }
       },
-      (error) => {}
+      (error) => {
+        this.AdminService.CloseLoader();
+      }
     );
   }
 
@@ -530,13 +546,88 @@ export class OperateurComponent {
     }
   }
 
-  FilterTicket(phone_client: any) {}
+  RechercherClient(search_bar: any) {
+    let Option = 'RequeteClientsClasse.svc/pvgListeUtilisateursRecherche';
+
+    if (search_bar == undefined || search_bar == '') {
+      this.toastr.error(
+        'Veuillez renseigner un code ou un téléphone',
+        'error',
+        {
+          positionClass: 'toast-bottom-left',
+        }
+      );
+    } else {
+      let body;
+      if (search_bar.substr(0, 1) === '0') {
+        // dans le cas d'une recherche avec numero de telephone
+        body = {
+          Objets: [
+            {
+              OE_PARAM: ['0002', '', search_bar, '', '01'],
+              clsObjetEnvoi: {
+                ET_CODEETABLISSEMENT: '',
+                AN_CODEANTENNE: '',
+                TYPEOPERATION: '01',
+              },
+            },
+          ],
+        };
+      } else {
+        // dans le cas d'une recherche avec code client
+        body = {
+          Objets: [
+            {
+              OE_PARAM: ['0002', search_bar, '', '', '01'],
+              clsObjetEnvoi: {
+                ET_CODEETABLISSEMENT: '',
+                AN_CODEANTENNE: '',
+                TYPEOPERATION: '01',
+              },
+            },
+          ],
+        };
+      }
+
+      // $(".datatables-basic").DataTable().destroy();
+      this.AdminService.AppelServeur(body, Option).subscribe(
+        (success: any) => {
+          this.tab_list_client = success;
+          this.tab_list_client =
+            this.tab_list_client.pvgListeUtilisateursRechercheResult;
+          console.log('tab_list_client_2', this.tab_list_client);
+          if (this.tab_list_client[0].clsResultat.SL_RESULTAT == 'TRUE') {
+            this.affiche_liste_client = true;
+            this.AdminService.CloseLoader();
+          } else {
+            this.affiche_liste_client = false;
+            this.AdminService.CloseLoader();
+            this.toastr.error(
+              this.tab_list_client[0].clsResultat.SL_MESSAGE,
+              'error',
+              { positionClass: 'toast-bottom-left' }
+            );
+          }
+        },
+        (error) => {
+          this.AdminService.CloseLoader();
+          this.affiche_liste_client = false;
+          this.toastr.warning(
+            this.tab_list_client[0].clsResultat.SL_MESSAGE,
+            'warning',
+            { positionClass: 'toast-bottom-left' }
+          );
+        }
+      );
+    }
+  }
 
   ModifyInfoClient(le_client: any) {
     this.formulaire_client[0].valeur = le_client.CU_NOMUTILISATEUR;
     this.formulaire_client[1].valeur = le_client.CU_CONTACT;
     this.formulaire_client[2].valeur = '';
     this.formulaire_client[3].valeur = le_client.CU_EMAIL;
+    this.item_client = le_client;
     $('#modifInfoClienOffcanvas').offcanvas('show');
   }
 
@@ -564,18 +655,18 @@ export class OperateurComponent {
             AG_CODEAGENCE: this.recupinfo[0].AG_CODEAGENCE, // this.formulaire_plaintes_reclamations[3].valeur,
             CU_ADRESSEGEOGRAPHIQUEUTILISATEUR: '.',
             CU_CLESESSION: '',
-            CU_CODECOMPTEUTULISATEUR: '',
+            CU_CODECOMPTEUTULISATEUR: this.item_client.CU_CODECOMPTEUTULISATEUR,
             CU_CONTACT: this.formulaire_client[1].valeur, //"2250747839553",
             CU_DATECLOTURE: '01/01/1900',
             CU_DATECREATION: date, //"01/01/1900",
             CU_DATEPIECE: '01/01/1900',
-            CU_EMAIL: this.formulaire_client[4].valeur, // "d.baz1008@gmail.com",
-            CU_LOGIN: '', //"d.baz1008@gmail.com",
-            CU_MOTDEPASSE: '', //"2250747839553",
+            CU_EMAIL: this.formulaire_client[3].valeur, // "d.baz1008@gmail.com",
+            CU_LOGIN: this.item_client.CU_LOGIN, //"d.baz1008@gmail.com",
+            CU_MOTDEPASSE: this.item_client.CU_MOTDEPASSE, //"2250747839553",
             CU_NOMBRECONNECTION: '0',
             CU_NOMUTILISATEUR: this.formulaire_client[0].valeur, //"bolaty",
             CU_NUMEROPIECE: 'XXXX',
-            CU_NUMEROUTILISATEUR: '',
+            CU_NUMEROUTILISATEUR: this.item_client.CU_NUMEROUTILISATEUR,
             CU_TOKEN: '',
             PI_CODEPIECE: '00001',
             TU_CODETYPEUTILISATEUR: '0002',
@@ -615,11 +706,12 @@ export class OperateurComponent {
             );
           } else {
             this.AdminService.CloseLoader();
-            this.toastr.error(
+            this.toastr.success(
               this.tab_enrg_cpte_client.clsResultat.SL_MESSAGE,
-              'error',
+              'success',
               { positionClass: 'toast-bottom-left' }
             );
+            this.ListeDesClients();
           }
         },
         (error: any) => {

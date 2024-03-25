@@ -11,6 +11,8 @@ import { SuiviRequeteComponent } from './suivi-requete/suivi-requete.component';
 import { PrintPageComponent } from './print-page/print-page.component';
 import { EtatSuiviComponent } from './states/components/etat-suivi/etat-suivi.component';
 import { EtatSuiviReclamationComponent } from './states/components/etat-suivi-reclamation/etat-suivi-reclamation.component';
+import { FrequenceReceptionReclamComponent } from './states/components/frequence-reception-reclam/frequence-reception-reclam.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -71,6 +73,10 @@ const routes: Routes = [
       {
         path: 'etat-suivi-reclamation',
         component: EtatSuiviReclamationComponent,
+      },
+      {
+        path: 'frequence-reception',
+        component: FrequenceReceptionReclamComponent,
       },
     ],
   },
