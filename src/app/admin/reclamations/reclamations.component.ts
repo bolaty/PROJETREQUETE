@@ -14,8 +14,8 @@ declare var $: any;
   styleUrls: ['./reclamations.component.scss'],
 })
 export class ReclamationsComponent {
-  // LienServeur: any = 'http://localhost:22248/'; // lien dev
-  LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
+  LienServeur: any = 'http://localhost:22248/'; // lien dev
+  // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
 
   maVariableSubscription?: Subscription;
 
@@ -389,12 +389,13 @@ export class ReclamationsComponent {
       (error) => {}
     );
   }
+
   ComboOperateur() {
     let Option = 'RequeteClientsClasse.svc/pvgListeUtilisateursCombo';
     let body = {
       Objets: [
         {
-          OE_PARAM: ['1000', '0001'],
+          OE_PARAM: [this.recupinfo[0].AG_CODEAGENCE, '0001'],
           clsObjetEnvoi: {
             ET_CODEETABLISSEMENT: '',
             AN_CODEANTENNE: '',
@@ -1190,6 +1191,7 @@ export class ReclamationsComponent {
       }
     }
   }
+
   EnregistrerAvis(tableau_recu: any) {
     this.AdminService.SecuriteChampObligatoireEtTypeDeDonnee(tableau_recu);
     this.AdminService.TypeDeDonneeChampNonObligatoire(tableau_recu);
@@ -2754,6 +2756,9 @@ export class ReclamationsComponent {
 
     if (info.RQ_NOMRAPPORT != '') this.consultation_doc = true;
     else this.consultation_doc = false;
+    for (let index = 0; index < this.formulaire_avis.length; index++) {
+      this.formulaire_avis[index].valeur = '';
+    }
   }
 
   ListeConsultationHistorique(list_step: any) {

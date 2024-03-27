@@ -16,8 +16,8 @@ declare var $: any;
   styleUrls: ['./suivi-requete.component.scss'],
 })
 export class SuiviRequeteComponent {
-  // LienServeur: any = 'http://localhost:22248/'; // lien dev
-  LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
+  LienServeur: any = 'http://localhost:22248/'; // lien dev
+  // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
 
   maVariableSubscription?: Subscription;
 
@@ -808,7 +808,8 @@ export class SuiviRequeteComponent {
       this.voirTraitement();
     }, 1000);
 
-    this.formulaire_suivi[0].valeur = this.recupinfo.RQ_DESCRIPTIONREQUETE;
+    this.formulaire_suivi[0].valeur =
+      this.recupinfo.TR_LIBELLETYEREQUETE_TRANSLATE; // this.recupinfo.RQ_DESCRIPTIONREQUETE;
     if (this.recupinfo.RS_CODESTATUTRECEVABILITE == '') {
       this.toastr.error(
         "L'étude de recevabilité de la requete doit etre faite",

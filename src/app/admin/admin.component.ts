@@ -1250,10 +1250,10 @@ export class AdminComponent implements OnInit {
     }, 5000);
 
     // info sur les notifications
-    let pointer3 = this;
+    /* let pointer3 = this;
     let stop3;
     stop3 = setInterval(function () {
       pointer3.Notification();
-    }, 7000);
+    }, 7000); */
   }
 }

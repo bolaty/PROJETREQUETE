@@ -17,9 +17,13 @@ export class EditionsComponent {
   info_connexion: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
 
   affichage_etat: boolean = true;
-  affiche_option: boolean = false;
+  affiche_option_1: boolean = false;
+  affiche_option_2: boolean = false;
+  affiche_option_3: boolean = false;
   invoice_label: any = '';
-  active: any = '';
+  active_1: any = '';
+  active_2: any = '';
+  active_3: any = '';
   tab_exercice: any = [];
   tab_agence: any = [];
   tab_periodicite: any = [];
@@ -167,8 +171,22 @@ export class EditionsComponent {
 
   SelectInvoice(etat: any) {
     this.invoice_label = etat;
-    this.affiche_option = true;
-    this.active = 'active';
+    this.active_1 = this.active_2 = this.active_3 = '';
+    this.affiche_option_1 =
+      this.affiche_option_2 =
+      this.affiche_option_3 =
+        false;
+
+    if (etat == 'bceao') {
+      this.active_1 = 'active';
+      this.affiche_option_1 = true;
+    } else if (etat == 'statistique') {
+      this.active_2 = 'active';
+      this.affiche_option_2 = true;
+    } else {
+      this.active_3 = 'active';
+      this.affiche_option_3 = true;
+    }
   }
 
   ListeComboExercice() {

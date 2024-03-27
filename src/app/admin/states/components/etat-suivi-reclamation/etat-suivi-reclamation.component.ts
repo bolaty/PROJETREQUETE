@@ -15,8 +15,8 @@ import { DateService } from 'src/app/services/date.service';
 export class EtatSuiviReclamationComponent implements OnInit {
   @ViewChild('contentEtatSuivi', { static: false }) content!: ElementRef;
 
-  // LienServeur: any = 'http://localhost:22248/'; // lien dev
-  LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
+  LienServeur: any = 'http://localhost:22248/'; // lien dev
+  // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
 
   APP_URL: any = `${this.LienServeur}RequeteClientsClasse.svc/pvgListeReqrequeteBCAO`;
 
@@ -48,7 +48,7 @@ export class EtatSuiviReclamationComponent implements OnInit {
           {
             OE_PARAM: [
               this.info_session[0].valeur, // agence
-              '',
+              '', // code nature requete
               this.info_session[4].valeur, // date de debut
               this.info_session[5].valeur, // date de fin
               this.info_connexion[0].CU_CODECOMPTEUTULISATEUR, // session de connexion • code utilisateur
@@ -77,22 +77,24 @@ export class EtatSuiviReclamationComponent implements OnInit {
             ENCOURS: values.clsReqrequeteEncours.map((e: any) => {
               return {
                 TR_LIBELLETYEREQUETE: e.TR_LIBELLETYEREQUETE,
-                RQ_DESCRIPTIONREQUETE: e.RQ_DESCRIPTIONREQUETE,
+                RQ_DESCRIPTIONREQUETE: e.RQ_OBSERVATIONDELAITRAITEMENTREQUETE, // RQ_DESCRIPTIONREQUETE,
               };
             }),
             TRAITES: values.clsReqrequeteTraitees.map((e: any) => {
               return {
                 TR_LIBELLETYEREQUETE: e.TR_LIBELLETYEREQUETE,
-                RQ_DESCRIPTIONREQUETE: e.RQ_DESCRIPTIONREQUETE,
+                RQ_DESCRIPTIONREQUETE: e.RQ_OBSERVATIONDELAITRAITEMENTREQUETE, // RQ_DESCRIPTIONREQUETE,
               };
             }),
             SUSPENDUES: values.clsReqrequeteSuspendues.map((e: any) => {
               return {
                 TR_LIBELLETYEREQUETE: e.TR_LIBELLETYEREQUETE,
-                RQ_DESCRIPTIONREQUETE: e.RQ_DESCRIPTIONREQUETE,
+                RQ_DESCRIPTIONREQUETE: e.RQ_OBSERVATIONDELAITRAITEMENTREQUETE, // RQ_DESCRIPTIONREQUETE,
               };
             }),
           };
+
+          console.log('le_data', this.data);
         });
     });
   }

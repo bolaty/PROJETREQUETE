@@ -385,7 +385,7 @@ export class OperateurComponent {
     let body = {
       Objets: [
         {
-          OE_PARAM: ['1000', '0001'],
+          OE_PARAM: [this.recupinfo[0].AG_CODEAGENCE, '0001'],
           clsObjetEnvoi: {
             ET_CODEETABLISSEMENT: '',
             AN_CODEANTENNE: '',
