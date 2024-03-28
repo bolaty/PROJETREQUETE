@@ -196,6 +196,18 @@ export class OperateurComponent {
   statusOrderListe: boolean = false;
   affiche_liste_client: boolean = false;
 
+  checkedMnuReclamation: any = 'checked';
+  checkedMnuRelance: any = '';
+  checkedMnuOperateur: any = '';
+  checkedMnuClient: any = '';
+  checkedMnuEdition: any = '';
+  checkedCreationDeReclamation: any = '';
+  checkedCreationOperateur: any = '';
+  checkedCreationClient: any = '';
+  checkedEditionBceao: any = '';
+  checkedEditionStatistique: any = '';
+  checkedEditionFrequence: any = '';
+
   constructor(
     public AdminService: AdminService,
     private toastr: ToastrService,
