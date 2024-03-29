@@ -151,14 +151,23 @@
                   />
                   <label for="password">Mot de passe</label>
                 </div>
-                <span class="input-group-text cursor-pointer"
+                <span
+                  class="input-group-text cursor-pointer"
+                  (click)="ShowHide(false)"
+                  *ngIf="infoBtnPassword"
                   ><i class="mdi mdi-eye-off-outline"></i
+                ></span>
+                <span
+                  class="input-group-text cursor-pointer"
+                  (click)="ShowHide(true)"
+                  *ngIf="!infoBtnPassword"
+                  ><i class="mdi mdi-eye-outline"></i
                 ></span>
               </div>
             </div>
           </div>
           <div class="mb-3 d-flex justify-content-between flex-wrap">
-            <div class="form-check">
+            <!--  <div class="form-check">
               <input
                 class="form-check-input"
                 type="checkbox"
@@ -167,7 +176,7 @@
               <label class="form-check-label me-2" for="remember-me">
                 Se souvenir de moi
               </label>
-            </div>
+            </div> -->
             <a
               routerLink="/login"
               (click)="voirRecuperation()"
@@ -185,6 +194,7 @@
           </button>
         </form>
 
+        <!-- personnalisable • activer ce module lors d'une connexion en tant que client -->
         <p class="text-center mt-2">
           <span>Nouveau sur notre plateforme ?</span> &#160;
           <a routerLink="/login" (click)="voirTraitement()">
@@ -360,7 +370,7 @@
             placeholder="2250100000000 ou ....@gmail.com"
             [(ngModel)]="formulaire_recupMdp[0].valeur"
           />
-          <label for="EmailRecup">Email ou telephone</label>
+          <label for="EmailRecup">Email ou téléphone</label>
         </div>
       </div>
       <div class="form-floating form-floating-outline mb-4">

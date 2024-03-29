@@ -15,6 +15,8 @@ export class LoginComponent {
   RetoursChargementMdp: any = [];
   tab_valeur_de_decision: any = [];
   customizer: any;
+  infoChmpPassword: any;
+  infoBtnPassword: boolean = true;
   temps_de_latence: boolean = true;
   formulaire_avis: any = [
     {
@@ -271,6 +273,16 @@ export class LoginComponent {
       },
       (error) => {}
     );
+  }
+
+  ShowHide(val_bool: boolean): void {
+    this.infoChmpPassword = document.getElementById('password');
+    this.infoBtnPassword = val_bool;
+    if (this.infoChmpPassword.type === 'password') {
+      this.infoChmpPassword.type = 'text';
+    } else {
+      this.infoChmpPassword.type = 'password';
+    }
   }
 
   ngOnInit(): void {

@@ -48,6 +48,12 @@ export class ChangePasswordComponent {
     },
   ];
   tab_modif_mdp: any = [];
+  infoChmpPassword_1: any;
+  infoChmpPassword_2: any;
+  infoChmpPassword_3: any;
+  infoBtnPassword_1: boolean = true;
+  infoBtnPassword_2: boolean = true;
+  infoBtnPassword_3: boolean = true;
 
   RetourConnexion() {
     window.location.href = '/auth/login';
@@ -111,6 +117,36 @@ export class ChangePasswordComponent {
           this.toastr.warning('Veuillez réessayer svp !!!', 'warning');
         }
       );
+    }
+  }
+
+  ShowHide1(val_bool: boolean): void {
+    this.infoChmpPassword_1 = document.getElementById('oldPassword');
+    this.infoBtnPassword_1 = val_bool;
+    if (this.infoChmpPassword_1.type === 'password') {
+      this.infoChmpPassword_1.type = 'text';
+    } else {
+      this.infoChmpPassword_1.type = 'password';
+    }
+  }
+
+  ShowHide2(val_bool: boolean): void {
+    this.infoChmpPassword_2 = document.getElementById('newPassword');
+    this.infoBtnPassword_2 = val_bool;
+    if (this.infoChmpPassword_2.type === 'password') {
+      this.infoChmpPassword_2.type = 'text';
+    } else {
+      this.infoChmpPassword_2.type = 'password';
+    }
+  }
+
+  ShowHide3(val_bool: boolean): void {
+    this.infoChmpPassword_3 = document.getElementById('confirmPassword');
+    this.infoBtnPassword_3 = val_bool;
+    if (this.infoChmpPassword_3.type === 'password') {
+      this.infoChmpPassword_3.type = 'text';
+    } else {
+      this.infoChmpPassword_3.type = 'password';
     }
   }
 }

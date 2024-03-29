@@ -40,6 +40,7 @@
       <div
         class="input-wrapper my-3 input-group input-group-lg input-group-merge px-sm-5"
       >
+        <!-- Code ou téléphone du client -->
         <input
           type="text"
           class="form-control"
@@ -52,6 +53,7 @@
             !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') &&
             recupinfo[0].TU_CODETYPEUTILISATEUR != '0002'
           "
+          (keyup)="RechercheAvecTouche1($event)"
         />
         <span
           class="input-group-text"
@@ -66,6 +68,7 @@
         ></span>
 
         <!-- dans le cas de l'admin -->
+        <!-- N° de ticket -->
         <input
           type="text"
           class="form-control"
@@ -111,14 +114,16 @@
       <div
         class="input-wrapper my-3 input-group input-group-lg input-group-merge px-sm-5"
       >
+        <!-- N° de ticket -->
         <input
           type="text"
           class="form-control"
-          placeholder="N° du ticket"
+          [placeholder]="LanguageService.reclam_placeholder_search_bar_op"
           name="SearchPersonal"
           aria-label="Search"
           aria-describedby="basic-addon1"
           [(ngModel)]="SearchValue"
+          (keyup)="RechercheAvecTouche2($event)"
         />
         <span
           class="input-group-text"

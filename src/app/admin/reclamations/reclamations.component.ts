@@ -1210,92 +1210,107 @@ export class ReclamationsComponent {
       }
 
       if (!this.long_sentence) {
-        let Options = 'RequeteClientsClasse.svc/pvgMajReqrequete'; // le chemin d'appel du service web
-        //objet d'envoi
-        let body = {
-          Objets: [
-            {
-              AC_CODEACTIONCORRECTIVE: '',
-              CU_CODECOMPTEUTULISATEUR:
-                this.recupValEtape.CU_CODECOMPTEUTULISATEUR, // this.recupinfo[0].CU_CODECOMPTEUTULISATEUR,//"1",
-              CU_CODECOMPTEUTULISATEURAGENTENCHARGE:
-                this.recupValEtape.CU_CODECOMPTEUTULISATEURAGENTENCHARGE, //this.formulaire_suivi[8].valeur,
-              MC_CODEMODECOLLETE: this.recupValEtape.MC_CODEMODECOLLETE, //"01",
-              NS_CODENIVEAUSATISFACTION:
-                this.recupValEtape.NS_CODENIVEAUSATISFACTION,
-              RQ_CODEREQUETE: this.recupValEtape.RQ_CODEREQUETE,
-              RQ_CODEREQUETERELANCEE: '',
-              RQ_DATECLOTUREREQUETE: '01/01/1900',
-              RQ_DATEDEBUTTRAITEMENTREQUETE: this.formulaire_avis[2].valeur,
-              RQ_DATEFINTRAITEMENTREQUETE: this.formulaire_avis[3].valeur,
-              RQ_DATESAISIEREQUETE: this.recupValEtape.RQ_DATESAISIEREQUETE,
-              RQ_DATETRANSFERTREQUETE:
-                this.recupValEtape.RQ_DATETRANSFERTREQUETE,
-              RQ_DELAITRAITEMENTREQUETE: '',
-              RQ_DESCRIPTIONREQUETE: this.recupValEtape.RQ_DESCRIPTIONREQUETE, //"DESCRIPTION DE LA REQUETE",
-              RQ_DUREETRAITEMENTREQUETE: '',
-              RQ_LOCALISATIONCLIENT: this.recupValEtape.RQ_LOCALISATIONCLIENT, //"LOCALISATION DU CLIENT",
-              RQ_NUMERORECOMPTE: this.recupValEtape.RQ_NUMERORECOMPTE, //"0",
-              RQ_NUMEROREQUETE: this.recupValEtape.RQ_NUMEROREQUETE,
-              RQ_OBJETREQUETE: this.recupValEtape.RQ_OBJETREQUETE,
-              RQ_OBSERVATIONAGENTTRAITEMENTREQUETE:
-                this.recupValEtape.RQ_OBSERVATIONAGENTTRAITEMENTREQUETE,
-              RQ_OBSERVATIONDELAITRAITEMENTREQUETE:
-                this.formulaire_avis[1].valeur,
-              RQ_AFFICHERINFOCLIENT: 'O',
-              RQ_SIGNATURE: '',
-              RQ_SIGNATURE1: '',
-              RS_CODESTATUTRECEVABILITE: this.formulaire_avis[0].valeur,
-              SR_CODESERVICE: this.recupValEtape.SR_CODESERVICE,
-              TR_CODETYEREQUETE: this.recupValEtape.TR_CODETYEREQUETE, //"00001",
-              clsObjetEnvoi: {
-                ET_CODEETABLISSEMENT: '',
-                AN_CODEANTENNE: '',
-                TYPEOPERATION: '1',
-              },
-            },
-          ],
-        };
-        this.AdminService.ShowLoader();
-        this.AdminService.AppelServeur(body, Options).subscribe(
-          (success) => {
-            this.tab_enregistrement_traitement = success;
-            this.tab_enregistrement_traitement =
-              this.tab_enregistrement_traitement.pvgMajReqrequeteResult;
-            this.AdminService.CloseLoader();
-            if (
-              this.tab_enregistrement_traitement.clsResultat.SL_RESULTAT ==
-              'FALSE'
-            ) {
-              //this.toastr.error(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
-              this.toastr.error(
-                this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE,
-                'error',
-                { positionClass: 'toast-bottom-left' }
-              );
-            } else {
-              // this.toastr.success(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
+        $('#' + tableau_recu[2].id).css('background-color', 'white');
+        $('#' + tableau_recu[3].id).css('background-color', 'white');
 
-              this.ListeRequete();
-              this.toastr.success(
+        if (
+          this.AdminService.ComparerDeuxDates(tableau_recu[2].valeur) >
+          this.AdminService.ComparerDeuxDates(tableau_recu[3].valeur)
+        ) {
+          $('#' + tableau_recu[3].id).css('background-color', 'MistyRose');
+          this.toastr.error(
+            'La date de fin ne doit pas être plus petite que la date de début',
+            'error',
+            { positionClass: 'toast-bottom-left' }
+          );
+        } else {
+          let Options = 'RequeteClientsClasse.svc/pvgMajReqrequete'; // le chemin d'appel du service web
+          //objet d'envoi
+          let body = {
+            Objets: [
+              {
+                AC_CODEACTIONCORRECTIVE: '',
+                CU_CODECOMPTEUTULISATEUR:
+                  this.recupValEtape.CU_CODECOMPTEUTULISATEUR, // this.recupinfo[0].CU_CODECOMPTEUTULISATEUR,//"1",
+                CU_CODECOMPTEUTULISATEURAGENTENCHARGE:
+                  this.recupValEtape.CU_CODECOMPTEUTULISATEURAGENTENCHARGE, //this.formulaire_suivi[8].valeur,
+                MC_CODEMODECOLLETE: this.recupValEtape.MC_CODEMODECOLLETE, //"01",
+                NS_CODENIVEAUSATISFACTION:
+                  this.recupValEtape.NS_CODENIVEAUSATISFACTION,
+                RQ_CODEREQUETE: this.recupValEtape.RQ_CODEREQUETE,
+                RQ_CODEREQUETERELANCEE: '',
+                RQ_DATECLOTUREREQUETE: '01/01/1900',
+                RQ_DATEDEBUTTRAITEMENTREQUETE: this.formulaire_avis[2].valeur,
+                RQ_DATEFINTRAITEMENTREQUETE: this.formulaire_avis[3].valeur,
+                RQ_DATESAISIEREQUETE: this.recupValEtape.RQ_DATESAISIEREQUETE,
+                RQ_DATETRANSFERTREQUETE:
+                  this.recupValEtape.RQ_DATETRANSFERTREQUETE,
+                RQ_DELAITRAITEMENTREQUETE: '',
+                RQ_DESCRIPTIONREQUETE: this.recupValEtape.RQ_DESCRIPTIONREQUETE, //"DESCRIPTION DE LA REQUETE",
+                RQ_DUREETRAITEMENTREQUETE: '',
+                RQ_LOCALISATIONCLIENT: this.recupValEtape.RQ_LOCALISATIONCLIENT, //"LOCALISATION DU CLIENT",
+                RQ_NUMERORECOMPTE: this.recupValEtape.RQ_NUMERORECOMPTE, //"0",
+                RQ_NUMEROREQUETE: this.recupValEtape.RQ_NUMEROREQUETE,
+                RQ_OBJETREQUETE: this.recupValEtape.RQ_OBJETREQUETE,
+                RQ_OBSERVATIONAGENTTRAITEMENTREQUETE:
+                  this.recupValEtape.RQ_OBSERVATIONAGENTTRAITEMENTREQUETE,
+                RQ_OBSERVATIONDELAITRAITEMENTREQUETE:
+                  this.formulaire_avis[1].valeur,
+                RQ_AFFICHERINFOCLIENT: 'O',
+                RQ_SIGNATURE: '',
+                RQ_SIGNATURE1: '',
+                RS_CODESTATUTRECEVABILITE: this.formulaire_avis[0].valeur,
+                SR_CODESERVICE: this.recupValEtape.SR_CODESERVICE,
+                TR_CODETYEREQUETE: this.recupValEtape.TR_CODETYEREQUETE, //"00001",
+                clsObjetEnvoi: {
+                  ET_CODEETABLISSEMENT: '',
+                  AN_CODEANTENNE: '',
+                  TYPEOPERATION: '1',
+                },
+              },
+            ],
+          };
+          this.AdminService.ShowLoader();
+          this.AdminService.AppelServeur(body, Options).subscribe(
+            (success) => {
+              this.tab_enregistrement_traitement = success;
+              this.tab_enregistrement_traitement =
+                this.tab_enregistrement_traitement.pvgMajReqrequeteResult;
+              this.AdminService.CloseLoader();
+              if (
+                this.tab_enregistrement_traitement.clsResultat.SL_RESULTAT ==
+                'FALSE'
+              ) {
+                //this.toastr.error(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
+                this.toastr.error(
+                  this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE,
+                  'error',
+                  { positionClass: 'toast-bottom-left' }
+                );
+              } else {
+                // this.toastr.success(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
+
+                this.ListeRequete();
+                this.toastr.success(
+                  this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE,
+                  'success',
+                  { positionClass: 'toast-bottom-left' }
+                );
+                this.ViderChamp();
+                $('#addNewAddress2').modal('hide');
+              }
+            },
+            (error: any) => {
+              this.AdminService.CloseLoader();
+              // this.toastr.warning(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
+              this.toastr.warning(
                 this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE,
-                'success',
+                'warning',
                 { positionClass: 'toast-bottom-left' }
               );
-              this.ViderChamp();
-              $('#addNewAddress2').modal('hide');
             }
-          },
-          (error: any) => {
-            this.AdminService.CloseLoader();
-            // this.toastr.warning(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
-            this.toastr.warning(
-              this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE,
-              'warning',
-              { positionClass: 'toast-bottom-left' }
-            );
-          }
-        );
+          );
+        }
       } else {
         this.toastr.error(
           `Vous avez saisi trop de mots. Veuillez limiter votre saisie à ${this.maxWords} mots.`,
@@ -3182,6 +3197,22 @@ export class ReclamationsComponent {
   ngOnDestroy(): void {
     // Assurez-vous de vous désabonner pour éviter les fuites de mémoire
     this.maVariableSubscription?.unsubscribe();
+  }
+
+  RechercheAvecTouche1(e: any) {
+    // Vérifier si la touche pressée est Entrée
+    if (e.key === 'Enter') {
+      // Appeler la fonction lorsque la touche Entrée est pressée
+      this.RechercherSelonEcran();
+    }
+  }
+
+  RechercheAvecTouche2(e: any) {
+    // Vérifier si la touche pressée est Entrée
+    if (e.key === 'Enter') {
+      // Appeler la fonction lorsque la touche Entrée est pressée
+      this.FilterTicket(this.SearchValue);
+    }
   }
 
   ngOnInit(): void {
