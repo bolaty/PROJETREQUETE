@@ -5,6 +5,9 @@ import { ToastrService } from 'ngx-toastr';
 import { LanguageService } from 'src/app/services/language.service';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
+// import { Dropzone } from 'src/app/services/dropzone';
+//@ts-ignore
+import Dropzone from 'dropzone';
 
 declare var $: any;
 
@@ -14,8 +17,9 @@ declare var $: any;
   styleUrls: ['./reclamations.component.scss'],
 })
 export class ReclamationsComponent {
-  LienServeur: any = 'http://localhost:22248/'; // lien dev
-  // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod
+  // LienServeur: any = 'http://localhost:22248/'; // lien dev
+  // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
+  LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
 
   maVariableSubscription?: Subscription;
 
@@ -288,6 +292,7 @@ export class ReclamationsComponent {
   ObservationsCloture: any = '';
   long_sentence: boolean = false;
   show_loader: boolean = false;
+  observer_trans_trib: boolean = false;
 
   constructor(
     public AdminService: AdminService,
@@ -554,6 +559,18 @@ export class ReclamationsComponent {
       );
       return;
     }
+
+    /*  this.file = event.target.files;
+    for (let index = 0; index < this.file.length; index++) {
+      if (this.file[index].size > 4 * 1024 * 1024) {
+        this.toastr.error(
+          'Le fichier est trop volumineux. Veuillez sélectionner un fichier de taille inférieure à 4 Mo.',
+          'Echec'
+        );
+        return;
+      }
+    } */
+
     const reader = new FileReader();
     reader.onload = (event: any) => {
       this.base64Image = event.target.result;
@@ -672,6 +689,7 @@ export class ReclamationsComponent {
                 { positionClass: 'toast-bottom-left' }
               );
             } else {
+              this.observer_trans_trib = true;
               $('#transmissionauntribunal').modal('hide');
               this.modal_transmission_tribunal[0].valeur = '';
               this.modal_transmission_tribunal[1].valeur = '';
@@ -686,7 +704,7 @@ export class ReclamationsComponent {
               this.recupEnregistrerFichierProcedure.clsResultat.SL_RESULTAT ==
               'FALSE'
             ) {
-            } else {
+              this.observer_trans_trib = false;
             }
           },
           (error: any) => {
@@ -2294,7 +2312,7 @@ export class ReclamationsComponent {
       console.log(date);
     }
     var recuperation = JSON.parse(sessionStorage.getItem('infoReque') || '');
-    let Options = 'RequeteClientsClasse.svc/pvgMajReqrequeteContentieux'; // le chemin d'appel du service web
+    let Options = 'RequeteClientsClasse.svc/pvgMajReqrequeteContentieux';
     //objet d'envoi
     let body = {
       Objets: [
@@ -2325,6 +2343,7 @@ export class ReclamationsComponent {
           this.tab_transmission_tribunal.pvgMajReqrequeteContentieuxResult;
         this.AdminService.CloseLoader();
         if (this.tab_transmission_tribunal.clsResultat.SL_RESULTAT == 'FALSE') {
+          this.observer_trans_trib = false;
           this.toastr.error(
             this.tab_transmission_tribunal.clsResultat.SL_MESSAGE,
             'error',
@@ -2344,6 +2363,7 @@ export class ReclamationsComponent {
               'success',
               { positionClass: 'toast-bottom-left' }
             );
+            this.observer_trans_trib = true;
           } else {
             this.ListeContentieux('T');
           }
@@ -2392,6 +2412,7 @@ export class ReclamationsComponent {
           this.tab_liste_contentieux.pvgListeReqrequeteContentieuxResult;
         this.AdminService.CloseLoader();
         if (this.tab_liste_contentieux[0].clsResultat.SL_RESULTAT == 'FALSE') {
+          this.observer_trans_trib = false;
           this.toastr.error(
             "Cloture impossible. Vous devez d'abord transmettre la requete à un tribunal",
             'error',
@@ -3215,6 +3236,34 @@ export class ReclamationsComponent {
     }
   }
 
+  uploadFiles() {
+    var fileInput = document.getElementById('fileInput');
+    //@ts-ignore
+    var files = fileInput.files;
+    var formData = new FormData();
+
+    // Ajouter chaque fichier à l'objet FormData
+    for (var i = 0; i < files.length; i++) {
+      var file = files[i];
+      formData.append('files[]', file);
+      // formData.push(file);
+    }
+    console.log('formData', formData);
+    return;
+
+    // Envoyer les fichiers au serveur via une requête AJAX
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'upload.php', true);
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        alert('Fichiers téléchargés avec succès !');
+      } else {
+        alert('Une erreur est survenue lors du téléchargement des fichiers.');
+      }
+    };
+    xhr.send(formData);
+  }
+
   ngOnInit(): void {
     this.ComboAgence();
     this.formulaire_plaintes_reclamations[8].valeur =
@@ -3233,5 +3282,59 @@ export class ReclamationsComponent {
           }
         }
       );
+
+    // Multiple Dropzone
+    /* const previewTemplate = `<div class="dz-preview dz-file-preview">
+      <div class="dz-details">
+        <div class="dz-thumbnail">
+          <img data-dz-thumbnail>
+          <span class="dz-nopreview">No preview</span>
+          <div class="dz-success-mark"></div>
+          <div class="dz-error-mark"></div>
+          <div class="dz-error-message"><span data-dz-errormessage></span></div>
+          <div class="progress">
+            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuemin="0" aria-valuemax="100" data-dz-uploadprogress></div>
+          </div>
+        </div>
+        <div class="dz-filename" data-dz-name></div>
+        <div class="dz-size" data-dz-size></div>
+      </div>
+      </div>`;
+
+    // --------------------------------------------------------------------
+    const dropzoneMulti = document.querySelector('#dropzone-multi');
+    if (dropzoneMulti) {
+      const myDropzoneMulti = new Dropzone(dropzoneMulti, {
+        previewTemplate: previewTemplate,
+        parallelUploads: 1,
+        maxFilesize: 5,
+        addRemoveLinks: true,
+      });
+    } */
+
+    // Initialiser Dropzone
+    Dropzone.autoDiscover = false;
+    var myDropzone = new Dropzone('#myDropzone', {
+      url: '/upload', // URL où les fichiers seront envoyés
+      uploadMultiple: true, // Autoriser le téléchargement de plusieurs fichiers
+      parallelUploads: 2, // Nombre maximum de téléchargements parallèles
+      maxFiles: 5, // Nombre maximum de fichiers autorisés
+      acceptedFiles: '.jpg, .png, .pdf', // Types de fichiers autorisés
+      dictDefaultMessage:
+        'Cliquez ici ou faites glisser des fichiers pour les télécharger',
+      // Ajoutez d'autres options de configuration selon vos besoins
+    });
+
+    // Gérer les événements Dropzone
+    //@ts-ignore
+    myDropzone.on('success', function (file, response) {
+      console.log('Fichier téléchargé avec succès:', file, response);
+      // Ajoutez ici le code pour traiter la réponse du serveur après le téléchargement réussi
+    });
+    //@ts-ignore
+    myDropzone.on('error', function (file, message) {
+      console.error('Erreur lors du téléchargement du fichier:', file, message);
+      // Ajoutez ici le code pour gérer les erreurs de téléchargement
+    });
   }
 }

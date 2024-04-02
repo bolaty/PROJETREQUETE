@@ -640,9 +640,11 @@ export class RelanceComponent {
       }
     }
   }
+
   selectionEtape(info: any) {
     this.recupEtape = info;
   }
+
   viderChampAff() {
     this.formulaire_attr_reclamations[0].valeur = '';
     this.formulaire_attr_reclamations[1].valeur = '';
@@ -650,6 +652,7 @@ export class RelanceComponent {
     this.formulaire_attr_reclamations[3].valeur = '';
     $('#addNewAddress').modal('hide');
   }
+
   ngOnInit(): void {
     this.ComboEtapeParam();
   }

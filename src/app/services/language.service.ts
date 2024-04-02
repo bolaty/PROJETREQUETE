@@ -166,6 +166,14 @@ export class LanguageService {
   btn_consult: string = '';
   btn_engr: string = '';
   search_placeholder_code_client: string = '';
+  transmission_title: string = '';
+  transmission_sub_title: string = '';
+  champ_obs_contentieux_placeholder: string = '';
+  champ_mtnt_contentieux_placeholder: string = '';
+  clo_pro_jud_title: string = '';
+  clo_pro_jud_sub_title: string = '';
+  relance_badge: string = '';
+  tribunal_badge: string = '';
 
   constructor(private http: HttpClient) {
     this.setLanguage('fr'); // Set default language
@@ -427,6 +435,18 @@ export class LanguageService {
     this.search_placeholder_code_client = this.getTranslation(
       'search_placeholder_code_client'
     );
+    this.transmission_title = this.getTranslation('transmission_title');
+    this.transmission_sub_title = this.getTranslation('transmission_sub_title');
+    this.champ_obs_contentieux_placeholder = this.getTranslation(
+      'champ_obs_contentieux_placeholder'
+    );
+    this.champ_mtnt_contentieux_placeholder = this.getTranslation(
+      'champ_mtnt_contentieux_placeholder'
+    );
+    this.clo_pro_jud_title = this.getTranslation('clo_pro_jud_title');
+    this.clo_pro_jud_sub_title = this.getTranslation('clo_pro_jud_sub_title');
+    this.relance_badge = this.getTranslation('relance_badge');
+    this.tribunal_badge = this.getTranslation('tribunal_badge');
   }
   // language
 

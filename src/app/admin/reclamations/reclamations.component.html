@@ -505,6 +505,8 @@
                               LanguageService.descript_reclam
                             }}</label>
                           </div>
+
+                          <!-- mode de collecte -->
                           <div class="col-md-6">
                             <div class="row">
                               <label
@@ -560,6 +562,7 @@
                               </div>
                             </div>
                           </div>
+
                           <!-- Multi  -->
                           <div class="col-12 mb-6">
                             <!-- <div class="card"> -->
@@ -586,6 +589,7 @@
                                       formulaire_plaintes_reclamations[9].valeur
                                     "
                                     (change)="HandleFileInput($event)"
+                                    multiple
                                   />
                                 </div>
                               </form>
@@ -705,6 +709,8 @@
                               LanguageService.descript_reclam
                             }}</label>
                           </div>
+
+                          <!-- mode de collecte -->
                           <div class="col-md-6">
                             <div class="row">
                               <label
@@ -765,6 +771,7 @@
                                       formulaire_plaintes_reclamations[9].valeur
                                     "
                                     (change)="HandleFileInput($event)"
+                                    multiple
                                   />
                                 </div>
                               </form>
@@ -1101,7 +1108,7 @@
                           >
                             <a href="javascript:;"
                               ><span class="badge bg-label-info rounded-pill">
-                                {{ LanguageService.sidebar_menu_2 }}</span
+                                {{ LanguageService.relance_badge }}</span
                               ></a
                             >
                           </li>
@@ -1170,6 +1177,7 @@
                             {{ ListRetourRequetes.RQ_CODEREQUETE }}</span
                           ></a
                         >
+
                         <!-- cloturée -->
                         <a
                           href="javascript:;"
@@ -2038,7 +2046,7 @@
                                   </a>
                                 </li>
 
-                                <!-- Clôture procédure judiciaire -->
+                                <!-- Cloture procedure judiciaire -->
                                 <li>
                                   <a
                                     class="dropdown-item"
@@ -2155,6 +2163,7 @@
                             {{ ListRetourRequetes.RQ_CODEREQUETE }}</span
                           ></a
                         >
+
                         <!-- cloturée -->
                         <a
                           href="javascript:;"
@@ -2198,7 +2207,7 @@
                           >
                             <a href="javascript:;"
                               ><span class="badge bg-label-info rounded-pill">
-                                {{ LanguageService.sidebar_menu_2 }}
+                                {{ LanguageService.relance_badge }}
                                 &nbsp;&nbsp;N°
                                 {{
                                   ListRetourRequetes.RQ_CODEREQUETERELANCEE
@@ -2209,6 +2218,11 @@
                         </ul>
                       </div>
                     </div>
+
+                    <!-- laaa *ngIf="observer_trans_trib" -->
+                    <span class="badge rounded-pill bg-label-dark">{{
+                      LanguageService.tribunal_badge
+                    }}</span>
                   </div>
                 </div>
               </div>
@@ -3137,8 +3151,12 @@
           aria-label="Close"
         ></button>
         <div class="text-center mb-4">
-          <h3 class="address-title mb-2 pb-1">Transmission a un tribunal</h3>
-          <p class="address-subtitle">Transmettez a un tribunal</p>
+          <h3 class="address-title mb-2 pb-1">
+            {{ LanguageService.transmission_title }}
+          </h3>
+          <p class="address-subtitle">
+            {{ LanguageService.transmission_sub_title }}
+          </p>
         </div>
 
         <!-- Inventory -->
@@ -3161,11 +3179,13 @@
                   name="invoice-observation-avisACloture"
                   id="invoice-observation-avisACloture"
                   style="height: 190px"
-                  [placeholder]="LanguageService.placeholder_description"
+                  [placeholder]="
+                    LanguageService.champ_obs_contentieux_placeholder
+                  "
                   [(ngModel)]="modal_transmission_tribunal[0].valeur"
                 ></textarea>
                 <label for="invoice-observation-avisACloture">{{
-                  LanguageService.ann_clo_def_chmp_title
+                  LanguageService.chmp_observation
                 }}</label>
               </div>
               <div class="form-floating form-floating-outline mb-4">
@@ -3174,9 +3194,14 @@
                   name="num-cpte-clt"
                   id="formtabs-num-cpte-clt"
                   class="form-control"
-                  placeholder="Montant du contentieux"
+                  [placeholder]="
+                    LanguageService.champ_mtnt_contentieux_placeholder
+                  "
                   [(ngModel)]="modal_transmission_tribunal[1].valeur"
                 />
+                <label for="formtabs-num-cpte-clt">{{
+                  LanguageService.champ_mtnt_contentieux_placeholder
+                }}</label>
               </div>
 
               <!-- Multi  -->
@@ -3202,6 +3227,7 @@
                         name="file"
                         type="file"
                         (change)="HandleFileInputContentieux($event)"
+                        multiple
                       />
                     </div>
                   </form>
@@ -3249,8 +3275,12 @@
           aria-label="Close"
         ></button>
         <div class="text-center mb-4">
-          <h3 class="address-title mb-2 pb-1">Cloture procedure judiciaire</h3>
-          <p class="address-subtitle">Cloturez la procedure</p>
+          <h3 class="address-title mb-2 pb-1">
+            {{ LanguageService.clo_pro_jud_title }}
+          </h3>
+          <p class="address-subtitle">
+            {{ LanguageService.clo_pro_jud_sub_title }}
+          </p>
         </div>
 
         <!-- Inventory -->
@@ -3273,11 +3303,13 @@
                   name="invoice-observation-avisACloture"
                   id="invoice-observation-avisACloture"
                   style="height: 190px"
-                  [placeholder]="LanguageService.placeholder_description"
+                  [placeholder]="
+                    LanguageService.champ_obs_contentieux_placeholder
+                  "
                   [(ngModel)]="modal_cloture_procedure[0].valeur"
                 ></textarea>
                 <label for="invoice-observation-avisACloture">{{
-                  LanguageService.ann_clo_def_chmp_title
+                  LanguageService.chmp_observation
                 }}</label>
               </div>
               <div class="form-floating form-floating-outline mb-4">
@@ -3286,9 +3318,14 @@
                   name="num-cpte-clt"
                   id="formtabs-num-cpte-clt"
                   class="form-control"
-                  placeholder="Montant du contentieux"
+                  [placeholder]="
+                    LanguageService.champ_mtnt_contentieux_placeholder
+                  "
                   [(ngModel)]="modal_cloture_procedure[1].valeur"
                 />
+                <label for="formtabs-num-cpte-clt">{{
+                  LanguageService.champ_mtnt_contentieux_placeholder
+                }}</label>
               </div>
 
               <!-- Multi  -->
@@ -3314,6 +3351,7 @@
                         name="file"
                         type="file"
                         (change)="HandleFileInputContentieuxCloture($event)"
+                        multiple
                       />
                     </div>
                   </form>
