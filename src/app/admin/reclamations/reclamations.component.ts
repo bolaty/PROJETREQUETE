@@ -292,7 +292,6 @@ export class ReclamationsComponent {
   ObservationsCloture: any = '';
   long_sentence: boolean = false;
   show_loader: boolean = false;
-  observer_trans_trib: boolean = false;
 
   constructor(
     public AdminService: AdminService,
@@ -689,7 +688,6 @@ export class ReclamationsComponent {
                 { positionClass: 'toast-bottom-left' }
               );
             } else {
-              this.observer_trans_trib = true;
               $('#transmissionauntribunal').modal('hide');
               this.modal_transmission_tribunal[0].valeur = '';
               this.modal_transmission_tribunal[1].valeur = '';
@@ -698,13 +696,14 @@ export class ReclamationsComponent {
                 'success',
                 { positionClass: 'toast-bottom-left' }
               );
+
+              this.ListeRequete();
             }
 
             if (
               this.recupEnregistrerFichierProcedure.clsResultat.SL_RESULTAT ==
               'FALSE'
             ) {
-              this.observer_trans_trib = false;
             }
           },
           (error: any) => {
@@ -2220,6 +2219,7 @@ export class ReclamationsComponent {
           );
           this.ObservationsCloture = '';
           this.ListeRequete();
+          this.NotifierLesOperateursTraitants(recuperation.RQ_CODEREQUETE);
           $('#addNewAddressClotureDefinitive').modal('hide');
         }
       },
@@ -2233,6 +2233,30 @@ export class ReclamationsComponent {
         );
       }
     );
+  }
+
+  NotifierLesOperateursTraitants(RQ_CODEREQUETE: any) {
+    let Option =
+      'RequeteClientsClasse.svc/pvgChargerDansDataSetParOperateursNotif';
+    let body = {
+      Objets: [
+        {
+          OE_PARAM: [RQ_CODEREQUETE],
+          clsObjetEnvoi: {
+            ET_CODEETABLISSEMENT: '',
+            AN_CODEANTENNE: '',
+            TYPEOPERATION: '01',
+          },
+        },
+      ],
+    };
+    // this.AdminService.ShowLoader();
+    this.AdminService.AppelServeur(body, Option).subscribe((success: any) => {
+      this.ListeRetourRequete = success;
+      this.ListeRetourRequete =
+        this.ListeRetourRequete.pvgChargerDansDataSetParOperateursNotifResult;
+      // this.AdminService.CloseLoader();
+    });
   }
 
   AnnulationClotureRequetePrincipale() {
@@ -2329,7 +2353,7 @@ export class ReclamationsComponent {
           RQ_CODEREQUETE: this.recupValEtape.RQ_CODEREQUETE,
           clsObjetEnvoi: {
             ET_CODEETABLISSEMENT: '',
-            AN_CODEANTENNE: '',
+            AN_CODEANTENNE: recuperation.CU_CODECOMPTEUTULISATEUR,
             TYPEOPERATION: '0',
           },
         },
@@ -2343,7 +2367,6 @@ export class ReclamationsComponent {
           this.tab_transmission_tribunal.pvgMajReqrequeteContentieuxResult;
         this.AdminService.CloseLoader();
         if (this.tab_transmission_tribunal.clsResultat.SL_RESULTAT == 'FALSE') {
-          this.observer_trans_trib = false;
           this.toastr.error(
             this.tab_transmission_tribunal.clsResultat.SL_MESSAGE,
             'error',
@@ -2363,7 +2386,7 @@ export class ReclamationsComponent {
               'success',
               { positionClass: 'toast-bottom-left' }
             );
-            this.observer_trans_trib = true;
+            this.ListeRequete();
           } else {
             this.ListeContentieux('T');
           }
@@ -2412,7 +2435,6 @@ export class ReclamationsComponent {
           this.tab_liste_contentieux.pvgListeReqrequeteContentieuxResult;
         this.AdminService.CloseLoader();
         if (this.tab_liste_contentieux[0].clsResultat.SL_RESULTAT == 'FALSE') {
-          this.observer_trans_trib = false;
           this.toastr.error(
             "Cloture impossible. Vous devez d'abord transmettre la requete à un tribunal",
             'error',

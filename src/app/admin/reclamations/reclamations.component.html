@@ -1913,7 +1913,7 @@
                                   >
                                 </li>
 
-                                <!-- Clôture définitive -->
+                                <!-- Cloture definitive -->
                                 <li>
                                   <a
                                     class="dropdown-item"
@@ -1937,7 +1937,7 @@
                                   >
                                 </li>
 
-                                <!-- Annulation clôture définitive -->
+                                <!-- Annulation cloture definitive -->
                                 <li>
                                   <a
                                     class="dropdown-item"
@@ -2220,9 +2220,14 @@
                     </div>
 
                     <!-- laaa *ngIf="observer_trans_trib" -->
-                    <span class="badge rounded-pill bg-label-dark">{{
-                      LanguageService.tribunal_badge
-                    }}</span>
+                    <span
+                      class="badge rounded-pill bg-label-dark"
+                      *ngIf="
+                        ListRetourRequetes.CT_DATEOUVERTURECONTENTIEUX !=
+                        '01/01/1900'
+                      "
+                      >{{ LanguageService.tribunal_badge }}</span
+                    >
                   </div>
                 </div>
               </div>
@@ -2946,7 +2951,7 @@
 </div>
 <!--/ Add New Address Modal -->
 
-<!-- Add New Address Modal -->
+<!-- Modal cloture definitive -->
 <div
   class="modal fade"
   id="addNewAddressClotureDefinitive"
@@ -3058,7 +3063,7 @@
     </div>
   </div>
 </div>
-<!--/ Add New Address Modal -->
+<!--/ Modal cloture definitive -->
 
 <!-- Add New Address Modal -->
 <div
