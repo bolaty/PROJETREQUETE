@@ -271,6 +271,8 @@ export class ReclamationsComponent {
   statutliste: boolean = false;
   statut_info_utilisateur: boolean = false;
   SearchValue: any;
+  SearchValueCode: any;
+  SearchValuePhone: any;
   statutClientExiste: boolean = true;
   statutFrmulaire: string = 'ENREGISTREMENT';
   var_checked_enrg: any = '';
@@ -292,6 +294,7 @@ export class ReclamationsComponent {
   ObservationsCloture: any = '';
   long_sentence: boolean = false;
   show_loader: boolean = false;
+  phone_or_code: boolean = false;
 
   constructor(
     public AdminService: AdminService,
@@ -2639,37 +2642,43 @@ export class ReclamationsComponent {
     }
   }
 
-  RechercherSelonEcran() {
+  RechercherSelonEcran(elem: any) {
     if (this.recupinfo[0].TU_CODETYPEUTILISATEUR == '0002') {
     }
 
     if (this.recupinfo[0].TU_CODETYPEUTILISATEUR != '0002') {
       if (this.statutFrmulaire == 'ENREGISTREMENT') {
-        this.listeClients();
+        this.listeClients(elem);
       } else {
       }
     }
   }
 
-  listeClients() {
+  listeClients(elem: any) {
     let Option = 'RequeteClientsClasse.svc/pvgListeUtilisateursRecherche';
 
-    if (this.SearchValue == undefined || this.SearchValue == '') {
-      this.toastr.error(
-        'Veuillez renseigner un code ou un téléphone',
-        'error',
-        {
-          positionClass: 'toast-bottom-left',
-        }
-      );
+    if (
+      elem == 'code' &&
+      (this.SearchValueCode == '' || this.SearchValueCode == undefined)
+    ) {
+      this.toastr.error('Veuillez renseigner un code', 'error', {
+        positionClass: 'toast-bottom-left',
+      });
+    } else if (
+      elem == 'telephone' &&
+      (this.SearchValuePhone == '' || this.SearchValuePhone == undefined)
+    ) {
+      this.toastr.error('Veuillez renseigner un numéro de téléphone', 'error', {
+        positionClass: 'toast-bottom-left',
+      });
     } else {
       let body;
-      if (this.SearchValue.substr(0, 1) === '0') {
+      if (elem == 'telephone') {
         // dans le cas d'une recherche avec numero de telephone
         body = {
           Objets: [
             {
-              OE_PARAM: ['0002', '', this.SearchValue, '', '01'],
+              OE_PARAM: ['0002', '', this.SearchValuePhone, '', '01'],
               clsObjetEnvoi: {
                 ET_CODEETABLISSEMENT: '',
                 AN_CODEANTENNE: '',
@@ -2683,7 +2692,7 @@ export class ReclamationsComponent {
         body = {
           Objets: [
             {
-              OE_PARAM: ['0002', this.SearchValue, '', '', '01'],
+              OE_PARAM: ['0002', this.SearchValueCode, '', '', '01'],
               clsObjetEnvoi: {
                 ET_CODEETABLISSEMENT: '',
                 AN_CODEANTENNE: '',
@@ -3021,6 +3030,12 @@ export class ReclamationsComponent {
   }
 
   checkStatusForm(infoEcran: any, type_user: any) {
+    this.phone_or_code = false;
+    this.statutClientExiste = true;
+    this.ListeClients = [];
+    this.SearchValueCode = '';
+    this.SearchValuePhone = '';
+
     if (type_user == 'simple') {
       this.search_bar = true;
     } else {
@@ -3242,11 +3257,11 @@ export class ReclamationsComponent {
     this.maVariableSubscription?.unsubscribe();
   }
 
-  RechercheAvecTouche1(e: any) {
+  RechercheAvecTouche1(e: any, elem: any) {
     // Vérifier si la touche pressée est Entrée
     if (e.key === 'Enter') {
       // Appeler la fonction lorsque la touche Entrée est pressée
-      this.RechercherSelonEcran();
+      this.RechercherSelonEcran(elem);
     }
   }
 
@@ -3284,6 +3299,14 @@ export class ReclamationsComponent {
       }
     };
     xhr.send(formData);
+  }
+
+  ChoixRecherche(elem: any) {
+    this.SearchValueCode = '';
+    this.SearchValuePhone = '';
+
+    if (elem == 'phone') this.phone_or_code = true;
+    else this.phone_or_code = false;
   }
 
   ngOnInit(): void {

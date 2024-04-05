@@ -208,6 +208,14 @@ export class LoginComponent {
               'Echec'
             );
           } else {
+            if (this.formulaire_recupMdp[0].valeur.includes('@')) {
+              this.RetoursChargementMdp[0].clsResultat.SL_MESSAGE =
+                'Opération réalisée avec succès. Veuillez consulter votre boite mail pour recuperer votre mot de passe';
+            } else {
+              this.RetoursChargementMdp[0].clsResultat.SL_MESSAGE =
+                'Opération réalisée avec succès. Un sms contenant votre mot de passe vous a été envoyé';
+            }
+
             this.formulaire_recupMdp[0].valeur = '';
             this.formulaire_recupMdp[1].valeur = '';
             this.toastr.success(

@@ -82,7 +82,6 @@ export class LanguageService {
   reclam_action_encrs_1: string = '';
   reclam_action_encrs_2: string = '';
   reclam_action_encrs_3: string = '';
-  reclam_action_clo_1: string = '';
   reclam_action_clo_2: string = '';
   reclam_action_clo_3: string = '';
   relance_title: string = '';
@@ -158,6 +157,8 @@ export class LanguageService {
   clo_def_title_step: string = '';
   chmp_observation: string = '';
   placeholder_description: string = '';
+  placeholder_avis_clo: string = '';
+  placeholder_obs_cloture: string = '';
   btn_title_to_enclose: string = '';
   ann_clo_def_title: string = '';
   ann_clo_def_sub_title: string = '';
@@ -166,6 +167,7 @@ export class LanguageService {
   btn_consult: string = '';
   btn_engr: string = '';
   search_placeholder_code_client: string = '';
+  search_placeholder_tel_client: string = '';
   transmission_title: string = '';
   transmission_sub_title: string = '';
   champ_obs_contentieux_placeholder: string = '';
@@ -174,6 +176,7 @@ export class LanguageService {
   clo_pro_jud_sub_title: string = '';
   relance_badge: string = '';
   tribunal_badge: string = '';
+  tribunal_end_badge: string = '';
 
   constructor(private http: HttpClient) {
     this.setLanguage('fr'); // Set default language
@@ -335,7 +338,6 @@ export class LanguageService {
     this.reclam_action_encrs_1 = this.getTranslation('reclam_action_encrs_1');
     this.reclam_action_encrs_2 = this.getTranslation('reclam_action_encrs_2');
     this.reclam_action_encrs_3 = this.getTranslation('reclam_action_encrs_3');
-    this.reclam_action_clo_1 = this.getTranslation('reclam_action_clo_1');
     this.reclam_action_clo_2 = this.getTranslation('reclam_action_clo_2');
     this.reclam_action_clo_3 = this.getTranslation('reclam_action_clo_3');
     this.relance_title = this.getTranslation('relance_title');
@@ -425,6 +427,10 @@ export class LanguageService {
     this.placeholder_description = this.getTranslation(
       'placeholder_description'
     );
+    this.placeholder_avis_clo = this.getTranslation('placeholder_avis_clo');
+    this.placeholder_obs_cloture = this.getTranslation(
+      'placeholder_obs_cloture'
+    );
     this.btn_title_to_enclose = this.getTranslation('btn_title_to_enclose');
     this.ann_clo_def_title = this.getTranslation('ann_clo_def_title');
     this.ann_clo_def_sub_title = this.getTranslation('ann_clo_def_sub_title');
@@ -434,6 +440,9 @@ export class LanguageService {
     this.btn_engr = this.getTranslation('btn_engr');
     this.search_placeholder_code_client = this.getTranslation(
       'search_placeholder_code_client'
+    );
+    this.search_placeholder_tel_client = this.getTranslation(
+      'search_placeholder_tel_client'
     );
     this.transmission_title = this.getTranslation('transmission_title');
     this.transmission_sub_title = this.getTranslation('transmission_sub_title');
@@ -447,6 +456,7 @@ export class LanguageService {
     this.clo_pro_jud_sub_title = this.getTranslation('clo_pro_jud_sub_title');
     this.relance_badge = this.getTranslation('relance_badge');
     this.tribunal_badge = this.getTranslation('tribunal_badge');
+    this.tribunal_end_badge = this.getTranslation('tribunal_end_badge');
   }
   // language
 

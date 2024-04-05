@@ -14,7 +14,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./admin.component.scss'],
 })
 export class AdminComponent implements OnInit {
-  recupinfo: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
+  recupinfo: any = '';
   ListeNotification: any = [];
   nombreNotif: any = 0;
   boutons: any = [];
@@ -931,6 +931,8 @@ export class AdminComponent implements OnInit {
   }
 
   Notification() {
+    this.recupinfo = JSON.parse(sessionStorage.getItem('infoLogin') || '');
+
     let Option = 'RequeteClientsClasse.svc/pvgListeSMS';
     let body = {
       Objets: [
@@ -1076,6 +1078,8 @@ export class AdminComponent implements OnInit {
   }
 
   ListeRequete() {
+    this.recupinfo = JSON.parse(sessionStorage.getItem('infoLogin') || '');
+
     var Option = '';
     var body = {};
 

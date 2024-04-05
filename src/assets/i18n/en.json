@@ -210,7 +210,6 @@
   "reclam_action_encrs_1": "Claim assignment",
   "reclam_action_encrs_2": "Consultation stage of the complaint",
   "reclam_action_encrs_3": "Final closure",
-  "reclam_action_clo_1": "Cancellation of permanent closure",
   "reclam_action_clo_2": "Transmission to a court",
   "reclam_action_clo_3": "Closure of legal proceedings",
   "relance_title": "Extension of claims",
@@ -248,7 +247,7 @@
   "avis_recev_title": "Notice of complaint",
   "avis_recev_sub_title": "Give your opinion on the admissibility of this complaint",
   "avis_recev_chmp_title_1": "Notice",
-  "avis_recev_chmp_title_2_placeholder": "Observation of the handling agent (related to the complaint or complaint)",
+  "avis_recev_chmp_title_2_placeholder": "Observation of the handling agent (related to the complaint)",
   "chmp_date_start": "Start date",
   "chmp_date_start_placeholder": "Enter a start date (01-01-2015)",
   "chmp_date_end": "End date",
@@ -286,6 +285,8 @@
   "clo_def_title_step": "Steps",
   "chmp_observation": "Observation",
   "placeholder_description": "Task objective",
+  "placeholder_avis_clo": "Give your opinion on the cancellation of the closure",
+  "placeholder_obs_cloture": "Comment on the request",
   "btn_title_to_enclose": "To enclose",
   "ann_clo_def_title": "Cancellation of permanent closure",
   "ann_clo_def_sub_title": "Cancellation of final closure",
@@ -330,7 +331,8 @@
   "Satisfait": "Satisfied",
   "Non satisfait ": "Not satisfied",
   "Neutre": "Neutral",
-  "search_placeholder_code_client": "Customer code or phone number",
+  "search_placeholder_code_client": "Search by code",
+  "search_placeholder_tel_client": "Search by phone number",
   "transmission_title": "Transmission to a court",
   "transmission_sub_title": "Send to court",
   "champ_obs_contentieux_placeholder": "Observation of litigation",
@@ -338,5 +340,6 @@
   "clo_pro_jud_title": "Closure of legal proceedings",
   "clo_pro_jud_sub_title": "Close the procedure",
   "relance_badge": "Revival",
-  "tribunal_badge": "Court"
+  "tribunal_badge": "Court",
+  "tribunal_end_badge": "End of procedure"
 }

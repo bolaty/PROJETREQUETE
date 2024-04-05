@@ -112,10 +112,12 @@
       class="d-flex col-12 col-lg-5 col-xl-4 align-items-center authentication-bg position-relative py-sm-5 px-4 py-4"
     >
       <div class="w-px-400 mx-auto pt-5 pt-lg-0">
+        <!-- personnalisable • ne doit s'afficher que dans le cas d'une connexion cliente -->
         <h4 class="mb-2">
           Bienvenue chez {{ AuthService.nom_de_la_structure }} ! 👋
         </h4>
         <p class="mb-4">Veuillez vous connecter à votre compte</p>
+        <!-- personnalisable • ne doit s'afficher que dans le cas d'une connexion cliente -->
 
         <form class="mb-3" id="formAuthentication" #Connectform="ngForm">
           <div class="form-floating form-floating-outline mb-3">

@@ -210,7 +210,6 @@
   "reclam_action_encrs_1": "Attribution de reclamation",
   "reclam_action_encrs_2": "Consultation étape de la reclamation",
   "reclam_action_encrs_3": "Clôture définitive",
-  "reclam_action_clo_1": "Annulation clôture définitive",
   "reclam_action_clo_2": "Transmission à un tribunal",
   "reclam_action_clo_3": "Clôture procédure judiciaire",
   "relance_title": "Prolongaton des reclamations",
@@ -248,7 +247,7 @@
   "avis_recev_title": "Avis sur la reclamation",
   "avis_recev_sub_title": "Donner votre avis sur la recevabilité de cette reclamation",
   "avis_recev_chmp_title_1": "Avis",
-  "avis_recev_chmp_title_2_placeholder": "Observation de l'agent traitant (portant sur la plainte ou la reclamation)",
+  "avis_recev_chmp_title_2_placeholder": "Observation de l'agent traitant (portant sur la reclamation)",
   "chmp_date_start": "Date de début",
   "chmp_date_start_placeholder": "Entrez une date de début (01-01-2015)",
   "chmp_date_end": "Date de fin",
@@ -286,6 +285,8 @@
   "clo_def_title_step": "Etapes",
   "chmp_observation": "Observation",
   "placeholder_description": "Objectif de la tâche",
+  "placeholder_avis_clo": "Donnez votre avis sur l'annulation de la cloture",
+  "placeholder_obs_cloture": "Observation sur la requête",
   "btn_title_to_enclose": "Cloturer",
   "ann_clo_def_title": "Annulation clôture définitive",
   "ann_clo_def_sub_title": "Annulation de la clôture définitive",
@@ -330,7 +331,8 @@
   "Satisfait": "Satisfait",
   "Non satisfait ": "Non satisfait",
   "Neutre": "Neutre",
-  "search_placeholder_code_client": "Code ou téléphone du client",
+  "search_placeholder_code_client": "Recherche par code",
+  "search_placeholder_tel_client": "Recherche par téléphone",
   "transmission_title": "Transmission à un tribunal",
   "transmission_sub_title": "Transmettez à un tribunal",
   "champ_obs_contentieux_placeholder": "Observation du contentieux",
@@ -338,5 +340,6 @@
   "clo_pro_jud_title": "Cloture procédure judiciaire",
   "clo_pro_jud_sub_title": "Cloturez la procédure",
   "relance_badge": "Relance",
-  "tribunal_badge": "Tribunal"
+  "tribunal_badge": "Tribunal",
+  "tribunal_end_badge": "Fin procédure"
 }

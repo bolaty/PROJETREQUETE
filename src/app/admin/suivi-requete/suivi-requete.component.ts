@@ -22,7 +22,7 @@ export class SuiviRequeteComponent {
 
   maVariableSubscription?: Subscription;
 
-  recupinfo: any = JSON.parse(sessionStorage.getItem('infoReque') || '');
+  recupinfo: any = '';
   recupinfoconnect: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
   statutValreq: any = '';
   var_off_on: any = 'N';
@@ -116,12 +116,16 @@ export class SuiviRequeteComponent {
   ) {}
 
   voirTraitement1() {
+    this.recupinfo = JSON.parse(sessionStorage.getItem('infoReque') || '');
+
     if (this.recupinfo.RQ_NOMRAPPORT != '') this.afficher_doc = true;
     else this.afficher_doc = false;
     $('#sendInvoiceOffcanvas').offcanvas('show');
   }
 
   voirTraitement() {
+    this.recupinfo = JSON.parse(sessionStorage.getItem('infoReque') || '');
+
     let Option = 'RequeteClientsClasse.svc/pvgInfosDuClient';
     let body = {
       Objets: [
@@ -172,6 +176,8 @@ export class SuiviRequeteComponent {
   }
 
   ComboSatisfaction() {
+    this.recupinfo = JSON.parse(sessionStorage.getItem('infoReque') || '');
+
     let Option = 'RequeteClientsClasse.svc/pvgReqniveausatisfactionCombo';
     let body = {
       Objets: [
@@ -213,6 +219,8 @@ export class SuiviRequeteComponent {
     );
   }
   ConsultationTraitement(info: any): void {
+    this.recupinfo = JSON.parse(sessionStorage.getItem('infoReque') || '');
+
     if (this.recupinfo.RQ_DATECLOTUREREQUETE != '01/01/1900') {
       $('#sendInvoiceOffcanvas2').offcanvas('show');
     } else {
@@ -225,6 +233,8 @@ export class SuiviRequeteComponent {
   }
 
   TestEpateRequete() {
+    this.recupinfo = JSON.parse(sessionStorage.getItem('infoReque') || '');
+
     if (this.recupinfo.RQ_DATECLOTUREREQUETE == '01/01/1900') {
       this.statutValreq = 'En cours de traitement';
     } else {
@@ -235,6 +245,8 @@ export class SuiviRequeteComponent {
   }
 
   Valider(tableau_recu: any) {
+    this.recupinfo = JSON.parse(sessionStorage.getItem('infoReque') || '');
+
     this.AdminService.SecuriteChampObligatoireEtTypeDeDonnee(tableau_recu);
     this.AdminService.TypeDeDonneeChampNonObligatoire(tableau_recu);
     if (
@@ -333,6 +345,8 @@ export class SuiviRequeteComponent {
   }
 
   ValiderTraitement(tableau_recu: any) {
+    this.recupinfo = JSON.parse(sessionStorage.getItem('infoReque') || '');
+
     this.AdminService.SecuriteChampObligatoireEtTypeDeDonnee(tableau_recu);
     this.AdminService.TypeDeDonneeChampNonObligatoire(tableau_recu);
     if (
@@ -353,34 +367,6 @@ export class SuiviRequeteComponent {
       let body = {
         Objets: [
           {
-            /* "AC_CODEACTIONCORRECTIVE": "",
-                  "CU_CODECOMPTEUTULISATEUR": this.recupinfo.CU_CODECOMPTEUTULISATEUR,// this.recupinfo[0].CU_CODECOMPTEUTULISATEUR,//"1",
-                  "CU_CODECOMPTEUTULISATEURAGENTENCHARGE": this.recupinfo.CU_CODECOMPTEUTULISATEURAGENTENCHARGE,//this.formulaire_suivi[8].valeur,
-                  "MC_CODEMODECOLLETE":this.recupinfo.MC_CODEMODECOLLETE,//"01",
-                  "NS_CODENIVEAUSATISFACTION": "",
-                  "RQ_CODEREQUETE": this.recupinfo.RQ_CODEREQUETE,
-                  "RQ_CODEREQUETERELANCEE": "",
-                  "RQ_DATECLOTUREREQUETE": date,
-                  "RQ_DATEDEBUTTRAITEMENTREQUETE": date,
-                  "RQ_DATEFINTRAITEMENTREQUETE": date,
-                  "RQ_DATESAISIEREQUETE": this.recupinfo.RQ_DATESAISIEREQUETE,
-                  "RQ_DATETRANSFERTREQUETE": this.recupinfo.RQ_DATETRANSFERTREQUETE,
-                  "RQ_DELAITRAITEMENTREQUETE": "",
-                  "RQ_DESCRIPTIONREQUETE": this.recupinfo.RQ_DESCRIPTIONREQUETE,//"DESCRIPTION DE LA REQUETE",
-                  "RQ_DUREETRAITEMENTREQUETE": "",
-                  "RQ_LOCALISATIONCLIENT": this.recupinfo.RQ_LOCALISATIONCLIENT,//"LOCALISATION DU CLIENT",
-                  "RQ_NUMERORECOMPTE":this.recupinfo.RQ_NUMERORECOMPTE,//"0",
-                  "RQ_NUMEROREQUETE":this.recupinfo.RQ_NUMEROREQUETE,
-                  "RQ_OBJETREQUETE": this.formulaire_suivi[0].valeur,
-                  "RQ_OBSERVATIONAGENTTRAITEMENTREQUETE": this.formulaire_suivi[3].valeur,
-                  "RQ_OBSERVATIONDELAITRAITEMENTREQUETE": "",
-                  RQ_AFFICHERINFOCLIENT: "O",
-                  "RQ_SIGNATURE": this.base64Image,
-                  "RQ_SIGNATURE1": "",
-                  "RS_CODESTATUTRECEVABILITE": this.recupinfo.RS_CODESTATUTRECEVABILITE,//this.formulaire_suivi[2].valeur,
-                  "SR_CODESERVICE": this.recupinfo.SR_CODESERVICE,//this.formulaire_suivi[1].valeur,
-                  "TR_CODETYEREQUETE": this.recupinfo.TR_CODETYEREQUETE,//"00001",*/
-
             AG_CODEAGENCE: this.recupinfoconnect[0].AG_CODEAGENCE,
             AT_DATECLOTUREETAPE: date,
             AT_DATEDEBUTTRAITEMENTETAPE: date,
@@ -463,6 +449,8 @@ export class SuiviRequeteComponent {
   }
 
   HandleFileInput(event: any) {
+    this.recupinfo = JSON.parse(sessionStorage.getItem('infoReque') || '');
+
     const file = event.target.files[0];
     if (file.size > 4 * 1024 * 1024) {
       this.toastr.error(
@@ -537,6 +525,8 @@ export class SuiviRequeteComponent {
   }
 
   EnregistrerAvis(tableau_recu: any) {
+    this.recupinfo = JSON.parse(sessionStorage.getItem('infoReque') || '');
+
     this.AdminService.SecuriteChampObligatoireEtTypeDeDonnee(tableau_recu);
     this.AdminService.TypeDeDonneeChampNonObligatoire(tableau_recu);
     if (
@@ -641,6 +631,8 @@ export class SuiviRequeteComponent {
   }
 
   RelanceRequetePrincipale() {
+    this.recupinfo = JSON.parse(sessionStorage.getItem('infoReque') || '');
+
     let Options = 'RequeteClientsClasse.svc/pvgMajReqrequete'; // le chemin d'appel du service web
     //objet d'envoi
     let body = {
@@ -721,6 +713,8 @@ export class SuiviRequeteComponent {
   }
 
   ComboReqrequeteselonEtape(info: any) {
+    this.recupinfo = JSON.parse(sessionStorage.getItem('infoReque') || '');
+
     let Option = 'RequeteClientsClasse.svc/pvgListeReqrequeteEtapeparRequete';
     let body = {
       Objets: [
@@ -766,6 +760,8 @@ export class SuiviRequeteComponent {
   }
 
   AfficherFichier() {
+    this.recupinfo = JSON.parse(sessionStorage.getItem('infoReque') || '');
+
     window.open(
       `${this.recupinfo.RQ_LIENRAPPORT}${this.recupinfo.RQ_NOMRAPPORT}`,
       '_blank'
@@ -804,6 +800,8 @@ export class SuiviRequeteComponent {
   }
 
   ngOnInit(): void {
+    this.recupinfo = JSON.parse(sessionStorage.getItem('infoReque') || '');
+
     setTimeout(() => {
       this.ComboStatut();
       this.voirTraitement();
