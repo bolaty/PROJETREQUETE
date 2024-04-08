@@ -4,6 +4,8 @@ import { AuthService } from '../auth.service';
 import { ToastrService } from 'ngx-toastr';
 const toastr = require('toastr');
 declare var $: any;
+declare var Swal: any;
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -15,6 +17,7 @@ export class LoginComponent {
   RetoursChargementMdp: any = [];
   tab_valeur_de_decision: any = [];
   customizer: any;
+  message: any;
   infoChmpPassword: any;
   infoBtnPassword: boolean = true;
   temps_de_latence: boolean = true;
@@ -84,8 +87,8 @@ export class LoginComponent {
     let body = {
       Objets: [
         {
-          // OE_PARAM: ['0001', this.formLogin.login, this.formLogin.mdp], // operateur personnalisable
-          OE_PARAM: ['0002', this.formLogin.login, this.formLogin.mdp], // client personnalisable
+          OE_PARAM: ['0001', this.formLogin.login, this.formLogin.mdp], // operateur personnalisable
+          // OE_PARAM: ['0002', this.formLogin.login, this.formLogin.mdp], // client personnalisable
           clsObjetEnvoi: {
             ET_CODEETABLISSEMENT: '',
             AN_CODEANTENNE: '',
@@ -210,18 +213,23 @@ export class LoginComponent {
           } else {
             if (this.formulaire_recupMdp[0].valeur.includes('@')) {
               this.RetoursChargementMdp[0].clsResultat.SL_MESSAGE =
-                'Opération réalisée avec succès. Veuillez consulter votre boite mail pour recuperer votre mot de passe';
+                this.message =
+                  'Veuillez consulter votre boite mail pour recuperer votre mot de passe.';
             } else {
               this.RetoursChargementMdp[0].clsResultat.SL_MESSAGE =
-                'Opération réalisée avec succès. Un sms contenant votre mot de passe vous a été envoyé';
+                this.message =
+                  'Un sms contenant votre mot de passe vous a été envoyé.';
             }
 
             this.formulaire_recupMdp[0].valeur = '';
             this.formulaire_recupMdp[1].valeur = '';
-            this.toastr.success(
+            /*  this.toastr.success(
               this.RetoursChargementMdp[0].clsResultat.SL_MESSAGE,
               'success'
-            );
+            );  */
+
+            $('#onboardImageModal').modal('show');
+
             $('#sendInvoiceOffcanvasMotdepasse').offcanvas('hide');
           }
         },

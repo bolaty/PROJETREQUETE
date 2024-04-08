@@ -561,7 +561,7 @@ export class OperateurComponent {
   RechercherClient(search_bar: any) {
     let Option = 'RequeteClientsClasse.svc/pvgListeUtilisateursRecherche';
 
-    if (search_bar == undefined || search_bar == '') {
+    /*   if (search_bar == undefined || search_bar == '') {
       this.toastr.error(
         'Veuillez renseigner un code ou un téléphone',
         'error',
@@ -569,23 +569,23 @@ export class OperateurComponent {
           positionClass: 'toast-bottom-left',
         }
       );
-    } else {
-      let body;
-      if (search_bar.substr(0, 1) === '0') {
-        // dans le cas d'une recherche avec numero de telephone
-        body = {
-          Objets: [
-            {
-              OE_PARAM: ['0002', '', search_bar, '', '01'],
-              clsObjetEnvoi: {
-                ET_CODEETABLISSEMENT: '',
-                AN_CODEANTENNE: '',
-                TYPEOPERATION: '01',
-              },
-            },
-          ],
-        };
-      } else {
+    } else { */
+    let body;
+    // if (search_bar.substr(0, 1) === '0') {
+    // dans le cas d'une recherche avec numero de telephone
+    body = {
+      Objets: [
+        {
+          OE_PARAM: ['0002', '', search_bar, '', '01'],
+          clsObjetEnvoi: {
+            ET_CODEETABLISSEMENT: '',
+            AN_CODEANTENNE: '',
+            TYPEOPERATION: '01',
+          },
+        },
+      ],
+    };
+    /* } else {
         // dans le cas d'une recherche avec code client
         body = {
           Objets: [
@@ -599,39 +599,39 @@ export class OperateurComponent {
             },
           ],
         };
-      }
+      } */
 
-      // $(".datatables-basic").DataTable().destroy();
-      this.AdminService.AppelServeur(body, Option).subscribe(
-        (success: any) => {
-          this.tab_list_client = success;
-          this.tab_list_client =
-            this.tab_list_client.pvgListeUtilisateursRechercheResult;
-          console.log('tab_list_client_2', this.tab_list_client);
-          if (this.tab_list_client[0].clsResultat.SL_RESULTAT == 'TRUE') {
-            this.affiche_liste_client = true;
-            this.AdminService.CloseLoader();
-          } else {
-            this.affiche_liste_client = false;
-            this.AdminService.CloseLoader();
-            this.toastr.error(
-              this.tab_list_client[0].clsResultat.SL_MESSAGE,
-              'error',
-              { positionClass: 'toast-bottom-left' }
-            );
-          }
-        },
-        (error) => {
+    // $(".datatables-basic").DataTable().destroy();
+    this.AdminService.AppelServeur(body, Option).subscribe(
+      (success: any) => {
+        this.tab_list_client = success;
+        this.tab_list_client =
+          this.tab_list_client.pvgListeUtilisateursRechercheResult;
+        console.log('tab_list_client_2', this.tab_list_client);
+        if (this.tab_list_client[0].clsResultat.SL_RESULTAT == 'TRUE') {
+          this.affiche_liste_client = true;
           this.AdminService.CloseLoader();
+        } else {
           this.affiche_liste_client = false;
-          this.toastr.warning(
+          this.AdminService.CloseLoader();
+          this.toastr.error(
             this.tab_list_client[0].clsResultat.SL_MESSAGE,
-            'warning',
+            'error',
             { positionClass: 'toast-bottom-left' }
           );
         }
-      );
-    }
+      },
+      (error) => {
+        this.AdminService.CloseLoader();
+        this.affiche_liste_client = false;
+        this.toastr.warning(
+          this.tab_list_client[0].clsResultat.SL_MESSAGE,
+          'warning',
+          { positionClass: 'toast-bottom-left' }
+        );
+      }
+    );
+    // }
   }
 
   ModifyInfoClient(le_client: any) {
@@ -735,6 +735,14 @@ export class OperateurComponent {
           );
         }
       );
+    }
+  }
+
+  RechercheAvecTouche1(e: any) {
+    // Vérifier si la touche pressée est Entrée
+    if (e.key === 'Enter') {
+      // Appeler la fonction lorsque la touche Entrée est pressée
+      this.RechercherClient(this.search_bar);
     }
   }
 

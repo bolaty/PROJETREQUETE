@@ -17,9 +17,9 @@ declare var $: any;
   styleUrls: ['./reclamations.component.scss'],
 })
 export class ReclamationsComponent {
-  // LienServeur: any = 'http://localhost:22248/'; // lien dev
+  LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
-  LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
+  // LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
 
   maVariableSubscription?: Subscription;
 
@@ -2603,6 +2603,31 @@ export class ReclamationsComponent {
     this.var_checked_clo = '';
     this.btn_filter = bouton;
 
+    // laaa
+    // Réinitialisation des styles de fond de tous les boutons
+    /* let buttons = document.querySelectorAll('.btn-outline-secondary');
+    buttons.forEach((button) => {
+      //@ts-ignore
+      button.style.backgroundColor = 'transparent'; // Réinitialisation de la couleur de fond
+      // Vous pouvez également réinitialiser d'autres propriétés CSS ici si nécessaire
+    });
+
+    if (this.afficher_tri && this.AdminService.for_phone) {
+      if (bouton == 'enrg') {
+        let menu_select_color1 = document.getElementById('one'); //@ts-ignore
+        menu_select_color1.style.backgroundColor = 'yellow';
+        console.log('btn_select', menu_select_color1);
+      } else if (bouton == 'trai') {
+        let menu_select_color2 = document.getElementById('two'); //@ts-ignore
+        menu_select_color2.style.backgroundColor = 'yellow';
+        console.log('btn_select', menu_select_color2);
+      } else {
+        let menu_select_color3 = document.getElementById('three'); //@ts-ignore
+        menu_select_color3.style.backgroundColor = 'yellow';
+        console.log('btn_select', menu_select_color3);
+      }
+    } */
+
     if (bouton == 'enrg') {
       this.var_checked_enrg = 'checked';
       for (let index = 0; index < this.tab_req_enregistree.length; index++) {
@@ -3031,7 +3056,8 @@ export class ReclamationsComponent {
 
   checkStatusForm(infoEcran: any, type_user: any) {
     this.phone_or_code = false;
-    this.statutClientExiste = true;
+    if (this.recupinfo[0].TU_CODETYPEUTILISATEUR == '0001')
+      this.statutClientExiste = true;
     this.ListeClients = [];
     this.SearchValueCode = '';
     this.SearchValuePhone = '';
@@ -3273,6 +3299,14 @@ export class ReclamationsComponent {
     }
   }
 
+  RechercheAvecToucheAdmin1(e: any) {
+    // Vérifier si la touche pressée est Entrée
+    if (e.key === 'Enter') {
+      // Appeler la fonction lorsque la touche Entrée est pressée
+      this.FilterTicket(this.SearchValue);
+    }
+  }
+
   uploadFiles() {
     var fileInput = document.getElementById('fileInput');
     //@ts-ignore
@@ -3313,6 +3347,7 @@ export class ReclamationsComponent {
     this.ComboAgence();
     this.formulaire_plaintes_reclamations[8].valeur =
       this.recupinfo[0].CU_NOMUTILISATEUR;
+
     if (this.recupinfo[0].TU_CODETYPEUTILISATEUR == '0002') {
       this.statutClientExiste = false;
     }

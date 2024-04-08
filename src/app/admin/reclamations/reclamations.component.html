@@ -182,6 +182,7 @@
           aria-label="Search"
           aria-describedby="basic-addon1"
           [(ngModel)]="SearchValue"
+          (keyup)="RechercheAvecToucheAdmin1($event)"
           *ngIf="
             recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') &&
             recupinfo[0].TU_CODETYPEUTILISATEUR != '0002'
@@ -930,7 +931,7 @@
               recupinfo[0].TU_CODETYPEUTILISATEUR == '0002'
             "
           >
-            <!-- affichage web -->
+            <!-- affichage web • cas d'un client -->
             <div
               class="d-flex mb-3 gap-3"
               *ngIf="afficher_tri && !AdminService.for_phone"
@@ -1000,7 +1001,7 @@
               </div>
             </div>
 
-            <!-- affichage mobile -->
+            <!-- affichage mobile • cas d'un client -->
             <div
               class="d-flex mb-5 gap-3"
               style="height: 50px"
@@ -1210,7 +1211,7 @@
                             data-bs-toggle="tooltip"
                             data-popup="tooltip-custom"
                             data-bs-placement="top"
-                            title="Kaith D'souza"
+                            title=""
                             class="avatar avatar-sm pull-up"
                           >
                             <a href="javascript:;"
@@ -1236,7 +1237,7 @@
                             data-bs-toggle="tooltip"
                             data-popup="tooltip-custom"
                             data-bs-placement="top"
-                            title="Kaith D'souza"
+                            title=""
                             class="avatar avatar-sm pull-up"
                           >
                             <a href="javascript:;"
@@ -1330,7 +1331,7 @@
               recupinfo[0].TU_CODETYPEUTILISATEUR == '0001'
             "
           >
-            <!-- affichage web -->
+            <!-- affichage web • cas d'un simple operateur -->
             <div
               class="d-flex mb-3 gap-3"
               *ngIf="afficher_tri && !AdminService.for_phone"
@@ -1398,7 +1399,7 @@
               </div>
             </div>
 
-            <!-- affichage mobile -->
+            <!-- affichage mobile • cas d'un simple operateur -->
             <div
               class="d-flex mb-5 gap-3"
               style="height: 50px"
@@ -1433,6 +1434,7 @@
                   <button
                     type="button"
                     class="btn btn-outline-secondary"
+                    id="one"
                     (click)="OnChecked('enrg')"
                   >
                     <i class="mdi mdi-alert-circle-check mdi-24px"></i>
@@ -1440,6 +1442,7 @@
                   <button
                     type="button"
                     class="btn btn-outline-secondary"
+                    id="two"
                     (click)="OnChecked('trai')"
                   >
                     <i class="mdi mdi-account-reactivate-outline mdi-24px"></i>
@@ -1447,6 +1450,7 @@
                   <button
                     type="button"
                     class="btn btn-outline-secondary"
+                    id="three"
                     (click)="OnChecked('clo')"
                   >
                     <i class="mdi mdi-alert-circle-check-outline mdi-24px"></i>
@@ -1603,7 +1607,7 @@
                             data-bs-toggle="tooltip"
                             data-popup="tooltip-custom"
                             data-bs-placement="top"
-                            title="Kaith D'souza"
+                            title=""
                             class="avatar avatar-sm pull-up"
                           >
                             <a href="javascript:;"
@@ -1694,7 +1698,7 @@
             role="tabpanel"
             *ngIf="recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')"
           >
-            <!-- affichage web -->
+            <!-- affichage web • cas d'un admin -->
             <div
               class="d-flex mb-3 gap-3"
               *ngIf="afficher_tri && !AdminService.for_phone"
@@ -1762,7 +1766,7 @@
               </div>
             </div>
 
-            <!-- affichage mobile -->
+            <!-- affichage mobile • cas d'un admin -->
             <div
               class="d-flex mb-5 gap-3"
               style="height: 50px"
@@ -2220,7 +2224,7 @@
                             data-bs-toggle="tooltip"
                             data-popup="tooltip-custom"
                             data-bs-placement="top"
-                            title="Kaith D'souza"
+                            title=""
                             class="avatar avatar-sm pull-up"
                           >
                             <a href="javascript:;"
@@ -2309,7 +2313,7 @@
                             data-bs-toggle="tooltip"
                             data-popup="tooltip-custom"
                             data-bs-placement="top"
-                            title="Kaith D'souza"
+                            title=""
                             class="avatar avatar-sm pull-up"
                           >
                             <a href="javascript:;"
@@ -2326,7 +2330,7 @@
                       </div>
                     </div>
 
-                    <!-- laaa *ngIf="observer_trans_trib" -->
+                    <!-- *ngIf="observer_trans_trib" -->
                     <span
                       class="badge rounded-pill bg-label-dark"
                       *ngIf="
