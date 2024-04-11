@@ -1,7 +1,10 @@
 <!-- <p>dashboard works!</p> -->
 
 <!-- Layout wrapper -->
-<div class="layout-wrapper layout-content-navbar">
+<div
+  class="layout-wrapper layout-content-navbar"
+  *ngIf="!AdminService.showMenu"
+>
   <div class="layout-container">
     <!-- Menu -->
     <aside
@@ -108,7 +111,8 @@
         <li class="menu-item active open" routerLink="dashboard">
           <a href="javascript:void(0);" class="menu-link">
             <i class="menu-icon tf-icons mdi mdi-home-outline"></i>
-            <div data-i18n="Dashboards">Dashboards</div>
+            <div>{{ LanguageService.sidebar_menu_5 }}</div>
+            <!-- <div data-i18n="Dashboards">Dashboards</div> -->
             <div class="badge bg-danger rounded-pill ms-auto">5</div>
           </a>
           <!-- <ul class="menu-sub">
@@ -135,12 +139,17 @@
             <div data-i18n="Plaintes">Plaintes</div>
           </a>
         </li> -->
+
+        <!-- Reclamations -->
         <li class="menu-item" routerLink="reclamations">
           <a style="cursor: pointer" class="menu-link">
             <span class="menu-icon tf-icons mdi mdi-alert-circle-check"></span>
-            <div data-i18n="Reclamations">Reclamations</div>
+            <div>{{ LanguageService.sidebar_menu_1 }}</div>
+            <!-- <div data-i18n="Reclamations">Reclamations</div> -->
           </a>
         </li>
+
+        <!-- Prolongation -->
         <li
           class="menu-item"
           routerLink="Relance"
@@ -148,9 +157,12 @@
         >
           <a style="cursor: pointer" class="menu-link">
             <span class="menu-icon tf-icons mdi mdi-reload-alert"></span>
-            <div data-i18n="Relance">Relance</div>
+            <div>{{ LanguageService.sidebar_menu_2 }}</div>
+            <!-- <div data-i18n="Relance">Relance</div> -->
           </a>
         </li>
+
+        <!-- Operateur -->
         <li
           class="menu-item"
           (click)="ChoixCreation('operateur')"
@@ -158,19 +170,34 @@
         >
           <a style="cursor: pointer" class="menu-link">
             <span class="menu-icon tf-icons mdi mdi-account"></span>
-            <div data-i18n="Operateur">Operateur</div>
+            <div>{{ LanguageService.sidebar_menu_3 }}</div>
+            <!-- <div data-i18n="Operateur">Operateur</div> -->
           </a>
         </li>
-        <!--<li class="menu-item" (click)="ChoixCreation('client')">
+        <li
+          class="menu-item"
+          (click)="ChoixCreation('client')"
+          *ngIf="
+            recupinfo[0].TU_CODETYPEUTILISATEUR != '0002' &&
+            !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')
+          "
+        >
           <a style="cursor: pointer" class="menu-link">
             <i class="menu-icon tf-icons mdi mdi-account-sync"></i>
             <div data-i18n="Client">Client</div>
           </a>
-        </li>-->
-        <li class="menu-item" routerLink="edition">
+        </li>
+
+        <!-- Edition -->
+        <li
+          class="menu-item"
+          routerLink="edition"
+          *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR != '0002'"
+        >
           <a style="cursor: pointer" class="menu-link">
             <span class="menu-icon tf-icons mdi mdi-file"></span>
-            <div data-i18n="Edition">Edition</div>
+            <div>{{ LanguageService.sidebar_menu_4 }}</div>
+            <!-- <div data-i18n="Edition">Edition</div> -->
           </a>
         </li>
       </ul>
@@ -180,7 +207,6 @@
     <!-- Layout container -->
     <div class="layout-page">
       <!-- Navbar -->
-
       <nav
         class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
         id="layout-navbar"
@@ -206,7 +232,7 @@
               >
                 <i class="mdi mdi-magnify mdi-24px scaleX-n1-rtl"></i>
                 <span class="d-none d-md-inline-block text-muted"
-                  >Rechercher (Ctrl+/)</span
+                  >{{ LanguageService.header_search_bar }} (Ctrl+/)</span
                 >
               </a>
             </div>
@@ -229,6 +255,7 @@
                     class="dropdown-item"
                     href="javascript:void(0);"
                     data-language="fr"
+                    (click)="LanguageService.changeLanguage('fr')"
                   >
                     <span class="align-middle">Français</span>
                   </a>
@@ -238,10 +265,31 @@
                     class="dropdown-item"
                     href="javascript:void(0);"
                     data-language="en"
+                    (click)="LanguageService.changeLanguage('en')"
                   >
                     <span class="align-middle">Anglais</span>
                   </a>
                 </li>
+                <!--  <li>
+                  <a
+                    class="dropdown-item"
+                    href="javascript:void(0);"
+                    data-language="de"
+                    (click)="LanguageService.changeLanguage('de')"
+                  >
+                    <span class="align-middle">Allémand</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="javascript:void(0);"
+                    data-language="pt"
+                    (click)="LanguageService.changeLanguage('pt')"
+                  >
+                    <span class="align-middle">Portuguais</span>
+                  </a>
+                </li> -->
               </ul>
             </li>
             <!--/ Language -->
@@ -263,7 +311,10 @@
                     data-theme="light"
                   >
                     <span class="align-middle"
-                      ><i class="mdi mdi-weather-sunny me-2"></i>Light</span
+                      ><i class="mdi mdi-weather-sunny me-2"></i
+                      >{{
+                        LanguageService.header_brightness_btn_sub_title_1
+                      }}</span
                     >
                   </a>
                 </li>
@@ -274,7 +325,10 @@
                     data-theme="dark"
                   >
                     <span class="align-middle"
-                      ><i class="mdi mdi-weather-night me-2"></i>Dark</span
+                      ><i class="mdi mdi-weather-night me-2"></i
+                      >{{
+                        LanguageService.header_brightness_btn_sub_title_2
+                      }}</span
                     >
                   </a>
                 </li>
@@ -285,7 +339,10 @@
                     data-theme="system"
                   >
                     <span class="align-middle"
-                      ><i class="mdi mdi-monitor me-2"></i>System</span
+                      ><i class="mdi mdi-monitor me-2"></i
+                      >{{
+                        LanguageService.header_brightness_btn_sub_title_3
+                      }}</span
                     >
                   </a>
                 </li>
@@ -438,9 +495,12 @@
               <ul class="dropdown-menu dropdown-menu-end py-0">
                 <li class="dropdown-menu-header border-bottom">
                   <div class="dropdown-header d-flex align-items-center py-3">
-                    <h6 class="fw-normal mb-0 me-auto">Notification</h6>
+                    <h6 class="fw-normal mb-0 me-auto">
+                      {{ LanguageService.header_notification_btn_title }}
+                    </h6>
                     <span class="badge rounded-pill bg-label-primary"
-                      >{{nombreNotif}} New</span
+                      >{{ nombreNotif }}
+                      {{ LanguageService.header_notification_nbre_title }}</span
                     >
                   </div>
                 </li>
@@ -448,7 +508,9 @@
                   <ul class="list-group list-group-flush">
                     <li
                       class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read"
-                      *ngFor="let LisNotification of ListeNotification">
+                      *ngFor="let LisNotification of ListeNotification"
+                      (click)="AllerAuSuivi(LisNotification)"
+                    >
                       <div class="d-flex align-items-center gap-2">
                         <div class="flex-shrink-0">
                           <div class="avatar me-1">
@@ -461,24 +523,28 @@
                         <div
                           class="d-flex flex-column flex-grow-1 overflow-hidden w-px-250"
                         >
-                          <h6 class="mb-1">{{LisNotification.SM_MESSAGE}}</h6>
-                          <small class="text-truncate text-body"
-                            >{{LisNotification.SM_STATUT}}</small
-                          >
+                          <h6 class="mb-1">
+                            {{ LisNotification.SM_MESSAGE_TRANSLATE }}
+                          </h6>
+                          <!--  <small class="text-truncate text-body">{{
+                            LisNotification.SM_STATUT
+                          }}</small> -->
                         </div>
                         <div
                           class="flex-shrink-0 dropdown-notifications-actions"
                         >
-                          <small class="text-muted">{{LisNotification.SM_DATEEMISSIONSMS}}</small>
+                          <small class="text-muted">{{
+                            LisNotification.SM_DATEEMISSIONSMS
+                          }}</small>
                         </div>
                       </div>
                     </li>
                   </ul>
                 </li>
-               <!-- <li class="dropdown-menu-footer border-top p-3">
+                <!-- <li class="dropdown-menu-footer border-top p-3">
                   <a
                     href="javascript:void(0);"
-                    class="btn btn-primary d-flex justify-content-center"
+                    class="bttn btn btn-primary d-flex justify-content-center"
                     >Read all notifications</a
                   >
                 </li>-->
@@ -514,11 +580,31 @@
                           />
                         </div>
                       </div>
+
                       <div class="flex-grow-1">
                         <h6 class="mb-0">
                           {{ recupinfo[0].CU_NOMUTILISATEUR }}
                         </h6>
-                        <small class="text-muted">Admin</small>
+                        <small
+                          class="text-muted"
+                          *ngIf="
+                            recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')
+                          "
+                          >Admin</small
+                        >
+                        <small
+                          class="text-muted"
+                          *ngIf="
+                            !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') &&
+                            recupinfo[0].TU_CODETYPEUTILISATEUR == '0001'
+                          "
+                          >{{ LanguageService.header_badge_1 }}</small
+                        >
+                        <small
+                          class="text-muted"
+                          *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR == '0002'"
+                          >{{ LanguageService.header_badge_2 }}</small
+                        >
                       </div>
                     </div>
                   </a>
@@ -526,47 +612,7 @@
                 <li>
                   <div class="dropdown-divider my-0"></div>
                 </li>
-                <li>
-                  <a class="dropdown-item" style="cursor: pointer">
-                    <i class="mdi mdi-account-outline me-1 mdi-20px"></i>
-                    <span class="align-middle">Mon Profile</span>
-                  </a>
-                </li>
-                <!--  <li>
-                  <a class="dropdown-item" style="cursor: pointer">
-                    <i class="mdi mdi-cog-outline me-1 mdi-20px"></i>
-                    <span class="align-middle">Settings</span>
-                  </a>
-                </li>
-                <li>
-                  <a class="dropdown-item" style="cursor: pointer">
-                    <span class="d-flex align-items-center align-middle">
-                      <i
-                        class="flex-shrink-0 mdi mdi-credit-card-outline me-1 mdi-20px"
-                      ></i>
-                      <span class="flex-grow-1 align-middle ms-1">Billing</span>
-                      <span
-                        class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20"
-                        >4</span
-                      >
-                    </span>
-                  </a>
-                </li>
-                <li>
-                  <div class="dropdown-divider"></div>
-                </li>
-                <li>
-                  <a class="dropdown-item" style="cursor: pointer">
-                    <i class="mdi mdi-help-circle-outline me-1 mdi-20px"></i>
-                    <span class="align-middle">FAQ</span>
-                  </a>
-                </li>
-                <li>
-                  <a class="dropdown-item" style="cursor: pointer">
-                    <i class="mdi mdi-currency-usd me-1 mdi-20px"></i>
-                    <span class="align-middle">Pricing</span>
-                  </a>
-                </li>-->
+
                 <li>
                   <div class="dropdown-divider my-1"></div>
                 </li>
@@ -578,7 +624,9 @@
                     (click)="Deconnexion()"
                   >
                     <i class="mdi mdi-logout me-1 mdi-20px"></i>
-                    <span class="align-middle">Deconnexion</span>
+                    <span class="align-middle">{{
+                      LanguageService.header_disconnection
+                    }}</span>
                   </a>
                 </li>
               </ul>
@@ -598,7 +646,6 @@
           <i class="mdi mdi-close search-toggler cursor-pointer"></i>
         </div>
       </nav>
-
       <!-- / Navbar -->
 
       <!-- Content wrapper -->
@@ -618,11 +665,11 @@
                 <!-- <script>
                   document.write(new Date().getFullYear());
                 </script> -->
-                , Conçu avec
+                , {{ LanguageService.footer_1 }}
                 <span class="text-danger"
                   ><i class="tf-icons mdi mdi-heart"></i
                 ></span>
-                par
+                {{ LanguageService.footer_2 }}
                 <a
                   href="http://mgdigitalplus.com/"
                   target="_blank"
@@ -662,5 +709,25 @@
 
   <!-- Drag Target Area To SlideIn Menu On Small Screens -->
   <div class="drag-target"></div>
+</div>
+<!-- / Layout wrapper -->
+
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar" *ngIf="AdminService.showMenu">
+  <!-- <div class="layout-container"> -->
+  <!-- Layout container -->
+  <!-- <div class="layout-page"> -->
+  <!-- Content wrapper -->
+  <div class="content-wrapper">
+    <!-- Content -->
+    <router-outlet></router-outlet>
+    <!-- / Content -->
+
+    <div class="content-backdrop fade"></div>
+  </div>
+  <!-- Content wrapper -->
+  <!-- </div> -->
+  <!-- / Layout page -->
+  <!-- </div> -->
 </div>
 <!-- / Layout wrapper -->

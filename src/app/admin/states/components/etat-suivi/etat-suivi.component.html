@@ -1,0 +1,225 @@
+<button (click)="printPage()" class="btn btn-primary hide-on-print">
+  Imprimer
+</button>
+<div class="content" #content>
+  <div class="row">
+    <div class="col-6">
+      <table>
+        <tbody>
+          <tr>
+            <td colspan="4">
+              <span class="bold">Taux de satisfaction de plaignants</span>
+            </td>
+          </tr>
+          <tr>
+            <td>Nombre total de plaintes traitées</td>
+            <td>avis client favorable</td>
+            <td>avis client non favorable</td>
+            <td>Taux de satisfaction en %</td>
+          </tr>
+          <tr>
+            <ng-container *ngFor="let value of data?.TAUXSATISFACTION.DATA">
+              <td class="text-right">{{ value ?? 0 }}</td>
+            </ng-container>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-6">
+      <div id="chart">
+        <apx-chart
+          [series]="chartOptionsSatisfaction.series!"
+          [chart]="chartOptionsSatisfaction.chart!"
+          [dataLabels]="chartOptionsSatisfaction.dataLabels!"
+          [plotOptions]="chartOptionsSatisfaction.plotOptions!"
+          [yaxis]="chartOptionsSatisfaction.yaxis!"
+          [legend]="chartOptionsSatisfaction.legend!"
+          [fill]="chartOptionsSatisfaction.fill!"
+          [stroke]="chartOptionsSatisfaction.stroke!"
+          [tooltip]="chartOptionsSatisfaction.tooltip!"
+          [xaxis]="chartOptionsSatisfaction.xaxis!"
+        ></apx-chart>
+      </div>
+    </div>
+  </div>
+  <div class="separator"></div>
+  <div class="row">
+    <div class="col-5">
+      <table>
+        <tbody>
+          <tr>
+            <td></td>
+            <td>Nombre de plaintes reçues</td>
+            <td>Nombre de plaintes traitées</td>
+            <td>Nombre de plaintes non traitées</td>
+          </tr>
+          <ng-container
+            *ngFor="
+              let value of data?.SITUATIONPLAINTES.LIBELLES;
+              let i = index
+            "
+          >
+            <tr>
+              <td>{{ value | titlecase }}</td>
+              <td class="text-right">
+                {{ data?.SITUATIONPLAINTES.TOTALPLAINTERECUES[i] ?? 0 }}
+              </td>
+              <td class="text-right">
+                {{ data?.SITUATIONPLAINTES.TOTALPLAINTETRAITES[i] ?? 0 }}
+              </td>
+              <td class="text-right">
+                {{ data?.SITUATIONPLAINTES.TOTALPLAINTENONTRAITES[i] ?? 0 }}
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-7">
+      <div id="chart">
+        <apx-chart
+          [series]="chartOptionsSituationPlaintes.series!"
+          [chart]="chartOptionsSituationPlaintes.chart!"
+          [dataLabels]="chartOptionsSituationPlaintes.dataLabels!"
+          [plotOptions]="chartOptionsSituationPlaintes.plotOptions!"
+          [yaxis]="chartOptionsSituationPlaintes.yaxis!"
+          [legend]="chartOptionsSituationPlaintes.legend!"
+          [fill]="chartOptionsSituationPlaintes.fill!"
+          [stroke]="chartOptionsSituationPlaintes.stroke!"
+          [tooltip]="chartOptionsSituationPlaintes.tooltip!"
+          [xaxis]="chartOptionsSituationPlaintes.xaxis!"
+        ></apx-chart>
+      </div>
+    </div>
+  </div>
+  <div class="separator"></div>
+  <div class="row">
+    <div class="col-5">
+      <table>
+        <tbody>
+          <tr>
+            <td colspan="2">
+              <span class="bold">Délai de traitement des plaintes</span>
+            </td>
+          </tr>
+          <ng-container
+            *ngFor="let value of data?.DELAITRAITEMENT.LIBELLES; let i = index"
+          >
+            <tr>
+              <td>{{ value | titlecase }}</td>
+              <td class="text-right">
+                {{ data?.DELAITRAITEMENT.NOMBRE[i] ?? 0 }}
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-7">
+      <div id="chart">
+        <apx-chart
+          [series]="chartOptionsDelaiPlaintes.series!"
+          [chart]="chartOptionsDelaiPlaintes.chart!"
+          [labels]="chartOptionsDelaiPlaintes.labels!"
+          [responsive]="chartOptionsDelaiPlaintes.responsive!"
+          [colors]="chartOptionsDelaiPlaintes.colors!"
+          [legend]="chartOptionsDelaiPlaintes.legend!"
+          [dataLabels]="chartOptionsDelaiPlaintes.dataLabels!"
+          [annotations]="chartOptionsDelaiPlaintes.annotations!"
+        ></apx-chart>
+      </div>
+    </div>
+  </div>
+  <div class="separator"></div>
+  <div class="row">
+    <div class="col-5">
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <span class="bold"
+                >Nature et type des plaintes les plus récurrentes</span
+              >
+            </td>
+            <td><span class="bold">Nombre de reception</span></td>
+          </tr>
+
+          <ng-container
+            *ngFor="
+              let value of data?.NATUREPLAINTES.LIBELLESTOSHOW;
+              let i = index
+            "
+          >
+            <tr>
+              <td>{{ value | titlecase }}</td>
+              <td class="text-right">
+                {{ data?.NATUREPLAINTES.NOMBRE[i] ?? 0 }}
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-7">
+      <div id="chart">
+        <apx-chart
+          [series]="chartOptionsNaturePlaintes.series!"
+          [chart]="chartOptionsNaturePlaintes.chart!"
+          [dataLabels]="chartOptionsNaturePlaintes.dataLabels!"
+          [plotOptions]="chartOptionsNaturePlaintes.plotOptions!"
+          [yaxis]="chartOptionsNaturePlaintes.yaxis!"
+          [legend]="chartOptionsNaturePlaintes.legend!"
+          [fill]="chartOptionsNaturePlaintes.fill!"
+          [stroke]="chartOptionsNaturePlaintes.stroke!"
+          [tooltip]="chartOptionsNaturePlaintes.tooltip!"
+          [xaxis]="chartOptionsNaturePlaintes.xaxis!"
+        ></apx-chart>
+      </div>
+    </div>
+  </div>
+  <div class="separator"></div>
+  <div class="row">
+    <div class="col-5">
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <span class="bold"
+                >Nombre de clients insatisfaits ayant reformulé leur
+                plainte</span
+              >
+            </td>
+            <td><span class="bold">Nombre de reception</span></td>
+          </tr>
+          <ng-container *ngFor="let value of data?.REFPLAINTES">
+            <tr>
+              <td>{{ value?.name | titlecase }}</td>
+              <td class="text-right">{{ value?.data[0] ?? 0 }}</td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-7">
+      <div id="chart">
+        <apx-chart
+          [series]="chartOptionsClientInsatisfait.series!"
+          [chart]="chartOptionsClientInsatisfait.chart!"
+          [dataLabels]="chartOptionsClientInsatisfait.dataLabels!"
+          [plotOptions]="chartOptionsClientInsatisfait.plotOptions!"
+          [yaxis]="chartOptionsClientInsatisfait.yaxis!"
+          [legend]="chartOptionsClientInsatisfait.legend!"
+          [fill]="chartOptionsClientInsatisfait.fill!"
+          [stroke]="chartOptionsClientInsatisfait.stroke!"
+          [tooltip]="chartOptionsClientInsatisfait.tooltip!"
+          [xaxis]="chartOptionsClientInsatisfait.xaxis!"
+        ></apx-chart>
+      </div>
+    </div>
+  </div>
+</div>

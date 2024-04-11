@@ -6,8 +6,8 @@
       class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3"
     >
       <div class="d-flex flex-column justify-content-center">
-        <h4 class="mb-1 mt-3">Relance des reclamations</h4>
-        <p>Consultation des reclamations</p>
+        <h4 class="mb-1 mt-3">{{ LanguageService.relance_title }}</h4>
+        <p>{{ LanguageService.relance_sub_title }}</p>
       </div>
     </div>
     <!-- Inventory -->
@@ -31,10 +31,10 @@
               <table class="datatables-basic table table-bordered">
                 <thead style="background-color: #83c5be">
                   <tr>
-                    <th>OBJET</th>
-                    <th>DESCRIPTION</th>
-                    <th>NATURE</th>
-                    <th>OBSERVATION AGENT</th>
+                    <th>{{ LanguageService.relance_table_title_1 }}</th>
+                    <th>{{ LanguageService.relance_table_title_2 }}</th>
+                    <th>{{ LanguageService.relance_table_title_3 }}</th>
+                    <th>{{ LanguageService.relance_table_title_4 }}</th>
                   </tr>
                 </thead>
               </table>
@@ -59,7 +59,7 @@
     <h5 class="offcanvas-title">Send Invoice</h5>
     <button
       type="button"
-      class="btn-close text-reset"
+      class="bttn btn-close text-reset"
       data-bs-dismiss="offcanvas"
       aria-label="Close"
     ></button>
@@ -119,14 +119,14 @@
       <div class="mb-3 d-flex flex-wrap">
         <button
           type="button"
-          class="btn btn-primary me-3"
+          class="bttn btn btn-primary me-3"
           data-bs-dismiss="offcanvas"
         >
           Send
         </button>
         <button
           type="button"
-          class="btn btn-outline-secondary"
+          class="bttn btn btn-outline-secondary"
           data-bs-dismiss="offcanvas"
         >
           Cancel
@@ -149,9 +149,7 @@
         ></button>
         <div class="text-center mb-4">
           <h3 class="address-title mb-2 pb-1">Autorisation de Relance</h3>
-          <p class="address-subtitle">
-            Voulez-vous relancer cette requete
-          </p>
+          <p class="address-subtitle">Voulez-vous relancer cette requete</p>
         </div>
 
         <!-- Inventory -->
@@ -176,7 +174,8 @@
                     role="alert"
                   >
                     <i class="mdi mdi-bell-outline me-2"></i>
-                    Souhaitez-vous donner suite à cette requête en la relançant  ? &#160; &#160; &#160;
+                    Souhaitez-vous donner suite à cette requête en la relançant
+                    ? &#160; &#160; &#160;
                     <span
                       class="badge rounded-pill bg-primary"
                       (click)="RelanceRequetePrincipale()"
@@ -185,7 +184,6 @@
                     >
                   </div>
                   <br />
-                  
                 </div>
               </div>
             </div>

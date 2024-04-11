@@ -1,16 +1,32 @@
 <!-- Content -->
 
-<div class="authentication-wrapper authentication-cover">
+<div
+  class="authentication-wrapper authentication-cover"
+  *ngIf="!temps_de_latence"
+>
   <!-- Logo -->
-  <a href="index.html" class="auth-cover-brand d-flex align-items-center gap-2">
+  <!-- personnalisable -->
+  <a
+    href="index.html"
+    class="auth-cover-brand d-flex align-items-center gap-2"
+    style="margin-top: 70px"
+  >
     <span class="app-brand-logo demo">
       <span style="color: var(--bs-primary)">
         <!-- logo de la structure -->
         <img
-          src="../../assets/img/illustrations/logo_remuci.png"
+          src="../../assets/img/illustrations/logo_remuci-removebg-preview.png"
           alt="tree"
-          height="70"
-          width="70"
+          height="90"
+          width="90"
+          *ngIf="customizer == 'remuci'"
+        />
+        <img
+          src="../../assets/img/illustrations/logo_gesci-removebg-preview.png"
+          alt="tree"
+          height="90"
+          width="90"
+          *ngIf="customizer == 'gesci'"
         />
       </span>
     </span>
@@ -23,9 +39,11 @@
 
   <div class="authentication-inner row m-0">
     <!-- /Left Section -->
+    <!-- personnalisable -->
     <div
       class="d-none d-lg-flex col-lg-7 col-xl-8 align-items-center justify-content-center p-5 pb-2"
       style="background-color: #fff6e7"
+      *ngIf="customizer == 'remuci' && AuthService.user_connecte"
     >
       <div>
         <img
@@ -44,6 +62,49 @@
         data-app-dark-img="illustrations/auth-cover-mask-dark.png"
       />
     </div>
+    <div
+      class="d-none d-lg-flex col-lg-7 col-xl-8 align-items-center justify-content-center p-5 pb-2"
+      style="background-color: #ffffff"
+      *ngIf="customizer == 'gesci' && AuthService.user_connecte"
+    >
+      <div>
+        <img
+          src="../../assets/img/illustrations/20944013.jpg"
+          class="authentication-image-model d-none d-lg-block"
+          alt="auth-model"
+          data-app-light-img="illustrations/20944013.jpg"
+          data-app-dark-img="illustrations/20944013.jpg"
+        />
+      </div>
+      <img
+        src="../../assets/img/illustrations/auth-cover-mask-light.png"
+        class="scaleX-n1-rtl authentication-image d-none d-lg-block w-75"
+        alt="triangle-bg"
+        data-app-light-img="illustrations/auth-cover-mask-light.png"
+        data-app-dark-img="illustrations/auth-cover-mask-dark.png"
+      />
+    </div>
+    <div
+      class="d-none d-lg-flex col-lg-7 col-xl-8 align-items-center justify-content-center p-5 pb-2"
+      *ngIf="!AuthService.user_connecte"
+    >
+      <div>
+        <img
+          src="../../assets/img/illustrations/boy-with-laptop-light.png"
+          class="authentication-image-model d-none d-lg-block"
+          alt="auth-model"
+          data-app-light-img="illustrations/boy-with-laptop-light.png"
+          data-app-dark-img="illustrations/boy-with-laptop-light.png"
+        />
+      </div>
+      <img
+        src="../../assets/img/illustrations/auth-cover-mask-light.png"
+        class="scaleX-n1-rtl authentication-image d-none d-lg-block w-75"
+        alt="triangle-bg"
+        data-app-light-img="illustrations/auth-cover-mask-light.png"
+        data-app-dark-img="illustrations/auth-cover-mask-dark.png"
+      />
+    </div>
     <!-- /Left Section -->
 
     <!-- Login -->
@@ -51,10 +112,12 @@
       class="d-flex col-12 col-lg-5 col-xl-4 align-items-center authentication-bg position-relative py-sm-5 px-4 py-4"
     >
       <div class="w-px-400 mx-auto pt-5 pt-lg-0">
+        <!-- personnalisable • ne doit s'afficher que dans le cas d'une connexion cliente -->
         <h4 class="mb-2">
           Bienvenue chez {{ AuthService.nom_de_la_structure }} ! 👋
         </h4>
         <p class="mb-4">Veuillez vous connecter à votre compte</p>
+        <!-- personnalisable • ne doit s'afficher que dans le cas d'une connexion cliente -->
 
         <form class="mb-3" id="formAuthentication" #Connectform="ngForm">
           <div class="form-floating form-floating-outline mb-3">
@@ -90,14 +153,23 @@
                   />
                   <label for="password">Mot de passe</label>
                 </div>
-                <span class="input-group-text cursor-pointer"
+                <span
+                  class="input-group-text cursor-pointer"
+                  (click)="ShowHide(false)"
+                  *ngIf="infoBtnPassword"
                   ><i class="mdi mdi-eye-off-outline"></i
+                ></span>
+                <span
+                  class="input-group-text cursor-pointer"
+                  (click)="ShowHide(true)"
+                  *ngIf="!infoBtnPassword"
+                  ><i class="mdi mdi-eye-outline"></i
                 ></span>
               </div>
             </div>
           </div>
           <div class="mb-3 d-flex justify-content-between flex-wrap">
-            <div class="form-check">
+            <!--  <div class="form-check">
               <input
                 class="form-check-input"
                 type="checkbox"
@@ -106,13 +178,17 @@
               <label class="form-check-label me-2" for="remember-me">
                 Se souvenir de moi
               </label>
-            </div>
-            <a routerLink="/login" (click)="voirRecuperation()" class="float-end mb-1">
+            </div> -->
+            <a
+              routerLink="/login"
+              (click)="voirRecuperation()"
+              class="float-end mb-1"
+            >
               <span>Mot de passe oublié ?</span>
             </a>
           </div>
           <button
-            class="btn btn-primary d-grid w-100"
+            class="bttn btn btn-primary d-grid w-100"
             [disabled]="!Connectform.form.valid"
             (click)="Login()"
           >
@@ -120,6 +196,7 @@
           </button>
         </form>
 
+        <!-- personnalisable • activer ce module lors d'une connexion en tant que client -->
         <p class="text-center mt-2">
           <span>Nouveau sur notre plateforme ?</span> &#160;
           <a routerLink="/login" (click)="voirTraitement()">
@@ -134,28 +211,28 @@
         <div class="d-flex justify-content-center gap-2">
           <a
             href="javascript:;"
-            class="btn btn-icon btn-lg rounded-pill btn-text-facebook"
+            class="bttn btn btn-icon btn-lg rounded-pill btn-text-facebook"
           >
             <i class="tf-icons mdi mdi-24px mdi-facebook"></i>
           </a>
 
           <a
             href="javascript:;"
-            class="btn btn-icon btn-lg rounded-pill btn-text-twitter"
+            class="bttn btn btn-icon btn-lg rounded-pill btn-text-twitter"
           >
             <i class="tf-icons mdi mdi-24px mdi-twitter"></i>
           </a>
 
           <a
             href="javascript:;"
-            class="btn btn-icon btn-lg rounded-pill btn-text-github"
+            class="bttn btn btn-icon btn-lg rounded-pill btn-text-github"
           >
             <i class="tf-icons mdi mdi-24px mdi-github"></i>
           </a>
 
           <a
             href="javascript:;"
-            class="btn btn-icon btn-lg rounded-pill btn-text-google-plus"
+            class="bttn btn btn-icon btn-lg rounded-pill btn-text-google-plus"
           >
             <i class="tf-icons mdi mdi-24px mdi-google"></i>
           </a>
@@ -176,7 +253,7 @@
     <h5 class="offcanvas-title">Consultation et avis</h5>
     <button
       type="button"
-      class="btn-close text-reset"
+      class="bttn btn-close text-reset"
       data-bs-dismiss="offcanvas"
       aria-label="Close"
     ></button>
@@ -227,7 +304,7 @@
             id="telephone"
             name="telephone"
             class="form-control"
-            placeholder="01 00 00 00 00"
+            placeholder="2250100000000"
             [(ngModel)]="formulaire_avis[3].valeur"
           />
           <label for="telephone">Numéro de téléphone</label>
@@ -248,14 +325,14 @@
       <div class="mb-3 d-flex flex-wrap">
         <button
           type="button"
-          class="btn btn-primary me-3"
+          class="bttn btn btn-primary me-3"
           data-bs-dismiss="offcanvas"
         >
           Enregistrer
         </button>
         <button
           type="button"
-          class="btn btn-outline-secondary"
+          class="bttn btn btn-outline-secondary"
           data-bs-dismiss="offcanvas"
         >
           Annuler
@@ -272,14 +349,17 @@
   aria-hidden="true"
 >
   <div class="offcanvas-header mb-3">
-    <h5 class="offcanvas-title">Faire une demande de recupération de mot de passe</h5>
+    <h5 class="offcanvas-title">
+      Faire une demande de recupération de mot de passe
+    </h5>
     <button
       type="button"
-      class="btn-close text-reset"
+      class="bttn btn-close text-reset"
       data-bs-dismiss="offcanvas"
       aria-label="Close"
     ></button>
-  </div><br><br><br><br><br><br>
+  </div>
+  <br /><br /><br /><br /><br /><br />
   <div class="offcanvas-body flex-grow-1">
     <form>
       <div class="form-floating form-floating-outline mb-4">
@@ -289,10 +369,10 @@
             id="EmailRecup"
             name="EmailRecup"
             class="form-control"
-            placeholder="01 00 00 00 00 ou ....@gmail.com"
+            placeholder="2250100000000 ou ....@gmail.com"
             [(ngModel)]="formulaire_recupMdp[0].valeur"
           />
-          <label for="EmailRecup">Email ou telephone</label>
+          <label for="EmailRecup">Email ou téléphone</label>
         </div>
       </div>
       <div class="form-floating form-floating-outline mb-4">
@@ -311,11 +391,108 @@
       <div class="mb-3 d-flex flex-wrap">
         <button
           type="button"
-          class="btn btn-primary me-3"
-          (click)="Recuperation()">
+          class="bttn btn btn-primary me-3"
+          (click)="Recuperation()"
+        >
           Enregistrer
         </button>
       </div>
     </form>
+  </div>
+</div>
+
+<!-- personnalisable -->
+<body>
+  <div class="loader" *ngIf="temps_de_latence">
+    <div class="inner_loader"></div>
+  </div>
+</body>
+
+<div
+  class="modal fade"
+  id="modalToggle"
+  aria-labelledby="modalToggleLabel"
+  tabindex="-1"
+  style="display: none"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modalToggleLabel">Information</h4>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        {{ message }}
+      </div>
+      <!-- <div class="modal-footer">
+        <button
+          class="btn btn-primary"
+          data-bs-target="#modalToggle2"
+          data-bs-toggle="modal"
+          data-bs-dismiss="modal"
+        >
+          Open second modal
+        </button>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal-onboarding modal fade animate__animated"
+  id="onboardImageModal"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content text-center">
+      <div class="modal-header border-0">
+        <a
+          class="text-muted close-label"
+          href="javascript:void(0);"
+          data-bs-dismiss="modal"
+        ></a>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body p-0">
+        <div class="onboarding-media">
+          <div class="mx-2">
+            <img
+              src="../../assets/img/illustrations/girl-unlock-password-light.png"
+              alt="girl-unlock-password-light"
+              width="335"
+              class="img-fluid"
+              data-app-light-img="illustrations/girl-unlock-password-light.png"
+              data-app-dark-img="illustrations/girl-unlock-password-dark.png"
+            />
+          </div>
+        </div>
+        <div class="onboarding-content mb-0">
+          <h4 class="onboarding-title text-body">
+            Opération réalisée avec succès !
+          </h4>
+          <div class="onboarding-info">
+            {{ message }}
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-0">
+        <!-- <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                Close
+                              </button>
+                              <button type="button" class="btn btn-primary">Submit</button> -->
+      </div>
+    </div>
   </div>
 </div>

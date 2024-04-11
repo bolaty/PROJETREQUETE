@@ -4,14 +4,23 @@
     <div
       class="faq-header d-flex flex-column justify-content-center align-items-center"
     >
-      <h3 class="text-center text-primary mb-2">
-        Bonjour, comment pouvons-nous vous aider ?
+      <h3
+        class="text-center text-primary mb-2"
+        *ngIf="recupinfoconnect[0].TU_CODETYPEUTILISATEUR != '0002'"
+      >
+        {{ LanguageService.reclam_title }} ?
       </h3>
-      <p class="text-body text-center mb-0 px-3">
+      <h3
+        class="text-center mb-2"
+        *ngIf="recupinfoconnect[0].TU_CODETYPEUTILISATEUR == '0002'"
+      >
+        {{ LanguageService.reclam_title }} ?
+      </h3>
+      <!-- <p class="text-body text-center mb-0 px-3">
         ou choisissez une catégorie pour trouver rapidement l'aide dont vous
         avez besoin
-      </p>
-      <div
+      </p> -->
+      <!--  <div
         class="input-wrapper my-3 input-group input-group-lg input-group-merge px-sm-5"
       >
         <span class="input-group-text" id="basic-addon1"
@@ -24,216 +33,143 @@
           aria-label="Search"
           aria-describedby="basic-addon1"
         />
-      </div>
+      </div> -->
     </div>
     <!-- Add Product -->
     <div
       class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3"
     >
       <div class="d-flex flex-column justify-content-center">
-        <h4 class="mb-1 mt-3">Suivi de la reclamation</h4>
-        <p>Suivez l'évolution de votre reclamation</p>
+        <h4 class="mb-1 mt-3">{{ LanguageService.suivi_reclam }}</h4>
+        <p>{{ LanguageService.suivi_reclam_sub_tutle }}</p>
       </div>
     </div>
-    <!-- Inventory -->
-    <div class="card mb-4">
-      <div class="row">
-        <!-- Navigation -->
+
+    <!-- Teams Cards -->
+    <div class="row g-4">
+      <div class="col-xl-4 col-lg-6 col-md-6">
         <div class="card">
-          <div class="table-responsive text-nowrap">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Objet</th>
-                  <th>Description</th>
-                  <th>Statut</th>
-                  <th>Actions &nbsp;<span
-                    class="badge rounded-pill bg-label-primary me-1"
-                    >{{recupinfo.RE_LIBELLEETAPE}} </span
-                  ></th>
-                </tr>
-              </thead>
-              <tbody class="table-border-bottom-0">
-                <tr>
-                  <td>
-                    <i
-                      class="mdi mdi-wallet-travel mdi-20px text-danger me-3"
-                    ></i
-                    ><span class="fw-medium">{{
-                      recupinfo.TR_LIBELLETYEREQUETE
-                    }}</span>
-                  </td>
-                  <td>{{ recupinfo.RQ_DESCRIPTIONREQUETE }}</td>
-                  <td>
-                    <span
-                      *ngIf="statutValreq != 'Cloturée'"
-                      class="badge rounded-pill bg-label-primary me-1"
-                      >{{ statutValreq }}</span
-                    >
-                    <span
-                      *ngIf="statutValreq == 'Cloturée'"
-                      class="badge rounded-pill bg-label-danger me-1"
-                      >{{ statutValreq }}</span
-                    >
-                  </td>
-                  <td>
+          <div class="card-body">
+            <div class="d-flex align-items-center mb-3 pb-1">
+              <a href="javascript:;" class="d-flex align-items-center">
+                <div class="me-2 text-heading h6 mb-0">
+                  {{ recupinfo.TR_LIBELLETYEREQUETE_TRANSLATE }}
+                </div>
+              </a>
+              <div class="ms-auto">
+                <ul class="list-inline mb-0 d-flex align-items-center">
+                  <li class="list-inline-item">
                     <div class="dropdown">
                       <button
                         type="button"
-                        class="btn p-0 dropdown-toggle hide-arrow"
+                        class="btn btn-text-secondary btn-icon rounded-pill dropdown-toggle hide-arrow p-0"
                         data-bs-toggle="dropdown"
+                        aria-expanded="false"
                       >
-                        <i class="mdi mdi-dots-vertical"></i>
+                        <i
+                          class="mdi mdi-dots-vertical mdi-24px text-muted"
+                        ></i>
                       </button>
-                      <div class="dropdown-menu">
-                        <a
+
+                      <!-- Traitement de la requête -->
+                      <ul class="dropdown-menu dropdown-menu-end">
+                        <li
                           class="dropdown-item"
                           href="javascript:void(0);"
-                          (click)="voirTraitement('Traitement')"
+                          (click)="voirTraitement1()"
                           *ngIf="
                             recupinfoconnect[0].TU_CODETYPEUTILISATEUR != '0002'
                           "
-                          ><i class="mdi mdi-pencil-outline me-1"></i>
-                          Traitement de la requete</a
+                          style="cursor: pointer"
                         >
-                        <a
+                          <i class="mdi mdi-pencil-outline me-1"></i>
+                          {{ LanguageService.traitement_requete }}
+                        </li>
+                        <li
                           class="dropdown-item"
                           href="javascript:void(0);"
                           (click)="ConsultationTraitement('Consultation')"
                           *ngIf="
                             recupinfoconnect[0].TU_CODETYPEUTILISATEUR == '0002'
                           "
-                          ><i class="mdi mdi-progress-clock me-1"></i> Avis</a
+                          style="cursor: pointer"
                         >
-                      </div>
+                          <i class="mdi mdi-progress-clock me-1"></i>
+                          {{ LanguageService.avis_recev_chmp_title_1 }}
+                        </li>
+                      </ul>
                     </div>
-                  </td>
-                </tr>
-                <!-- <tr>
-                  <td>
-                    <i class="mdi mdi-basketball mdi-20px text-info me-3"></i
-                    ><span class="fw-medium">Sports Project</span>
-                  </td>
-                  <td>Barry Hunter</td>
-                  <td>
-                    <span class="badge rounded-pill bg-label-success me-1"
-                      >Completed</span
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <p class="mb-3 pb-1">
+              {{ recupinfo.RQ_DESCRIPTIONREQUETE }}
+            </p>
+
+            <div class="d-flex align-items-center">
+              <div class="d-flex align-items-center">
+                <ul
+                  class="list-unstyled d-flex align-items-center avatar-group mb-0"
+                >
+                  <li
+                    data-bs-toggle="tooltip"
+                    data-popup="tooltip-custom"
+                    data-bs-placement="top"
+                    title=""
+                    class="avatar avatar-sm pull-up"
+                  >
+                    <a href="javascript:;"
+                      ><span class="badge bg-label-primary rounded-pill">
+                        {{ recupinfo.RE_LIBELLEETAPE_TRANSLATE }}</span
+                      ></a
                     >
-                  </td>
-                  <td>
-                    <div class="dropdown">
-                      <button
-                        type="button"
-                        class="btn p-0 dropdown-toggle hide-arrow"
-                        data-bs-toggle="dropdown"
-                      >
-                        <i class="mdi mdi-dots-vertical"></i>
-                      </button>
-                      <div class="dropdown-menu">
-                        <a
-                          class="dropdown-item"
-                          href="javascript:void(0);"
-                          (click)="voirTraitement('Traitement')"
-                          ><i class="mdi mdi-pencil-outline me-2"></i>
-                          Traitement de la requete</a
-                        >
-                        <a
-                          class="dropdown-item"
-                          href="javascript:void(0);"
-                          (click)="ConsultationTraitement('Consultation')"
-                          ><i class="mdi mdi-progress-clock me-1"></i>
-                          Consultation de l'etat d'avancement de la requete</a
-                        >
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <i class="mdi mdi-greenhouse mdi-20px text-success me-3"></i
-                    ><span class="fw-medium">Greenhouse Project</span>
-                  </td>
-                  <td>Trevor Baker</td>
-                  <td>
-                    <span class="badge rounded-pill bg-label-info me-1"
-                      >Scheduled</span
-                    >
-                  </td>
-                  <td>
-                    <div class="dropdown">
-                      <button
-                        type="button"
-                        class="btn p-0 dropdown-toggle hide-arrow"
-                        data-bs-toggle="dropdown"
-                      >
-                        <i class="mdi mdi-dots-vertical"></i>
-                      </button>
-                      <div class="dropdown-menu">
-                        <a
-                          class="dropdown-item"
-                          href="javascript:void(0);"
-                          (click)="voirTraitement('Traitement')"
-                          ><i class="mdi mdi-pencil-outline me-2"></i>
-                          Traitement de la requete</a
-                        >
-                        <a
-                          class="dropdown-item"
-                          href="javascript:void(0);"
-                          (click)="ConsultationTraitement('Consultation')"
-                          ><i class="mdi mdi-progress-clock me-1"></i>
-                          Consultation de l'etat d'avancement de la requete</a
-                        >
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <i class="mdi mdi-bank mdi-20px text-primary me-3"></i
-                    ><span class="fw-medium">Bank Project</span>
-                  </td>
-                  <td>Jerry Milton</td>
-                  <td>
-                    <span class="badge rounded-pill bg-label-warning me-1"
-                      >Pending</span
-                    >
-                  </td>
-                  <td>
-                    <div class="dropdown">
-                      <button
-                        type="button"
-                        class="btn p-0 dropdown-toggle hide-arrow"
-                        data-bs-toggle="dropdown"
-                      >
-                        <i class="mdi mdi-dots-vertical"></i>
-                      </button>
-                      <div class="dropdown-menu">
-                        <a
-                          class="dropdown-item"
-                          href="javascript:void(0);"
-                          (click)="voirTraitement('Traitement')"
-                          ><i class="mdi mdi-pencil-outline me-2"></i>
-                          Traitement de la requete</a
-                        >
-                        <a
-                          class="dropdown-item"
-                          href="javascript:void(0);"
-                          (click)="ConsultationTraitement('Consultation')"
-                          ><i class="mdi mdi-progress-clock me-1"></i>
-                          Consultation de l'etat d'avancement de la requete</a
-                        >
-                      </div>
-                    </div>
-                  </td>
-                </tr>-->
-              </tbody>
-            </table>
+                  </li>
+                </ul>
+              </div>
+              <div class="ms-auto">
+                <a
+                  href="javascript:;"
+                  *ngIf="
+                    recupinfo.RQ_DATESAISIEREQUETE != '01/01/1900' &&
+                    recupinfo.RQ_DATEDEBUTTRAITEMENTREQUETE == '01/01/1900' &&
+                    recupinfo.RQ_DATECLOTUREREQUETE == '01/01/1900'
+                  "
+                  ><span class="badge bg-label-primary rounded-pill"
+                    >{{
+                      LanguageService.reclam_list_group_title_1
+                    }}
+                    &nbsp;&nbsp;N° {{ recupinfo.RQ_CODEREQUETE }}</span
+                  ></a
+                >
+                <a
+                  href="javascript:;"
+                  *ngIf="
+                    recupinfo.RQ_DATESAISIEREQUETE != '01/01/1900' &&
+                    recupinfo.RQ_DATEDEBUTTRAITEMENTREQUETE != '01/01/1900' &&
+                    recupinfo.RQ_DATECLOTUREREQUETE == '01/01/1900'
+                  "
+                  ><span class="badge bg-label-primary rounded-pill">{{
+                    LanguageService.reclam_list_group_title_2
+                  }}</span></a
+                >
+                <a
+                  href="javascript:;"
+                  *ngIf="recupinfo.RQ_DATECLOTUREREQUETE != '01/01/1900'"
+                  ><span class="badge bg-label-danger rounded-pill"
+                    >{{
+                      LanguageService.reclam_list_group_title_3
+                    }}
+                    &nbsp;&nbsp;N° {{ recupinfo.RQ_CODEREQUETE }}</span
+                  ></a
+                >
+              </div>
+            </div>
           </div>
         </div>
-        <!--/ Basic Bootstrap Table -->
       </div>
     </div>
-    <!-- /Inventory -->
+    <!--/ Teams Cards -->
   </div>
 </div>
 <!-- / Content -->
@@ -245,15 +181,15 @@
   aria-hidden="true"
 >
   <div class="offcanvas-header mb-3">
-    <h5 class="offcanvas-title">{{recupinfo.RE_LIBELLEETAPE}}</h5>
+    <h5 class="offcanvas-title">{{ recupinfo.RE_LIBELLEETAPE_TRANSLATE }}</h5>
     <button
       type="button"
-      class="btn-close text-reset"
+      class="bttn btn-close text-reset"
       data-bs-dismiss="offcanvas"
       aria-label="Close"
     ></button>
   </div>
-   <div class="offcanvas-body flex-grow-1">
+  <div class="offcanvas-body flex-grow-1">
     <form>
       <div class="form-floating form-floating-outline mb-4">
         <input
@@ -266,66 +202,38 @@
           [(ngModel)]="formulaire_suivi[0].valeur"
           readonly
         />
-        <label for="offcanvasObjet">Objet</label>
+        <label for="offcanvasObjet">{{
+          LanguageService.champ_obj_title
+        }}</label>
       </div>
-      <!--<div class="form-floating form-floating-outline mb-4">
-        <div class="form-floating form-floating-outline">
-          <select
-            id="offCanvasService"
-            name="offCanvasService"
-            class="select2 form-select"
-            data-allow-clear="true"
-            [(ngModel)]="formulaire_suivi[2].valeur"
-          >
-            <option value="">Selectionner</option>
-            <option
-              *ngFor="let ListeComboService of tab_service"
-              value="{{ ListeComboService.CODESERVICE }}"
-            >
-              {{ ListeComboService.LIBELLE }}
-            </option>
-          </select>
-          <label for="offCanvasService">Service</label>
-        </div>
-      </div>
-      <div class="form-floating form-floating-outline mb-4">
-        <div class="form-floating form-floating-outline">
-          <select
-            id="offCanvasStatut"
-            name="offCanvasStatut"
-            class="select2 form-select"
-            data-allow-clear="true"
-            [(ngModel)]="formulaire_suivi[2].valeur"
-          >
-            <option value="">Selectionner</option>
-            <option
-              *ngFor="let ListeComboStatut of ListeComboStatut"
-              value="{{ ListeComboStatut.RS_CODESTATUTRECEVABILITE }}"
-            >
-              {{ ListeComboStatut.RS_LIBELLESTATUTRECEVABILITE }}
-            </option>
-          </select>
-          <label for="offCanvasStatut">Statut</label>
-        </div>
-      </div>-->
       <div class="form-floating form-floating-outline mb-4">
         <textarea
           class="form-control"
           name="invoice-observation"
           id="invoice-observation"
           style="height: 190px"
-          placeholder="Observation de l'agent traitant (portant sur la plainte ou la reclamation)"
+          [placeholder]="LanguageService.avis_recev_chmp_title_2_placeholder"
           [(ngModel)]="formulaire_suivi[3].valeur"
-          (input)="checkWordCount()"
+          (input)="CheckWordCount()"
         ></textarea>
-        <label for="invoice-observation">Observation</label>
+        <label for="invoice-observation">{{
+          LanguageService.chmp_observation
+        }}</label>
       </div>
-      <div class="mb-4">
+      <div
+        class="mb-4"
+        *ngIf="afficher_doc"
+        (click)="AfficherFichier()"
+        style="cursor: pointer"
+      >
         <span class="badge bg-label-primary rounded-pill">
-          <i class="mdi mdi-link-variant mdi-14px me-1"></i>
-          <span class="align-middle">Fichier joint</span>
+          <i class="mdi mdi-file-eye-outline mdi-14px me-1"></i>
+          <span class="align-middle">{{
+            LanguageService.fichier_joint_req
+          }}</span>
         </span>
       </div>
+
       <!-- Multi  -->
       <div class="col-12 mb-4" *ngIf="statutDocument">
         <div class="card">
@@ -359,19 +267,45 @@
       <div class="mb-3 d-flex flex-wrap">
         <button
           type="button"
-          class="btn btn-primary me-3"
+          class="bttn btn btn-primary me-3"
           data-bs-dismiss="offcanvas"
           (click)="ValiderTraitement(formulaire_suivi)"
         >
-          Valider
+          {{ LanguageService.btn_valider }}
         </button>
         <button
           type="button"
-          class="btn btn-outline-secondary"
+          class="bttn btn btn-outline-secondary"
           data-bs-dismiss="offcanvas"
         >
-          Annuler
+          {{ LanguageService.btn_title_cancel }}
         </button>
+      </div>
+
+      <br />
+      <!-- Information sur le client -->
+      <label for="" *ngIf="var_off_on == 'O'">{{
+        LanguageService.info_sur_client_title
+      }}</label>
+      <div class="card h-100" *ngIf="var_off_on == 'O'">
+        <div class="row h-100">
+          <div class="col">
+            <div class="card-body ps-sm-3">
+              <p class="mb-0">
+                <strong>{{ LanguageService.info_cli_sub_title_1 }}:</strong>
+                {{ tab_infos_client[0].CU_NOMUTILISATEUR }}
+              </p>
+              <p class="mb-0">
+                <strong>{{ LanguageService.info_cli_sub_title_2 }}:</strong>
+                {{ tab_infos_client[0].CU_EMAIL }}
+              </p>
+              <p class="mb-0">
+                <strong>{{ LanguageService.info_cli_sub_title_3 }}:</strong>
+                {{ tab_infos_client[0].CU_CONTACT }}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </form>
   </div>
@@ -383,10 +317,10 @@
   aria-hidden="true"
 >
   <div class="offcanvas-header mb-3">
-    <h5 class="offcanvas-title">Consultation et avis</h5>
+    <h5 class="offcanvas-title">{{ LanguageService.consult_avis }}</h5>
     <button
       type="button"
-      class="btn-close text-reset"
+      class="bttn btn-close text-reset"
       data-bs-dismiss="offcanvas"
       aria-label="Close"
     ></button>
@@ -402,15 +336,19 @@
             data-allow-clear="true"
             [(ngModel)]="formulaire_avis[0].valeur"
           >
-            <option value="">Selectionner</option>
+            <option value="">{{ LanguageService.select_title }}</option>
             <option
               *ngFor="let ListeComboSatisfaction of ListeComboSatisfaction"
               value="{{ ListeComboSatisfaction.NS_CODENIVEAUSATISFACTION }}"
             >
-              {{ ListeComboSatisfaction.NS_LIBELLENIVEAUSATISFACTION }}
+              {{
+                ListeComboSatisfaction.NS_LIBELLENIVEAUSATISFACTION_TRANSLATE
+              }}
             </option>
           </select>
-          <label for="offcanvaSatisfaction">Satisfaction</label>
+          <label for="offcanvaSatisfaction">{{
+            LanguageService.champ_satisfaction_title
+          }}</label>
         </div>
       </div>
       <div class="form-floating form-floating-outline mb-4">
@@ -419,26 +357,28 @@
           name="invoice-observation-avis"
           id="invoice-observation-avis"
           style="height: 190px"
-          placeholder="Observation de l'agent traitant (portant sur la plainte ou la reclamation)"
+          [placeholder]="LanguageService.avis_recev_chmp_title_2_placeholder"
           [(ngModel)]="formulaire_avis[1].valeur"
         ></textarea>
-        <label for="invoice-observation-avis">Observation</label>
+        <label for="invoice-observation-avis">{{
+          LanguageService.chmp_observation
+        }}</label>
       </div>
       <div class="mb-3 d-flex flex-wrap">
         <button
           type="button"
-          class="btn btn-primary me-3"
+          class="bttn btn btn-primary me-3"
           data-bs-dismiss="offcanvas"
           (click)="EnregistrerAvis(formulaire_avis)"
         >
-          Enregistrer
+          {{ LanguageService.btn_engr }}
         </button>
         <button
           type="button"
-          class="btn btn-outline-secondary"
+          class="bttn btn btn-outline-secondary"
           data-bs-dismiss="offcanvas"
         >
-          Annuler
+          {{ LanguageService.btn_title_cancel }}
         </button>
       </div>
     </form>

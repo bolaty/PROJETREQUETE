@@ -29,6 +29,11 @@ import { OperateurComponent } from './operateur/operateur.component';
 import { RelanceComponent } from './relance/relance.component';
 import { SuiviRequeteComponent } from './suivi-requete/suivi-requete.component';
 import { FormsModule } from '@angular/forms';
+import { PrintPageComponent } from './print-page/print-page.component';
+import { EtatSuiviComponent } from './states/components/etat-suivi/etat-suivi.component';
+import { EtatSuiviReclamationComponent } from './states/components/etat-suivi-reclamation/etat-suivi-reclamation.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { FrequenceReceptionReclamComponent } from './states/components/frequence-reception-reclam/frequence-reception-reclam.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +64,11 @@ import { FormsModule } from '@angular/forms';
     OperateurComponent,
     RelanceComponent,
     SuiviRequeteComponent,
+    PrintPageComponent,
+    EtatSuiviComponent,
+    EtatSuiviReclamationComponent,
+    FrequenceReceptionReclamComponent,
   ],
-  imports: [CommonModule, AdminRoutingModule, FormsModule],
+  imports: [CommonModule, AdminRoutingModule, FormsModule, NgApexchartsModule],
 })
 export class AdminModule {}

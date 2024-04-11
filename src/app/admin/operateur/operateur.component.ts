@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AdminService } from '../admin.service';
 import { ToastrService } from 'ngx-toastr';
+import { LanguageService } from 'src/app/services/language.service';
 
 declare var $: any;
 
@@ -15,6 +16,11 @@ export class OperateurComponent {
   tab_eng_operateur: any = [];
   ListeComboAgence: any = [];
   ListeOperateur: any = [];
+  tab_list_client: any = [];
+  tab_enrg_cpte_client: any = [];
+  ListeClients: any = [];
+  search_bar: any = '';
+  item_client: any = {};
   formulaire_operateur: any = [
     {
       id: 'nom',
@@ -66,6 +72,38 @@ export class OperateurComponent {
       label: 'mot de passe',
     },
   ];
+
+  formulaire_client: any = [
+    {
+      id: 'nomEtPrenoms',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'O',
+      label: 'nom et prénoms',
+    },
+    {
+      id: 'telephone',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'O',
+      label: 'téléphone',
+    },
+    {
+      id: 'localisation',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'N',
+      label: 'localisation',
+    },
+    {
+      id: 'email',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'O',
+      label: 'email',
+    },
+  ];
+
   RecupOerateurs: any = [];
   voirlist: any;
   recupclient: any = [
@@ -156,9 +194,24 @@ export class OperateurComponent {
   ];
   statuFormulaire: any = 'ENREGISTREMENT';
   statusOrderListe: boolean = false;
+  affiche_liste_client: boolean = false;
+
+  checkedMnuReclamation: any = 'checked';
+  checkedMnuRelance: any = '';
+  checkedMnuOperateur: any = '';
+  checkedMnuClient: any = '';
+  checkedMnuEdition: any = '';
+  checkedCreationDeReclamation: any = '';
+  checkedCreationOperateur: any = '';
+  checkedCreationClient: any = '';
+  checkedEditionBceao: any = '';
+  checkedEditionStatistique: any = '';
+  checkedEditionFrequence: any = '';
+
   constructor(
     public AdminService: AdminService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public LanguageService: LanguageService
   ) {}
 
   rowClicked(info: any): void {
@@ -166,6 +219,7 @@ export class OperateurComponent {
     this.statusOrderListe = true;
     this.voirlist = this.ListeOperateur[info.id];
   }
+
   checkModif() {
     this.statusOrderListe = false;
     this.statuFormulaire = 'MODIFICATION';
@@ -177,6 +231,7 @@ export class OperateurComponent {
     this.formulaire_operateur[5].valeur = this.voirlist.CU_LOGIN;
     this.formulaire_operateur[6].valeur = this.voirlist.CU_MOTDEPASSE;
   }
+
   chargementDate() {
     var pt = this;
     $(function () {
@@ -267,9 +322,7 @@ export class OperateurComponent {
           ],
         });
 
-        $('div.head-label').html(
-          '<h5 class="card-title mb-0">Liste des opérateurs</h5>'
-        );
+        $('div.head-label').html('<h5 class="card-title mb-0"></h5>');
       }
     });
   }
@@ -292,6 +345,9 @@ export class OperateurComponent {
       (success: any) => {
         this.ListeComboAgence = success;
         this.ListeComboAgence = this.ListeComboAgence.pvgReqAgenceComboResult;
+
+        this.ListeDesClients();
+
         if (this.ListeComboAgence[0].clsResultat.SL_RESULTAT == 'TRUE') {
           //  this.ComboOperateur()
         } else {
@@ -301,12 +357,47 @@ export class OperateurComponent {
     );
   }
 
+  ListeDesClients() {
+    this.AdminService.ShowLoader();
+    let Option = 'RequeteClientsClasse.svc/pvgInsertIntoDatasetListeClient';
+
+    let body = {
+      Objets: [
+        {
+          OE_PARAM: [],
+          clsObjetEnvoi: {
+            ET_CODEETABLISSEMENT: '',
+            AN_CODEANTENNE: '',
+            TYPEOPERATION: '01',
+          },
+        },
+      ],
+    };
+
+    this.AdminService.AppelServeur(body, Option).subscribe(
+      (success: any) => {
+        this.tab_list_client = success;
+        console.log('tab_list_client', this.tab_list_client);
+        if (this.tab_list_client[0].SL_RESULTAT == 'TRUE') {
+          this.affiche_liste_client = true;
+          this.AdminService.CloseLoader();
+        } else {
+          this.affiche_liste_client = false;
+          this.AdminService.CloseLoader();
+        }
+      },
+      (error) => {
+        this.AdminService.CloseLoader();
+      }
+    );
+  }
+
   ListeOperateurs() {
     let Option = 'RequeteClientsClasse.svc/pvgListeUtilisateurs';
     let body = {
       Objets: [
         {
-          OE_PARAM: ['1000', '0001'],
+          OE_PARAM: [this.recupinfo[0].AG_CODEAGENCE, '0001'],
           clsObjetEnvoi: {
             ET_CODEETABLISSEMENT: '',
             AN_CODEANTENNE: '',
@@ -362,6 +453,7 @@ export class OperateurComponent {
       }
     );
   }
+
   EnregistrementCompteOperateur(tableau_recu: any) {
     this.AdminService.SecuriteChampObligatoireEtTypeDeDonnee(tableau_recu);
     this.AdminService.TypeDeDonneeChampNonObligatoire(tableau_recu);
@@ -421,7 +513,7 @@ export class OperateurComponent {
             clsObjetEnvoi: {
               ET_CODEETABLISSEMENT: '',
               AN_CODEANTENNE: '',
-              TYPEOPERATION: this.statuFormulaire == 'MODIFICATION' ? '1' : '0',
+              TYPEOPERATION: this.statuFormulaire == 'MODIFICATION' ? '1' : '4',
             },
           },
         ],
@@ -449,6 +541,7 @@ export class OperateurComponent {
             for (let index = 0; index < tableau_recu.length; index++) {
               tableau_recu[index].valeur = '';
             }
+            this.ListeOperateurs();
             this.AdminService.CloseLoader();
           }
         },
@@ -462,6 +555,194 @@ export class OperateurComponent {
           );
         }
       );
+    }
+  }
+
+  RechercherClient(search_bar: any) {
+    let Option = 'RequeteClientsClasse.svc/pvgListeUtilisateursRecherche';
+
+    /*   if (search_bar == undefined || search_bar == '') {
+      this.toastr.error(
+        'Veuillez renseigner un code ou un téléphone',
+        'error',
+        {
+          positionClass: 'toast-bottom-left',
+        }
+      );
+    } else { */
+    let body;
+    // if (search_bar.substr(0, 1) === '0') {
+    // dans le cas d'une recherche avec numero de telephone
+    body = {
+      Objets: [
+        {
+          OE_PARAM: ['0002', '', search_bar, '', '01'],
+          clsObjetEnvoi: {
+            ET_CODEETABLISSEMENT: '',
+            AN_CODEANTENNE: '',
+            TYPEOPERATION: '01',
+          },
+        },
+      ],
+    };
+    /* } else {
+        // dans le cas d'une recherche avec code client
+        body = {
+          Objets: [
+            {
+              OE_PARAM: ['0002', search_bar, '', '', '01'],
+              clsObjetEnvoi: {
+                ET_CODEETABLISSEMENT: '',
+                AN_CODEANTENNE: '',
+                TYPEOPERATION: '01',
+              },
+            },
+          ],
+        };
+      } */
+
+    // $(".datatables-basic").DataTable().destroy();
+    this.AdminService.AppelServeur(body, Option).subscribe(
+      (success: any) => {
+        this.tab_list_client = success;
+        this.tab_list_client =
+          this.tab_list_client.pvgListeUtilisateursRechercheResult;
+        console.log('tab_list_client_2', this.tab_list_client);
+        if (this.tab_list_client[0].clsResultat.SL_RESULTAT == 'TRUE') {
+          this.affiche_liste_client = true;
+          this.AdminService.CloseLoader();
+        } else {
+          this.affiche_liste_client = false;
+          this.AdminService.CloseLoader();
+          this.toastr.error(
+            this.tab_list_client[0].clsResultat.SL_MESSAGE,
+            'error',
+            { positionClass: 'toast-bottom-left' }
+          );
+        }
+      },
+      (error) => {
+        this.AdminService.CloseLoader();
+        this.affiche_liste_client = false;
+        this.toastr.warning(
+          this.tab_list_client[0].clsResultat.SL_MESSAGE,
+          'warning',
+          { positionClass: 'toast-bottom-left' }
+        );
+      }
+    );
+    // }
+  }
+
+  ModifyInfoClient(le_client: any) {
+    this.formulaire_client[0].valeur = le_client.CU_NOMUTILISATEUR;
+    this.formulaire_client[1].valeur = le_client.CU_CONTACT;
+    this.formulaire_client[2].valeur = '';
+    this.formulaire_client[3].valeur = le_client.CU_EMAIL;
+    this.item_client = le_client;
+    $('#modifInfoClienOffcanvas').offcanvas('show');
+  }
+
+  EnregistrementCompteClient(tableau_recu: any) {
+    this.AdminService.SecuriteChampObligatoireEtTypeDeDonnee(tableau_recu);
+    this.AdminService.TypeDeDonneeChampNonObligatoire(tableau_recu);
+    if (
+      this.AdminService.statut_traitement == true &&
+      this.AdminService.statut_traitement_champ_non_obligatoire == true
+    ) {
+      var d = new Date();
+      var date =
+        d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
+      var jour = d.getDate();
+      if (jour < 10) {
+        var date =
+          '0' + d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
+        console.log(date);
+      }
+      let Options = 'RequeteClientsClasse.svc/pvgMajUtilisateurs'; // le chemin d'appel du service web
+      //objet d'envoi
+      let body = {
+        Objets: [
+          {
+            AG_CODEAGENCE: this.recupinfo[0].AG_CODEAGENCE, // this.formulaire_plaintes_reclamations[3].valeur,
+            CU_ADRESSEGEOGRAPHIQUEUTILISATEUR: '.',
+            CU_CLESESSION: '',
+            CU_CODECOMPTEUTULISATEUR: this.item_client.CU_CODECOMPTEUTULISATEUR,
+            CU_CONTACT: this.formulaire_client[1].valeur, //"2250747839553",
+            CU_DATECLOTURE: '01/01/1900',
+            CU_DATECREATION: date, //"01/01/1900",
+            CU_DATEPIECE: '01/01/1900',
+            CU_EMAIL: this.formulaire_client[3].valeur, // "d.baz1008@gmail.com",
+            CU_LOGIN: this.item_client.CU_LOGIN, //"d.baz1008@gmail.com",
+            CU_MOTDEPASSE: this.item_client.CU_MOTDEPASSE, //"2250747839553",
+            CU_NOMBRECONNECTION: '0',
+            CU_NOMUTILISATEUR: this.formulaire_client[0].valeur, //"bolaty",
+            CU_NUMEROPIECE: 'XXXX',
+            CU_NUMEROUTILISATEUR: this.item_client.CU_NUMEROUTILISATEUR,
+            CU_TOKEN: '',
+            PI_CODEPIECE: '00001',
+            TU_CODETYPEUTILISATEUR: '0002',
+            clsReqmicclient: {
+              OP_CODEOPERATEUR: '',
+              OP_CODEOPERATEURZENITH: 'dddd',
+              AG_CODEAGENCE: this.recupinfo[0].AG_CODEAGENCE,
+              PV_CODEPOINTVENTE: '100000001',
+              CU_CODECOMPTEUTULISATEUR:
+                this.recupinfo[0].CU_CODECOMPTEUTULISATEUR,
+              SR_CODESERVICE: '01',
+              OP_DATESAISIE: date,
+            },
+            clsReqmicprospect: null,
+            clsReqoperateur: null,
+            clsReqtontineepargnantjournalier: null,
+            clsObjetEnvoi: {
+              ET_CODEETABLISSEMENT: '',
+              AN_CODEANTENNE: '',
+              TYPEOPERATION: '1',
+            },
+          },
+        ],
+      };
+      this.AdminService.ShowLoader();
+      this.AdminService.AppelServeur(body, Options).subscribe(
+        (success) => {
+          this.tab_enrg_cpte_client = success;
+          this.tab_enrg_cpte_client =
+            this.tab_enrg_cpte_client.pvgMajUtilisateursResult;
+          if (this.tab_enrg_cpte_client.clsResultat.SL_RESULTAT == 'FALSE') {
+            this.AdminService.CloseLoader();
+            this.toastr.error(
+              this.tab_enrg_cpte_client.clsResultat.SL_MESSAGE,
+              'error',
+              { positionClass: 'toast-bottom-left' }
+            );
+          } else {
+            this.AdminService.CloseLoader();
+            this.toastr.success(
+              this.tab_enrg_cpte_client.clsResultat.SL_MESSAGE,
+              'success',
+              { positionClass: 'toast-bottom-left' }
+            );
+            this.ListeDesClients();
+          }
+        },
+        (error: any) => {
+          this.AdminService.CloseLoader();
+          this.toastr.warning(
+            this.tab_enrg_cpte_client.clsResultat.SL_MESSAGE,
+            'warning',
+            { positionClass: 'toast-bottom-left' }
+          );
+        }
+      );
+    }
+  }
+
+  RechercheAvecTouche1(e: any) {
+    // Vérifier si la touche pressée est Entrée
+    if (e.key === 'Enter') {
+      // Appeler la fonction lorsque la touche Entrée est pressée
+      this.RechercherClient(this.search_bar);
     }
   }
 

@@ -1,0 +1,23 @@
+span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: x-large;
+}
+
+canvas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media print {
+  #printButton {
+    display: none !important;
+  }
+
+  @page {
+    size: landscape;
+    margin: 0;
+  }
+}

@@ -85,7 +85,9 @@
   <div class="card">
     <div class="card-header">
       <h5 class="card-title">Search Filter</h5>
-      <div class="d-flex justify-content-between align-items-center row py-3 gap-3 gap-md-0">
+      <div
+        class="d-flex justify-content-between align-items-center row py-3 gap-3 gap-md-0"
+      >
         <div class="col-md-4 user_role"></div>
         <div class="col-md-4 user_plan"></div>
         <div class="col-md-4 user_status"></div>
@@ -112,17 +114,23 @@
       class="offcanvas offcanvas-end"
       tabindex="-1"
       id="offcanvasAddUser"
-      aria-labelledby="offcanvasAddUserLabel">
+      aria-labelledby="offcanvasAddUserLabel"
+    >
       <div class="offcanvas-header">
         <h5 id="offcanvasAddUserLabel" class="offcanvas-title">Add User</h5>
         <button
           type="button"
-          class="btn-close text-reset"
+          class="bttn btn-close text-reset"
           data-bs-dismiss="offcanvas"
-          aria-label="Close"></button>
+          aria-label="Close"
+        ></button>
       </div>
       <div class="offcanvas-body mx-0 flex-grow-0 h-100">
-        <form class="add-new-user pt-0" id="addNewUserForm" onsubmit="return false">
+        <form
+          class="add-new-user pt-0"
+          id="addNewUserForm"
+          onsubmit="return false"
+        >
           <div class="form-floating form-floating-outline mb-4">
             <input
               type="text"
@@ -130,7 +138,8 @@
               id="add-user-fullname"
               placeholder="John Doe"
               name="userFullname"
-              aria-label="John Doe" />
+              aria-label="John Doe"
+            />
             <label for="add-user-fullname">Full Name</label>
           </div>
           <div class="form-floating form-floating-outline mb-4">
@@ -140,7 +149,8 @@
               class="form-control"
               placeholder="john.doe@example.com"
               aria-label="john.doe@example.com"
-              name="userEmail" />
+              name="userEmail"
+            />
             <label for="add-user-email">Email</label>
           </div>
           <div class="form-floating form-floating-outline mb-4">
@@ -150,7 +160,8 @@
               class="form-control phone-mask"
               placeholder="+1 (609) 988-44-11"
               aria-label="john.doe@example.com"
-              name="userContact" />
+              name="userContact"
+            />
             <label for="add-user-contact">Contact</label>
           </div>
           <div class="form-floating form-floating-outline mb-4">
@@ -160,7 +171,8 @@
               class="form-control"
               placeholder="Web Developer"
               aria-label="jdoe1"
-              name="companyName" />
+              name="companyName"
+            />
             <label for="add-user-company">Company</label>
           </div>
           <div class="form-floating form-floating-outline mb-4">
@@ -212,8 +224,19 @@
             </select>
             <label for="user-plan">Select Plan</label>
           </div>
-          <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">Submit</button>
-          <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">Cancel</button>
+          <button
+            type="submit"
+            class="bttn btn btn-primary me-sm-3 me-1 data-submit"
+          >
+            Submit
+          </button>
+          <button
+            type="reset"
+            class="bttn btn btn-outline-secondary"
+            data-bs-dismiss="offcanvas"
+          >
+            Cancel
+          </button>
         </form>
       </div>
     </div>

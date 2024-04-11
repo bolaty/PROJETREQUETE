@@ -12,13 +12,15 @@ import Swal from 'sweetalert2';
   providedIn: 'root',
 })
 export class AuthService {
-  nom_de_la_structure: any = 'REMU-CI';
+  nom_de_la_structure: any = ''; // personnalisable
 
   libelleConnexion: any = '';
   tempsRestant: number = 10;
   statusConnect: boolean = false;
-  LienServeur: any = 'http://51.210.111.16:1009/'; //LIEN LOCALE
- // LienServeur: any ='http://51.210.111.16:1009/'; //LIEN prod
+  LienServeur: any = 'http://localhost:22248/'; // lien dev
+  // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
+  // LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
+  user_connecte: boolean = true; // true designe la connexion d'un operateur et false celui d'un client // personnalisable
 
   constructor(private http: HttpClient) {
     Network.addListener(

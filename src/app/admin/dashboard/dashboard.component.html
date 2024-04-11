@@ -5,12 +5,13 @@
       <div class="card">
         <div class="card-body">
           <h4 class="card-title mb-1">
-            Bienvenue {{ recupinfo[0].CU_NOMUTILISATEUR }} ! 🎉
+            {{ languageService.welcome_message }}
+            {{ recupinfo[0].CU_NOMUTILISATEUR }} ! 🎉
           </h4>
-          <p class="pb-0">Consultez les reclamations</p>
+          <p class="pb-0">{{ languageService.welcome_message_sub_title }}</p>
           <!-- <h4 class="text-primary mb-1">0</h4> -->
           <!-- <p class="mb-2 pb-1">100% de l'objectif 🚀</p> -->
-          <!-- <a href="javascript:;" class="btn btn-sm btn-primary">Voir plus</a> -->
+          <!-- <a href="javascript:;" class="bttn btn btn-sm btn-primary">Voir plus</a> -->
         </div>
         <img
           src="../../assets/img/icons/misc/triangle-light.png"
@@ -39,8 +40,10 @@
       <div class="card">
         <div class="card-header">
           <div class="d-flex align-items-center justify-content-between">
-            <h5 class="card-title m-0 me-2">Reclamations</h5>
-            <div class="dropdown">
+            <h5 class="card-title m-0 me-2">
+              {{ languageService.bloc_title }}
+            </h5>
+            <!-- <div class="dropdown">
               <button
                 class="btn p-0"
                 type="button"
@@ -59,7 +62,7 @@
                 <a class="dropdown-item" href="javascript:void(0);">Share</a>
                 <a class="dropdown-item" href="javascript:void(0);">Update</a>
               </div>
-            </div>
+            </div> -->
           </div>
           <!-- <p class="mt-3">
             <span class="fw-medium">Croissance totale de 48,5%</span> 😎 ce
@@ -77,8 +80,10 @@
                   </div>
                 </div>
                 <div class="ms-3">
-                  <div class="small mb-1">Reclamations enregistrées</div>
-                  <h5 class="mb-0">245</h5>
+                  <div class="small mb-1">
+                    {{ languageService.stat_title_1 }}
+                  </div>
+                  <h5 class="mb-0">{{ recap_reclam.TOTALPLAINTERECUES }}</h5>
                 </div>
               </div>
             </div>
@@ -91,7 +96,9 @@
                   </div>
                 </div>
                 <div class="ms-3">
-                  <div class="small mb-1">Reclamations attribuées</div>
+                  <div class="small mb-1">
+                    {{ languageService.stat_title_2 }}
+                  </div>
                   <h5 class="mb-0">18</h5>
                 </div>
               </div>
@@ -105,7 +112,9 @@
                   </div>
                 </div>
                 <div class="ms-3">
-                  <div class="small mb-1">Reclamations en cours</div>
+                  <div class="small mb-1">
+                    {{ languageService.stat_title_3 }}
+                  </div>
                   <h5 class="mb-0">12</h5>
                 </div>
               </div>
@@ -119,8 +128,10 @@
                   </div>
                 </div>
                 <div class="ms-3">
-                  <div class="small mb-1">Reclamations déjà traitées</div>
-                  <h5 class="mb-0">10</h5>
+                  <div class="small mb-1">
+                    {{ languageService.stat_title_4 }}
+                  </div>
+                  <h5 class="mb-0">{{ recap_reclam.TOTALPLAINTETRAITES }}</h5>
                 </div>
               </div>
             </div>
@@ -129,6 +140,84 @@
       </div>
     </div>
     <!--/ Reclamations -->
+
+    <!-- delai de traitement Chart -->
+    <div class="col-xl-12">
+      <div class="card h-100">
+        <div class="card-header pb-1">
+          <div class="d-flex justify-content-between">
+            <h5 class="mb-0">Délai de traitement</h5>
+            <!-- <div class="dropdown">
+              <button
+                class="btn p-0"
+                type="button"
+                id="salesOverviewDropdown"
+                data-bs-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i class="mdi mdi-dots-vertical mdi-24px"></i>
+              </button>
+              <div
+                class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="salesOverviewDropdown"
+              >
+                <a class="dropdown-item" href="javascript:void(0);"
+                  >Last 28 Days</a
+                >
+                <a class="dropdown-item" href="javascript:void(0);"
+                  >Last Month</a
+                >
+                <a class="dropdown-item" href="javascript:void(0);"
+                  >Last Year</a
+                >
+              </div>
+            </div> -->
+          </div>
+        </div>
+        <div class="card-body pt-lg-4 mt-lg-1">
+          <div class="row align-items-center">
+            <div class="col-md-6">
+              <div id="salesOverviewChart"></div>
+            </div>
+            <div class="col-md-6 mt-3 mt-md-0">
+              <div class="d-flex align-items-center mb-3">
+                <div class="avatar">
+                  <div class="avatar-initial bg-label-primary rounded">
+                    <!-- <i class="mdi mdi-currency-usd mdi-24px"></i> -->
+                    <i class="mdi mdi-counter mdi-24px"></i>
+                  </div>
+                </div>
+                <div class="ms-3 d-flex flex-column">
+                  <p class="mb-1">Nombre de reclamation</p>
+                  <h5 class="mb-1">
+                    {{ nombre_de_reclam }}
+                  </h5>
+                </div>
+              </div>
+              <hr />
+              <div class="row g-4">
+                <div class="col-6">
+                  <div class="d-flex align-items-center mb-2">
+                    <div class="badge badge-dot bg-primary me-2"></div>
+                    <p class="text-heading mb-0">Dans les délais</p>
+                  </div>
+                  <p class="fw-medium mb-0">{{ reclam_dans_le_delai }}</p>
+                </div>
+                <div class="col-6">
+                  <div class="d-flex align-items-center mb-2">
+                    <div class="badge badge-dot bg-primary me-2"></div>
+                    <p class="text-heading mb-0">Hors délais</p>
+                  </div>
+                  <p class="fw-medium mb-0">{{ reclam_hors_le_delai }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/ delai de traitement Chart -->
 
     <!--/ Weekly Overview Chart -->
     <div class="d-flex mb-3 gap-3">
@@ -140,18 +229,26 @@
       </div>
       <div>
         <h5 class="mb-1">
-          <span class="align-middle">Reclamations</span>
+          <span class="align-middle">{{ languageService.bloc_title }}</span>
         </h5>
-        <span>Statistique des reclamations</span>
+        <span>{{ languageService.bloc_sub_title }}</span>
       </div>
     </div>
+
     <!-- Total Earnings -->
-    <div class="col">
+    <div
+      class="col"
+      data-bs-toggle="modal"
+      data-bs-target="#enlargeModal1"
+      style="cursor: pointer"
+    >
       <div class="card">
         <div
           class="card-header d-flex align-items-center justify-content-between"
         >
-          <h5 class="card-title m-0 me-2">Reclamations enregistrées</h5>
+          <h5 class="card-title m-0 me-2">
+            {{ languageService.stat_title_1 }}
+          </h5>
         </div>
         <div class="card-body">
           <canvas id="MyChartPie3">{{ chart_pie }}</canvas>
@@ -161,12 +258,19 @@
     <!--/ Total Earnings -->
 
     <!-- Total Earnings -->
-    <div class="col">
+    <div
+      class="col"
+      data-bs-toggle="modal"
+      data-bs-target="#enlargeModal2"
+      style="cursor: pointer"
+    >
       <div class="card">
         <div
           class="card-header d-flex align-items-center justify-content-between"
         >
-          <h5 class="card-title m-0 me-2">Reclamations en cours</h5>
+          <h5 class="card-title m-0 me-2">
+            {{ languageService.stat_title_3 }}
+          </h5>
         </div>
         <div class="card-body">
           <canvas id="MyChartBar2">{{ chart_bar }}</canvas>
@@ -176,12 +280,19 @@
     <!--/ Total Earnings -->
 
     <!-- Total Earnings -->
-    <div class="col">
+    <div
+      class="col"
+      data-bs-toggle="modal"
+      data-bs-target="#enlargeModal3"
+      style="cursor: pointer"
+    >
       <div class="card">
         <div
           class="card-header d-flex align-items-center justify-content-between"
         >
-          <h5 class="card-title m-0 me-2">Reclamations déjà traitées</h5>
+          <h5 class="card-title m-0 me-2">
+            {{ languageService.stat_title_4 }}
+          </h5>
         </div>
         <div class="card-body">
           <canvas id="MyChartPie4">{{ chart_pie }}</canvas>
@@ -191,3 +302,111 @@
     <!--/ Total Earnings -->
   </div>
 </div>
+
+<!-- Pricing Modal -->
+<div class="modal fade" id="enlargeModal1" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-simple modal-pricing">
+    <div class="modal-content p-2 p-md-5">
+      <div class="modal-body py-3 py-md-0">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+        <!-- Pricing Plans -->
+        <div class="pb-3 rounded-top">
+          <h3 class="text-center mb-2">{{ languageService.stat_title_1 }}</h3>
+          <p class="text-center pt-1 mb-0"></p>
+
+          <div class="row mx-0 gy-3">
+            <canvas id="MyChartPie33">{{ chart_pie }}</canvas>
+          </div>
+        </div>
+        <!--/ Pricing Plans -->
+        <div class="text-center">
+          <p></p>
+          <a
+            href="javascript:void(0);"
+            class="btn btn-primary"
+            (click)="PrintGraphPie(languageService.stat_title_1)"
+            >{{ languageService.Preview }}</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--/ Pricing Modal -->
+
+<!-- Pricing Modal -->
+<div class="modal fade" id="enlargeModal2" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-simple modal-pricing">
+    <div class="modal-content p-2 p-md-5">
+      <div class="modal-body py-3 py-md-0">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+        <!-- Pricing Plans -->
+        <div class="pb-3 rounded-top">
+          <h3 class="text-center mb-2">{{ languageService.stat_title_3 }}</h3>
+          <p class="text-center pt-1 mb-0"></p>
+
+          <div class="row mx-0 gy-3">
+            <canvas id="MyChartBar22">{{ chart_bar }}</canvas>
+          </div>
+        </div>
+        <!--/ Pricing Plans -->
+        <div class="text-center">
+          <p></p>
+          <a
+            href="javascript:void(0);"
+            class="btn btn-primary"
+            (click)="PrintGraphBar(languageService.stat_title_3)"
+            >{{ languageService.Preview }}</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--/ Pricing Modal -->
+
+<!-- Pricing Modal -->
+<div class="modal fade" id="enlargeModal3" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-simple modal-pricing">
+    <div class="modal-content p-2 p-md-5">
+      <div class="modal-body py-3 py-md-0">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+        <!-- Pricing Plans -->
+        <div class="pb-3 rounded-top">
+          <h3 class="text-center mb-2">{{ languageService.stat_title_4 }}</h3>
+          <p class="text-center pt-1 mb-0"></p>
+
+          <div class="row mx-0 gy-3">
+            <canvas id="MyChartPie44">{{ chart_pie }}</canvas>
+          </div>
+        </div>
+        <!--/ Pricing Plans -->
+        <div class="text-center">
+          <p></p>
+          <a
+            href="javascript:void(0);"
+            class="btn btn-primary"
+            (click)="PrintGraphPie(languageService.stat_title_4)"
+            >{{ languageService.Preview }}</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--/ Pricing Modal -->
