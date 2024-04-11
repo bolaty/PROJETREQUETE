@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { AdminService } from 'src/app/admin/admin.service';
 const toastr = require('toastr');
+
 declare var $: any;
 declare var Swal: any;
 
@@ -16,46 +18,54 @@ export class LoginComponent {
   RetoursChargement: any = [];
   RetoursChargementMdp: any = [];
   tab_valeur_de_decision: any = [];
+  tab_retour_data: any = [];
   customizer: any;
   message: any;
   infoChmpPassword: any;
   infoBtnPassword: boolean = true;
   temps_de_latence: boolean = true;
-  formulaire_avis: any = [
+  formulaire_wew_reclam: any = [
     {
       id: 'nom',
       type: 'text',
       valeur: '',
-      obligatoire: 'N',
+      obligatoire: 'O',
       label: 'nom',
     },
     {
       id: 'prenoms',
       type: 'text',
       valeur: '',
-      obligatoire: 'N',
+      obligatoire: 'O',
       label: 'prénoms',
     },
     {
       id: 'email',
       type: 'text',
       valeur: '',
-      obligatoire: 'N',
+      obligatoire: 'O',
       label: 'email',
     },
     {
       id: 'telephone',
       type: 'telephone',
       valeur: '',
-      obligatoire: 'N',
+      obligatoire: 'O',
       label: 'numéro de téléphone',
     },
     {
       id: 'invoice-observation-avis',
       type: 'text',
       valeur: '',
-      obligatoire: 'N',
+      obligatoire: 'O',
       label: 'observation',
+    },
+    {
+      id: 'numCompte',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'N',
+      label: 'numéro de compte',
     },
   ];
   formulaire_recupMdp: any = [
@@ -78,7 +88,8 @@ export class LoginComponent {
   constructor(
     public _router: Router,
     private toastr: ToastrService,
-    public AuthService: AuthService
+    public AuthService: AuthService,
+    public AdminService: AdminService
   ) {}
 
   Login() {
@@ -298,6 +309,76 @@ export class LoginComponent {
       this.infoChmpPassword.type = 'text';
     } else {
       this.infoChmpPassword.type = 'password';
+    }
+  }
+
+  SubmitNewReclam(tableau_recu: any) {
+    this.AdminService.SecuriteChampObligatoireEtTypeDeDonnee(tableau_recu);
+    this.AdminService.TypeDeDonneeChampNonObligatoire(tableau_recu);
+
+    if (
+      this.AdminService.statut_traitement == true &&
+      this.AdminService.statut_traitement_champ_non_obligatoire == true
+    ) {
+      var d = new Date();
+      var date =
+        d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
+      var jour = d.getDate();
+      if (jour < 10) {
+        var date =
+          '0' + d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
+        console.log(date);
+      }
+
+      let Options = 'RequeteClientsClasse.svc/pvgEnvoiEmail';
+
+      let body = {
+        Objets: [
+          {
+            EE_NOM: this.formulaire_wew_reclam[0].valeur,
+            EE_PRENOMS: this.formulaire_wew_reclam[1].valeur,
+            EE_EMAIL: this.formulaire_wew_reclam[2].valeur,
+            EE_NUMTELEPHONE: this.formulaire_wew_reclam[3].valeur,
+            EE_NUMCOMPTE: this.formulaire_wew_reclam[5].valeur,
+            EE_OBSERVATION: this.formulaire_wew_reclam[4].valeur,
+            EE_DATEEMISSION: date,
+            clsObjetEnvoi: {
+              TYPEOPERATION: '0',
+            },
+          },
+        ],
+      };
+      this.AdminService.ShowLoader();
+      this.AdminService.AppelServeur(body, Options).subscribe(
+        (success) => {
+          this.tab_retour_data = success;
+          this.tab_retour_data = this.tab_retour_data.pvgEnvoiEmailResult;
+          if (this.tab_retour_data[0].clsResultat.SL_RESULTAT == 'FALSE') {
+            this.toastr.error(
+              this.tab_retour_data[0].clsResultat.SL_MESSAGE,
+              'error',
+              { positionClass: 'toast-bottom-left' }
+            );
+            this.AdminService.CloseLoader();
+          } else {
+            this.toastr.error(
+              this.tab_retour_data[0].clsResultat.SL_MESSAGE,
+              'success',
+              { positionClass: 'toast-bottom-left' }
+            );
+            this.AdminService.CloseLoader();
+          }
+        },
+        (error: any) => {
+          this.AdminService.CloseLoader();
+          // this.toastr.warning(this.tab_retour_data[0].clsResultat.SL_MESSAGE);
+          this.toastr.warning(
+            this.tab_retour_data[0].clsResultat.SL_MESSAGE,
+            'warning',
+            { positionClass: 'toast-bottom-left' }
+          );
+        }
+      );
     }
   }
 

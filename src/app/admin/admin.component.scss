@@ -7,3 +7,8 @@
   left: -200px; /* Caché par défaut */
   transition: left 0.3s ease;
 }
+
+.scrollable-container {
+  max-height: 300px; /* Définissez la hauteur maximale que vous souhaitez pour la zone de notifications */
+  overflow-y: auto; /* Activez le défilement vertical lorsque la zone de notifications dépasse la hauteur maximale */
+}

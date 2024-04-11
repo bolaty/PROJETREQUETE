@@ -707,9 +707,31 @@
                     <div class="d-flex align-items-center">
                       <div class="user-status me-2 d-flex align-items-center">
                         <span class="badge badge-dot bg-success me-1"></span>
-                        <small>{{ item.CU_CONTACT }}</small>
+                        <small
+                          ><strong>Téléphone:</strong>
+                          {{ item.CU_CONTACT }}</small
+                        >
                       </div>
-                      <small class="text-muted ms-1">{{ item.CU_EMAIL }}</small>
+                      <!-- <small class="text-muted ms-1">{{ item.CU_EMAIL }}</small> -->
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <div class="user-status me-2 d-flex align-items-center">
+                        <span class="badge badge-dot bg-success me-1"></span>
+                        <small
+                          ><strong>Code:</strong>
+                          {{ item.CU_NUMEROUTILISATEUR }}</small
+                        >
+                      </div>
+                      <!-- <small class="text-muted ms-1">{{ item.CU_EMAIL }}</small> -->
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <div class="user-status me-2 d-flex align-items-center">
+                        <span class="badge badge-dot bg-success me-1"></span>
+                        <small
+                          ><strong>Email:</strong> {{ item.CU_EMAIL }}</small
+                        >
+                      </div>
+                      <!-- <small class="text-muted ms-1">{{ item.CU_EMAIL }}</small> -->
                     </div>
                   </div>
                   <div class="add-btn" (click)="ModifyInfoClient(item)">

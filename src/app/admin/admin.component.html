@@ -224,7 +224,7 @@
           id="navbar-collapse"
         >
           <!-- Search -->
-          <div class="navbar-nav align-items-center">
+          <!-- <div class="navbar-nav align-items-center">
             <div class="nav-item navbar-search-wrapper mb-0">
               <a
                 class="nav-item nav-link search-toggler fw-normal px-0"
@@ -236,7 +236,7 @@
                 >
               </a>
             </div>
-          </div>
+          </div> -->
           <!-- /Search -->
 
           <ul class="navbar-nav flex-row align-items-center ms-auto">
@@ -506,8 +506,9 @@
                 </li>
                 <li class="dropdown-notifications-list scrollable-container">
                   <ul class="list-group list-group-flush">
+                    <!-- marked-as-read -->
                     <li
-                      class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read"
+                      class="list-group-item list-group-item-action dropdown-notifications-item"
                       *ngFor="let LisNotification of ListeNotification"
                       (click)="AllerAuSuivi(LisNotification)"
                     >

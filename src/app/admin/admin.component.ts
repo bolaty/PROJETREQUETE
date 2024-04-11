@@ -956,7 +956,7 @@ export class AdminComponent implements OnInit {
       this.ListeNotification = this.ListeNotification.pvgListeSMSResult;
       console.log('this.ListeNotification', this.ListeNotification);
       if (this.ListeNotification[0].clsResultat.SL_RESULTAT == 'TRUE') {
-        this.nombreNotif = this.ListeNotification.length + 1;
+        this.nombreNotif = this.ListeNotification.length;
 
         // formater les dates
         for (let index = 0; index < this.ListeNotification.length; index++) {
@@ -1217,11 +1217,34 @@ export class AdminComponent implements OnInit {
     this.maVariableSubscription?.unsubscribe();
   }
 
+  initNavbarDropdownScrollbar() {
+    const scrollbarContainer = document.querySelectorAll(
+      '.navbar-dropdown .scrollable-container'
+    ); //@ts-ignore
+    const { PerfectScrollbar } = window;
+
+    if (PerfectScrollbar !== undefined) {
+      if (
+        typeof scrollbarContainer !== 'undefined' &&
+        scrollbarContainer !== null
+      ) {
+        scrollbarContainer.forEach((el) => {
+          // eslint-disable-next-line no-new
+          new PerfectScrollbar(el, {
+            wheelPropagation: false,
+            suppressScrollX: true,
+          });
+        });
+      }
+    }
+  }
+
   ngOnInit(): void {
     if (!this.AdminService.for_phone) {
       this.AdminService.showMenuMobile = false;
     }
 
+    // this.initNavbarDropdownScrollbar();
     this.Notification();
 
     setTimeout(() => {

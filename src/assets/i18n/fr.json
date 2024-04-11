@@ -248,6 +248,7 @@
   "avis_recev_sub_title": "Donner votre avis sur la recevabilité de cette reclamation",
   "avis_recev_chmp_title_1": "Avis",
   "avis_recev_chmp_title_2_placeholder": "Observation de l'agent traitant (portant sur la reclamation)",
+  "consult_avis_client": "Entrez une observation suite à votre avis",
   "chmp_date_start": "Date de début",
   "chmp_date_start_placeholder": "Entrez une date de début (01-01-2015)",
   "chmp_date_end": "Date de fin",
@@ -285,8 +286,8 @@
   "clo_def_title_step": "Etapes",
   "chmp_observation": "Observation",
   "placeholder_description": "Objectif de la tâche",
-  "placeholder_avis_clo": "Donnez votre avis sur l'annulation de la cloture",
-  "placeholder_obs_cloture": "Observation sur la requête",
+  "placeholder_avis_clo": "Donnez votre avis sur l'annulation de la clôture",
+  "placeholder_obs_cloture": "Entrez une observation",
   "btn_title_to_enclose": "Cloturer",
   "ann_clo_def_title": "Annulation clôture définitive",
   "ann_clo_def_sub_title": "Annulation de la clôture définitive",
@@ -341,5 +342,6 @@
   "clo_pro_jud_sub_title": "Cloturez la procédure",
   "relance_badge": "Relance",
   "tribunal_badge": "Tribunal",
-  "tribunal_end_badge": "Fin procédure"
+  "tribunal_end_badge": "Fin procédure",
+  "tribunal_message_clo": "Clôture impossible. Vous devez d'abord transmettre la requête à un tribunal"
 }

@@ -112,12 +112,34 @@
       class="d-flex col-12 col-lg-5 col-xl-4 align-items-center authentication-bg position-relative py-sm-5 px-4 py-4"
     >
       <div class="w-px-400 mx-auto pt-5 pt-lg-0">
+        <!-- ***************************************************************************** personnalisable • ne doit s'afficher que dans le cas d'une connexion cliente -->
+        <div class="container">
+          <div class="content">
+            <div class="content__container">
+              <!-- <p class="content__container__text">Hello</p> -->
+
+              <ul class="content__container__list">
+                <li class="content__container__list__item">Reclam +</li>
+                <li class="content__container__list__item">Simple</li>
+                <li class="content__container__list__item">Puissant</li>
+                <li class="content__container__list__item">Flexible</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- ***************************************************************************** -->
+
         <!-- personnalisable • ne doit s'afficher que dans le cas d'une connexion cliente -->
         <h4 class="mb-2">
           Bienvenue chez {{ AuthService.nom_de_la_structure }} ! 👋
         </h4>
         <p class="mb-4">Veuillez vous connecter à votre compte</p>
         <!-- personnalisable • ne doit s'afficher que dans le cas d'une connexion cliente -->
+
+        <!-- personnalisable • ne doit s'afficher que dans le cas d'une connexion operateur et admin -->
+        <h4 class="mb-2">Bienvenue sur <strong>Req App</strong> ! 👋</h4>
+        <p class="mb-4">Veuillez vous connecter à votre compte</p>
+        <!-- personnalisable • ne doit s'afficher que dans le cas d'une connexion operateur et admin -->
 
         <form class="mb-3" id="formAuthentication" #Connectform="ngForm">
           <div class="form-floating form-floating-outline mb-3">
@@ -199,7 +221,7 @@
         <!-- personnalisable • activer ce module lors d'une connexion en tant que client -->
         <p class="text-center mt-2">
           <span>Nouveau sur notre plateforme ?</span> &#160;
-          <a routerLink="/login" (click)="voirTraitement()">
+          <a (click)="voirTraitement()" style="cursor: pointer; color: #9055fd">
             Faire une reclamation
           </a>
         </p>
@@ -250,7 +272,7 @@
   aria-hidden="true"
 >
   <div class="offcanvas-header mb-3">
-    <h5 class="offcanvas-title">Consultation et avis</h5>
+    <h5 class="offcanvas-title">Nouvelle reclamation</h5>
     <button
       type="button"
       class="bttn btn-close text-reset"
@@ -269,7 +291,7 @@
           placeholder="Nom"
           value=""
           autofocus
-          [(ngModel)]="formulaire_avis[0].valeur"
+          [(ngModel)]="formulaire_wew_reclam[0].valeur"
         />
         <label for="nom">Nom</label>
       </div>
@@ -281,7 +303,7 @@
           id="prenoms"
           value=""
           placeholder="Prénoms"
-          [(ngModel)]="formulaire_avis[1].valeur"
+          [(ngModel)]="formulaire_wew_reclam[1].valeur"
         />
         <label for="prenoms">Prénoms</label>
       </div>
@@ -293,7 +315,7 @@
           name="email"
           value=""
           placeholder="mail@example.com"
-          [(ngModel)]="formulaire_avis[2].valeur"
+          [(ngModel)]="formulaire_wew_reclam[2].valeur"
         />
         <label for="email">E-mail</label>
       </div>
@@ -305,9 +327,22 @@
             name="telephone"
             class="form-control"
             placeholder="2250100000000"
-            [(ngModel)]="formulaire_avis[3].valeur"
+            [(ngModel)]="formulaire_wew_reclam[3].valeur"
           />
           <label for="telephone">Numéro de téléphone</label>
+        </div>
+      </div>
+      <div class="form-floating form-floating-outline mb-4">
+        <div class="form-floating form-floating-outline">
+          <input
+            type="text"
+            id="numCompte"
+            name="numCompte"
+            class="form-control"
+            placeholder="XXXXX"
+            [(ngModel)]="formulaire_wew_reclam[5].valeur"
+          />
+          <label for="numCompte">Numéro de compte</label>
         </div>
       </div>
       <div class="form-floating form-floating-outline mb-4">
@@ -316,8 +351,8 @@
           name="invoice-observation-avis"
           id="invoice-observation-avis"
           style="height: 190px"
-          placeholder="Observation de l'agent traitant (portant sur la plainte ou la reclamation)"
-          [(ngModel)]="formulaire_avis[4].valeur"
+          placeholder="Ecrivez votre reclamation"
+          [(ngModel)]="formulaire_wew_reclam[4].valeur"
         ></textarea>
         <label for="invoice-observation-avis">Observation</label>
       </div>
@@ -327,6 +362,7 @@
           type="button"
           class="bttn btn btn-primary me-3"
           data-bs-dismiss="offcanvas"
+          (click)="SubmitNewReclam(formulaire_wew_reclam)"
         >
           Enregistrer
         </button>
