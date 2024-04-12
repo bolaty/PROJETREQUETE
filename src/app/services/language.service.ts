@@ -120,6 +120,7 @@ export class LanguageService {
   avis_recev_sub_title: string = '';
   avis_recev_chmp_title_1: string = '';
   avis_recev_chmp_title_2_placeholder: string = '';
+  consult_avis_client: string = '';
   chmp_date_start: string = '';
   chmp_date_start_placeholder: string = '';
   chmp_date_end: string = '';
@@ -177,6 +178,7 @@ export class LanguageService {
   relance_badge: string = '';
   tribunal_badge: string = '';
   tribunal_end_badge: string = '';
+  tribunal_message_clo: string = '';
 
   constructor(private http: HttpClient) {
     this.setLanguage('fr'); // Set default language
@@ -380,6 +382,7 @@ export class LanguageService {
     this.avis_recev_chmp_title_2_placeholder = this.getTranslation(
       'avis_recev_chmp_title_2_placeholder'
     );
+    this.consult_avis_client = this.getTranslation('consult_avis_client');
     this.chmp_date_start = this.getTranslation('chmp_date_start');
     this.chmp_date_start_placeholder = this.getTranslation(
       'chmp_date_start_placeholder'
@@ -457,6 +460,7 @@ export class LanguageService {
     this.relance_badge = this.getTranslation('relance_badge');
     this.tribunal_badge = this.getTranslation('tribunal_badge');
     this.tribunal_end_badge = this.getTranslation('tribunal_end_badge');
+    this.tribunal_message_clo = this.getTranslation('tribunal_message_clo');
   }
   // language
 

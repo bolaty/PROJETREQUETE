@@ -248,6 +248,7 @@
   "avis_recev_sub_title": "Give your opinion on the admissibility of this complaint",
   "avis_recev_chmp_title_1": "Notice",
   "avis_recev_chmp_title_2_placeholder": "Observation of the handling agent (related to the complaint)",
+  "consult_avis_client": "Enter an observation following your review",
   "chmp_date_start": "Start date",
   "chmp_date_start_placeholder": "Enter a start date (01-01-2015)",
   "chmp_date_end": "End date",
@@ -286,7 +287,7 @@
   "chmp_observation": "Observation",
   "placeholder_description": "Task objective",
   "placeholder_avis_clo": "Give your opinion on the cancellation of the closure",
-  "placeholder_obs_cloture": "Comment on the request",
+  "placeholder_obs_cloture": "Enter an observation",
   "btn_title_to_enclose": "To enclose",
   "ann_clo_def_title": "Cancellation of permanent closure",
   "ann_clo_def_sub_title": "Cancellation of final closure",
@@ -341,5 +342,6 @@
   "clo_pro_jud_sub_title": "Close the procedure",
   "relance_badge": "Revival",
   "tribunal_badge": "Court",
-  "tribunal_end_badge": "End of procedure"
+  "tribunal_end_badge": "End of procedure",
+  "tribunal_message_clo": "Closure impossible. You must first send the request to a court"
 }

@@ -2438,8 +2438,9 @@ export class ReclamationsComponent {
           this.tab_liste_contentieux.pvgListeReqrequeteContentieuxResult;
         this.AdminService.CloseLoader();
         if (this.tab_liste_contentieux[0].clsResultat.SL_RESULTAT == 'FALSE') {
+          // Clôture impossible. Vous devez d'abord transmettre la requête à un tribunal
           this.toastr.error(
-            "Cloture impossible. Vous devez d'abord transmettre la requete à un tribunal",
+            this.LanguageService.tribunal_message_clo,
             'error',
             { positionClass: 'toast-bottom-left' }
           );
@@ -2462,26 +2463,25 @@ export class ReclamationsComponent {
               }
             }
           } else {
-            for (
-              let index = 0;
-              index < this.tab_liste_contentieux.length;
-              index++
-            ) {
+            let code_existe = false;
+            this.tab_liste_contentieux.forEach((element: any) => {
               if (
-                this.tab_liste_contentieux[index].RQ_CODEREQUETE ==
-                this.recupValEtape.RQ_CODEREQUETE
+                element.RQ_CODEREQUETE === this.recupValEtape.RQ_CODEREQUETE
               ) {
-                this.code_contentieux =
-                  this.tab_liste_contentieux[index].CT_CODEREQUETECONTENTIEUX;
+                this.code_contentieux = element.CT_CODEREQUETECONTENTIEUX;
                 $('#clotureprocedurejudiciaire').modal('show');
-                break;
-              } else {
-                this.toastr.error(
-                  "Cloture impossible. Vous devez d'abord transmettre la requete à un tribunal",
-                  'error',
-                  { positionClass: 'toast-bottom-left' }
-                );
+
+                code_existe = true;
               }
+            });
+
+            // Si le code n'existe pas, envoyer un message
+            if (!code_existe) {
+              this.toastr.error(
+                this.LanguageService.tribunal_message_clo,
+                'error',
+                { positionClass: 'toast-bottom-left' }
+              );
             }
           }
         }
