@@ -4,7 +4,7 @@ import { AdminService } from '../admin.service';
 import { ToastrService } from 'ngx-toastr';
 import { LanguageService } from 'src/app/services/language.service';
 import { HttpClient } from '@angular/common/http';
-import { Subscription } from 'rxjs';
+import { Subscription, forkJoin } from 'rxjs';
 // import { Dropzone } from 'src/app/services/dropzone';
 //@ts-ignore
 import Dropzone from 'dropzone';
@@ -17,16 +17,16 @@ declare var $: any;
   styleUrls: ['./reclamations.component.scss'],
 })
 export class ReclamationsComponent {
-  LienServeur: any = 'http://localhost:22248/'; // lien dev
+  // LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
-  // LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
+  LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
 
   maVariableSubscription?: Subscription;
 
   recupinfo: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
   maxWords: any = 30;
   code_contentieux: any;
-  file: any;
+  files: any;
   base64Image: string = '';
   btn_filter: string = 'enrg';
   option_body: any = '';
@@ -286,6 +286,8 @@ export class ReclamationsComponent {
   ListeComboEtapeSelonReq: any = [];
   tab_infos_client: any = [];
   ListConsultEtapeSelonReq: any = [];
+  formDataArray: any = [];
+  tab_data_doc: any = [];
   FormObjet: any;
   statutTraitement: boolean = false;
   cloture: boolean = true;
@@ -553,32 +555,40 @@ export class ReclamationsComponent {
   }
 
   HandleFileInput(event: any) {
-    this.file = event.target.files[0];
+    /*   this.file = event.target.files[0];
     if (this.file.size > 4 * 1024 * 1024) {
       this.toastr.error(
         'Le fichier est trop volumineux. Veuillez sélectionner un fichier de taille inférieure à 4 Mo.',
         'Echec'
       );
       return;
-    }
-
-    /*  this.file = event.target.files;
-    for (let index = 0; index < this.file.length; index++) {
-      if (this.file[index].size > 4 * 1024 * 1024) {
-        this.toastr.error(
-          'Le fichier est trop volumineux. Veuillez sélectionner un fichier de taille inférieure à 4 Mo.',
-          'Echec'
-        );
-        return;
-      }
     } */
 
-    const reader = new FileReader();
+    this.files = event.target.files;
+    for (let i = 0; i < this.files.length; i++) {
+      const file = this.files[i];
+      if (file.size > 4 * 1024 * 1024) {
+        this.toastr.error(
+          `Le fichier "${file.name}" est trop volumineux. Veuillez sélectionner un fichier de taille inférieure à 4 Mo.`,
+          'Echec'
+        );
+        // continue; // ignorer ce fichier et passer au suivant
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.base64Image = e.target.result.split(',')[1];
+      };
+      reader.readAsDataURL(file);
+    }
+
+    /* const reader = new FileReader();
     reader.onload = (event: any) => {
       this.base64Image = event.target.result;
       this.base64Image = this.base64Image.split(',')[1];
     };
-    reader.readAsDataURL(this.file);
+    reader.readAsDataURL(this.file); */
+
     var d = new Date();
     var date = d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
     var jour = d.getDate();
@@ -594,7 +604,7 @@ export class ReclamationsComponent {
   }
 
   HandleFileInputContentieux(event: any) {
-    const file = event.target.files[0];
+    /* const file = event.target.files[0];
     if (file.size > 4 * 1024 * 1024) {
       this.toastr.error(
         'Le fichier est trop volumineux. Veuillez sélectionner un fichier de taille inférieure à 4 Mo.',
@@ -607,7 +617,28 @@ export class ReclamationsComponent {
       this.base64Image = event.target.result;
       this.base64Image = this.base64Image.split(',')[1];
     };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(file); */
+
+    this.files = event.target.files;
+    this.formDataArray = [];
+    for (let i = 0; i < this.files.length; i++) {
+      const file = this.files[i];
+      if (file.size > 4 * 1024 * 1024) {
+        this.toastr.error(
+          `Le fichier "${file.name}" est trop volumineux. Veuillez sélectionner un fichier de taille inférieure à 4 Mo.`,
+          'Echec'
+        );
+        // continue; // ignorer ce fichier et passer au suivant
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.base64Image = e.target.result.split(',')[1];
+      };
+      reader.readAsDataURL(file);
+    }
+
     var d = new Date();
     var date = d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
     var jour = d.getDate();
@@ -617,13 +648,13 @@ export class ReclamationsComponent {
       console.log(date);
     }
 
-    const formData = new FormData();
+    /* const formData = new FormData();
     formData.append('DOCUMENT_FICHIER', file, file.name);
-    this.FormObjet = formData;
+    this.FormObjet = formData; */
   }
 
   HandleFileInputContentieuxCloture(event: any) {
-    const file = event.target.files[0];
+    /* const file = event.target.files[0];
     if (file.size > 4 * 1024 * 1024) {
       this.toastr.error(
         'Le fichier est trop volumineux. Veuillez sélectionner un fichier de taille inférieure à 4 Mo.',
@@ -636,7 +667,32 @@ export class ReclamationsComponent {
       this.base64Image = event.target.result;
       this.base64Image = this.base64Image.split(',')[1];
     };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(file); */
+
+    this.files = event.target.files;
+    this.formDataArray = [];
+    for (let i = 0; i < this.files.length; i++) {
+      const file = this.files[i];
+      if (file.size > 4 * 1024 * 1024) {
+        this.toastr.error(
+          `Le fichier "${file.name}" est trop volumineux. Veuillez sélectionner un fichier de taille inférieure à 4 Mo.`,
+          'Echec'
+        );
+        // continue; // ignorer ce fichier et passer au suivant
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.base64Image = e.target.result.split(',')[1];
+        const formData = new FormData();
+        formData.append('DOCUMENT_FICHIER', file, file.name);
+        formData.append('CT_CODEREQUETECONTENTIEUX', this.code_contentieux);
+        this.formDataArray.push(formData); // Store each formData in an array
+      };
+      reader.readAsDataURL(file);
+    }
+
     var d = new Date();
     var date = d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
     var jour = d.getDate();
@@ -646,115 +702,179 @@ export class ReclamationsComponent {
       console.log(date);
     }
 
-    const formData = new FormData();
+    /* const formData = new FormData();
     formData.append('DOCUMENT_FICHIER', file, file.name);
     formData.append('CT_CODEREQUETECONTENTIEUX', this.code_contentieux);
-    this.FormObjet = formData;
+    this.FormObjet = formData; */
   }
 
   SaveRapportProcedure(code_contentieux: any, btn: any) {
-    if (
-      this.FormObjet == null ||
-      this.FormObjet == undefined ||
-      this.FormObjet == ''
-    ) {
-      this.AdminService.NotificationErreur(
-        'Veuillez selectionner un document !'
-      );
+    if (this.files.length == 0) {
+      this.toastr.success('Veuillez selectionner un document !', 'success', {
+        positionClass: 'toast-bottom-left',
+      });
     } else {
-      if (btn == 'T')
-        this.FormObjet.append('CT_CODEREQUETECONTENTIEUX', code_contentieux);
-      this.http
-        .post(
-          `${this.LienServeur}RequeteClientsClasse.svc/pvgMajReqrequeteContentieuxUPloadFile`,
-          this.FormObjet
-        )
-        .subscribe(
-          (success) => {
-            this.recupEnregistrerFichierProcedure = success;
-            this.recupEnregistrerFichierProcedure =
-              this.recupEnregistrerFichierProcedure.pvgMajReqrequeteContentieuxUPloadFileResult;
+      // laaa
+      if (btn == 'T') {
+        for (let i = 0; i < this.files.length; i++) {
+          const file = this.files[i];
 
+          const formData = new FormData();
+          formData.append('DOCUMENT_FICHIER', file, file.name);
+          formData.append('CT_CODEREQUETECONTENTIEUX', code_contentieux);
+          this.formDataArray.push(formData); // Stocker chaque formData dans le tableau
+        }
+      }
+
+      // Créez un tableau d'observables pour stocker toutes les requêtes HTTP
+      const httpRequests = [];
+
+      for (let i = 0; i < this.formDataArray.length; i++) {
+        // Ajoutez chaque requête HTTP à votre tableau
+        httpRequests.push(
+          this.http.post(
+            `${this.LienServeur}RequeteClientsClasse.svc/pvgMajReqrequeteContentieuxUPloadFile`,
+            this.formDataArray[i]
+          )
+        );
+      }
+
+      // Utilisez forkJoin pour attendre que toutes les requêtes HTTP soient terminées
+      forkJoin(httpRequests).subscribe(
+        (successArray) => {
+          // Ce code sera exécuté une fois que toutes les requêtes HTTP seront terminées
+          // successArray contient les réponses de chaque requête
+
+          this.recupEnregistrerFichierProcedure = successArray.map(
+            //@ts-ignore
+            (response) => response.pvgMajReqrequeteContentieuxUPloadFileResult
+          );
+
+          // Votre code ici après la boucle for
+          this.toastr.success(
+            this.tab_transmission_tribunal.clsResultat.SL_MESSAGE,
+            'success',
+            { positionClass: 'toast-bottom-left' }
+          );
+
+          if (btn == 'C') {
+            $('#clotureprocedurejudiciaire').modal('hide');
+            this.modal_cloture_procedure[0].valeur = '';
+            this.modal_cloture_procedure[1].valeur = '';
+            this.toastr.success(
+              this.tab_cloture_procedure.clsResultat.SL_MESSAGE,
+              'success',
+              { positionClass: 'toast-bottom-left' }
+            );
+          } else {
+            $('#transmissionauntribunal').modal('hide');
+            this.modal_transmission_tribunal[0].valeur = '';
+            this.modal_transmission_tribunal[1].valeur = '';
             this.toastr.success(
               this.tab_transmission_tribunal.clsResultat.SL_MESSAGE,
               'success',
               { positionClass: 'toast-bottom-left' }
             );
-
-            if (btn == 'C') {
-              $('#clotureprocedurejudiciaire').modal('hide');
-              this.modal_cloture_procedure[0].valeur = '';
-              this.modal_cloture_procedure[1].valeur = '';
-              this.toastr.success(
-                this.tab_cloture_procedure.clsResultat.SL_MESSAGE,
-                'success',
-                { positionClass: 'toast-bottom-left' }
-              );
-            } else {
-              $('#transmissionauntribunal').modal('hide');
-              this.modal_transmission_tribunal[0].valeur = '';
-              this.modal_transmission_tribunal[1].valeur = '';
-              this.toastr.success(
-                this.tab_transmission_tribunal.clsResultat.SL_MESSAGE,
-                'success',
-                { positionClass: 'toast-bottom-left' }
-              );
-
-              this.ListeRequete();
-            }
-
-            if (
-              this.recupEnregistrerFichierProcedure.clsResultat.SL_RESULTAT ==
-              'FALSE'
-            ) {
-            }
-          },
-          (error: any) => {
-            $('#modal_de_modification').LoadingOverlay('hide');
+            this.ListeRequete();
           }
+        },
+        (error: any) => {
+          // Gérez les erreurs ici
+        }
+      );
+
+      /* for (let i = 0; i < this.formDataArray.length; i++) {
+        this.http
+          .post(
+            `${this.LienServeur}RequeteClientsClasse.svc/pvgMajReqrequeteContentieuxUPloadFile`,
+            this.formDataArray[i]
+          )
+          .subscribe(
+            (success) => {
+              this.recupEnregistrerFichierProcedure = success;
+            },
+            (error: any) => {
+
+            }
+          );
+      }
+
+      this.recupEnregistrerFichierProcedure =
+        this.recupEnregistrerFichierProcedure.pvgMajReqrequeteContentieuxUPloadFileResult;
+
+      this.toastr.success(
+        this.tab_transmission_tribunal.clsResultat.SL_MESSAGE,
+        'success',
+        { positionClass: 'toast-bottom-left' }
+      );
+
+      if (btn == 'C') {
+        $('#clotureprocedurejudiciaire').modal('hide');
+        this.modal_cloture_procedure[0].valeur = '';
+        this.modal_cloture_procedure[1].valeur = '';
+        this.toastr.success(
+          this.tab_cloture_procedure.clsResultat.SL_MESSAGE,
+          'success',
+          { positionClass: 'toast-bottom-left' }
         );
+      } else {
+        $('#transmissionauntribunal').modal('hide');
+        this.modal_transmission_tribunal[0].valeur = '';
+        this.modal_transmission_tribunal[1].valeur = '';
+        this.toastr.success(
+          this.tab_transmission_tribunal.clsResultat.SL_MESSAGE,
+          'success',
+          { positionClass: 'toast-bottom-left' }
+        );
+
+        this.ListeRequete();
+      }
+
+      if (
+        this.recupEnregistrerFichierProcedure.clsResultat.SL_RESULTAT == 'FALSE'
+      ) {
+      } */
     }
   }
 
   SaveRapportRequete() {
-    if (
-      this.FormObjet == null ||
-      this.FormObjet == undefined ||
-      this.FormObjet == ''
-    ) {
+    if (this.formDataArray.length == 0) {
       this.AdminService.NotificationErreur(
         'Veuillez selectionner un document !'
       );
     } else {
       // this.FormObjet.append('RQ_CODEREQUETE', code_requete);
-      this.http
-        .post(
-          `${this.LienServeur}RequeteClientsClasse.svc/pvgpvgMajReqrequeteUPloadFile`,
-          this.FormObjet
-        )
-        .subscribe(
-          (success) => {
-            this.recupEnregistrerFichierRequete = success;
-            this.recupEnregistrerFichierRequete =
-              this.recupEnregistrerFichierRequete.pvgpvgMajReqrequeteUPloadFileResult;
 
-            this.ListeRequete();
-            this.toastr.success(
-              this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE,
-              'success',
-              { positionClass: 'toast-bottom-left' }
-            );
-            this.viderChamp();
+      for (let i = 0; i < this.formDataArray.length; i++) {
+        this.http
+          .post(
+            `${this.LienServeur}RequeteClientsClasse.svc/pvgpvgMajReqrequeteUPloadFile`,
+            this.formDataArray[i]
+          )
+          .subscribe(
+            (success) => {
+              this.recupEnregistrerFichierRequete = success;
+            },
+            (error: any) => {}
+          );
+      }
 
-            if (
-              this.recupEnregistrerFichierRequete.clsResultat.SL_RESULTAT ==
-              'FALSE'
-            ) {
-            } else {
-            }
-          },
-          (error: any) => {}
-        );
+      this.recupEnregistrerFichierRequete =
+        this.recupEnregistrerFichierRequete.pvgpvgMajReqrequeteUPloadFileResult;
+
+      this.ListeRequete();
+      this.toastr.success(
+        this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE,
+        'success',
+        { positionClass: 'toast-bottom-left' }
+      );
+      this.viderChamp();
+
+      if (
+        this.recupEnregistrerFichierRequete.clsResultat.SL_RESULTAT == 'FALSE'
+      ) {
+      } else {
+      }
     }
   }
 
@@ -850,13 +970,27 @@ export class ReclamationsComponent {
                 );
                 this.viderChamp();
               } else {
-                const formData = new FormData();
+                // laaa
+                this.formDataArray = [];
+                for (let i = 0; i < this.files.length; i++) {
+                  const file = this.files[i];
+
+                  const formData = new FormData();
+                  formData.append('DOCUMENT_FICHIER', file, file.name);
+                  formData.append(
+                    'RQ_CODEREQUETE',
+                    this.retourRequeteEnregistrement.RQ_CODEREQUETE
+                  );
+                  this.formDataArray.push(formData); // stocker chaque formData dans le tableau
+                }
+
+                /* const formData = new FormData();
                 formData.append('DOCUMENT_FICHIER', this.file, this.file.name);
                 formData.append(
                   'RQ_CODEREQUETE',
                   this.retourRequeteEnregistrement.RQ_CODEREQUETE
                 );
-                this.FormObjet = formData;
+                this.FormObjet = formData; */
 
                 this.SaveRapportRequete();
               }
@@ -954,13 +1088,27 @@ export class ReclamationsComponent {
                 );
                 this.viderChamp();
               } else {
-                const formData = new FormData();
+                // laaa
+                this.formDataArray = [];
+                for (let i = 0; i < this.files.length; i++) {
+                  const file = this.files[i];
+
+                  const formData = new FormData();
+                  formData.append('DOCUMENT_FICHIER', file, file.name);
+                  formData.append(
+                    'RQ_CODEREQUETE',
+                    this.retourRequeteEnregistrement.RQ_CODEREQUETE
+                  );
+                  this.formDataArray.push(formData); // stocker chaque formData dans le tableau
+                }
+
+                /* const formData = new FormData();
                 formData.append('DOCUMENT_FICHIER', this.file, this.file.name);
                 formData.append(
                   'RQ_CODEREQUETE',
                   this.retourRequeteEnregistrement.RQ_CODEREQUETE
                 );
-                this.FormObjet = formData;
+                this.FormObjet = formData; */
 
                 this.SaveRapportRequete();
               }
@@ -2603,31 +2751,6 @@ export class ReclamationsComponent {
     this.var_checked_clo = '';
     this.btn_filter = bouton;
 
-    // laaa
-    // Réinitialisation des styles de fond de tous les boutons
-    /* let buttons = document.querySelectorAll('.btn-outline-secondary');
-    buttons.forEach((button) => {
-      //@ts-ignore
-      button.style.backgroundColor = 'transparent'; // Réinitialisation de la couleur de fond
-      // Vous pouvez également réinitialiser d'autres propriétés CSS ici si nécessaire
-    });
-
-    if (this.afficher_tri && this.AdminService.for_phone) {
-      if (bouton == 'enrg') {
-        let menu_select_color1 = document.getElementById('one'); //@ts-ignore
-        menu_select_color1.style.backgroundColor = 'yellow';
-        console.log('btn_select', menu_select_color1);
-      } else if (bouton == 'trai') {
-        let menu_select_color2 = document.getElementById('two'); //@ts-ignore
-        menu_select_color2.style.backgroundColor = 'yellow';
-        console.log('btn_select', menu_select_color2);
-      } else {
-        let menu_select_color3 = document.getElementById('three'); //@ts-ignore
-        menu_select_color3.style.backgroundColor = 'yellow';
-        console.log('btn_select', menu_select_color3);
-      }
-    } */
-
     if (bouton == 'enrg') {
       this.var_checked_enrg = 'checked';
       for (let index = 0; index < this.tab_req_enregistree.length; index++) {
@@ -2846,8 +2969,8 @@ export class ReclamationsComponent {
     }
     // this.ComboEtapeParamSimple()
 
-    if (info.RQ_NOMRAPPORT != '') this.consultation_doc = true;
-    else this.consultation_doc = false;
+    /* if (info.RQ_NOMRAPPORT != '') this.consultation_doc = true;
+    else this.consultation_doc = false; */
     for (let index = 0; index < this.formulaire_avis.length; index++) {
       this.formulaire_avis[index].valeur = '';
     }
@@ -3049,8 +3172,42 @@ export class ReclamationsComponent {
             this.ListeComboEtapes[j].RE_ACTIF = 'O';
           }
         }
+
+        this.GetFilesRequete(info);
       },
       (error) => {}
+    );
+  }
+
+  GetFilesRequete(info: any) {
+    let Option = 'RequeteClientsClasse.svc/pvgListeReqrequeteDoc';
+    let body = {
+      Objets: [
+        {
+          OE_PARAM: [info],
+          clsObjetEnvoi: {
+            ET_CODEETABLISSEMENT: '',
+            AN_CODEANTENNE: '',
+            TYPEOPERATION: '01',
+          },
+        },
+      ],
+    };
+    this.AdminService.AppelServeur(body, Option).subscribe(
+      (success: any) => {
+        this.tab_data_doc = success;
+        this.tab_data_doc = this.tab_data_doc.pvgListeReqrequeteDocResult;
+
+        console.log('this.tab_data_doc', this.tab_data_doc);
+
+        this.consultation_doc = false;
+        if (this.tab_data_doc[0].clsResultat.SL_RESULTAT == 'TRUE') {
+          this.consultation_doc = true;
+        }
+      },
+      (error) => {
+        this.consultation_doc = false;
+      }
     );
   }
 
@@ -3193,11 +3350,8 @@ export class ReclamationsComponent {
     }
   }
 
-  ConsulterPJ() {
-    window.open(
-      `${this.recupValEtape.RQ_LIENRAPPORT}${this.recupValEtape.RQ_NOMRAPPORT}`,
-      '_blank'
-    );
+  ConsulterPJ(doc_show: any) {
+    window.open(`${this.recupValEtape.RQ_LIENRAPPORT}${doc_show}`, '_blank');
   }
 
   // Fonction à exécuter lorsque la variable change

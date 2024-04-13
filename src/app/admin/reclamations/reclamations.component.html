@@ -3062,23 +3062,98 @@
               <label for="dtdefin">{{ LanguageService.chmp_date_end }}</label>
             </div>
           </div>
+          &#160; &#160; &#160;
+          <div class="divider" *ngIf="consultation_doc">
+            <div class="divider-text">Les pièces jointes à la requête</div>
+          </div>
 
           <div
             class="col-sm-12 col-lg-12 mb-4"
             *ngIf="consultation_doc"
-            (click)="ConsulterPJ()"
             style="cursor: pointer"
           >
-            <div class="card bg-primary text-white text-center p-3">
-              <figure class="mb-0">
-                <blockquote class="blockquote">
-                  <p>Consultez la pièce jointe</p>
-                </blockquote>
-                <figcaption class="blockquote-footer mb-0 text-white">
-                  {{ recupValEtape.RQ_NOMRAPPORT }}
-                  <!-- <cite title="Source Title">Source Title</cite> -->
-                </figcaption>
-              </figure>
+            <div class="row">
+              <div class="col" *ngFor="let doc of tab_data_doc">
+                <div
+                  class="d-flex align-items-center"
+                  *ngIf="doc.RQ_NOMRAPPORT.includes('.pdf')"
+                  (click)="ConsulterPJ(doc.RQ_NOMRAPPORT)"
+                >
+                  <img
+                    src="../../assets/img/icons/misc/pdf.png"
+                    alt="img"
+                    width="28"
+                    class="me-2"
+                  />
+                  <span class="h6 mb-0">{{ doc.RQ_NOMRAPPORT }}</span>
+                </div>
+              </div>
+              <div class="col" *ngFor="let doc of tab_data_doc">
+                <div
+                  class="d-flex align-items-center"
+                  *ngIf="doc.RQ_NOMRAPPORT.includes('.docx')"
+                  (click)="ConsulterPJ(doc.RQ_NOMRAPPORT)"
+                >
+                  <img
+                    src="../../assets/img/icons/misc/doc.png"
+                    alt="img"
+                    width="28"
+                    class="me-2"
+                  />
+                  <span class="h6 mb-0">{{ doc.RQ_NOMRAPPORT }}</span>
+                </div>
+              </div>
+              <div class="col" *ngFor="let doc of tab_data_doc">
+                <div
+                  class="d-flex align-items-center"
+                  *ngIf="
+                    doc.RQ_NOMRAPPORT.includes('.xlsx') ||
+                    doc.RQ_NOMRAPPORT.includes('.xls')
+                  "
+                  (click)="ConsulterPJ(doc.RQ_NOMRAPPORT)"
+                >
+                  <img
+                    src="../../assets/img/icons/misc/xls.png"
+                    alt="img"
+                    width="28"
+                    class="me-2"
+                  />
+                  <span class="h6 mb-0">{{ doc.RQ_NOMRAPPORT }}</span>
+                </div>
+              </div>
+              <div class="col" *ngFor="let doc of tab_data_doc">
+                <div
+                  class="d-flex align-items-center"
+                  *ngIf="doc.RQ_NOMRAPPORT.includes('.txt')"
+                  (click)="ConsulterPJ(doc.RQ_NOMRAPPORT)"
+                >
+                  <img
+                    src="../../assets/img/icons/misc/txt.png"
+                    alt="img"
+                    width="28"
+                    class="me-2"
+                  />
+                  <span class="h6 mb-0">{{ doc.RQ_NOMRAPPORT }}</span>
+                </div>
+              </div>
+              <div class="col" *ngFor="let doc of tab_data_doc">
+                <div
+                  class="d-flex align-items-center"
+                  *ngIf="
+                    doc.RQ_NOMRAPPORT.includes('.jpg') ||
+                    doc.RQ_NOMRAPPORT.includes('.jpeg')
+                  "
+                  (click)="ConsulterPJ(doc.RQ_NOMRAPPORT)"
+                >
+                  <img
+                    src="../../assets/img/icons/misc/jpg.png"
+                    alt="img"
+                    width="28"
+                    class="me-2"
+                  />
+                  <span class="h6 mb-0">{{ doc.RQ_NOMRAPPORT }}</span>
+                </div>
+              </div>
             </div>
           </div>
 

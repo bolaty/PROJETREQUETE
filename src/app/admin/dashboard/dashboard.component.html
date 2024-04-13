@@ -83,7 +83,9 @@
                   <div class="small mb-1">
                     {{ languageService.stat_title_1 }}
                   </div>
-                  <h5 class="mb-0">{{ recup_reclamation_stats[0].NOMBREREQUETES }}</h5>
+                  <h5 class="mb-0">
+                    {{ recup_reclamation_stats[0].NOMBREREQUETES }}
+                  </h5>
                 </div>
               </div>
             </div>
@@ -99,7 +101,9 @@
                   <div class="small mb-1">
                     {{ languageService.stat_title_2 }}
                   </div>
-                  <h5 class="mb-0">{{recup_reclamation_stats[0].NOMBREREQUETESATTRIBUEES}}</h5>
+                  <h5 class="mb-0">
+                    {{ recup_reclamation_stats[0].NOMBREREQUETESATTRIBUEES }}
+                  </h5>
                 </div>
               </div>
             </div>
@@ -115,7 +119,9 @@
                   <div class="small mb-1">
                     {{ languageService.stat_title_3 }}
                   </div>
-                  <h5 class="mb-0">{{recup_reclamation_stats[0].NOMBREREQUETESENCOURS}}</h5>
+                  <h5 class="mb-0">
+                    {{ recup_reclamation_stats[0].NOMBREREQUETESENCOURS }}
+                  </h5>
                 </div>
               </div>
             </div>
@@ -131,7 +137,9 @@
                   <div class="small mb-1">
                     {{ languageService.stat_title_4 }}
                   </div>
-                  <h5 class="mb-0">{{ recup_reclamation_stats[0].NOMBREREQUETEDEJATRAITER }}</h5>
+                  <h5 class="mb-0">
+                    {{ recup_reclamation_stats[0].NOMBREREQUETEDEJATRAITER }}
+                  </h5>
                 </div>
               </div>
             </div>
@@ -191,7 +199,7 @@
                 <div class="ms-3 d-flex flex-column">
                   <p class="mb-1">Nombre de reclamation</p>
                   <h5 class="mb-1">
-                    {{ recup_reclamation_stats[0].NOMBREREQUETES }}
+                    {{ recup_reclamation_stats[0].NOMBREREQUETEDEJATRAITER }}
                   </h5>
                 </div>
               </div>
@@ -202,14 +210,24 @@
                     <div class="badge badge-dot bg-primary me-2"></div>
                     <p class="text-heading mb-0">Dans les délais</p>
                   </div>
-                  <p class="fw-medium mb-0">{{ recup_reclamation_stats[0].NOMBREREQUETESTRAITEESDANSDELAIS }}</p>
+                  <p class="fw-medium mb-0">
+                    {{
+                      recup_reclamation_stats[0]
+                        .NOMBREREQUETESTRAITEESDANSDELAIS
+                    }}
+                  </p>
                 </div>
                 <div class="col-6">
                   <div class="d-flex align-items-center mb-2">
                     <div class="badge badge-dot bg-primary me-2"></div>
                     <p class="text-heading mb-0">Hors délais</p>
                   </div>
-                  <p class="fw-medium mb-0">{{ recup_reclamation_stats[0].NOMBREREQUETESTRAITEESHORSDELAIS }}</p>
+                  <p class="fw-medium mb-0">
+                    {{
+                      recup_reclamation_stats[0]
+                        .NOMBREREQUETESTRAITEESHORSDELAIS
+                    }}
+                  </p>
                 </div>
               </div>
             </div>
