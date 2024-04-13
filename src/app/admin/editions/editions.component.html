@@ -121,6 +121,7 @@
                       class="form-select"
                       id="idExercice"
                       required
+                      (change)="resetdate()"
                       [(ngModel)]="formulaire_edition_1[1].valeur"
                     >
                       <option value="">Selectionnez un exercice</option>
@@ -268,6 +269,7 @@
                       class="form-select"
                       id="idExercice"
                       required
+                      (change)="resetdate2()"
                       [(ngModel)]="formulaire_edition_2[1].valeur"
                     >
                       <option value="">Selectionnez un exercice/option></option>
@@ -415,6 +417,7 @@
                       class="form-select"
                       id="idExercice"
                       required
+                      (change)="resetdate3()"
                       [(ngModel)]="formulaire_edition_3[1].valeur"
                     >
                       <option value="">Selectionnez un exercice</option>

@@ -67,7 +67,7 @@ export class EtatSuiviComponent implements OnInit {
         },
       ],
       [
-        ['Nombre de', 'plaintes traitées'],
+        ['Nombre de', 'réclamations traitées'],
         ['Avis client', 'favorable'],
         ['Avis client', 'non favorable'],
         ['Taux de', 'satisfaction en %'],
@@ -75,7 +75,7 @@ export class EtatSuiviComponent implements OnInit {
     );
 
     this.chartOptionsSituationPlaintes = barChartOptions(
-      'situation des plaintes des plaintes (reçus, traitées, non traitées)',
+      'situation des réclamations des réclamations (reçus, traitées, non traitées)',
       [
         {
           name: 'Valeur',
@@ -105,10 +105,10 @@ export class EtatSuiviComponent implements OnInit {
     this.chartOptionsDelaiPlaintes = PieChartOptions(
       'Taux de satisfaction des plaignants',
       [0, 0],
-      [['Nombre de plaintes traitées'], ['Avis client favorable']]
+      [['Nombre de réclamations traitées'], ['Avis client favorable']]
     );
     this.chartOptionsNaturePlaintes = barChartOptions(
-      'Nature et type des plaintes les plus recurrentes',
+      'Nature et type des réclamations les plus recurrentes',
       [
         {
           name: 'Valeur',
@@ -127,17 +127,17 @@ export class EtatSuiviComponent implements OnInit {
       'Nombre de clients insatisfaits ayant reformulé leur plainte',
       [
         {
-          name: 'Nombre de plaintes relatives au comportement du personnel',
+          name: 'Nombre de réclamations relatives au comportement du personnel',
           data: [20],
           color: '#5B9BD5',
         },
         {
-          name: 'Nombre de plaintes relatives aux produits et services',
+          name: 'Nombre de réclamations relatives aux produits et services',
           data: [30],
           color: '#ED7D31',
         },
         {
-          name: 'Nombre de plaintes relatives aux politiques ou procédures',
+          name: 'Nombre de réclamations relatives aux politiques ou procédures',
           data: [25],
           color: '#A5A5A5',
         },
@@ -150,134 +150,139 @@ export class EtatSuiviComponent implements OnInit {
 
   ngOnInit(): void {
     this.AdminService.showMenu = true;
-
-    this.route.queryParams.subscribe((params) => {
-      const paramName = params['paramName'];
-      this.apiService
-        .postData(this.APP_URL, {
-          AG_CODEAGENCE: this.info_connexion[0].AG_CODEAGENCE,
-          RQ_DATEDEBUT: this.info_session[4].valeur,
-          RQ_DATEFIN: this.info_session[5].valeur,
-          CU_CODECOMPTEUTULISATEUR:
-            this.info_connexion[0].CU_CODECOMPTEUTULISATEUR,
-          TYPEETAT: 'TSCLT',
-        })
-        .pipe(
-          map((res: any) => {
-            const data = res.pvgTableauDeBordResult;
-            const ts = data.clsTableauDeBordTauxSatisfactions[0];
-            const sp = data.clsTableauDeBordSituationPlaintes;
-            const dt = data.clsTableauDeBordDelaiTraiPlaintes;
-            const natP = data.clsTableauDeBordNatPlainteRecurs;
-            const refP = data.clsTableauDeBordNbrePlainterefs;
-            return {
-              TAUXSATISFACTION: {
-                LIBELLERUBRIQUE: ts.LIBELLERUBRIQUE,
-                DATA: [
-                  ts.TOTALPLAINTETRAITES,
-                  ts.AVISCLIENTFAVORABLE,
-                  ts.AVISCLIENTNONFAVORABLE,
-                  parseInt(ts.TOTALPLAINTETRAITES) > 0
-                    ? (parseInt(ts.AVISCLIENTFAVORABLE) /
-                        parseInt(ts.TOTALPLAINTETRAITES)) *
-                      100
-                    : 0,
-                ],
-              },
-              SITUATIONPLAINTES: {
-                LIBELLES: sp.map((e: any) => e.LIBELLERUBRIQUE),
-                TOTALPLAINTERECUES: sp.map((e: any) => e.TOTALPLAINTERECUES),
-                TOTALPLAINTETRAITES: sp.map((e: any) => e.TOTALPLAINTETRAITES),
-                TOTALPLAINTENONTRAITES: sp.map(
-                  (e: any) => e.TOTALPLAINTERECUES - e.TOTALPLAINTETRAITES
-                ),
-              },
-              DELAITRAITEMENT: {
-                LIBELLES: dt.map((e: any) => e.LIBELLERUBRIQUE),
-                NOMBRE: dt.map((e: any) => e.NOMBRE),
-              },
-              NATUREPLAINTES: {
-                LIBELLES: natP.map((e: any) => ajustLibelle(e.LIBELLERUBRIQUE)),
-                LIBELLESTOSHOW: natP.map((e: any) => e.LIBELLERUBRIQUE),
-                NOMBRE: natP.map((e: any) => e.NOMBRE),
-              },
-              REFPLAINTES: refP.map((e: any, i: number) => {
-                return {
-                  name: e.LIBELLERUBRIQUE,
-                  data: [e.NOMBRE],
-                  color: this.colors[i],
-                };
-              }),
-            };
+    this.AdminService.ShowLoader()
+    setTimeout(() => {
+      this.route.queryParams.subscribe((params) => {
+        
+        const paramName = params['paramName'];
+        this.apiService
+          .postData(this.APP_URL, {
+            AG_CODEAGENCE: this.info_connexion[0].AG_CODEAGENCE,
+            RQ_DATEDEBUT: this.info_session[4].valeur,
+            RQ_DATEFIN: this.info_session[5].valeur,
+            CU_CODECOMPTEUTULISATEUR:
+              this.info_connexion[0].CU_CODECOMPTEUTULISATEUR,
+            TYPEETAT: 'TSCLT',
           })
-        )
-        .subscribe((data: any) => {
-          this.data = data;
-          this.chartOptionsSatisfaction = barChartOptions(
-            data.TAUXSATISFACTION.LIBELLERUBRIQUE,
-            [
-              {
-                name: 'Valeur',
-                data: data.TAUXSATISFACTION.DATA,
-                color: '#5B9BD5',
-              },
-            ],
-            [
-              ['Nombre de', 'plaintes traitées'],
-              ['Avis client', 'favorable'],
-              ['Avis client', 'non favorable'],
-              ['Taux de', 'satisfaction en %'],
-            ]
-          );
-
-          this.chartOptionsSituationPlaintes = barChartOptions(
-            'situation des plaintes des plaintes (reçus, traitées, non traitées)',
-            [
-              {
-                name: 'Valeur',
-                data: data.SITUATIONPLAINTES.TOTALPLAINTERECUES,
-                color: '#5B9BD5',
-              },
-              {
-                name: 'Valeur',
-                data: data.SITUATIONPLAINTES.TOTALPLAINTETRAITES,
-                color: '#ED7D31',
-              },
-              {
-                name: 'Valeur',
-                data: data.SITUATIONPLAINTES.TOTALPLAINTENONTRAITES,
-                color: '#A5A5A5',
-              },
-            ],
-            data.SITUATIONPLAINTES.LIBELLES
-          );
-
-          this.chartOptionsDelaiPlaintes = PieChartOptions(
-            'Taux de satisfaction des plaignants',
-            data.DELAITRAITEMENT.NOMBRE,
-            data.DELAITRAITEMENT.LIBELLES
-          );
-          this.chartOptionsNaturePlaintes = barChartOptions(
-            'Nature et type des plaintes les plus recurrentes',
-            [
-              {
-                name: 'Valeur',
-                data: data.NATUREPLAINTES.NOMBRE,
-                color: '#5B9BD5',
-              },
-            ],
-
-            data.NATUREPLAINTES.LIBELLES
-          );
-          this.chartOptionsClientInsatisfait = barChartOptions(
-            'Nombre de clients insatisfaits ayant reformulé leur plainte',
-            data.REFPLAINTES,
-            [],
-            true,
-            true
-          );
-        });
-    });
+          .pipe(
+            map((res: any) => {
+              this.AdminService.CloseLoader()
+              const data = res.pvgTableauDeBordResult;
+              const ts = data.clsTableauDeBordTauxSatisfactions[0];
+              const sp = data.clsTableauDeBordSituationPlaintes;
+              const dt = data.clsTableauDeBordDelaiTraiPlaintes;
+              const natP = data.clsTableauDeBordNatPlainteRecurs;
+              const refP = data.clsTableauDeBordNbrePlainterefs;
+              return {
+                TAUXSATISFACTION: {
+                  LIBELLERUBRIQUE: ts.LIBELLERUBRIQUE,
+                  DATA: [
+                    ts.TOTALPLAINTETRAITES,
+                    ts.AVISCLIENTFAVORABLE,
+                    ts.AVISCLIENTNONFAVORABLE,
+                    parseInt(ts.TOTALPLAINTETRAITES) > 0
+                      ? (parseInt(ts.AVISCLIENTFAVORABLE) /
+                          parseInt(ts.TOTALPLAINTETRAITES)) *
+                        100
+                      : 0,
+                  ],
+                },
+                SITUATIONPLAINTES: {
+                  LIBELLES: sp.map((e: any) => e.LIBELLERUBRIQUE),
+                  TOTALPLAINTERECUES: sp.map((e: any) => e.TOTALPLAINTERECUES),
+                  TOTALPLAINTETRAITES: sp.map((e: any) => e.TOTALPLAINTETRAITES),
+                  TOTALPLAINTENONTRAITES: sp.map(
+                    (e: any) => e.TOTALPLAINTERECUES - e.TOTALPLAINTETRAITES
+                  ),
+                },
+                DELAITRAITEMENT: {
+                  LIBELLES: dt.map((e: any) => e.LIBELLERUBRIQUE),
+                  NOMBRE: dt.map((e: any) => e.NOMBRE),
+                },
+                NATUREPLAINTES: {
+                  LIBELLES: natP.map((e: any) => ajustLibelle(e.LIBELLERUBRIQUE)),
+                  LIBELLESTOSHOW: natP.map((e: any) => e.LIBELLERUBRIQUE),
+                  NOMBRE: natP.map((e: any) => e.NOMBRE),
+                },
+                REFPLAINTES: refP.map((e: any, i: number) => {
+                  return {
+                    name: e.LIBELLERUBRIQUE,
+                    data: [e.NOMBRE],
+                    color: this.colors[i],
+                  };
+                }),
+              };
+            })
+          )
+          .subscribe((data: any) => {
+            this.data = data;
+            this.chartOptionsSatisfaction = barChartOptions(
+              data.TAUXSATISFACTION.LIBELLERUBRIQUE,
+              [
+                {
+                  name: 'Valeur',
+                  data: data.TAUXSATISFACTION.DATA,
+                  color: '#5B9BD5',
+                },
+              ],
+              [
+                ['Nombre de', 'réclamations traitées'],
+                ['Avis client', 'favorable'],
+                ['Avis client', 'non favorable'],
+                ['Taux de', 'satisfaction en %'],
+              ]
+            );
+  
+            this.chartOptionsSituationPlaintes = barChartOptions(
+              'situation des réclamations des réclamations (reçus, traitées, non traitées)',
+              [
+                {
+                  name: 'Valeur',
+                  data: data.SITUATIONPLAINTES.TOTALPLAINTERECUES,
+                  color: '#5B9BD5',
+                },
+                {
+                  name: 'Valeur',
+                  data: data.SITUATIONPLAINTES.TOTALPLAINTETRAITES,
+                  color: '#ED7D31',
+                },
+                {
+                  name: 'Valeur',
+                  data: data.SITUATIONPLAINTES.TOTALPLAINTENONTRAITES,
+                  color: '#A5A5A5',
+                },
+              ],
+              data.SITUATIONPLAINTES.LIBELLES
+            );
+  
+            this.chartOptionsDelaiPlaintes = PieChartOptions(
+              'Taux de satisfaction des plaignants',
+              data.DELAITRAITEMENT.NOMBRE,
+              data.DELAITRAITEMENT.LIBELLES
+            );
+            this.chartOptionsNaturePlaintes = barChartOptions(
+              'Nature et type des réclamations les plus recurrentes',
+              [
+                {
+                  name: 'Valeur',
+                  data: data.NATUREPLAINTES.NOMBRE,
+                  color: '#5B9BD5',
+                },
+              ],
+  
+              data.NATUREPLAINTES.LIBELLES
+            );
+            this.chartOptionsClientInsatisfait = barChartOptions(
+              'Nombre de clients insatisfaits ayant reformulé leur plainte',
+              data.REFPLAINTES,
+              [],
+              true,
+              true
+            );
+          });
+      });
+    }, 1000);
+   
   }
   printPage() {
     window.print();

@@ -21,18 +21,30 @@
         <!-- <thead class="border-top table-light"> -->
         <thead>
           <tr>
-            <th>Client</th>
-            <th>Fréquence</th>
+            <th>Code Client</th>
+            <th>Nom et prenoms</th>
+            <th>Contact</th>
+            <th>Email</th>
+            <th>Canal</th>
+            <th>Nombre de réclamation</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of tab_retour">
+            <td>{{ item?.CU_NUMEROUTILISATEUR }}</td>
             <td>{{ item?.CU_NOMUTILISATEUR }}</td>
+            <td>{{ item?.CU_CONTACT }}</td>
+            <td>{{ item?.CU_EMAIL }}</td>
+            <td>{{ item?.CANAL }}</td>
             <td>{{ item?.NOMBRE }}</td>
           </tr>
         </tbody>
         <tfoot>
           <tr>
+            <td class="text-end fw-bold fs-5"></td>
+            <td class="text-end fw-bold fs-5"></td>
+            <td class="text-end fw-bold fs-5"></td>
+            <td class="text-end fw-bold fs-5"></td>
             <td class="text-end fw-bold fs-5">Total</td>
             <td class="text-end fw-bold fs-5">{{ total }}</td>
           </tr>

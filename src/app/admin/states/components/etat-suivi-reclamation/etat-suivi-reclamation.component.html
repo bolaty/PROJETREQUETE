@@ -37,8 +37,8 @@
             <td></td>
             <td></td>
           </tr>
-          <tr *ngFor="let item of data?.ENCOURS">
-            <td></td>
+          <tr *ngFor="let item of data?.ENCOURS; let index= index">
+            <td>{{index + 1}}</td>
             <td>{{ item?.TR_LIBELLETYEREQUETE }}</td>
             <td>{{ item?.RQ_DESCRIPTIONREQUETE }}</td>
           </tr>
@@ -52,8 +52,8 @@
             <td></td>
             <td></td>
           </tr>
-          <tr *ngFor="let item of data?.TRAITES">
-            <td></td>
+          <tr *ngFor="let item of data?.TRAITES; let index= index">
+            <td>{{index + 1}}</td>
             <td>{{ item?.TR_LIBELLETYEREQUETE }}</td>
             <td>{{ item?.RQ_DESCRIPTIONREQUETE }}</td>
           </tr>
@@ -67,8 +67,8 @@
             <td></td>
             <td></td>
           </tr>
-          <tr *ngFor="let item of data?.SUSPENDUES">
-            <td></td>
+          <tr *ngFor="let item of data?.SUSPENDUES; let index= index">
+            <td>{{index + 1}}</td>
             <td>{{ item?.TR_LIBELLETYEREQUETE }}</td>
             <td>{{ item?.RQ_DESCRIPTIONREQUETE }}</td>
           </tr>

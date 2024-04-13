@@ -312,7 +312,16 @@ export class EditionsComponent {
     this.AdminService.AppelServeur(body, Option).subscribe(
       (success: any) => {
         this.tab_periode = success;
-
+        
+        if(this.affiche_option_1 == true) {
+          this.resetdate()
+        }
+        if(this.affiche_option_2 == true) {
+          this.resetdate2()
+        }
+        if(this.affiche_option_3 == true) {
+          this.resetdate3()
+        }
         this.AdminService.CloseLoader();
       },
       (error) => {
@@ -323,14 +332,52 @@ export class EditionsComponent {
       }
     );
   }
+  resetdate(){
+    this.formulaire_edition_1[3].valeur = ""
+    this.formulaire_edition_1[4].valeur = ""
+    this.formulaire_edition_1[5].valeur = ""
+  }
 
+  resetdate2(){
+    this.formulaire_edition_2[3].valeur = ""
+    this.formulaire_edition_2[4].valeur = ""
+    this.formulaire_edition_2[5].valeur = ""
+  }
+
+  resetdate3(){
+    this.formulaire_edition_3[3].valeur = ""
+    this.formulaire_edition_3[4].valeur = ""
+    this.formulaire_edition_3[5].valeur = ""
+  }
   ChangeDate(periodicite: any, periode: any) {
     let Option = 'RequeteClientsClasse.svc/pvgPeriodiciteDateDebutFin';
-    let body = {
-      EX_EXERCICE: this.info_connexion[0].EX_EXERCICE,
-      MO_CODEMOIS: periode,
-      PE_CODEPERIODICITE: periodicite,
+    var body = {
+      EX_EXERCICE: "",//this.info_connexion[0].EX_EXERCICE,
+      MO_CODEMOIS: "",
+      PE_CODEPERIODICITE: ""
     };
+    if(this.affiche_option_1 == true){
+       body = {
+        EX_EXERCICE: this.formulaire_edition_1[1].valeur,//this.info_connexion[0].EX_EXERCICE,
+        MO_CODEMOIS: periode,
+        PE_CODEPERIODICITE: periodicite,
+      };
+    }
+    if(this.affiche_option_2 == true){
+      body = {
+        EX_EXERCICE: this.formulaire_edition_2[1].valeur,//this.info_connexion[0].EX_EXERCICE,
+        MO_CODEMOIS: periode,
+        PE_CODEPERIODICITE: periodicite,
+      };
+    }
+    if(this.affiche_option_3 == true){
+      body = {
+        EX_EXERCICE: this.formulaire_edition_3[1].valeur,//this.info_connexion[0].EX_EXERCICE,
+        MO_CODEMOIS: periode,
+        PE_CODEPERIODICITE: periodicite,
+      };
+    }
+    
 
     this.AdminService.ShowLoader();
     this.AdminService.AppelServeur(body, Option).subscribe(
