@@ -38,11 +38,11 @@ export class DashboardComponent {
   recup_reclamation_enrg: any = [];
   recup_reclamation_encour: any = [];
   recup_reclamation_attr: any = [];
-  tab_intermediaire_cercle_absEnrg: any = []
+  tab_intermediaire_cercle_absEnrg: any = [];
   tab_intermediaire_cercle_ordEnrgVal: any = [];
-  tab_intermediaire_cercle_absEncour: any = []
+  tab_intermediaire_cercle_absEncour: any = [];
   tab_intermediaire_cercle_ordEncourVal: any = [];
-  tab_intermediaire_cercle_abstraiter: any = []
+  tab_intermediaire_cercle_abstraiter: any = [];
   tab_intermediaire_cercle_ordtraiterVal: any = [];
   couleurs_aleatoiresEnrg: any = [];
   couleurs_aleatoiresEncour: any = [];
@@ -104,13 +104,12 @@ export class DashboardComponent {
   };
 
   FormationChartPieEnregistrer() {
-
-    this.chart_pie = new Chart("MyChartPie3", {
+    this.chart_pie = new Chart('MyChartPie3', {
       type: 'pie', //this denotes tha type of chart
 
       data: {
         // values on X-Axis
-        labels:  this.tab_intermediaire_cercle_absEnrg, // table_label,
+        labels: this.tab_intermediaire_cercle_absEnrg, // table_label,
         datasets: [
           {
             label: '',
@@ -125,13 +124,12 @@ export class DashboardComponent {
     });
   }
   FormationChartPieEnregistrermodal() {
-
-    this.chart_pie = new Chart("MyChartPie33", {
+    this.chart_pie = new Chart('MyChartPie33', {
       type: 'pie', //this denotes tha type of chart
 
       data: {
         // values on X-Axis
-        labels:  this.tab_intermediaire_cercle_absEnrg, // table_label,
+        labels: this.tab_intermediaire_cercle_absEnrg, // table_label,
         datasets: [
           {
             label: '',
@@ -147,13 +145,12 @@ export class DashboardComponent {
   }
 
   FormationChartBarEncour() {
-
-    this.chart_pie = new Chart("MyChartBar2", {
+    this.chart_pie = new Chart('MyChartBar2', {
       type: 'pie', //this denotes tha type of chart
 
       data: {
         // values on X-Axis
-        labels:  this.tab_intermediaire_cercle_absEncour, // table_label,
+        labels: this.tab_intermediaire_cercle_absEncour, // table_label,
         datasets: [
           {
             label: '',
@@ -169,13 +166,12 @@ export class DashboardComponent {
   }
 
   FormationChartBarEncourmodal() {
-
-    this.chart_pie = new Chart("MyChartBar22", {
+    this.chart_pie = new Chart('MyChartBar22', {
       type: 'pie', //this denotes tha type of chart
 
       data: {
         // values on X-Axis
-        labels:  this.tab_intermediaire_cercle_absEncour, // table_label,
+        labels: this.tab_intermediaire_cercle_absEncour, // table_label,
         datasets: [
           {
             label: '',
@@ -190,12 +186,11 @@ export class DashboardComponent {
     });
   }
 
-
   /*FormationChartBarEncour() {
     var datacour = []
     var obj = {
       label: '',
-      data: '', 
+      data: '',
       backgroundColor: ''
     }
     if(this.recup_reclamation_encour.length > 0){
@@ -208,11 +203,11 @@ export class DashboardComponent {
         datacour.push(obj)
         obj = {
           label: '',
-          data: '', 
+          data: '',
           backgroundColor: ''
         }
       }
-      
+
     }
     this.chart_bar = new Chart('MyChartBar2', {
       type: 'bar', //this denotes tha type of chart
@@ -232,7 +227,7 @@ export class DashboardComponent {
     var datacour = []
     var obj = {
       label: '',
-      data: '', 
+      data: '',
       backgroundColor: ''
     }
     if(this.recup_reclamation_encour.length > 0){
@@ -245,11 +240,11 @@ export class DashboardComponent {
         datacour.push(obj)
         obj = {
           label: '',
-          data: '', 
+          data: '',
           backgroundColor: ''
         }
       }
-      
+
     }
     this.chart_bar = new Chart('MyChartBar22', {
       type: 'bar', //this denotes tha type of chart
@@ -265,16 +260,13 @@ export class DashboardComponent {
     });
   }*/
 
-
-
   FormationChartPietraite() {
-
-    this.chart_pie = new Chart("MyChartPie4", {
+    this.chart_pie = new Chart('MyChartPie4', {
       type: 'pie', //this denotes tha type of chart
 
       data: {
         // values on X-Axis
-        labels:  this.tab_intermediaire_cercle_abstraiter, // table_label,
+        labels: this.tab_intermediaire_cercle_abstraiter, // table_label,
         datasets: [
           {
             label: '',
@@ -290,13 +282,12 @@ export class DashboardComponent {
   }
 
   FormationChartPietraitemodal() {
-
-    this.chart_pie = new Chart("MyChartPie44", {
+    this.chart_pie = new Chart('MyChartPie44', {
       type: 'pie', //this denotes tha type of chart
 
       data: {
         // values on X-Axis
-        labels:  this.tab_intermediaire_cercle_abstraiter, // table_label,
+        labels: this.tab_intermediaire_cercle_abstraiter, // table_label,
         datasets: [
           {
             label: '',
@@ -317,7 +308,7 @@ export class DashboardComponent {
 
       data: {
         // values on X-Axis
-        labels:  this.tab_intermediaire_cercle_abs, // table_label,
+        labels: this.tab_intermediaire_cercle_abs, // table_label,
         datasets: [
           {
             label: '',
@@ -477,19 +468,25 @@ export class DashboardComponent {
     );
   }
   DataDashboardSTATISTIQUE() {
-    var TYPEOPERATION = "0";
+    var TYPEOPERATION = '0';
     if (this.recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')) {
-      TYPEOPERATION = "0"
-    }else if (this.recupinfo[0].TU_CODETYPEUTILISATEUR == '0001'){
-      TYPEOPERATION = "1"
-    }else{
-      TYPEOPERATION = "2"
+      TYPEOPERATION = '0';
+    } else if (this.recupinfo[0].TU_CODETYPEUTILISATEUR == '0001') {
+      TYPEOPERATION = '1';
+    } else {
+      TYPEOPERATION = '2';
     }
     let Option = 'RequeteClientsClasse.svc/pvgChargerDansDataSetDASHBOARD';
     let body = {
       Objets: [
         {
-          OE_PARAM: [this.recupinfo[0].AG_CODEAGENCE,this.recupinfo[0].CU_CODECOMPTEUTULISATEUR,'01/01/1900','01/01/1900',TYPEOPERATION],
+          OE_PARAM: [
+            this.recupinfo[0].AG_CODEAGENCE,
+            this.recupinfo[0].CU_CODECOMPTEUTULISATEUR,
+            '01/01/1900',
+            '01/01/1900',
+            TYPEOPERATION,
+          ],
           //OE_PARAM: ['1000','10000000000000000000000000005','01/01/1900','01/01/1900','1'],
           clsObjetEnvoi: {
             ET_CODEETABLISSEMENT: '',
@@ -499,19 +496,20 @@ export class DashboardComponent {
         },
       ],
     };
-    this.recup_reclamation_stats = []
+    this.recup_reclamation_stats = [];
     this.AdminService.AppelServeur(body, Option).subscribe(
       (success: any) => {
         this.tab_data = success;
         this.tab_data = this.tab_data.pvgChargerDansDataSetDASHBOARDResult;
         if (this.tab_data[0].clsResultat.SL_RESULTAT == 'TRUE') {
           this.AdminService.CloseLoader();
-          this.recup_reclamation_stats = this.tab_data
-          this.chargement()
-          this.DataDashboardSTATISTIQUEDETAIL()
+          this.recup_reclamation_stats = this.tab_data;
+          console.log('recup_reclamation_stats', this.recup_reclamation_stats);
+          this.chargement();
+          this.DataDashboardSTATISTIQUEDETAIL();
         } else {
           this.AdminService.CloseLoader();
-          this.recup_reclamation_stats = this.tab_data
+          this.recup_reclamation_stats = this.tab_data;
         }
       },
       (error) => {
@@ -520,29 +518,28 @@ export class DashboardComponent {
     );
   }
 
-
   DataDashboardSTATISTIQUEDETAIL() {
     let Option = 'RequeteClientsClasse.svc/pvgTableauDeBordstatistique';
-    var TYPEOPERATION = "ADMIN";
+    var TYPEOPERATION = 'ADMIN';
     if (this.recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')) {
-      TYPEOPERATION = "ADMIN"
-    }else if (this.recupinfo[0].TU_CODETYPEUTILISATEUR == '0001'){
-      TYPEOPERATION = "OPERATEUR"
-    }else{
-      TYPEOPERATION = "CLIENT"
+      TYPEOPERATION = 'ADMIN';
+    } else if (this.recupinfo[0].TU_CODETYPEUTILISATEUR == '0001') {
+      TYPEOPERATION = 'OPERATEUR';
+    } else {
+      TYPEOPERATION = 'CLIENT';
     }
     let body = {
-      AG_CODEAGENCE: this.recupinfo[0].AG_CODEAGENCE,//'1000',//this.recupinfo[0].AG_CODEAGENCE,//
-      RQ_DATEDEBUT: this.recupinfo[0].EX_DATEDEBUT,//'01/01/1900',//this.recupinfo[0].EX_DATEDEBUT,//
-      RQ_DATEFIN: this.recupinfo[0].EX_DATEFIN,//'01/01/1900',//this.recupinfo[0].EX_DATEFIN,//
-      CU_CODECOMPTEUTULISATEUR: this.recupinfo[0].CU_CODECOMPTEUTULISATEUR,//'10000000000000000000000000005',//this.recupinfo[0].CU_CODECOMPTEUTULISATEUR,//
-      TYPEETAT: TYPEOPERATION,//"OPERATEUR",//TYPEOPERATION,//
+      AG_CODEAGENCE: this.recupinfo[0].AG_CODEAGENCE, //'1000',//this.recupinfo[0].AG_CODEAGENCE,//
+      RQ_DATEDEBUT: this.recupinfo[0].EX_DATEDEBUT, //'01/01/1900',//this.recupinfo[0].EX_DATEDEBUT,//
+      RQ_DATEFIN: this.recupinfo[0].EX_DATEFIN, //'01/01/1900',//this.recupinfo[0].EX_DATEFIN,//
+      CU_CODECOMPTEUTULISATEUR: this.recupinfo[0].CU_CODECOMPTEUTULISATEUR, //'10000000000000000000000000005',//this.recupinfo[0].CU_CODECOMPTEUTULISATEUR,//
+      TYPEETAT: TYPEOPERATION, //"OPERATEUR",//TYPEOPERATION,//
     };
 
     //this.AdminService.ShowLoader();
-    this.recup_reclamation_enrg = []
-    this.recup_reclamation_encour = []
-    this.recup_reclamation_attr = []
+    this.recup_reclamation_enrg = [];
+    this.recup_reclamation_encour = [];
+    this.recup_reclamation_attr = [];
     this.AdminService.AppelServeur(body, Option).subscribe(
       (success: any) => {
         this.tab_data = success;
@@ -552,91 +549,132 @@ export class DashboardComponent {
           // recuperation des differents tableaux
           this.tab_data_taux_satisfaction =
             this.tab_data.clsTableauDeBordTauxSatisfactions;
-          for(let i = 0; i < this.tab_data_taux_satisfaction.length;i++){
-             if(this.tab_data_taux_satisfaction[i].NR_CODENATUREREQUETE == '1'){
-                this.recup_reclamation_enrg.push(this.tab_data_taux_satisfaction[i])
-             }
-             if(this.tab_data_taux_satisfaction[i].NR_CODENATUREREQUETE == '2'){
-                this.recup_reclamation_encour.push(this.tab_data_taux_satisfaction[i])
-             }
-             if(this.tab_data_taux_satisfaction[i].NR_CODENATUREREQUETE == '3'){
-                this.recup_reclamation_attr.push(this.tab_data_taux_satisfaction[i])
-             }
+          for (let i = 0; i < this.tab_data_taux_satisfaction.length; i++) {
+            if (
+              this.tab_data_taux_satisfaction[i].NR_CODENATUREREQUETE == '1'
+            ) {
+              this.recup_reclamation_enrg.push(
+                this.tab_data_taux_satisfaction[i]
+              );
+            }
+            if (
+              this.tab_data_taux_satisfaction[i].NR_CODENATUREREQUETE == '2'
+            ) {
+              this.recup_reclamation_encour.push(
+                this.tab_data_taux_satisfaction[i]
+              );
+            }
+            if (
+              this.tab_data_taux_satisfaction[i].NR_CODENATUREREQUETE == '3'
+            ) {
+              this.recup_reclamation_attr.push(
+                this.tab_data_taux_satisfaction[i]
+              );
+            }
           }
-          this.tab_intermediaire_cercle_absEnrg = []
+          this.tab_intermediaire_cercle_absEnrg = [];
           this.tab_intermediaire_cercle_ordEnrgVal = [];
-          this.tab_intermediaire_cercle_absEncour = []
+          this.tab_intermediaire_cercle_absEncour = [];
           this.tab_intermediaire_cercle_ordEncourVal = [];
-          this.tab_intermediaire_cercle_abstraiter = []
+          this.tab_intermediaire_cercle_abstraiter = [];
           this.tab_intermediaire_cercle_ordtraiterVal = [];
-          if(this.recup_reclamation_enrg.length > 0){
-            for(var i=0; i< this.recup_reclamation_enrg.length;i++){
-              this.tab_intermediaire_cercle_absEnrg.push(this.recup_reclamation_enrg[i].TR_LIBELLETYEREQUETE)
-              this.tab_intermediaire_cercle_ordEnrgVal.push(this.recup_reclamation_enrg[i].NOMBRE)
+          if (this.recup_reclamation_enrg.length > 0) {
+            for (var i = 0; i < this.recup_reclamation_enrg.length; i++) {
+              this.tab_intermediaire_cercle_absEnrg.push(
+                this.recup_reclamation_enrg[i].TR_LIBELLETYEREQUETE
+              );
+              this.tab_intermediaire_cercle_ordEnrgVal.push(
+                this.recup_reclamation_enrg[i].NOMBRE
+              );
             }
           }
 
-          if(this.recup_reclamation_encour.length > 0){
-            for(var i=0; i< this.recup_reclamation_encour.length;i++){
-              this.tab_intermediaire_cercle_absEncour.push(this.recup_reclamation_encour[i].TR_LIBELLETYEREQUETE)
-              this.tab_intermediaire_cercle_ordEncourVal.push(this.recup_reclamation_encour[i].NOMBRE)
+          if (this.recup_reclamation_encour.length > 0) {
+            for (var i = 0; i < this.recup_reclamation_encour.length; i++) {
+              this.tab_intermediaire_cercle_absEncour.push(
+                this.recup_reclamation_encour[i].TR_LIBELLETYEREQUETE
+              );
+              this.tab_intermediaire_cercle_ordEncourVal.push(
+                this.recup_reclamation_encour[i].NOMBRE
+              );
             }
           }
 
-          if(this.recup_reclamation_attr.length > 0){
-            for(var i=0; i< this.recup_reclamation_attr.length;i++){
-              this.tab_intermediaire_cercle_abstraiter.push(this.recup_reclamation_attr[i].TR_LIBELLETYEREQUETE)
-              this.tab_intermediaire_cercle_ordtraiterVal.push(this.recup_reclamation_attr[i].NOMBRE)
+          if (this.recup_reclamation_attr.length > 0) {
+            for (var i = 0; i < this.recup_reclamation_attr.length; i++) {
+              this.tab_intermediaire_cercle_abstraiter.push(
+                this.recup_reclamation_attr[i].TR_LIBELLETYEREQUETE
+              );
+              this.tab_intermediaire_cercle_ordtraiterVal.push(
+                this.recup_reclamation_attr[i].NOMBRE
+              );
             }
           }
-
 
           // Générer un tableau de couleurs aléatoires de la même taille que tab_intermediaire_cercle_absEnrg
-          this.couleurs_aleatoiresEnrg = []
-          this.couleurs_aleatoiresEncour = []
-          this.couleurs_aleatoirestraiter = []
-          if(this.tab_intermediaire_cercle_absEnrg.length > 0){
-            for (let i = 0; i < this.tab_intermediaire_cercle_absEnrg.length; i++) {
-              let randomIndex = Math.floor(Math.random() * this.background_color.length);
-              this.couleurs_aleatoiresEnrg.push(this.background_color[randomIndex]);
+          this.couleurs_aleatoiresEnrg = [];
+          this.couleurs_aleatoiresEncour = [];
+          this.couleurs_aleatoirestraiter = [];
+          if (this.tab_intermediaire_cercle_absEnrg.length > 0) {
+            for (
+              let i = 0;
+              i < this.tab_intermediaire_cercle_absEnrg.length;
+              i++
+            ) {
+              let randomIndex = Math.floor(
+                Math.random() * this.background_color.length
+              );
+              this.couleurs_aleatoiresEnrg.push(
+                this.background_color[randomIndex]
+              );
             }
           }
 
-          if(this.tab_intermediaire_cercle_absEncour.length > 0){
-            for (let i = 0; i < this.tab_intermediaire_cercle_absEncour.length; i++) {
-              let randomIndex = Math.floor(Math.random() * this.background_color.length);
-              this.couleurs_aleatoiresEncour.push(this.background_color[randomIndex]);
+          if (this.tab_intermediaire_cercle_absEncour.length > 0) {
+            for (
+              let i = 0;
+              i < this.tab_intermediaire_cercle_absEncour.length;
+              i++
+            ) {
+              let randomIndex = Math.floor(
+                Math.random() * this.background_color.length
+              );
+              this.couleurs_aleatoiresEncour.push(
+                this.background_color[randomIndex]
+              );
             }
           }
 
-          if(this.recup_reclamation_attr.length > 0){
+          if (this.recup_reclamation_attr.length > 0) {
             for (let i = 0; i < this.recup_reclamation_attr.length; i++) {
-              let randomIndex = Math.floor(Math.random() * this.background_color.length);
-              this.couleurs_aleatoirestraiter.push(this.background_color[randomIndex]);
+              let randomIndex = Math.floor(
+                Math.random() * this.background_color.length
+              );
+              this.couleurs_aleatoirestraiter.push(
+                this.background_color[randomIndex]
+              );
             }
           }
-         
-          this.FormationChartPieEnregistrer()
-          this.FormationChartPieEnregistrermodal()
-          this.FormationChartBarEncour()
-          this.FormationChartBarEncourmodal()
-          this.FormationChartPietraite()
-          this.FormationChartPietraitemodal()
-         
+
+          this.FormationChartPieEnregistrer();
+          this.FormationChartPieEnregistrermodal();
+          this.FormationChartBarEncour();
+          this.FormationChartBarEncourmodal();
+          this.FormationChartPietraite();
+          this.FormationChartPietraitemodal();
+
           //this.AdminService.CloseLoader();
         } else {
-         // this.AdminService.CloseLoader();
+          // this.AdminService.CloseLoader();
         }
       },
       (error) => {
-       // this.AdminService.CloseLoader();
+        // this.AdminService.CloseLoader();
       }
     );
   }
 
-
-
-  chargement(){
+  chargement() {
     // chart delai de traitement
     let isDarkStyle = this.isDarkStyle();
     let headingColor;
@@ -662,8 +700,12 @@ export class DashboardComponent {
         },
         labels: ['Reclamations dans les délais', 'Reclamations hors délais'],
         series: [
-          parseInt(this.recup_reclamation_stats[0].NOMBREREQUETESTRAITEESDANSDELAIS),
-          parseInt(this.recup_reclamation_stats[0].NOMBREREQUETESTRAITEESHORSDELAIS),
+          parseInt(
+            this.recup_reclamation_stats[0].NOMBREREQUETESTRAITEESDANSDELAIS
+          ),
+          parseInt(
+            this.recup_reclamation_stats[0].NOMBREREQUETESTRAITEESHORSDELAIS
+          ),
         ],
         colors: [
           this.chartColors.donut.series1,
@@ -703,7 +745,7 @@ export class DashboardComponent {
                   fontWeight: 500,
                   offsetY: -20,
                   formatter: function (val: any) {
-                    return parseInt(val) ;
+                    return parseInt(val);
                   },
                 },
                 name: {
@@ -757,11 +799,11 @@ export class DashboardComponent {
 
   ngOnInit(): void {
     //this.DataDashboard();
-    this.DataDashboardSTATISTIQUE()
+    this.DataDashboardSTATISTIQUE();
     if (!sessionStorage.getItem('isLoggedIn')) {
       window.location.href = '/auth';
     }
-   /* for (let index = 0; index < this.table_id_pie.length; index++) {
+    /* for (let index = 0; index < this.table_id_pie.length; index++) {
       this.FormationChartPie(this.table_id_pie[index]);
     }
 
@@ -769,7 +811,6 @@ export class DashboardComponent {
       this.FormationChartBar(this.table_id_bar[index]);
     }*/
 
-    
     // chart delai de traitement
   }
 }
