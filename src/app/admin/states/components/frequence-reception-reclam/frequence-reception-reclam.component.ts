@@ -19,9 +19,9 @@ export class FrequenceReceptionReclamComponent implements OnInit {
     public AdminService: AdminService
   ) {}
 
-  // LienServeur: any = 'http://localhost:22248/'; // lien dev
+  LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
-  LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
+  // LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
 
   APP_URL: any = `${this.LienServeur}RequeteClientsClasse.svc/pvgFrequenceReclamation`;
   postData: any;
@@ -44,9 +44,8 @@ export class FrequenceReceptionReclamComponent implements OnInit {
 
   ngOnInit(): void {
     this.AdminService.showMenu = true;
-    this.AdminService.ShowLoader()
+    this.AdminService.ShowLoader();
     setTimeout(() => {
-      
       this.route.queryParams.subscribe((params) => {
         this.postData = {
           AG_CODEAGENCE: this.info_session[0].valeur,
@@ -56,14 +55,14 @@ export class FrequenceReceptionReclamComponent implements OnInit {
             this.info_connexion[0].CU_CODECOMPTEUTULISATEUR,
           TYPEETAT: 'TSCLT',
         };
-  
+
         this.apiService
           .postData(this.APP_URL, this.postData)
           .subscribe((res: any) => {
-            this.AdminService.CloseLoader()
+            this.AdminService.CloseLoader();
             this.tab_retour = res.pvgFrequenceReclamationResult;
             console.log('tab_retour', this.tab_retour);
-  
+
             this.total = 0;
             /* for (let index = 0; index < this.tab_retour.length; index++) {
               this.total += this.tab_retour[index].NOMBRE;
@@ -75,6 +74,5 @@ export class FrequenceReceptionReclamComponent implements OnInit {
           });
       });
     }, 1000);
-    
   }
 }

@@ -15,9 +15,9 @@ import { DateService } from 'src/app/services/date.service';
 export class EtatSuiviReclamationComponent implements OnInit {
   @ViewChild('contentEtatSuivi', { static: false }) content!: ElementRef;
 
-  // LienServeur: any = 'http://localhost:22248/'; // lien dev
+  LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
-  LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
+  // LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
 
   APP_URL: any = `${this.LienServeur}RequeteClientsClasse.svc/pvgListeReqrequeteBCAO`;
 
@@ -41,9 +41,8 @@ export class EtatSuiviReclamationComponent implements OnInit {
 
   ngOnInit(): void {
     this.AdminService.showMenu = true;
-    this.AdminService.ShowLoader()
+    this.AdminService.ShowLoader();
     setTimeout(() => {
-     
       this.route.queryParams.subscribe((params) => {
         const paramName = params['paramName'];
         this.postData = {
@@ -67,16 +66,17 @@ export class EtatSuiviReclamationComponent implements OnInit {
         };
         this.SEMESTER_BEGIN = this.postData.Objets[0].OE_PARAM[2];
         this.SEMESTER_END = this.postData.Objets[0].OE_PARAM[3];
-  
+
         this.apiService
           .postData(this.APP_URL, this.postData)
           .subscribe((res: any) => {
-            this.AdminService.CloseLoader()
+            this.AdminService.CloseLoader();
             const values = res.pvgListeReqrequeteBCAOResult[0];
             this.data = {
               AG_RAISONSOCIAL: values?.AG_RAISONSOCIAL ?? '',
               PY_LIBELLE: values?.PY_LIBELLE ?? '',
-              RQ_MONTANTTOTALCONTENTIEUX: values?.RQ_MONTANTTOTALCONTENTIEUX ?? 0,
+              RQ_MONTANTTOTALCONTENTIEUX:
+                values?.RQ_MONTANTTOTALCONTENTIEUX ?? 0,
               RQ_NOMBRETOTALCONTENTIEUX: values?.RQ_NOMBRETOTALCONTENTIEUX ?? 0,
               ENCOURS: values.clsReqrequeteRecus.map((e: any) => {
                 return {
@@ -97,12 +97,11 @@ export class EtatSuiviReclamationComponent implements OnInit {
                 };
               }),
             };
-  
+
             console.log('le_data', this.data);
           });
       });
     }, 1000);
-    
   }
 
   printPage() {
