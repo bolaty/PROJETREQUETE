@@ -150,10 +150,9 @@ export class EtatSuiviComponent implements OnInit {
 
   ngOnInit(): void {
     this.AdminService.showMenu = true;
-    this.AdminService.ShowLoader()
+    this.AdminService.ShowLoader();
     setTimeout(() => {
       this.route.queryParams.subscribe((params) => {
-        
         const paramName = params['paramName'];
         this.apiService
           .postData(this.APP_URL, {
@@ -166,7 +165,7 @@ export class EtatSuiviComponent implements OnInit {
           })
           .pipe(
             map((res: any) => {
-              this.AdminService.CloseLoader()
+              this.AdminService.CloseLoader();
               const data = res.pvgTableauDeBordResult;
               const ts = data.clsTableauDeBordTauxSatisfactions[0];
               const sp = data.clsTableauDeBordSituationPlaintes;
@@ -190,7 +189,9 @@ export class EtatSuiviComponent implements OnInit {
                 SITUATIONPLAINTES: {
                   LIBELLES: sp.map((e: any) => e.LIBELLERUBRIQUE),
                   TOTALPLAINTERECUES: sp.map((e: any) => e.TOTALPLAINTERECUES),
-                  TOTALPLAINTETRAITES: sp.map((e: any) => e.TOTALPLAINTETRAITES),
+                  TOTALPLAINTETRAITES: sp.map(
+                    (e: any) => e.TOTALPLAINTETRAITES
+                  ),
                   TOTALPLAINTENONTRAITES: sp.map(
                     (e: any) => e.TOTALPLAINTERECUES - e.TOTALPLAINTETRAITES
                   ),
@@ -200,7 +201,9 @@ export class EtatSuiviComponent implements OnInit {
                   NOMBRE: dt.map((e: any) => e.NOMBRE),
                 },
                 NATUREPLAINTES: {
-                  LIBELLES: natP.map((e: any) => ajustLibelle(e.LIBELLERUBRIQUE)),
+                  LIBELLES: natP.map((e: any) =>
+                    ajustLibelle(e.LIBELLERUBRIQUE)
+                  ),
                   LIBELLESTOSHOW: natP.map((e: any) => e.LIBELLERUBRIQUE),
                   NOMBRE: natP.map((e: any) => e.NOMBRE),
                 },
@@ -232,7 +235,7 @@ export class EtatSuiviComponent implements OnInit {
                 ['Taux de', 'satisfaction en %'],
               ]
             );
-  
+
             this.chartOptionsSituationPlaintes = barChartOptions(
               'situation des réclamations des réclamations (reçus, traitées, non traitées)',
               [
@@ -254,7 +257,7 @@ export class EtatSuiviComponent implements OnInit {
               ],
               data.SITUATIONPLAINTES.LIBELLES
             );
-  
+
             this.chartOptionsDelaiPlaintes = PieChartOptions(
               'Taux de satisfaction des plaignants',
               data.DELAITRAITEMENT.NOMBRE,
@@ -269,7 +272,7 @@ export class EtatSuiviComponent implements OnInit {
                   color: '#5B9BD5',
                 },
               ],
-  
+
               data.NATUREPLAINTES.LIBELLES
             );
             this.chartOptionsClientInsatisfait = barChartOptions(
@@ -282,7 +285,6 @@ export class EtatSuiviComponent implements OnInit {
           });
       });
     }, 1000);
-   
   }
   printPage() {
     window.print();
