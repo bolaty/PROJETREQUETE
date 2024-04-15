@@ -24,7 +24,7 @@ export class LoginComponent {
   infoChmpPassword: any;
   infoBtnPassword: boolean = true;
   temps_de_latence: boolean = true;
-  formulaire_wew_reclam: any = [
+  formulaire_new_reclam: any = [
     {
       id: 'nom',
       type: 'text',
@@ -98,8 +98,8 @@ export class LoginComponent {
     let body = {
       Objets: [
         {
-          // OE_PARAM: ['0001', this.formLogin.login, this.formLogin.mdp], // operateur personnalisable
-          OE_PARAM: ['0002', this.formLogin.login, this.formLogin.mdp], // client personnalisable
+          OE_PARAM: ['0001', this.formLogin.login, this.formLogin.mdp], // operateur personnalisable
+          // OE_PARAM: ['0002', this.formLogin.login, this.formLogin.mdp], // client personnalisable
           clsObjetEnvoi: {
             ET_CODEETABLISSEMENT: '',
             AN_CODEANTENNE: '',
@@ -335,12 +335,12 @@ export class LoginComponent {
       let body = {
         Objets: [
           {
-            EE_NOM: this.formulaire_wew_reclam[0].valeur,
-            EE_PRENOMS: this.formulaire_wew_reclam[1].valeur,
-            EE_EMAIL: this.formulaire_wew_reclam[2].valeur,
-            EE_NUMTELEPHONE: this.formulaire_wew_reclam[3].valeur,
-            EE_NUMCOMPTE: this.formulaire_wew_reclam[5].valeur,
-            EE_OBSERVATION: this.formulaire_wew_reclam[4].valeur,
+            EE_NOM: this.formulaire_new_reclam[0].valeur,
+            EE_PRENOMS: this.formulaire_new_reclam[1].valeur,
+            EE_EMAIL: this.formulaire_new_reclam[2].valeur,
+            EE_NUMTELEPHONE: this.formulaire_new_reclam[3].valeur,
+            EE_NUMCOMPTE: this.formulaire_new_reclam[5].valeur,
+            EE_OBSERVATION: this.formulaire_new_reclam[4].valeur,
             EE_DATEEMISSION: date,
             clsObjetEnvoi: {
               TYPEOPERATION: '0',
@@ -361,7 +361,14 @@ export class LoginComponent {
             );
             this.AdminService.CloseLoader();
           } else {
-            this.toastr.error(
+            for (
+              let index = 0;
+              index < this.formulaire_new_reclam.length;
+              index++
+            ) {
+              this.formulaire_new_reclam[index].valeur = '';
+            }
+            this.toastr.success(
               this.tab_retour_data[0].clsResultat.SL_MESSAGE,
               'success',
               { positionClass: 'toast-bottom-left' }

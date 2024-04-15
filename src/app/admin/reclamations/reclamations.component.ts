@@ -17,9 +17,9 @@ declare var $: any;
   styleUrls: ['./reclamations.component.scss'],
 })
 export class ReclamationsComponent {
-   LienServeur: any = 'http://localhost:22248/'; // lien dev
+  LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
-  //LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
+  // LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
 
   maVariableSubscription?: Subscription;
 
@@ -27,6 +27,7 @@ export class ReclamationsComponent {
   maxWords: any = 30;
   code_contentieux: any;
   files: any;
+  formData: any;
   base64Image: string = '';
   btn_filter: string = 'enrg';
   option_body: any = '';
@@ -555,15 +556,6 @@ export class ReclamationsComponent {
   }
 
   HandleFileInput(event: any) {
-    /*   this.file = event.target.files[0];
-    if (this.file.size > 4 * 1024 * 1024) {
-      this.toastr.error(
-        'Le fichier est trop volumineux. Veuillez sélectionner un fichier de taille inférieure à 4 Mo.',
-        'Echec'
-      );
-      return;
-    } */
-
     this.files = event.target.files;
     for (let i = 0; i < this.files.length; i++) {
       const file = this.files[i];
@@ -582,13 +574,6 @@ export class ReclamationsComponent {
       reader.readAsDataURL(file);
     }
 
-    /* const reader = new FileReader();
-    reader.onload = (event: any) => {
-      this.base64Image = event.target.result;
-      this.base64Image = this.base64Image.split(',')[1];
-    };
-    reader.readAsDataURL(this.file); */
-
     var d = new Date();
     var date = d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
     var jour = d.getDate();
@@ -597,10 +582,6 @@ export class ReclamationsComponent {
         '0' + d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
       console.log(date);
     }
-
-    // const formData = new FormData();
-    // formData.append('DOCUMENT_FICHIER', file, file.name);
-    // this.FormObjet = formData;
   }
 
   HandleFileInputContentieux(event: any) {
@@ -838,44 +819,44 @@ export class ReclamationsComponent {
   }
 
   SaveRapportRequete() {
-    if (this.formDataArray.length == 0) {
+    /* if (this.formData.length == 0) {
       this.AdminService.NotificationErreur(
         'Veuillez selectionner un document !'
       );
-    } else {
-      // this.FormObjet.append('RQ_CODEREQUETE', code_requete);
+    } else { */
+    // this.FormObjet.append('RQ_CODEREQUETE', code_requete);
 
-      for (let i = 0; i < this.formDataArray.length; i++) {
-        this.http
-          .post(
-            `${this.LienServeur}RequeteClientsClasse.svc/pvgpvgMajReqrequeteUPloadFile`,
-            this.formDataArray[i]
-          )
-          .subscribe(
-            (success) => {
-              this.recupEnregistrerFichierRequete = success;
-            },
-            (error: any) => {}
-          );
-      }
+    // for (let i = 0; i < this.formDataArray.length; i++) {
+    this.http
+      .post(
+        `${this.LienServeur}RequeteClientsClasse.svc/pvgpvgMajReqrequeteUPloadFile`,
+        this.formData
+      )
+      .subscribe(
+        (success) => {
+          this.recupEnregistrerFichierRequete = success;
 
-      this.recupEnregistrerFichierRequete =
-        this.recupEnregistrerFichierRequete.pvgpvgMajReqrequeteUPloadFileResult;
+          this.recupEnregistrerFichierRequete =
+            this.recupEnregistrerFichierRequete.pvgpvgMajReqrequeteUPloadFileResult;
 
-      this.ListeRequete();
-      this.toastr.success(
-        this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE,
-        'success',
-        { positionClass: 'toast-bottom-left' }
+          if (
+            this.recupEnregistrerFichierRequete.clsResultat.SL_RESULTAT ==
+            'TRUE'
+          ) {
+            this.base64Image = '';
+            this.ListeRequete();
+            this.viderChamp();
+            this.toastr.success(
+              this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE,
+              'success',
+              { positionClass: 'toast-bottom-left' }
+            );
+          }
+        },
+        (error: any) => {}
       );
-      this.viderChamp();
-
-      if (
-        this.recupEnregistrerFichierRequete.clsResultat.SL_RESULTAT == 'FALSE'
-      ) {
-      } else {
-      }
-    }
+    // }
+    // }
   }
 
   EnregistrementRequete(tableau_recu: any) {
@@ -970,27 +951,17 @@ export class ReclamationsComponent {
                 );
                 this.viderChamp();
               } else {
-                // laaa
-                this.formDataArray = [];
+                this.formData = new FormData();
+
                 for (let i = 0; i < this.files.length; i++) {
                   const file = this.files[i];
 
-                  const formData = new FormData();
-                  formData.append('DOCUMENT_FICHIER', file, file.name);
-                  formData.append(
+                  this.formData.append('DOCUMENT_FICHIER', file, file.name);
+                  this.formData.append(
                     'RQ_CODEREQUETE',
                     this.retourRequeteEnregistrement.RQ_CODEREQUETE
                   );
-                  this.formDataArray.push(formData); // stocker chaque formData dans le tableau
                 }
-
-                /* const formData = new FormData();
-                formData.append('DOCUMENT_FICHIER', this.file, this.file.name);
-                formData.append(
-                  'RQ_CODEREQUETE',
-                  this.retourRequeteEnregistrement.RQ_CODEREQUETE
-                );
-                this.FormObjet = formData; */
 
                 this.SaveRapportRequete();
               }
@@ -998,7 +969,6 @@ export class ReclamationsComponent {
           },
           (error: any) => {
             this.AdminService.CloseLoader();
-            // this.toastr.warning(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE);
             this.toastr.warning(
               this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE,
               'warning',
@@ -1069,7 +1039,6 @@ export class ReclamationsComponent {
               this.retourRequeteEnregistrement.clsResultat.SL_RESULTAT ==
               'FALSE'
             ) {
-              //this.toastr.error(this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE);
               this.toastr.error(
                 this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE,
                 'error',
@@ -1089,27 +1058,17 @@ export class ReclamationsComponent {
                 );
                 this.viderChamp();
               } else {
-                // laaa
-                this.formDataArray = [];
+                this.formData = new FormData();
+
                 for (let i = 0; i < this.files.length; i++) {
                   const file = this.files[i];
 
-                  const formData = new FormData();
-                  formData.append('DOCUMENT_FICHIER', file, file.name);
-                  formData.append(
+                  this.formData.append('DOCUMENT_FICHIER', file, file.name);
+                  this.formData.append(
                     'RQ_CODEREQUETE',
                     this.retourRequeteEnregistrement.RQ_CODEREQUETE
                   );
-                  this.formDataArray.push(formData); // stocker chaque formData dans le tableau
                 }
-
-                /* const formData = new FormData();
-                formData.append('DOCUMENT_FICHIER', this.file, this.file.name);
-                formData.append(
-                  'RQ_CODEREQUETE',
-                  this.retourRequeteEnregistrement.RQ_CODEREQUETE
-                );
-                this.FormObjet = formData; */
 
                 this.SaveRapportRequete();
               }

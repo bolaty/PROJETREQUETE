@@ -116,11 +116,11 @@
         <div class="container">
           <div class="content">
             <div class="content__container">
-              <ul class="content__container__list">
-                <li class="content__container__list__item">Reclam +</li>
-                <li class="content__container__list__item">Simple</li>
-                <li class="content__container__list__item">Puissant</li>
-                <li class="content__container__list__item">Flexible</li>
+              <ul class="content_container_list">
+                <li class="content_containerlist_item">Reclam +</li>
+                <li class="content_containerlist_item">Simple</li>
+                <li class="content_containerlist_item">Puissant</li>
+                <li class="content_containerlist_item">Flexible</li>
               </ul>
             </div>
           </div>
@@ -289,7 +289,7 @@
           placeholder="Nom"
           value=""
           autofocus
-          [(ngModel)]="formulaire_wew_reclam[0].valeur"
+          [(ngModel)]="formulaire_new_reclam[0].valeur"
         />
         <label for="nom">Nom</label>
       </div>
@@ -301,7 +301,7 @@
           id="prenoms"
           value=""
           placeholder="Prénoms"
-          [(ngModel)]="formulaire_wew_reclam[1].valeur"
+          [(ngModel)]="formulaire_new_reclam[1].valeur"
         />
         <label for="prenoms">Prénoms</label>
       </div>
@@ -313,7 +313,7 @@
           name="email"
           value=""
           placeholder="mail@example.com"
-          [(ngModel)]="formulaire_wew_reclam[2].valeur"
+          [(ngModel)]="formulaire_new_reclam[2].valeur"
         />
         <label for="email">E-mail</label>
       </div>
@@ -325,7 +325,7 @@
             name="telephone"
             class="form-control"
             placeholder="2250100000000"
-            [(ngModel)]="formulaire_wew_reclam[3].valeur"
+            [(ngModel)]="formulaire_new_reclam[3].valeur"
           />
           <label for="telephone">Numéro de téléphone</label>
         </div>
@@ -338,7 +338,7 @@
             name="numCompte"
             class="form-control"
             placeholder="XXXXX"
-            [(ngModel)]="formulaire_wew_reclam[5].valeur"
+            [(ngModel)]="formulaire_new_reclam[5].valeur"
           />
           <label for="numCompte">Numéro de compte</label>
         </div>
@@ -350,7 +350,7 @@
           id="invoice-observation-avis"
           style="height: 190px"
           placeholder="Ecrivez votre reclamation"
-          [(ngModel)]="formulaire_wew_reclam[4].valeur"
+          [(ngModel)]="formulaire_new_reclam[4].valeur"
         ></textarea>
         <label for="invoice-observation-avis">Observation</label>
       </div>
@@ -360,7 +360,7 @@
           type="button"
           class="bttn btn btn-primary me-3"
           data-bs-dismiss="offcanvas"
-          (click)="SubmitNewReclam(formulaire_wew_reclam)"
+          (click)="SubmitNewReclam(formulaire_new_reclam)"
         >
           Enregistrer
         </button>
