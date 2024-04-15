@@ -17,9 +17,9 @@ declare var $: any;
   styleUrls: ['./reclamations.component.scss'],
 })
 export class ReclamationsComponent {
-  // LienServeur: any = 'http://localhost:22248/'; // lien dev
+   LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
-  LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
+  //LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
 
   maVariableSubscription?: Subscription;
 
@@ -1049,6 +1049,7 @@ export class ReclamationsComponent {
               SR_CODESERVICE: '',
               TR_CODETYEREQUETE:
                 this.formulaire_plaintes_reclamations[5].valeur, //"00001",
+              CU_CODECOMPTEUTULISATEURASSOCIER: this.recupinfo[0].CU_CODECOMPTEUTULISATEUR, 
               clsObjetEnvoi: {
                 ET_CODEETABLISSEMENT: '',
                 AN_CODEANTENNE: '',

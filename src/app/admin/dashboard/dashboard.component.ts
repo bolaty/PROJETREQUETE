@@ -47,6 +47,7 @@ export class DashboardComponent {
   couleurs_aleatoiresEnrg: any = [];
   couleurs_aleatoiresEncour: any = [];
   couleurs_aleatoirestraiter: any = [];
+  ValEnregistrer:any=0
   tab_intermediaire_cercle_abs: any = [
     'libellé 1',
     'libellé 2',
@@ -57,24 +58,24 @@ export class DashboardComponent {
   tab_intermediaire_cercle_ord: any = ['1', '2', '3', '4', '5'];
   tab_intermediaire_color: any = [];
   background_color: any = [
-    '#44FD48',
-    '#CA72A4',
-    '#FCCD6A',
-    '#36E036',
-    '#FCA4A6',
+    '#0e1428',
+    '#333533',
+    '#8183c0',
+    '#d625d8',
+    '#eb5e28',
     '#369EE2',
-    '#DEDEFE',
-    '#FD383A',
-    '#FDFE37',
-    '#A725A5',
-    '#4344FC',
-    '#27A7A4',
-    '#BFC0FD',
-    '#BF6498',
-    '#FCD170',
-    '#3BE23B',
-    '#FDBBBB',
-    '#3BA3E5',
+    '#b9fbc0',
+    '#80ffdb',
+    '#bc4b51',
+    '#5b8e7d',
+    '#495057',
+    '#00afb9',
+    '#fca311',
+    '#023047',
+    '#8338ec',
+    '#ff006e',
+    '#780000',
+    '#bc6c25',
   ];
   table_id_pie: any = [
     'MyChartPie3',
@@ -504,6 +505,7 @@ export class DashboardComponent {
         if (this.tab_data[0].clsResultat.SL_RESULTAT == 'TRUE') {
           this.AdminService.CloseLoader();
           this.recup_reclamation_stats = this.tab_data;
+          //this.ValEnregistrer = parseInt(this.recup_reclamation_stats[0].NOMBREREQUETEDEJATRAITER) - parseInt(this.recup_reclamation_stats[0].NOMBREREQUETESENCOURS) 
           console.log('recup_reclamation_stats', this.recup_reclamation_stats);
           this.chargement();
           this.DataDashboardSTATISTIQUEDETAIL();
@@ -625,7 +627,7 @@ export class DashboardComponent {
                 Math.random() * this.background_color.length
               );
               this.couleurs_aleatoiresEnrg.push(
-                this.background_color[randomIndex]
+                this.background_color[i]
               );
             }
           }
@@ -636,11 +638,12 @@ export class DashboardComponent {
               i < this.tab_intermediaire_cercle_absEncour.length;
               i++
             ) {
+              
               let randomIndex = Math.floor(
                 Math.random() * this.background_color.length
               );
               this.couleurs_aleatoiresEncour.push(
-                this.background_color[randomIndex]
+                this.background_color[i]
               );
             }
           }
@@ -651,7 +654,7 @@ export class DashboardComponent {
                 Math.random() * this.background_color.length
               );
               this.couleurs_aleatoirestraiter.push(
-                this.background_color[randomIndex]
+                this.background_color[i]
               );
             }
           }

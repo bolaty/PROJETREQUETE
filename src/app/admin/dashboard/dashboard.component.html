@@ -69,7 +69,7 @@
             mois-ci
           </p> -->
         </div>
-        <div class="card-body">
+        <div class="card-body" *ngIf="recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') && recupinfo[0].TU_CODETYPEUTILISATEUR == '0001'">
           <div class="row g-3">
             <div class="col-md-3 col-6">
               <div class="d-flex align-items-center">
@@ -79,6 +79,26 @@
                     <i class="mdi mdi-alert-circle-check mdi-24px"></i>
                   </div>
                 </div>
+                
+                <div class="ms-3">
+                  <div class="small mb-1">
+                    {{ languageService.stat_title_0 }}
+                  </div>
+                  <h5 class="mb-0">
+                    {{ recup_reclamation_stats[0].NOMBREREQUETESTOTAL }}
+                  </h5>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-6">
+              <div class="d-flex align-items-center">
+                <div class="avatar">
+                  <div class="avatar-initial bg-primary rounded shadow">
+                    <!-- <i class="mdi mdi-account-sync-outline mdi-24px"></i> -->
+                    <i class="mdi mdi-alert-circle-check mdi-24px"></i>
+                  </div>
+                </div>
+                
                 <div class="ms-3">
                   <div class="small mb-1">
                     {{ languageService.stat_title_1 }}
@@ -126,6 +146,157 @@
               </div>
             </div>
             <div class="col-md-3 col-6">
+              <div class="d-flex align-items-center">
+                <div class="avatar">
+                  <div class="avatar-initial bg-success rounded shadow">
+                    <!-- <i class="mdi mdi-cellphone-link mdi-24px"></i> -->
+                    <i class="mdi mdi-alert-circle-check-outline mdi-24px"></i>
+                  </div>
+                </div>
+                <div class="ms-3">
+                  <div class="small mb-1">
+                    {{ languageService.stat_title_4 }}
+                  </div>
+                  <h5 class="mb-0">
+                    {{ recup_reclamation_stats[0].NOMBREREQUETEDEJATRAITER }}
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR == '0001' && !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')">
+          <div class="row g-3">
+            <div class="col-md-4 col-6">
+              <div class="d-flex align-items-center">
+                <div class="avatar">
+                  <div class="avatar-initial bg-primary rounded shadow">
+                    <!-- <i class="mdi mdi-account-sync-outline mdi-24px"></i> -->
+                    <i class="mdi mdi-alert-circle-check mdi-24px"></i>
+                  </div>
+                </div>
+                <div class="ms-3">
+                  <div class="small mb-1">
+                    {{ languageService.stat_title_1 }}
+                  </div>
+                  <h5 class="mb-0">
+                    {{ recup_reclamation_stats[0].NOMBREREQUETES }}
+                  </h5>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-6">
+              <div class="d-flex align-items-center">
+                <div class="avatar">
+                  <div class="avatar-initial bg-info rounded shadow">
+                    <!-- <i class="mdi mdi-currency-usd mdi-24px"></i> -->
+                    <i class="mdi mdi-account-arrow-right-outline mdi-24px"></i>
+                  </div>
+                </div>
+                <div class="ms-3">
+                  <div class="small mb-1">
+                    {{ languageService.stat_title_2 }}
+                  </div>
+                  <h5 class="mb-0">
+                    {{ recup_reclamation_stats[0].NOMBREREQUETESATTRIBUEES }}
+                  </h5>
+                </div>
+              </div>
+            </div>
+            <!--<div class="col-md-3 col-6">
+              <div class="d-flex align-items-center">
+                <div class="avatar">
+                  <div class="avatar-initial bg-warning rounded shadow">
+                    
+                  </div>
+                </div>
+                <div class="ms-3">
+                  <div class="small mb-1">
+                    {{ languageService.stat_title_3 }}
+                  </div>
+                  <h5 class="mb-0">
+                    {{ recup_reclamation_stats[0].NOMBREREQUETESENCOURS }}
+                  </h5>
+                </div>
+              </div>
+            </div>-->
+            <div class="col-md-4 col-6">
+              <div class="d-flex align-items-center">
+                <div class="avatar">
+                  <div class="avatar-initial bg-success rounded shadow">
+                    <!-- <i class="mdi mdi-cellphone-link mdi-24px"></i> -->
+                    <i class="mdi mdi-alert-circle-check-outline mdi-24px"></i>
+                  </div>
+                </div>
+                <div class="ms-3">
+                  <div class="small mb-1">
+                    {{ languageService.stat_title_4 }}
+                  </div>
+                  <h5 class="mb-0">
+                    {{ recup_reclamation_stats[0].NOMBREREQUETEDEJATRAITER }}
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR == '0002'">
+          <div class="row g-3">
+            <div class="col-md-4 col-6">
+              <div class="d-flex align-items-center">
+                <div class="avatar">
+                  <div class="avatar-initial bg-primary rounded shadow">
+                    <!-- <i class="mdi mdi-account-sync-outline mdi-24px"></i> -->
+                    <i class="mdi mdi-alert-circle-check mdi-24px"></i>
+                  </div>
+                </div>
+                <div class="ms-3">
+                  <div class="small mb-1">
+                    {{ languageService.stat_title_1 }}
+                  </div>
+                  <h5 class="mb-0">
+                    {{ recup_reclamation_stats[0].NOMBREREQUETES }}
+                  </h5>
+                </div>
+              </div>
+            </div>
+            <!--<div class="col-md-3 col-6">
+              <div class="d-flex align-items-center">
+                <div class="avatar">
+                  <div class="avatar-initial bg-info rounded shadow">
+                   
+                    <i class="mdi mdi-account-arrow-right-outline mdi-24px"></i>
+                  </div>
+                </div>
+                <div class="ms-3">
+                  <div class="small mb-1">
+                    {{ languageService.stat_title_2 }}
+                  </div>
+                  <h5 class="mb-0">
+                    {{ recup_reclamation_stats[0].NOMBREREQUETESATTRIBUEES }}
+                  </h5>
+                </div>
+              </div>
+            </div>-->
+            <div class="col-md-4 col-6">
+              <div class="d-flex align-items-center">
+                <div class="avatar">
+                  <div class="avatar-initial bg-warning rounded shadow">
+                    <!-- <i class="mdi mdi-account-outline mdi-24px"></i> -->
+                    <i class="mdi mdi-account-reactivate-outline mdi-24px"></i>
+                  </div>
+                </div>
+                <div class="ms-3">
+                  <div class="small mb-1">
+                    {{ languageService.stat_title_3 }}
+                  </div>
+                  <h5 class="mb-0">
+                    {{ recup_reclamation_stats[0].NOMBREREQUETESENCOURS }}
+                  </h5>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-6">
               <div class="d-flex align-items-center">
                 <div class="avatar">
                   <div class="avatar-initial bg-success rounded shadow">

@@ -19,6 +19,7 @@ export class LanguageService {
   welcome_message_sub_title: string = '';
   bloc_title: string = '';
   bloc_sub_title: string = '';
+  stat_title_0: string = '';
   stat_title_1: string = '';
   stat_title_2: string = '';
   stat_title_3: string = '';
@@ -243,6 +244,7 @@ export class LanguageService {
     );
     this.bloc_title = this.getTranslation('bloc_title');
     this.bloc_sub_title = this.getTranslation('bloc_sub_title');
+    this.stat_title_0 = this.getTranslation('stat_title_0');
     this.stat_title_1 = this.getTranslation('stat_title_1');
     this.stat_title_2 = this.getTranslation('stat_title_2');
     this.stat_title_3 = this.getTranslation('stat_title_3');
