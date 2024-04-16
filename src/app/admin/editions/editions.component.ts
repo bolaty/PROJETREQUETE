@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { LanguageService } from 'src/app/services/language.service';
 import { AdminService } from '../admin.service';
 import { ToastrService } from 'ngx-toastr';
@@ -15,7 +15,8 @@ export class EditionsComponent {
   maVariableSubscription?: Subscription;
 
   info_connexion: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
-
+  @ViewChild('agence') charger_l_agence: any;
+  cocherDecocherCombo: any = 'd';
   affichage_etat: boolean = true;
   affiche_option_1: boolean = false;
   affiche_option_2: boolean = false;
@@ -26,6 +27,7 @@ export class EditionsComponent {
   active_3: any = '';
   tab_exercice: any = [];
   tab_agence: any = [];
+  recuptab_agence: any = [];
   tab_periodicite: any = [];
   tab_periode: any = [];
   tab_date: any = [];
@@ -455,8 +457,25 @@ export class EditionsComponent {
   ConfirmationOptions(action: any) {
     // if (action == 'retour') this.affichage_etat = true;
     // else this.affichage_etat = false;
-
+    
     if (this.invoice_label == 'bceao') {
+      this.recuptab_agence = [];
+    for (
+      let index = 0;
+      index < this.charger_l_agence.nativeElement.length;
+      index++
+    ) {
+      if (
+        index != 0 &&
+        this.charger_l_agence.nativeElement[index].selected == true
+      ) {
+        // this.charger_l_agence.nativeElement[index].selected = true;
+        var localvalue = this.charger_l_agence.nativeElement[index].value;
+        localvalue = localvalue.split(': ');
+        localvalue[1] = localvalue[1].replaceAll("'", "''");
+        this.recuptab_agence.push(localvalue[1]);
+      }
+    }
       var test = 0;
       for (let index = 0; index < this.formulaire_edition_1.length; index++) {
         if (this.formulaire_edition_1[index].valeur == '') {
@@ -465,8 +484,9 @@ export class EditionsComponent {
           break;
         }
       }
-
+       
       if (test == 1) {
+       
         for (let index = 0; index < this.formulaire_edition_1.length; index++) {
           if (this.formulaire_edition_1[index].valeur == '') {
             $(`#${this.formulaire_edition_1[index].id}`).css(
@@ -489,6 +509,7 @@ export class EditionsComponent {
           }
         );
       } else {
+        this.formulaire_edition_1[0].valeur = this.recuptab_agence.join(',')
         sessionStorage.setItem(
           'info_etat',
           JSON.stringify(this.formulaire_edition_1)
@@ -528,6 +549,7 @@ export class EditionsComponent {
           }
         );
       } else {
+        //this.formulaire_edition_2[0].valeur = this.recuptab_agence.join(',')
         sessionStorage.setItem(
           'info_etat',
           JSON.stringify(this.formulaire_edition_2)
@@ -535,6 +557,23 @@ export class EditionsComponent {
         window.open('/admin/etat-suivi', '_blank');
       }
     } else if (this.invoice_label == 'frequence') {
+      this.recuptab_agence = [];
+    for (
+      let index = 0;
+      index < this.charger_l_agence.nativeElement.length;
+      index++
+    ) {
+      if (
+        index != 0 &&
+        this.charger_l_agence.nativeElement[index].selected == true
+      ) {
+        // this.charger_l_agence.nativeElement[index].selected = true;
+        var localvalue = this.charger_l_agence.nativeElement[index].value;
+        localvalue = localvalue.split(': ');
+        localvalue[1] = localvalue[1].replaceAll("'", "''");
+        this.recuptab_agence.push(localvalue[1]);
+      }
+    }
       var test = 0;
       for (let index = 0; index < this.formulaire_edition_3.length; index++) {
         if (this.formulaire_edition_3[index].valeur == '') {
@@ -567,12 +606,46 @@ export class EditionsComponent {
           }
         );
       } else {
+        this.formulaire_edition_3[0].valeur = this.recuptab_agence.join(',')
         sessionStorage.setItem(
           'info_etat',
           JSON.stringify(this.formulaire_edition_3)
         );
         window.open('/admin/frequence-reception', '_blank');
       }
+    }
+  }
+
+
+
+  CocherDecocherAg() {
+    if (this.cocherDecocherCombo == 'd') {
+      for (
+        let index = 0;
+        index < this.charger_l_agence.nativeElement.length;
+        index++
+      ) {
+        if (index != 0) {
+          this.charger_l_agence.nativeElement[index].selected = false;
+        }
+      }
+      this.cocherDecocherCombo = 'c';
+      this.tab_agence = [];
+    } else {
+      this.tab_agence = [];
+      for (
+        let index = 0;
+        index < this.charger_l_agence.nativeElement.length;
+        index++
+      ) {
+        if (index != 0) {
+          this.charger_l_agence.nativeElement[index].selected = true;
+        }
+      }
+
+      this.cocherDecocherCombo = 'd';
+
+     
     }
   }
 

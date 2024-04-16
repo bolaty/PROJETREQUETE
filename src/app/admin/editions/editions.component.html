@@ -81,14 +81,19 @@
                 <h6 class="text-body" *ngIf="affiche_option_1">Options</h6>
                 <div class="row mb-3 g-3" *ngIf="affiche_option_1">
                   <!-- agence -->
+                  
                   <div
                     class="form-floating form-floating-outline col-12 col-sm-8 col-lg-12 col-xxl-8"
                   >
                     <select
                       class="form-select"
                       id="idAgence"
+                      multiple
+                      #agence
+                      style="height: 150px;"
                       required
                       [(ngModel)]="formulaire_edition_1[0].valeur"
+                      
                     >
                       <option value="">Selectionnez une agence</option>
                       <option
@@ -101,17 +106,7 @@
                     <label for="idAgence">Agence</label>
                   </div>
 
-                  <!-- bouton de confirmation -->
-                  <div class="col-6 col-sm-4 d-grid col-lg-6 col-xxl-4">
-                    <button
-                      class="bttn btn btn-primary btn-lg"
-                      (click)="ConfirmationOptions('')"
-                    >
-                      <i class="mdi mdi-check me-2"></i
-                      >{{ LanguageService.edit_btn_confirm }}
-                    </button>
-                  </div>
-                  <!-- bouton de confirmation -->
+                  
 
                   <!-- exercice -->
                   <div
@@ -134,7 +129,17 @@
                     </select>
                     <label for="idExercice">Exercice</label>
                   </div>
-
+                    <!-- bouton de confirmation -->
+                    <div class="col-6 col-sm-4 d-grid col-lg-6 col-xxl-4">
+                      <button
+                        class="bttn btn btn-primary btn-lg"
+                        (click)="ConfirmationOptions('')"
+                      >
+                        <i class="mdi mdi-check me-2"></i
+                        >{{ LanguageService.edit_btn_confirm }}
+                      </button>
+                    </div>
+                    <!-- bouton de confirmation -->
                   <!-- periodicité -->
                   <div
                     class="form-floating form-floating-outline col-12 col-sm-8 col-lg-12 col-xxl-8"
@@ -218,6 +223,7 @@
                     </div>
                   </div>
                 </div>
+                
               </div>
 
               <!-- etat statistique -->
@@ -239,6 +245,7 @@
                       [(ngModel)]="formulaire_edition_2[0].valeur"
                     >
                       <option value="">Selectionnez une agence</option>
+                      <option value="ADMIN">TOUTES LES AGENCES</option>
                       <option
                         *ngFor="let item_agence of tab_agence"
                         value="{{ item_agence.AG_CODEAGENCE }}"
@@ -249,17 +256,7 @@
                     <label for="idAgence">Agence</label>
                   </div>
 
-                  <!-- bouton de confirmation -->
-                  <div class="col-6 col-sm-4 d-grid col-lg-6 col-xxl-4">
-                    <button
-                      class="bttn btn btn-primary btn-lg"
-                      (click)="ConfirmationOptions('')"
-                    >
-                      <i class="mdi mdi-check me-2"></i
-                      >{{ LanguageService.edit_btn_confirm }}
-                    </button>
-                  </div>
-                  <!-- bouton de confirmation -->
+                 
 
                   <!-- exercice -->
                   <div
@@ -282,7 +279,17 @@
                     </select>
                     <label for="idExercice">Exercice</label>
                   </div>
-
+                    <!-- bouton de confirmation -->
+                    <div class="col-6 col-sm-4 d-grid col-lg-6 col-xxl-4">
+                      <button
+                        class="bttn btn btn-primary btn-lg"
+                        (click)="ConfirmationOptions('')"
+                      >
+                        <i class="mdi mdi-check me-2"></i
+                        >{{ LanguageService.edit_btn_confirm }}
+                      </button>
+                    </div>
+                    <!-- bouton de confirmation -->
                   <!-- periodicité -->
                   <div
                     class="form-floating form-floating-outline col-12 col-sm-8 col-lg-12 col-xxl-8"
@@ -383,6 +390,9 @@
                     <select
                       class="form-select"
                       id="idAgence"
+                      multiple
+                      #agence
+                      style="height: 150px;"
                       required
                       [(ngModel)]="formulaire_edition_3[0].valeur"
                     >
@@ -397,17 +407,7 @@
                     <label for="idAgence">Agence</label>
                   </div>
 
-                  <!-- bouton de confirmation -->
-                  <div class="col-6 col-sm-4 d-grid col-lg-6 col-xxl-4">
-                    <button
-                      class="bttn btn btn-primary btn-lg"
-                      (click)="ConfirmationOptions('')"
-                    >
-                      <i class="mdi mdi-check me-2"></i
-                      >{{ LanguageService.edit_btn_confirm }}
-                    </button>
-                  </div>
-                  <!-- bouton de confirmation -->
+                  
 
                   <!-- exercice -->
                   <div
@@ -430,7 +430,17 @@
                     </select>
                     <label for="idExercice">Exercice</label>
                   </div>
-
+                  <!-- bouton de confirmation -->
+                  <div class="col-6 col-sm-4 d-grid col-lg-6 col-xxl-4">
+                    <button
+                      class="bttn btn btn-primary btn-lg"
+                      (click)="ConfirmationOptions('')"
+                    >
+                      <i class="mdi mdi-check me-2"></i
+                      >{{ LanguageService.edit_btn_confirm }}
+                    </button>
+                  </div>
+                  <!-- bouton de confirmation -->
                   <!-- periodicité -->
                   <div
                     class="form-floating form-floating-outline col-12 col-sm-8 col-lg-12 col-xxl-8"
