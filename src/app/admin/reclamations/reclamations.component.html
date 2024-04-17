@@ -1083,7 +1083,7 @@
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex align-items-center mb-3 pb-1">
-                      <a href="javascript:;" class="d-flex align-items-center">
+                      <a href="" class="d-flex align-items-center">
                         <!-- <div class="avatar avatar-sm me-2">
                           <img
                             src="../../assets/img/icons/brands/vue-label.png"
@@ -1196,6 +1196,7 @@
                                     {{ LanguageService.suivi_reclam }}</a
                                   >
                                 </li>
+
                                 <!--<li>
                                     <hr class="dropdown-divider" />
                                   </li>
@@ -1233,6 +1234,29 @@
                         </ul>
                       </div>
                     </div>
+
+                    <!-- *ngIf="observer_trans_trib" laaa-->
+                    <span
+                      class="badge rounded-pill bg-label-dark"
+                      *ngIf="
+                        ListRetourRequetes.CT_DATEOUVERTURECONTENTIEUX !=
+                          '01/01/1900' &&
+                        ListRetourRequetes.CT_DATECLOTURECONTENTIEUX ==
+                          '01/01/1900'
+                      "
+                      >{{ LanguageService.tribunal_badge }}</span
+                    >
+                    <span
+                      class="badge rounded-pill bg-label-dark"
+                      *ngIf="
+                        ListRetourRequetes.CT_DATEOUVERTURECONTENTIEUX !=
+                          '01/01/1900' &&
+                        ListRetourRequetes.CT_DATECLOTURECONTENTIEUX !=
+                          '01/01/1900'
+                      "
+                      >{{ LanguageService.tribunal_end_badge }}</span
+                    >
+
                     <div class="d-flex align-items-center">
                       <div
                         class="d-flex align-items-center"
@@ -1250,7 +1274,7 @@
                             title=""
                             class="avatar avatar-sm pull-up"
                           >
-                            <a href="javascript:;"
+                            <a href=""
                               ><span
                                 class="badge bg-label-primary rounded-pill"
                               >
@@ -1264,7 +1288,7 @@
                       </div>
                       <div class="ms-auto">
                         <a
-                          href="javascript:;"
+                          href=""
                           *ngIf="
                             ListRetourRequetes.RQ_DATESAISIEREQUETE !=
                               '01/01/1900' &&
@@ -1280,7 +1304,7 @@
                           ></a
                         >
                         <a
-                          href="javascript:;"
+                          href=""
                           *ngIf="
                             ListRetourRequetes.RQ_DATESAISIEREQUETE !=
                               '01/01/1900' &&
@@ -1298,7 +1322,7 @@
 
                         <!-- cloturée -->
                         <a
-                          href="javascript:;"
+                          href=""
                           *ngIf="
                             ListRetourRequetes.RQ_DATECLOTUREREQUETE !=
                             '01/01/1900'
@@ -1491,7 +1515,7 @@
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex align-items-center mb-3 pb-1">
-                      <a href="javascript:;" class="d-flex align-items-center">
+                      <a href="" class="d-flex align-items-center">
                         <div class="me-2 text-heading h6 mb-0">
                           {{
                             ListRetourRequetes.TR_LIBELLETYEREQUETE_TRANSLATE
@@ -1597,6 +1621,7 @@
                                     {{ LanguageService.suivi_reclam }}</a
                                   >
                                 </li>
+
                                 <!--<li>
                                     <hr class="dropdown-divider" />
                                   </li>
@@ -1627,7 +1652,7 @@
                             title=""
                             class="avatar avatar-sm pull-up"
                           >
-                            <a href="javascript:;"
+                            <a href=""
                               ><span
                                 class="badge bg-label-primary rounded-pill"
                               >
@@ -1641,7 +1666,7 @@
                       </div>
                       <div class="ms-auto">
                         <a
-                          href="javascript:;"
+                          href=""
                           *ngIf="
                             ListRetourRequetes.RQ_DATESAISIEREQUETE !=
                               '01/01/1900' &&
@@ -1660,7 +1685,7 @@
                           ></a
                         >
                         <a
-                          href="javascript:;"
+                          href=""
                           *ngIf="
                             ListRetourRequetes.RQ_DATESAISIEREQUETE !=
                               '01/01/1900' &&
@@ -1676,7 +1701,7 @@
                           ></a
                         >
                         <!--<a
-                          href="javascript:;"
+                          href=""
                           *ngIf="
 
                             ListRetourRequetes.AT_DATECLOTUREETAPE !=
@@ -1864,7 +1889,7 @@
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex align-items-center mb-3 pb-1">
-                      <a href="javascript:;" class="d-flex align-items-center">
+                      <a href="" class="d-flex align-items-center">
                         <!-- <div class="avatar avatar-sm me-2">
                           <img
                             src="../../assets/img/icons/brands/vue-label.png"
@@ -2254,7 +2279,7 @@
                             title=""
                             class="avatar avatar-sm pull-up"
                           >
-                            <a href="javascript:;"
+                            <a href=""
                               ><span
                                 class="badge bg-label-primary rounded-pill"
                               >
@@ -2268,7 +2293,7 @@
                       </div>
                       <div class="ms-auto">
                         <a
-                          href="javascript:;"
+                          href=""
                           *ngIf="
                             ListRetourRequetes.RQ_DATESAISIEREQUETE !=
                               '01/01/1900' &&
@@ -2285,7 +2310,7 @@
                           ></a
                         >
                         <a
-                          href="javascript:;"
+                          href=""
                           *ngIf="
                             ListRetourRequetes.RQ_DATESAISIEREQUETE !=
                               '01/01/1900' &&
@@ -2304,7 +2329,7 @@
 
                         <!-- cloturée -->
                         <a
-                          href="javascript:;"
+                          href=""
                           *ngIf="
                             ListRetourRequetes.RQ_DATECLOTUREREQUETE !=
                               '01/01/1900' &&
@@ -2317,12 +2342,15 @@
                           ></a
                         >
                         <a
-                          href="javascript:;"
+                          href=""
                           *ngIf="
                             ListRetourRequetes.RS_CODESTATUTRECEVABILITE == '02'
                           "
                           ><span class="badge bg-label-warning rounded-pill"
-                            >non recevable &nbsp;&nbsp;N°
+                            >{{
+                              LanguageService.non_receive_badge
+                            }}
+                            &nbsp;&nbsp;N°
                             {{ ListRetourRequetes.RQ_CODEREQUETE }}</span
                           ></a
                         >
@@ -2343,7 +2371,7 @@
                             title=""
                             class="avatar avatar-sm pull-up"
                           >
-                            <a href="javascript:;"
+                            <a href="/blisse/"
                               ><span class="badge bg-label-info rounded-pill">
                                 {{ LanguageService.relance_badge }}
                                 &nbsp;&nbsp;N°
@@ -2887,29 +2915,31 @@
                           <div class="d-flex">
                             <p
                               class="mb-0"
-                              *ngIf="voirlist.AT_NOMRAPPORT == ''"
+                              *ngIf="voirlist.clsDocEtapesDetails == null"
                               style="color: black"
                             >
                               Aucun document disponible
                             </p>
-                            <a
-                              href="{{ voirlist.AT_NOMRAPPORT }}"
-                              class="me-3"
-                              *ngIf="voirlist.AT_NOMRAPPORT != ''"
-                            >
-                              <img
-                                src="../../assets/img/icons/misc/pdf.png"
-                                alt="PDF image"
-                                width="20"
-                                class="me-1"
-                              />
-                              <!-- Consulter -->
-                              <span
-                                class="fw-medium text-body"
-                                style="color: black"
-                                >{{ LanguageService.btn_consult }}</span
+                            <div *ngIf="voirlist.clsDocEtapesDetails != null">
+                              <div
+                                class="d-flex align-items-center"
+                                (click)="ConsulterPJ(item_doc.AT_NOMRAPPORT)"
+                                *ngFor="
+                                  let item_doc of voirlist.clsDocEtapesDetails
+                                "
+                                style="cursor: pointer"
                               >
-                            </a>
+                                <img
+                                  src="../../assets/img/icons/misc/pdf.png"
+                                  alt="img"
+                                  width="28"
+                                  class="me-2"
+                                />
+                                <span class="h6 mb-0">{{
+                                  item_doc.AT_NOMRAPPORT
+                                }}</span>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </li>
