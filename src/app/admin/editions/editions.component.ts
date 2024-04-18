@@ -231,7 +231,42 @@ export class EditionsComponent {
   }
 
   ListeComboAgence() {
-    let Option = 'RequeteClientsClasse.svc/pvgInsertIntoDatasetAgenceWeb';
+    let Option = 'RequeteClientsClasse.svc/pvgReqAgenceCombo';
+    let body = {
+      Objets: [
+        {
+          OE_PARAM: [],
+          clsObjetEnvoi: {
+            ET_CODEETABLISSEMENT: '',
+            AN_CODEANTENNE: '',
+            TYPEOPERATION: '01',
+          },
+        },
+      ],
+    };
+    this.AdminService.AppelServeur(body, Option).subscribe(
+      (success: any) => {
+        this.tab_agence = success;
+        this.tab_agence = this.tab_agence.pvgReqAgenceComboResult;
+        if (this.tab_agence[0].clsResultat.SL_RESULTAT == 'TRUE') {
+          // traduction combo agence
+          for (let index = 0; index < this.tab_agence.length; index++) {
+            this.tab_agence[index].AG_RAISONSOCIAL_TRANSLATE = this.Translate(
+              this.tab_agence[index].AG_RAISONSOCIAL,
+              this.LanguageService.langue_en_cours
+            );
+          }
+
+          this.ListeComboPeriodicite();
+        } else {
+        }
+      },
+      (error) => {}
+    );
+  }
+
+  /* ListeComboAgence() {
+    let Option = 'RequeteClientsClasse.svc/pvgReqAgenceCombo';
 
     let body = {
       EX_EXERCICE: this.info_connexion[0].EX_EXERCICE,
@@ -265,7 +300,7 @@ export class EditionsComponent {
         });
       }
     );
-  }
+  } */
 
   ListeComboPeriodicite() {
     let Option = 'RequeteClientsClasse.svc/pvgInsertIntoDatasetPeriodiciteWeb';
@@ -314,15 +349,15 @@ export class EditionsComponent {
     this.AdminService.AppelServeur(body, Option).subscribe(
       (success: any) => {
         this.tab_periode = success;
-        
-        if(this.affiche_option_1 == true) {
-          this.resetdate()
+
+        if (this.affiche_option_1 == true) {
+          this.resetdate();
         }
-        if(this.affiche_option_2 == true) {
-          this.resetdate2()
+        if (this.affiche_option_2 == true) {
+          this.resetdate2();
         }
-        if(this.affiche_option_3 == true) {
-          this.resetdate3()
+        if (this.affiche_option_3 == true) {
+          this.resetdate3();
         }
         this.AdminService.CloseLoader();
       },
@@ -334,52 +369,51 @@ export class EditionsComponent {
       }
     );
   }
-  resetdate(){
-    this.formulaire_edition_1[3].valeur = ""
-    this.formulaire_edition_1[4].valeur = ""
-    this.formulaire_edition_1[5].valeur = ""
+  resetdate() {
+    this.formulaire_edition_1[3].valeur = '';
+    this.formulaire_edition_1[4].valeur = '';
+    this.formulaire_edition_1[5].valeur = '';
   }
 
-  resetdate2(){
-    this.formulaire_edition_2[3].valeur = ""
-    this.formulaire_edition_2[4].valeur = ""
-    this.formulaire_edition_2[5].valeur = ""
+  resetdate2() {
+    this.formulaire_edition_2[3].valeur = '';
+    this.formulaire_edition_2[4].valeur = '';
+    this.formulaire_edition_2[5].valeur = '';
   }
 
-  resetdate3(){
-    this.formulaire_edition_3[3].valeur = ""
-    this.formulaire_edition_3[4].valeur = ""
-    this.formulaire_edition_3[5].valeur = ""
+  resetdate3() {
+    this.formulaire_edition_3[3].valeur = '';
+    this.formulaire_edition_3[4].valeur = '';
+    this.formulaire_edition_3[5].valeur = '';
   }
   ChangeDate(periodicite: any, periode: any) {
     let Option = 'RequeteClientsClasse.svc/pvgPeriodiciteDateDebutFin';
     var body = {
-      EX_EXERCICE: "",//this.info_connexion[0].EX_EXERCICE,
-      MO_CODEMOIS: "",
-      PE_CODEPERIODICITE: ""
+      EX_EXERCICE: '', //this.info_connexion[0].EX_EXERCICE,
+      MO_CODEMOIS: '',
+      PE_CODEPERIODICITE: '',
     };
-    if(this.affiche_option_1 == true){
-       body = {
-        EX_EXERCICE: this.formulaire_edition_1[1].valeur,//this.info_connexion[0].EX_EXERCICE,
-        MO_CODEMOIS: periode,
-        PE_CODEPERIODICITE: periodicite,
-      };
-    }
-    if(this.affiche_option_2 == true){
+    if (this.affiche_option_1 == true) {
       body = {
-        EX_EXERCICE: this.formulaire_edition_2[1].valeur,//this.info_connexion[0].EX_EXERCICE,
+        EX_EXERCICE: this.formulaire_edition_1[1].valeur, //this.info_connexion[0].EX_EXERCICE,
         MO_CODEMOIS: periode,
         PE_CODEPERIODICITE: periodicite,
       };
     }
-    if(this.affiche_option_3 == true){
+    if (this.affiche_option_2 == true) {
       body = {
-        EX_EXERCICE: this.formulaire_edition_3[1].valeur,//this.info_connexion[0].EX_EXERCICE,
+        EX_EXERCICE: this.formulaire_edition_2[1].valeur, //this.info_connexion[0].EX_EXERCICE,
         MO_CODEMOIS: periode,
         PE_CODEPERIODICITE: periodicite,
       };
     }
-    
+    if (this.affiche_option_3 == true) {
+      body = {
+        EX_EXERCICE: this.formulaire_edition_3[1].valeur, //this.info_connexion[0].EX_EXERCICE,
+        MO_CODEMOIS: periode,
+        PE_CODEPERIODICITE: periodicite,
+      };
+    }
 
     this.AdminService.ShowLoader();
     this.AdminService.AppelServeur(body, Option).subscribe(
@@ -457,25 +491,25 @@ export class EditionsComponent {
   ConfirmationOptions(action: any) {
     // if (action == 'retour') this.affichage_etat = true;
     // else this.affichage_etat = false;
-    
+
     if (this.invoice_label == 'bceao') {
       this.recuptab_agence = [];
-    for (
-      let index = 0;
-      index < this.charger_l_agence.nativeElement.length;
-      index++
-    ) {
-      if (
-        index != 0 &&
-        this.charger_l_agence.nativeElement[index].selected == true
+      for (
+        let index = 0;
+        index < this.charger_l_agence.nativeElement.length;
+        index++
       ) {
-        // this.charger_l_agence.nativeElement[index].selected = true;
-        var localvalue = this.charger_l_agence.nativeElement[index].value;
-        localvalue = localvalue.split(': ');
-        localvalue[1] = localvalue[1].replaceAll("'", "''");
-        this.recuptab_agence.push(localvalue[1]);
+        if (
+          index != 0 &&
+          this.charger_l_agence.nativeElement[index].selected == true
+        ) {
+          // this.charger_l_agence.nativeElement[index].selected = true;
+          var localvalue = this.charger_l_agence.nativeElement[index].value;
+          localvalue = localvalue.split(': ');
+          localvalue[1] = localvalue[1].replaceAll("'", "''");
+          this.recuptab_agence.push(localvalue[1]);
+        }
       }
-    }
       var test = 0;
       for (let index = 0; index < this.formulaire_edition_1.length; index++) {
         if (this.formulaire_edition_1[index].valeur == '') {
@@ -484,9 +518,8 @@ export class EditionsComponent {
           break;
         }
       }
-       
+
       if (test == 1) {
-       
         for (let index = 0; index < this.formulaire_edition_1.length; index++) {
           if (this.formulaire_edition_1[index].valeur == '') {
             $(`#${this.formulaire_edition_1[index].id}`).css(
@@ -509,7 +542,7 @@ export class EditionsComponent {
           }
         );
       } else {
-        this.formulaire_edition_1[0].valeur = this.recuptab_agence.join(',')
+        this.formulaire_edition_1[0].valeur = this.recuptab_agence.join(',');
         sessionStorage.setItem(
           'info_etat',
           JSON.stringify(this.formulaire_edition_1)
@@ -566,7 +599,7 @@ export class EditionsComponent {
           }
         );
       } else {
-        this.formulaire_edition_2[0].valeur = this.recuptab_agence.join(',')
+        this.formulaire_edition_2[0].valeur = this.recuptab_agence.join(',');
         sessionStorage.setItem(
           'info_etat',
           JSON.stringify(this.formulaire_edition_2)
@@ -575,22 +608,22 @@ export class EditionsComponent {
       }
     } else if (this.invoice_label == 'frequence') {
       this.recuptab_agence = [];
-    for (
-      let index = 0;
-      index < this.charger_l_agence.nativeElement.length;
-      index++
-    ) {
-      if (
-        index != 0 &&
-        this.charger_l_agence.nativeElement[index].selected == true
+      for (
+        let index = 0;
+        index < this.charger_l_agence.nativeElement.length;
+        index++
       ) {
-        // this.charger_l_agence.nativeElement[index].selected = true;
-        var localvalue = this.charger_l_agence.nativeElement[index].value;
-        localvalue = localvalue.split(': ');
-        localvalue[1] = localvalue[1].replaceAll("'", "''");
-        this.recuptab_agence.push(localvalue[1]);
+        if (
+          index != 0 &&
+          this.charger_l_agence.nativeElement[index].selected == true
+        ) {
+          // this.charger_l_agence.nativeElement[index].selected = true;
+          var localvalue = this.charger_l_agence.nativeElement[index].value;
+          localvalue = localvalue.split(': ');
+          localvalue[1] = localvalue[1].replaceAll("'", "''");
+          this.recuptab_agence.push(localvalue[1]);
+        }
       }
-    }
       var test = 0;
       for (let index = 0; index < this.formulaire_edition_3.length; index++) {
         if (this.formulaire_edition_3[index].valeur == '') {
@@ -623,7 +656,7 @@ export class EditionsComponent {
           }
         );
       } else {
-        this.formulaire_edition_3[0].valeur = this.recuptab_agence.join(',')
+        this.formulaire_edition_3[0].valeur = this.recuptab_agence.join(',');
         sessionStorage.setItem(
           'info_etat',
           JSON.stringify(this.formulaire_edition_3)
@@ -632,8 +665,6 @@ export class EditionsComponent {
       }
     }
   }
-
-
 
   CocherDecocherAg() {
     if (this.cocherDecocherCombo == 'd') {
@@ -661,8 +692,6 @@ export class EditionsComponent {
       }
 
       this.cocherDecocherCombo = 'd';
-
-     
     }
   }
 
