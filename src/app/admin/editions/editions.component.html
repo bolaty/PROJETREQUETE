@@ -241,11 +241,14 @@
                     <select
                       class="form-select"
                       id="idAgence"
+                      multiple
+                      #agence
+                      style="height: 150px;"
                       required
                       [(ngModel)]="formulaire_edition_2[0].valeur"
                     >
                       <option value="">Selectionnez une agence</option>
-                      <option value="ADMIN">TOUTES LES AGENCES</option>
+                      <!--<option value="ADMIN">TOUTES LES AGENCES</option>-->
                       <option
                         *ngFor="let item_agence of tab_agence"
                         value="{{ item_agence.AG_CODEAGENCE }}"

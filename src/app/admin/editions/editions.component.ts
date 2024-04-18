@@ -517,6 +517,23 @@ export class EditionsComponent {
         window.open('/admin/etat-suivi-reclamation', '_blank');
       }
     } else if (this.invoice_label == 'statistique') {
+      this.recuptab_agence = [];
+      for (
+        let index = 0;
+        index < this.charger_l_agence.nativeElement.length;
+        index++
+      ) {
+        if (
+          index != 0 &&
+          this.charger_l_agence.nativeElement[index].selected == true
+        ) {
+          // this.charger_l_agence.nativeElement[index].selected = true;
+          var localvalue = this.charger_l_agence.nativeElement[index].value;
+          localvalue = localvalue.split(': ');
+          localvalue[1] = localvalue[1].replaceAll("'", "''");
+          this.recuptab_agence.push(localvalue[1]);
+        }
+      }
       var test = 0;
       for (let index = 0; index < this.formulaire_edition_2.length; index++) {
         if (this.formulaire_edition_2[index].valeur == '') {
@@ -549,7 +566,7 @@ export class EditionsComponent {
           }
         );
       } else {
-        //this.formulaire_edition_2[0].valeur = this.recuptab_agence.join(',')
+        this.formulaire_edition_2[0].valeur = this.recuptab_agence.join(',')
         sessionStorage.setItem(
           'info_etat',
           JSON.stringify(this.formulaire_edition_2)
