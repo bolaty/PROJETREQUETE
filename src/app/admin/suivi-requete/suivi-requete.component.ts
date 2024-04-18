@@ -16,9 +16,9 @@ declare var $: any;
   styleUrls: ['./suivi-requete.component.scss'],
 })
 export class SuiviRequeteComponent {
-  LienServeur: any = 'http://localhost:22248/'; // lien dev
+  // LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
-  // LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
+  LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
 
   maVariableSubscription?: Subscription;
 
@@ -27,6 +27,8 @@ export class SuiviRequeteComponent {
   statutValreq: any = '';
   var_off_on: any = 'N';
   ListeComboStatut: any = [];
+  files: any;
+  formData: any;
   tab_infos_client: any = [];
   tab_enregistrement_traitement: any = [];
   ListeComboSatisfaction: any = [];
@@ -449,22 +451,37 @@ export class SuiviRequeteComponent {
   }
 
   HandleFileInput(event: any) {
-    this.recupinfo = JSON.parse(sessionStorage.getItem('infoReque') || '');
+    this.files = event.target.files;
+    this.formData = new FormData();
 
-    const file = event.target.files[0];
-    if (file.size > 4 * 1024 * 1024) {
-      this.toastr.error(
-        'Le fichier est trop volumineux. Veuillez sélectionner un fichier de taille inférieure à 4 Mo.',
-        'Echec'
-      );
-      return;
+    for (let i = 0; i < this.files.length; i++) {
+      const file = this.files[i];
+      if (file.size > 4 * 1024 * 1024) {
+        this.toastr.error(
+          `Le fichier "${file.name}" est trop volumineux. Veuillez sélectionner un fichier de taille inférieure à 4 Mo.`,
+          'Echec'
+        );
+        // continue; // ignorer ce fichier et passer au suivant
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.base64Image = e.target.result.split(',')[1];
+
+        this.formData.append('DOCUMENT_FICHIER', file, file.name);
+        this.formData.append(
+          'AG_CODEAGENCE',
+          this.recupinfoconnect[0].AG_CODEAGENCE
+        );
+        this.formData.append('RQ_CODEREQUETE', this.recupinfo.RQ_CODEREQUETE);
+        this.formData.append('AT_INDEXETAPE', this.recupinfo.AT_INDEXETAPE);
+        this.formData.append('AT_DATEFINTRAITEMENTETAPE', date);
+        this.formData.append('RE_CODEETAPE', this.recupinfo.RE_CODEETAPE);
+        this.formData.append('AT_OBSERVATION', this.formulaire_suivi[3].valeur);
+      };
+      reader.readAsDataURL(file);
     }
-    const reader = new FileReader();
-    reader.onload = (event: any) => {
-      this.base64Image = event.target.result;
-      this.base64Image = this.base64Image.split(',')[1];
-    };
-    reader.readAsDataURL(file);
+
     var d = new Date();
     var date = d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
     var jour = d.getDate();
@@ -473,24 +490,10 @@ export class SuiviRequeteComponent {
         '0' + d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
       console.log(date);
     }
-
-    const formData = new FormData();
-    formData.append('DOCUMENT_FICHIER', file, file.name);
-    formData.append('AG_CODEAGENCE', this.recupinfoconnect[0].AG_CODEAGENCE);
-    formData.append('RQ_CODEREQUETE', this.recupinfo.RQ_CODEREQUETE);
-    formData.append('AT_INDEXETAPE', this.recupinfo.AT_INDEXETAPE);
-    formData.append('AT_DATEFINTRAITEMENTETAPE', date);
-    formData.append('RE_CODEETAPE', this.recupinfo.RE_CODEETAPE);
-    formData.append('AT_OBSERVATION', this.formulaire_suivi[3].valeur);
-    this.FormObjet = formData;
   }
 
   SaveRapport() {
-    if (
-      this.FormObjet == null ||
-      this.FormObjet == undefined ||
-      this.FormObjet == ''
-    ) {
+    if (this.files.length == 0) {
       this.AdminService.NotificationErreur(
         'Veuillez selectionner un document !'
       );
@@ -498,7 +501,7 @@ export class SuiviRequeteComponent {
       this.http
         .post(
           `${this.LienServeur}RequeteClientsClasse.svc/pvgpvgMajReqrequeteEtapeUPloadFile`,
-          this.FormObjet
+          this.formData
         )
         .subscribe(
           (success) => {

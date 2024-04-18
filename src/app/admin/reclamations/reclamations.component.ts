@@ -17,9 +17,9 @@ declare var $: any;
   styleUrls: ['./reclamations.component.scss'],
 })
 export class ReclamationsComponent {
-  LienServeur: any = 'http://localhost:22248/'; // lien dev
+  // LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
-  // LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
+  LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
 
   maVariableSubscription?: Subscription;
 
@@ -584,24 +584,9 @@ export class ReclamationsComponent {
     }
   }
 
+  // laaa
   HandleFileInputContentieux(event: any) {
-    /* const file = event.target.files[0];
-    if (file.size > 4 * 1024 * 1024) {
-      this.toastr.error(
-        'Le fichier est trop volumineux. Veuillez sélectionner un fichier de taille inférieure à 4 Mo.',
-        'Echec'
-      );
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = (event: any) => {
-      this.base64Image = event.target.result;
-      this.base64Image = this.base64Image.split(',')[1];
-    };
-    reader.readAsDataURL(file); */
-
     this.files = event.target.files;
-    this.formDataArray = [];
     for (let i = 0; i < this.files.length; i++) {
       const file = this.files[i];
       if (file.size > 4 * 1024 * 1024) {
@@ -628,30 +613,13 @@ export class ReclamationsComponent {
         '0' + d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
       console.log(date);
     }
-
-    /* const formData = new FormData();
-    formData.append('DOCUMENT_FICHIER', file, file.name);
-    this.FormObjet = formData; */
   }
 
+  // laaa
   HandleFileInputContentieuxCloture(event: any) {
-    /* const file = event.target.files[0];
-    if (file.size > 4 * 1024 * 1024) {
-      this.toastr.error(
-        'Le fichier est trop volumineux. Veuillez sélectionner un fichier de taille inférieure à 4 Mo.',
-        'Echec'
-      );
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = (event: any) => {
-      this.base64Image = event.target.result;
-      this.base64Image = this.base64Image.split(',')[1];
-    };
-    reader.readAsDataURL(file); */
-
     this.files = event.target.files;
-    this.formDataArray = [];
+    this.formData = new FormData();
+
     for (let i = 0; i < this.files.length; i++) {
       const file = this.files[i];
       if (file.size > 4 * 1024 * 1024) {
@@ -659,17 +627,17 @@ export class ReclamationsComponent {
           `Le fichier "${file.name}" est trop volumineux. Veuillez sélectionner un fichier de taille inférieure à 4 Mo.`,
           'Echec'
         );
-        // continue; // ignorer ce fichier et passer au suivant
         return;
       }
 
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.base64Image = e.target.result.split(',')[1];
-        const formData = new FormData();
-        formData.append('DOCUMENT_FICHIER', file, file.name);
-        formData.append('CT_CODEREQUETECONTENTIEUX', this.code_contentieux);
-        this.formDataArray.push(formData); // Store each formData in an array
+        this.formData.append('DOCUMENT_FICHIER', file, file.name);
+        this.formData.append(
+          'CT_CODEREQUETECONTENTIEUX',
+          this.code_contentieux
+        );
       };
       reader.readAsDataURL(file);
     }
@@ -682,11 +650,6 @@ export class ReclamationsComponent {
         '0' + d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
       console.log(date);
     }
-
-    /* const formData = new FormData();
-    formData.append('DOCUMENT_FICHIER', file, file.name);
-    formData.append('CT_CODEREQUETECONTENTIEUX', this.code_contentieux);
-    this.FormObjet = formData; */
   }
 
   SaveRapportProcedure(code_contentieux: any, btn: any) {
@@ -697,124 +660,57 @@ export class ReclamationsComponent {
     } else {
       // laaa
       if (btn == 'T') {
+        this.formData = new FormData();
         for (let i = 0; i < this.files.length; i++) {
           const file = this.files[i];
 
-          const formData = new FormData();
-          formData.append('DOCUMENT_FICHIER', file, file.name);
-          formData.append('CT_CODEREQUETECONTENTIEUX', code_contentieux);
-          this.formDataArray.push(formData); // Stocker chaque formData dans le tableau
+          this.formData.append('DOCUMENT_FICHIER', file, file.name);
+          this.formData.append('CT_CODEREQUETECONTENTIEUX', code_contentieux);
         }
       }
 
-      // Créez un tableau d'observables pour stocker toutes les requêtes HTTP
-      const httpRequests = [];
+      this.http
+        .post(
+          `${this.LienServeur}RequeteClientsClasse.svc/pvgMajReqrequeteContentieuxUPloadFile`,
+          this.formData
+        )
+        .subscribe(
+          (success) => {
+            this.recupEnregistrerFichierProcedure = success;
 
-      for (let i = 0; i < this.formDataArray.length; i++) {
-        // Ajoutez chaque requête HTTP à votre tableau
-        httpRequests.push(
-          this.http.post(
-            `${this.LienServeur}RequeteClientsClasse.svc/pvgMajReqrequeteContentieuxUPloadFile`,
-            this.formDataArray[i]
-          )
-        );
-      }
+            this.recupEnregistrerFichierProcedure =
+              this.recupEnregistrerFichierProcedure.pvgMajReqrequeteContentieuxUPloadFileResult;
 
-      // Utilisez forkJoin pour attendre que toutes les requêtes HTTP soient terminées
-      forkJoin(httpRequests).subscribe(
-        (successArray) => {
-          // Ce code sera exécuté une fois que toutes les requêtes HTTP seront terminées
-          // successArray contient les réponses de chaque requête
+            if (btn == 'C') {
+              $('#clotureprocedurejudiciaire').modal('hide');
+              this.modal_cloture_procedure[0].valeur = '';
+              this.modal_cloture_procedure[1].valeur = '';
+              this.toastr.success(
+                this.tab_cloture_procedure.clsResultat.SL_MESSAGE,
+                'success',
+                { positionClass: 'toast-bottom-left' }
+              );
+            } else {
+              $('#transmissionauntribunal').modal('hide');
+              this.modal_transmission_tribunal[0].valeur = '';
+              this.modal_transmission_tribunal[1].valeur = '';
+              this.toastr.success(
+                this.tab_transmission_tribunal.clsResultat.SL_MESSAGE,
+                'success',
+                { positionClass: 'toast-bottom-left' }
+              );
 
-          this.recupEnregistrerFichierProcedure = successArray.map(
-            //@ts-ignore
-            (response) => response.pvgMajReqrequeteContentieuxUPloadFileResult
-          );
-
-          // Votre code ici après la boucle for
-          this.toastr.success(
-            this.tab_transmission_tribunal.clsResultat.SL_MESSAGE,
-            'success',
-            { positionClass: 'toast-bottom-left' }
-          );
-
-          if (btn == 'C') {
-            $('#clotureprocedurejudiciaire').modal('hide');
-            this.modal_cloture_procedure[0].valeur = '';
-            this.modal_cloture_procedure[1].valeur = '';
-            this.toastr.success(
-              this.tab_cloture_procedure.clsResultat.SL_MESSAGE,
-              'success',
-              { positionClass: 'toast-bottom-left' }
-            );
-          } else {
-            $('#transmissionauntribunal').modal('hide');
-            this.modal_transmission_tribunal[0].valeur = '';
-            this.modal_transmission_tribunal[1].valeur = '';
-            this.toastr.success(
-              this.tab_transmission_tribunal.clsResultat.SL_MESSAGE,
-              'success',
-              { positionClass: 'toast-bottom-left' }
-            );
-            this.ListeRequete();
-          }
-        },
-        (error: any) => {
-          // Gérez les erreurs ici
-        }
-      );
-
-      /* for (let i = 0; i < this.formDataArray.length; i++) {
-        this.http
-          .post(
-            `${this.LienServeur}RequeteClientsClasse.svc/pvgMajReqrequeteContentieuxUPloadFile`,
-            this.formDataArray[i]
-          )
-          .subscribe(
-            (success) => {
-              this.recupEnregistrerFichierProcedure = success;
-            },
-            (error: any) => {
-
+              this.ListeRequete();
             }
-          );
-      }
 
-      this.recupEnregistrerFichierProcedure =
-        this.recupEnregistrerFichierProcedure.pvgMajReqrequeteContentieuxUPloadFileResult;
-
-      this.toastr.success(
-        this.tab_transmission_tribunal.clsResultat.SL_MESSAGE,
-        'success',
-        { positionClass: 'toast-bottom-left' }
-      );
-
-      if (btn == 'C') {
-        $('#clotureprocedurejudiciaire').modal('hide');
-        this.modal_cloture_procedure[0].valeur = '';
-        this.modal_cloture_procedure[1].valeur = '';
-        this.toastr.success(
-          this.tab_cloture_procedure.clsResultat.SL_MESSAGE,
-          'success',
-          { positionClass: 'toast-bottom-left' }
+            if (
+              this.recupEnregistrerFichierProcedure.clsResultat.SL_RESULTAT ==
+              'FALSE'
+            ) {
+            }
+          },
+          (error: any) => {}
         );
-      } else {
-        $('#transmissionauntribunal').modal('hide');
-        this.modal_transmission_tribunal[0].valeur = '';
-        this.modal_transmission_tribunal[1].valeur = '';
-        this.toastr.success(
-          this.tab_transmission_tribunal.clsResultat.SL_MESSAGE,
-          'success',
-          { positionClass: 'toast-bottom-left' }
-        );
-
-        this.ListeRequete();
-      }
-
-      if (
-        this.recupEnregistrerFichierProcedure.clsResultat.SL_RESULTAT == 'FALSE'
-      ) {
-      } */
     }
   }
 
@@ -1019,7 +915,8 @@ export class ReclamationsComponent {
               SR_CODESERVICE: '',
               TR_CODETYEREQUETE:
                 this.formulaire_plaintes_reclamations[5].valeur, //"00001",
-              CU_CODECOMPTEUTULISATEURASSOCIER: this.recupinfo[0].CU_CODECOMPTEUTULISATEUR, 
+              CU_CODECOMPTEUTULISATEURASSOCIER:
+                this.recupinfo[0].CU_CODECOMPTEUTULISATEUR,
               clsObjetEnvoi: {
                 ET_CODEETABLISSEMENT: '',
                 AN_CODEANTENNE: '',
@@ -1612,6 +1509,7 @@ export class ReclamationsComponent {
               this.ListConsultEtapeSelonReq[i].RE_CODEETAPE
             ) {
               this.voirlist = this.ListConsultEtapeSelonReq[i];
+              console.log('voirlist_doc', this.voirlist);
               this.statutTraitement = true;
 
               //  traitement des dates pour retirer l'heure
@@ -3035,6 +2933,7 @@ export class ReclamationsComponent {
               this.tab_req_afficher_historique[i].RE_CODEETAPE
             ) {
               this.voirlist = this.tab_req_afficher_historique[i];
+              console.log('voirlist_doc', this.voirlist);
               this.statutTraitement = true;
 
               //  traitement des dates pour retirer l'heure

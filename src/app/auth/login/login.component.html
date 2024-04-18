@@ -113,30 +113,30 @@
     >
       <div class="w-px-400 mx-auto pt-5 pt-lg-0">
         <!-- ***************************************************************************** personnalisable • ne doit s'afficher que dans le cas d'une connexion cliente -->
-        <div class="container">
+        <!-- <div class="container">
           <div class="content">
             <div class="content__container">
-              <ul class="content_container_list">
-                <li class="content_containerlist_item">Reclam +</li>
-                <li class="content_containerlist_item">Simple</li>
-                <li class="content_containerlist_item">Puissant</li>
-                <li class="content_containerlist_item">Flexible</li>
+              <ul class="content__container__list">
+                <li class="content__container__list__item">Reclam +</li>
+                <li class="content__container__list__item">Simple</li>
+                <li class="content__container__list__item">Puissant</li>
+                <li class="content__container__list__item">Flexible</li>
               </ul>
             </div>
           </div>
-        </div>
+        </div> -->
         <!-- ***************************************************************************** -->
 
         <!-- personnalisable • ne doit s'afficher que dans le cas d'une connexion cliente -->
-        <h4 class="mb-2">
+        <!-- <h4 class="mb-2">
           Bienvenue chez {{ AuthService.nom_de_la_structure }} ! 👋
         </h4>
-        <p class="mb-4">Veuillez vous connecter à votre compte</p>
+        <p class="mb-4">Veuillez vous connecter à votre compte</p> -->
         <!-- personnalisable • ne doit s'afficher que dans le cas d'une connexion cliente
 
         <!-- personnalisable • ne doit s'afficher que dans le cas d'une connexion operateur et admin -->
-        <!-- <h4 class="mb-2">Bienvenue sur <strong>Req App</strong> ! 👋</h4>
-        <p class="mb-4">Veuillez vous connecter à votre compte</p> -->
+        <h4 class="mb-2">Bienvenue sur <strong>Req App</strong> ! 👋</h4>
+        <p class="mb-4">Veuillez vous connecter à votre compte</p>
         <!-- personnalisable • ne doit s'afficher que dans le cas d'une connexion operateur et admin -->
 
         <form class="mb-3" id="formAuthentication" #Connectform="ngForm">
@@ -144,7 +144,7 @@
             <input
               type="text"
               class="form-control"
-              id="email"
+              id="emailNomUtilisateur"
               name="email-username"
               placeholder="Entrez votre email ou votre nom d'utilisateur"
               autofocus
@@ -217,12 +217,12 @@
         </form>
 
         <!-- personnalisable • activer ce module lors d'une connexion en tant que client -->
-        <p class="text-center mt-2">
+        <!-- <p class="text-center mt-2">
           <span>Nouveau sur notre plateforme ?</span> &#160;
           <a (click)="voirTraitement()" style="cursor: pointer; color: #9055fd">
             Faire une reclamation
           </a>
-        </p>
+        </p> -->
 
         <!--  <div class="divider my-4">
           <div class="divider-text">ou</div>

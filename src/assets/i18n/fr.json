@@ -343,6 +343,7 @@
   "clo_pro_jud_sub_title": "Cloturez la procédure",
   "relance_badge": "Relance",
   "tribunal_badge": "Tribunal",
+  "non_receive_badge": "Non recevable",
   "tribunal_end_badge": "Fin procédure",
   "tribunal_message_clo": "Clôture impossible. Vous devez d'abord transmettre la requête à un tribunal"
 }

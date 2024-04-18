@@ -343,6 +343,7 @@
   "clo_pro_jud_sub_title": "Close the procedure",
   "relance_badge": "Revival",
   "tribunal_badge": "Court",
+  "non_receive_badge": "Not admissible",
   "tribunal_end_badge": "End of procedure",
   "tribunal_message_clo": "Closure impossible. You must first send the request to a court"
 }

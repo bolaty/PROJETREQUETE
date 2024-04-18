@@ -178,6 +178,7 @@ export class LanguageService {
   clo_pro_jud_sub_title: string = '';
   relance_badge: string = '';
   tribunal_badge: string = '';
+  non_receive_badge: string = '';
   tribunal_end_badge: string = '';
   tribunal_message_clo: string = '';
 
@@ -461,6 +462,7 @@ export class LanguageService {
     this.clo_pro_jud_sub_title = this.getTranslation('clo_pro_jud_sub_title');
     this.relance_badge = this.getTranslation('relance_badge');
     this.tribunal_badge = this.getTranslation('tribunal_badge');
+    this.non_receive_badge = this.getTranslation('non_receive_badge');
     this.tribunal_end_badge = this.getTranslation('tribunal_end_badge');
     this.tribunal_message_clo = this.getTranslation('tribunal_message_clo');
   }
