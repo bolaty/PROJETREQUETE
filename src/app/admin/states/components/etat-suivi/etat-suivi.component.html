@@ -8,14 +8,13 @@
         <tbody>
           <tr>
             <td colspan="4">
-              <span class="bold">Taux de satisfaction de plaignants</span>
+              <span class="bold">Taux de satisfaction de plaignants ---- {{valtauxsatisfaction}} %</span>
             </td>
           </tr>
           <tr>
             <td>Nombre total de réclamations traitées</td>
             <td>avis client favorable</td>
             <td>avis client non favorable</td>
-            <td>Taux de satisfaction en %</td>
           </tr>
           <tr>
             <ng-container *ngFor="let value of data?.TAUXSATISFACTION.DATA">
@@ -25,7 +24,9 @@
         </tbody>
       </table>
     </div>
-
+    <div class="col-6">
+         <canvas id="MyChartPie3">{{ chart_pie }}</canvas>
+     </div>
     <div class="col-6">
       <div id="chart">
         <apx-chart
@@ -42,6 +43,8 @@
         ></apx-chart>
       </div>
     </div>
+
+   
   </div>
   <div class="separator"></div>
   <div class="row">
