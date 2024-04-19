@@ -17,9 +17,9 @@ declare var $: any;
   styleUrls: ['./reclamations.component.scss'],
 })
 export class ReclamationsComponent {
-  // LienServeur: any = 'http://localhost:22248/'; // lien dev
+  LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
-  LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
+  // LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
 
   maVariableSubscription?: Subscription;
 
@@ -27,6 +27,7 @@ export class ReclamationsComponent {
   maxWords: any = 30;
   code_contentieux: any;
   files: any;
+  le_code_contentieux: any;
   formData: any;
   base64Image: string = '';
   btn_filter: string = 'enrg';
@@ -266,9 +267,11 @@ export class ReclamationsComponent {
   tab_req_en_cours_trait: any = [];
   tab_req_cloturee: any = [];
   tab_req_afficher: any = [];
+  tab_liste_contentieux_pour_doc: any = [];
   search_bar: boolean = false;
   afficher_tri: boolean = false;
-  consultation_doc: boolean = false;
+  consultation_doc_req: boolean = false;
+  consultation_doc_cont: boolean = false;
   statutliste: boolean = false;
   statut_info_utilisateur: boolean = false;
   SearchValue: any;
@@ -289,6 +292,8 @@ export class ReclamationsComponent {
   ListConsultEtapeSelonReq: any = [];
   formDataArray: any = [];
   tab_data_doc: any = [];
+  tab_doc_show_req: any = [];
+  tab_doc_show_cont: any = [];
   FormObjet: any;
   statutTraitement: boolean = false;
   cloture: boolean = true;
@@ -584,7 +589,6 @@ export class ReclamationsComponent {
     }
   }
 
-  // laaa
   HandleFileInputContentieux(event: any) {
     this.files = event.target.files;
     for (let i = 0; i < this.files.length; i++) {
@@ -615,7 +619,6 @@ export class ReclamationsComponent {
     }
   }
 
-  // laaa
   HandleFileInputContentieuxCloture(event: any) {
     this.files = event.target.files;
     this.formData = new FormData();
@@ -658,7 +661,6 @@ export class ReclamationsComponent {
         positionClass: 'toast-bottom-left',
       });
     } else {
-      // laaa
       if (btn == 'T') {
         this.formData = new FormData();
         for (let i = 0; i < this.files.length; i++) {
@@ -2827,8 +2829,8 @@ export class ReclamationsComponent {
     }
     // this.ComboEtapeParamSimple()
 
-    /* if (info.RQ_NOMRAPPORT != '') this.consultation_doc = true;
-    else this.consultation_doc = false; */
+    /* if (info.RQ_NOMRAPPORT != '') this.consultation_doc_req = true;
+    else this.consultation_doc_req = false; */
     for (let index = 0; index < this.formulaire_avis.length; index++) {
       this.formulaire_avis[index].valeur = '';
     }
@@ -2973,12 +2975,12 @@ export class ReclamationsComponent {
     console.log('table_des_requetes', this.tab_req_afficher);
   }
 
-  ComboReqrequeteselonEtape(info: any) {
+  ComboReqrequeteselonEtape(info_code_req: any) {
     let Option = 'RequeteClientsClasse.svc/pvgListeReqrequeteEtapeparRequete';
     let body = {
       Objets: [
         {
-          OE_PARAM: [info],
+          OE_PARAM: [info_code_req],
           clsObjetEnvoi: {
             ET_CODEETABLISSEMENT: '',
             AN_CODEANTENNE: '',
@@ -3032,18 +3034,21 @@ export class ReclamationsComponent {
           }
         }
 
-        this.GetFilesRequete(info);
+        // this.GetFilesRequete(info_code_req);
       },
       (error) => {}
     );
   }
 
-  GetFilesRequete(info: any) {
+  GetFilesRequete(info_code_req: any, code_contentieux: any) {
+    if (code_contentieux == undefined || code_contentieux == null) {
+      code_contentieux = '';
+    }
     let Option = 'RequeteClientsClasse.svc/pvgListeReqrequeteDoc';
     let body = {
       Objets: [
         {
-          OE_PARAM: [info],
+          OE_PARAM: [info_code_req, code_contentieux],
           clsObjetEnvoi: {
             ET_CODEETABLISSEMENT: '',
             AN_CODEANTENNE: '',
@@ -3059,13 +3064,48 @@ export class ReclamationsComponent {
 
         console.log('this.tab_data_doc', this.tab_data_doc);
 
-        this.consultation_doc = false;
-        if (this.tab_data_doc[0].clsResultat.SL_RESULTAT == 'TRUE') {
-          this.consultation_doc = true;
+        this.consultation_doc_req = false;
+        this.consultation_doc_cont = false;
+
+        if (this.tab_data_doc[0].clsDocumentAssociesALaRequetes != null) {
+          this.consultation_doc_req = true;
+          this.tab_doc_show_req = [];
+          for (
+            let index = 0;
+            index < this.tab_data_doc[0].clsDocumentAssociesALaRequetes.length;
+            index++
+          ) {
+            this.tab_doc_show_req.push(
+              this.tab_data_doc[0].clsDocumentAssociesALaRequetes[index]
+                .RQ_NOMRAPPORT
+            );
+          }
         }
+
+        if (this.tab_data_doc[0].clsDocumentAssociesAuContentieux != null) {
+          this.consultation_doc_cont = true;
+          this.tab_doc_show_cont = [];
+          for (
+            let index = 0;
+            index <
+            this.tab_data_doc[0].clsDocumentAssociesAuContentieux.length;
+            index++
+          ) {
+            this.tab_doc_show_cont.push(
+              this.tab_data_doc[0].clsDocumentAssociesAuContentieux[index]
+                .FICHIERSJOINT
+            );
+          }
+        }
+
+        setTimeout(() => {
+          $('#offcanvasEndInfoClient').offcanvas('show');
+        }, 1000);
+        console.log('this.tab_infos_client', this.tab_infos_client);
       },
       (error) => {
-        this.consultation_doc = false;
+        this.consultation_doc_req = false;
+        this.consultation_doc_cont = false;
       }
     );
   }
@@ -3104,7 +3144,8 @@ export class ReclamationsComponent {
     this.formulaire_plaintes_reclamations[5].valeur = '';
     this.formulaire_plaintes_reclamations[6].valeur = '';
     this.formulaire_plaintes_reclamations[7].valeur = '';
-    this.formulaire_plaintes_reclamations[8].valeur = '';
+    this.formulaire_plaintes_reclamations[8].valeur =
+      this.recupinfo[0].CU_NOMUTILISATEUR;
     this.formulaire_plaintes_reclamations[9].valeur = '';
     this.formulaire_plaintes_reclamations[10].valeur = '';
     this.formulaire_plaintes_reclamations[11].valeur = '';
@@ -3135,12 +3176,70 @@ export class ReclamationsComponent {
     }
   }
 
-  GetInfoClient(CU_CODECOMPTEUTULISATEUR: any) {
+  ListeContentieuxPourDoc(req_item: any) {
+    this.recupValEtape = req_item;
+    let Options = 'RequeteClientsClasse.svc/pvgListeReqrequeteContentieux';
+
+    let body = {
+      Objets: [
+        {
+          OE_PARAM: [],
+          clsObjetEnvoi: {
+            ET_CODEETABLISSEMENT: '',
+            AN_CODEANTENNE: '',
+            TYPEOPERATION: '01',
+          },
+        },
+      ],
+    };
+
+    this.AdminService.AppelServeur(body, Options).subscribe(
+      (success) => {
+        this.tab_liste_contentieux_pour_doc = success;
+        this.tab_liste_contentieux_pour_doc =
+          this.tab_liste_contentieux_pour_doc.pvgListeReqrequeteContentieuxResult;
+        this.AdminService.CloseLoader();
+        if (
+          this.tab_liste_contentieux_pour_doc[0].clsResultat.SL_RESULTAT ==
+          'TRUE'
+        ) {
+          for (
+            let index = 0;
+            index < this.tab_liste_contentieux_pour_doc.length;
+            index++
+          ) {
+            if (
+              this.tab_liste_contentieux_pour_doc[index].RQ_CODEREQUETE ==
+              req_item.RQ_CODEREQUETE
+            ) {
+              this.le_code_contentieux =
+                this.tab_liste_contentieux_pour_doc[
+                  index
+                ].CT_CODEREQUETECONTENTIEUX;
+              break;
+            }
+          }
+        }
+
+        this.GetInfoClient(req_item);
+      },
+      (error: any) => {
+        this.AdminService.CloseLoader();
+        this.toastr.warning(
+          this.tab_liste_contentieux.clsResultat.SL_MESSAGE,
+          'warning',
+          { positionClass: 'toast-bottom-left' }
+        );
+      }
+    );
+  }
+
+  GetInfoClient(req_item: any) {
     let Option = 'RequeteClientsClasse.svc/pvgInfosDuClient';
     let body = {
       Objets: [
         {
-          OE_PARAM: [CU_CODECOMPTEUTULISATEUR],
+          OE_PARAM: [req_item.CU_CODECOMPTEUTULISATEUR],
         },
       ],
     };
@@ -3149,10 +3248,8 @@ export class ReclamationsComponent {
         this.statut_info_utilisateur = true;
         this.tab_infos_client = success;
         this.tab_infos_client = this.tab_infos_client.pvgInfosDuClientResult;
-        setTimeout(() => {
-          $('#offcanvasEndInfoClient').offcanvas('show');
-        }, 1000);
-        console.log('this.tab_infos_client', this.tab_infos_client);
+
+        this.GetFilesRequete(req_item.RQ_CODEREQUETE, this.le_code_contentieux);
       },
       (error) => {}
     );

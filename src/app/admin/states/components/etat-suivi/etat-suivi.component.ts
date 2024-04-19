@@ -23,9 +23,9 @@ import { AdminService } from 'src/app/admin/admin.service';
 export class EtatSuiviComponent implements OnInit {
   @ViewChild('content', { static: false }) content!: ElementRef;
 
-  // LienServeur: any = 'http://localhost:22248/'; // lien dev
+  LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
-  LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
+  // LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
 
   APP_URL: any = `${this.LienServeur}RequeteClientsClasse.svc/pvgTableauDeBord`;
   info_session: any = JSON.parse(sessionStorage.getItem('info_etat') || '');
@@ -156,7 +156,7 @@ export class EtatSuiviComponent implements OnInit {
         const paramName = params['paramName'];
         this.apiService
           .postData(this.APP_URL, {
-            AG_CODEAGENCE: this.info_session[0].valeur,//this.info_connexion[0].AG_CODEAGENCE,
+            AG_CODEAGENCE: this.info_session[0].valeur, //this.info_connexion[0].AG_CODEAGENCE,
             RQ_DATEDEBUT: this.info_session[4].valeur,
             RQ_DATEFIN: this.info_session[5].valeur,
             CU_CODECOMPTEUTULISATEUR:

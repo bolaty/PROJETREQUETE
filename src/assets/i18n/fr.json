@@ -190,7 +190,7 @@
   "sidebar_menu_5": "Tableau de bord",
   "reclam_title": "Bonjour, comment pouvons-nous vous aider",
   "reclam_sub_title_op": "Trouvez plus rapidement les tickets en les recherchant par leur numéro",
-  "reclam_sub_title_list_op": "Trouvez plus rapidement les clients en les recherchant par leur code ou par leur téléphone",
+  "reclam_sub_title_list_op": "Trouvez plus rapidement les clients en les recherchant par leur numéro de téléphone",
   "reclam_sub_title_list_op_2": "Trouvez plus rapidement les requetes en les recherchant par leur n° de ticket",
   "reclam_placeholder_search_bar_op": "N° de ticket",
   "reclam_engr_title": "Nouvelles reclamations",

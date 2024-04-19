@@ -1083,7 +1083,7 @@
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex align-items-center mb-3 pb-1">
-                      <a href="" class="d-flex align-items-center">
+                      <a class="d-flex align-items-center">
                         <!-- <div class="avatar avatar-sm me-2">
                           <img
                             src="../../assets/img/icons/brands/vue-label.png"
@@ -1274,7 +1274,7 @@
                             title=""
                             class="avatar avatar-sm pull-up"
                           >
-                            <a href=""
+                            <a
                               ><span
                                 class="badge bg-label-primary rounded-pill"
                               >
@@ -1288,7 +1288,6 @@
                       </div>
                       <div class="ms-auto">
                         <a
-                          href=""
                           *ngIf="
                             ListRetourRequetes.RQ_DATESAISIEREQUETE !=
                               '01/01/1900' &&
@@ -1304,7 +1303,6 @@
                           ></a
                         >
                         <a
-                          href=""
                           *ngIf="
                             ListRetourRequetes.RQ_DATESAISIEREQUETE !=
                               '01/01/1900' &&
@@ -1322,7 +1320,6 @@
 
                         <!-- cloturée -->
                         <a
-                          href=""
                           *ngIf="
                             ListRetourRequetes.RQ_DATECLOTUREREQUETE !=
                             '01/01/1900'
@@ -1515,7 +1512,7 @@
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex align-items-center mb-3 pb-1">
-                      <a href="" class="d-flex align-items-center">
+                      <a class="d-flex align-items-center">
                         <div class="me-2 text-heading h6 mb-0">
                           {{
                             ListRetourRequetes.TR_LIBELLETYEREQUETE_TRANSLATE
@@ -1652,7 +1649,7 @@
                             title=""
                             class="avatar avatar-sm pull-up"
                           >
-                            <a href=""
+                            <a
                               ><span
                                 class="badge bg-label-primary rounded-pill"
                               >
@@ -1666,7 +1663,6 @@
                       </div>
                       <div class="ms-auto">
                         <a
-                          href=""
                           *ngIf="
                             ListRetourRequetes.RQ_DATESAISIEREQUETE !=
                               '01/01/1900' &&
@@ -1685,7 +1681,6 @@
                           ></a
                         >
                         <a
-                          href=""
                           *ngIf="
                             ListRetourRequetes.RQ_DATESAISIEREQUETE !=
                               '01/01/1900' &&
@@ -1701,7 +1696,7 @@
                           ></a
                         >
                         <!--<a
-                          href=""
+
                           *ngIf="
 
                             ListRetourRequetes.AT_DATECLOTUREETAPE !=
@@ -1889,7 +1884,7 @@
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex align-items-center mb-3 pb-1">
-                      <a href="" class="d-flex align-items-center">
+                      <a class="d-flex align-items-center">
                         <!-- <div class="avatar avatar-sm me-2">
                           <img
                             src="../../assets/img/icons/brands/vue-label.png"
@@ -1955,8 +1950,8 @@
                                         '01/01/1900'
                                     "
                                     (click)="
-                                      GetInfoClient(
-                                        ListRetourRequetes.CU_CODECOMPTEUTULISATEUR
+                                      ListeContentieuxPourDoc(
+                                        ListRetourRequetes
                                       )
                                     "
                                   >
@@ -2062,8 +2057,8 @@
                                         '01/01/1900'
                                     "
                                     (click)="
-                                      GetInfoClient(
-                                        ListRetourRequetes.CU_CODECOMPTEUTULISATEUR
+                                      ListeContentieuxPourDoc(
+                                        ListRetourRequetes
                                       )
                                     "
                                   >
@@ -2168,8 +2163,8 @@
                                         '01/01/1900'
                                     "
                                     (click)="
-                                      GetInfoClient(
-                                        ListRetourRequetes.CU_CODECOMPTEUTULISATEUR
+                                      ListeContentieuxPourDoc(
+                                        ListRetourRequetes
                                       )
                                     "
                                   >
@@ -2279,7 +2274,7 @@
                             title=""
                             class="avatar avatar-sm pull-up"
                           >
-                            <a href=""
+                            <a
                               ><span
                                 class="badge bg-label-primary rounded-pill"
                               >
@@ -2293,7 +2288,6 @@
                       </div>
                       <div class="ms-auto">
                         <a
-                          href=""
                           *ngIf="
                             ListRetourRequetes.RQ_DATESAISIEREQUETE !=
                               '01/01/1900' &&
@@ -2310,7 +2304,6 @@
                           ></a
                         >
                         <a
-                          href=""
                           *ngIf="
                             ListRetourRequetes.RQ_DATESAISIEREQUETE !=
                               '01/01/1900' &&
@@ -2329,7 +2322,6 @@
 
                         <!-- cloturée -->
                         <a
-                          href=""
                           *ngIf="
                             ListRetourRequetes.RQ_DATECLOTUREREQUETE !=
                               '01/01/1900' &&
@@ -2342,14 +2334,11 @@
                           ></a
                         >
                         <a
-                          href=""
                           *ngIf="
                             ListRetourRequetes.RS_CODESTATUTRECEVABILITE == '02'
                           "
                           ><span class="badge bg-label-warning rounded-pill"
-                            >{{
-                              LanguageService.non_receive_badge
-                            }}
+                            >{{ LanguageService.non_receive_badge }}
                             &nbsp;&nbsp;N°
                             {{ ListRetourRequetes.RQ_CODEREQUETE }}</span
                           ></a
@@ -2371,7 +2360,7 @@
                             title=""
                             class="avatar avatar-sm pull-up"
                           >
-                            <a href="/blisse/"
+                            <a
                               ><span class="badge bg-label-info rounded-pill">
                                 {{ LanguageService.relance_badge }}
                                 &nbsp;&nbsp;N°
@@ -3092,100 +3081,6 @@
               <label for="dtdefin">{{ LanguageService.chmp_date_end }}</label>
             </div>
           </div>
-          &#160; &#160; &#160;
-          <div class="divider" *ngIf="consultation_doc">
-            <div class="divider-text">Les pièces jointes à la requête</div>
-          </div>
-
-          <div
-            class="col-sm-12 col-lg-12 mb-4"
-            *ngIf="consultation_doc"
-            style="cursor: pointer"
-          >
-            <div class="row">
-              <div class="col" *ngFor="let doc of tab_data_doc">
-                <div
-                  class="d-flex align-items-center"
-                  *ngIf="doc.RQ_NOMRAPPORT.includes('.pdf')"
-                  (click)="ConsulterPJ(doc.RQ_NOMRAPPORT)"
-                >
-                  <img
-                    src="../../assets/img/icons/misc/pdf.png"
-                    alt="img"
-                    width="28"
-                    class="me-2"
-                  />
-                  <span class="h6 mb-0">{{ doc.RQ_NOMRAPPORT }}</span>
-                </div>
-              </div>
-              <div class="col" *ngFor="let doc of tab_data_doc">
-                <div
-                  class="d-flex align-items-center"
-                  *ngIf="doc.RQ_NOMRAPPORT.includes('.docx')"
-                  (click)="ConsulterPJ(doc.RQ_NOMRAPPORT)"
-                >
-                  <img
-                    src="../../assets/img/icons/misc/doc.png"
-                    alt="img"
-                    width="28"
-                    class="me-2"
-                  />
-                  <span class="h6 mb-0">{{ doc.RQ_NOMRAPPORT }}</span>
-                </div>
-              </div>
-              <div class="col" *ngFor="let doc of tab_data_doc">
-                <div
-                  class="d-flex align-items-center"
-                  *ngIf="
-                    doc.RQ_NOMRAPPORT.includes('.xlsx') ||
-                    doc.RQ_NOMRAPPORT.includes('.xls')
-                  "
-                  (click)="ConsulterPJ(doc.RQ_NOMRAPPORT)"
-                >
-                  <img
-                    src="../../assets/img/icons/misc/xls.png"
-                    alt="img"
-                    width="28"
-                    class="me-2"
-                  />
-                  <span class="h6 mb-0">{{ doc.RQ_NOMRAPPORT }}</span>
-                </div>
-              </div>
-              <div class="col" *ngFor="let doc of tab_data_doc">
-                <div
-                  class="d-flex align-items-center"
-                  *ngIf="doc.RQ_NOMRAPPORT.includes('.txt')"
-                  (click)="ConsulterPJ(doc.RQ_NOMRAPPORT)"
-                >
-                  <img
-                    src="../../assets/img/icons/misc/txt.png"
-                    alt="img"
-                    width="28"
-                    class="me-2"
-                  />
-                  <span class="h6 mb-0">{{ doc.RQ_NOMRAPPORT }}</span>
-                </div>
-              </div>
-              <div class="col" *ngFor="let doc of tab_data_doc">
-                <div
-                  class="d-flex align-items-center"
-                  *ngIf="
-                    doc.RQ_NOMRAPPORT.includes('.jpg') ||
-                    doc.RQ_NOMRAPPORT.includes('.jpeg')
-                  "
-                  (click)="ConsulterPJ(doc.RQ_NOMRAPPORT)"
-                >
-                  <img
-                    src="../../assets/img/icons/misc/jpg.png"
-                    alt="img"
-                    width="28"
-                    class="me-2"
-                  />
-                  <span class="h6 mb-0">{{ doc.RQ_NOMRAPPORT }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
 
           <div class="col-12 text-center">
             <hr />
@@ -3690,5 +3585,191 @@
       </label></strong
     >
     <p class="text-center">{{ tab_infos_client[0].CU_CONTACT }}</p>
+
+    &#160; &#160; &#160; &#160; &#160;
+    <div class="divider" *ngIf="consultation_doc_req">
+      <div class="divider-text">Les pièces jointes à la requête</div>
+    </div>
+
+    <div
+      class="col-sm-12 col-lg-12 mb-4"
+      *ngIf="consultation_doc_req"
+      style="cursor: pointer"
+    >
+      <div class="row">
+        <div class="col" *ngFor="let doc of tab_doc_show_req">
+          <div
+            class="d-flex align-items-center"
+            *ngIf="doc.includes('.pdf')"
+            (click)="ConsulterPJ(doc)"
+          >
+            <img
+              src="../../assets/img/icons/misc/pdf.png"
+              alt="img"
+              width="28"
+              class="me-2"
+            />
+            <span class="h6 mb-0">{{ doc }}</span>
+          </div>
+        </div>
+        <div class="col" *ngFor="let doc of tab_doc_show_req">
+          <div
+            class="d-flex align-items-center"
+            *ngIf="doc.includes('.docx')"
+            (click)="ConsulterPJ(doc)"
+          >
+            <img
+              src="../../assets/img/icons/misc/doc.png"
+              alt="img"
+              width="28"
+              class="me-2"
+            />
+            <span class="h6 mb-0">{{ doc }}</span>
+          </div>
+        </div>
+        <div class="col" *ngFor="let doc of tab_doc_show_req">
+          <div
+            class="d-flex align-items-center"
+            *ngIf="doc.includes('.xlsx') || doc.includes('.xls')"
+            (click)="ConsulterPJ(doc)"
+          >
+            <img
+              src="../../assets/img/icons/misc/xls.png"
+              alt="img"
+              width="28"
+              class="me-2"
+            />
+            <span class="h6 mb-0">{{ doc }}</span>
+          </div>
+        </div>
+        <div class="col" *ngFor="let doc of tab_doc_show_req">
+          <div
+            class="d-flex align-items-center"
+            *ngIf="doc.includes('.txt')"
+            (click)="ConsulterPJ(doc)"
+          >
+            <img
+              src="../../assets/img/icons/misc/txt.png"
+              alt="img"
+              width="28"
+              class="me-2"
+            />
+            <span class="h6 mb-0">{{ doc }}</span>
+          </div>
+        </div>
+        <div class="col" *ngFor="let doc of tab_doc_show_req">
+          <div
+            class="d-flex align-items-center"
+            *ngIf="
+              doc.includes('.jpg') ||
+              doc.includes('.jpeg') ||
+              doc.includes('.png')
+            "
+            (click)="ConsulterPJ(doc)"
+          >
+            <img
+              src="../../assets/img/icons/misc/jpg.png"
+              alt="img"
+              width="28"
+              class="me-2"
+            />
+            <span class="h6 mb-0">{{ doc }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    &#160; &#160; &#160; &#160; &#160;
+    <div class="divider" *ngIf="consultation_doc_cont">
+      <div class="divider-text">Les pièces jointes lors du contentieux</div>
+    </div>
+
+    <div
+      class="col-sm-12 col-lg-12 mb-4"
+      *ngIf="consultation_doc_cont"
+      style="cursor: pointer"
+    >
+      <div class="row">
+        <div class="col" *ngFor="let doc of tab_doc_show_cont">
+          <div
+            class="d-flex align-items-center"
+            *ngIf="doc.includes('.pdf')"
+            (click)="ConsulterPJ(doc)"
+          >
+            <img
+              src="../../assets/img/icons/misc/pdf.png"
+              alt="img"
+              width="28"
+              class="me-2"
+            />
+            <span class="h6 mb-0">{{ doc }}</span>
+          </div>
+        </div>
+        <div class="col" *ngFor="let doc of tab_doc_show_cont">
+          <div
+            class="d-flex align-items-center"
+            *ngIf="doc.includes('.docx')"
+            (click)="ConsulterPJ(doc)"
+          >
+            <img
+              src="../../assets/img/icons/misc/doc.png"
+              alt="img"
+              width="28"
+              class="me-2"
+            />
+            <span class="h6 mb-0">{{ doc }}</span>
+          </div>
+        </div>
+        <div class="col" *ngFor="let doc of tab_doc_show_cont">
+          <div
+            class="d-flex align-items-center"
+            *ngIf="doc.includes('.xlsx') || doc.includes('.xls')"
+            (click)="ConsulterPJ(doc)"
+          >
+            <img
+              src="../../assets/img/icons/misc/xls.png"
+              alt="img"
+              width="28"
+              class="me-2"
+            />
+            <span class="h6 mb-0">{{ doc }}</span>
+          </div>
+        </div>
+        <div class="col" *ngFor="let doc of tab_doc_show_cont">
+          <div
+            class="d-flex align-items-center"
+            *ngIf="doc.includes('.txt')"
+            (click)="ConsulterPJ(doc)"
+          >
+            <img
+              src="../../assets/img/icons/misc/txt.png"
+              alt="img"
+              width="28"
+              class="me-2"
+            />
+            <span class="h6 mb-0">{{ doc }}</span>
+          </div>
+        </div>
+        <div class="col" *ngFor="let doc of tab_doc_show_cont">
+          <div
+            class="d-flex align-items-center"
+            *ngIf="
+              doc.includes('.jpg') ||
+              doc.includes('.jpeg') ||
+              doc.includes('.png')
+            "
+            (click)="ConsulterPJ(doc)"
+          >
+            <img
+              src="../../assets/img/icons/misc/jpg.png"
+              alt="img"
+              width="28"
+              class="me-2"
+            />
+            <span class="h6 mb-0">{{ doc }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
