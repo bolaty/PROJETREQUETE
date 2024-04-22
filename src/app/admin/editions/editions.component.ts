@@ -21,10 +21,12 @@ export class EditionsComponent {
   affiche_option_1: boolean = false;
   affiche_option_2: boolean = false;
   affiche_option_3: boolean = false;
+  affiche_option_4: boolean = false;
   invoice_label: any = '';
   active_1: any = '';
   active_2: any = '';
   active_3: any = '';
+  active_4: any = '';
   tab_exercice: any = [];
   tab_agence: any = [];
   recuptab_agence: any = [];
@@ -173,10 +175,11 @@ export class EditionsComponent {
 
   SelectInvoice(etat: any) {
     this.invoice_label = etat;
-    this.active_1 = this.active_2 = this.active_3 = '';
+    this.active_1 = this.active_2 = this.active_3 = this.active_4 ='';
     this.affiche_option_1 =
       this.affiche_option_2 =
       this.affiche_option_3 =
+      this.affiche_option_4 =
         false;
 
     if (etat == 'bceao') {
@@ -185,6 +188,9 @@ export class EditionsComponent {
     } else if (etat == 'statistique') {
       this.active_2 = 'active';
       this.affiche_option_2 = true;
+    }else if (etat == 'statistiquehebdomadaire') {
+      this.active_4 = 'active';
+      this.affiche_option_4 = true;
     } else {
       this.active_3 = 'active';
       this.affiche_option_3 = true;
@@ -491,7 +497,11 @@ export class EditionsComponent {
   ConfirmationOptions(action: any) {
     // if (action == 'retour') this.affichage_etat = true;
     // else this.affichage_etat = false;
-
+      if(this.invoice_label == 'statistiquehebdomadaire'){
+          sessionStorage.setItem('statusForm', 'true');
+      }else{
+          sessionStorage.setItem('statusForm', 'false');
+      }
     if (this.invoice_label == 'bceao') {
       this.recuptab_agence = [];
       for (
@@ -549,7 +559,8 @@ export class EditionsComponent {
         );
         window.open('/admin/etat-suivi-reclamation', '_blank');
       }
-    } else if (this.invoice_label == 'statistique') {
+    } else if (this.invoice_label == 'statistique' || this.invoice_label == 'statistiquehebdomadaire') {
+      
       this.recuptab_agence = [];
       for (
         let index = 0;
@@ -568,13 +579,24 @@ export class EditionsComponent {
         }
       }
       var test = 0;
-      for (let index = 0; index < this.formulaire_edition_2.length; index++) {
-        if (this.formulaire_edition_2[index].valeur == '') {
-          test = 1;
-
-          break;
+      if(this.invoice_label == 'statistiquehebdomadaire'){
+        for (let index = 0; index < this.formulaire_edition_2.length; index++) {
+          if (this.formulaire_edition_2[0].valeur == '') {
+            test = 1;
+  
+            break;
+          }
+        }
+      }else{
+        for (let index = 0; index < this.formulaire_edition_2.length; index++) {
+          if (this.formulaire_edition_2[index].valeur == '') {
+            test = 1;
+  
+            break;
+          }
         }
       }
+      
 
       if (test == 1) {
         for (let index = 0; index < this.formulaire_edition_2.length; index++) {
@@ -603,7 +625,7 @@ export class EditionsComponent {
         sessionStorage.setItem(
           'info_etat',
           JSON.stringify(this.formulaire_edition_2)
-        );
+        ); 
         window.open('/admin/etat-suivi', '_blank');
       }
     } else if (this.invoice_label == 'frequence') {

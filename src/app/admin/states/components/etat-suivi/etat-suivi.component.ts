@@ -12,7 +12,7 @@ import { map } from 'rxjs';
 import { ajustLibelle } from '../../utils/libelle.utils';
 import { JsonPipe } from '@angular/common';
 import { AdminService } from 'src/app/admin/admin.service';
-
+import Chart from 'chart.js/auto';
 // const APP_URL = "http://51.210.111.16:1009/RequeteClientsClasse.svc/pvgTableauDeBord";
 
 @Component({
@@ -29,6 +29,7 @@ export class EtatSuiviComponent implements OnInit {
 
   APP_URL: any = `${this.LienServeur}RequeteClientsClasse.svc/pvgTableauDeBord`;
   info_session: any = JSON.parse(sessionStorage.getItem('info_etat') || '');
+  statusForms: any = JSON.parse(sessionStorage.getItem('statusForm') || '');
   info_connexion: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
 
   data: any;
@@ -37,7 +38,13 @@ export class EtatSuiviComponent implements OnInit {
   chartOptionsNaturePlaintes: Partial<ChartOptions>;
   chartOptionsClientInsatisfait: Partial<ChartOptions>;
   chartOptionsDelaiPlaintes: Partial<ChartOptionsPie>;
-
+  chart_pie: any;
+  secondeFonctionAppelee: any;
+  valtauxsatisfaction: any = 0;
+  datebar: any;
+  val1: any = 10;
+  val2: any = 15;
+  val3: any = 5;
   dataSatisfaction: any;
   colors: string[] = [
     '#5B9BD5',
@@ -62,20 +69,20 @@ export class EtatSuiviComponent implements OnInit {
       [
         {
           name: 'Valeur',
-          data: [0, 0, 0, 0],
+          data: [0, 0, 0],
           color: '#5B9BD5',
         },
       ],
       [
         ['Nombre de', 'réclamations traitées'],
         ['Avis client', 'favorable'],
-        ['Avis client', 'non favorable'],
-        ['Taux de', 'satisfaction en %'],
+        ['Avis client', 'non favorable'] /*,
+        ['Taux de', 'satisfaction en %'],*/,
       ]
     );
 
     this.chartOptionsSituationPlaintes = barChartOptions(
-      'situation des réclamations des réclamations (reçus, traitées, non traitées)',
+      'situation des réclamations (reçus, traitées, non traitées)',
       [
         {
           name: 'Valeur',
@@ -128,17 +135,17 @@ export class EtatSuiviComponent implements OnInit {
       [
         {
           name: 'Nombre de réclamations relatives au comportement du personnel',
-          data: [20],
+          data: [0],
           color: '#5B9BD5',
         },
         {
           name: 'Nombre de réclamations relatives aux produits et services',
-          data: [30],
+          data: [0],
           color: '#ED7D31',
         },
         {
           name: 'Nombre de réclamations relatives aux politiques ou procédures',
-          data: [25],
+          data: [0],
           color: '#A5A5A5',
         },
       ],
@@ -148,17 +155,54 @@ export class EtatSuiviComponent implements OnInit {
     );
   }
 
+  FormationChartPieEnregistrer() {
+    var valtaux = sessionStorage.getItem('valtab') || '';
+    var colr = ['#fb8500', '#219ebc'];
+    var valtotal = 100 - parseInt(valtaux);
+    var libelledata = ['Taux de satisfaction en %', ''];
+    var val = [this.valtauxsatisfaction, valtotal]; //this.valtauxsatisfaction
+    this.chart_pie = new Chart('MyChartPie3', {
+      type: 'pie', //this denotes tha type of chart
+      data: {
+        // values on X-Axis
+        labels: libelledata, // table_label,
+        datasets: [
+          {
+            label: '',
+            data: val, // table_data,
+            backgroundColor: colr, // table_color,
+          },
+        ],
+      },
+      options: {
+        aspectRatio: 2.5,
+      },
+    });
+  }
   ngOnInit(): void {
     this.AdminService.showMenu = true;
     this.AdminService.ShowLoader();
+    sessionStorage.setItem('valtab', '');
+    sessionStorage.setItem('secondeFonctionAppelee', 'false');
     setTimeout(() => {
+      var d = new Date();
+      var date =
+        d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
+      var jour = d.getDate();
+      if (jour < 10) {
+        var date =
+          '0' + d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
+      }
+
       this.route.queryParams.subscribe((params) => {
         const paramName = params['paramName'];
         this.apiService
           .postData(this.APP_URL, {
             AG_CODEAGENCE: this.info_session[0].valeur, //this.info_connexion[0].AG_CODEAGENCE,
-            RQ_DATEDEBUT: this.info_session[4].valeur,
-            RQ_DATEFIN: this.info_session[5].valeur,
+            RQ_DATEDEBUT:
+              this.statusForms == true ? date : this.info_session[4].valeur,
+            RQ_DATEFIN:
+              this.statusForms == true ? date : this.info_session[5].valeur,
             CU_CODECOMPTEUTULISATEUR:
               this.info_connexion[0].CU_CODECOMPTEUTULISATEUR,
             TYPEETAT: 'TSCLT',
@@ -172,18 +216,20 @@ export class EtatSuiviComponent implements OnInit {
               const dt = data.clsTableauDeBordDelaiTraiPlaintes;
               const natP = data.clsTableauDeBordNatPlainteRecurs;
               const refP = data.clsTableauDeBordNbrePlainterefs;
+              this.valtauxsatisfaction =
+                parseInt(ts.TOTALPLAINTETRAITES) > 0
+                  ? (parseInt(ts.AVISCLIENTFAVORABLE) /
+                      parseInt(ts.TOTALPLAINTETRAITES)) *
+                    100
+                  : 0;
+              sessionStorage.setItem('valtab', this.valtauxsatisfaction);
               return {
                 TAUXSATISFACTION: {
                   LIBELLERUBRIQUE: ts.LIBELLERUBRIQUE,
                   DATA: [
-                    ts.TOTALPLAINTETRAITES,
-                    ts.AVISCLIENTFAVORABLE,
-                    ts.AVISCLIENTNONFAVORABLE,
-                    parseInt(ts.TOTALPLAINTETRAITES) > 0
-                      ? (parseInt(ts.AVISCLIENTFAVORABLE) /
-                          parseInt(ts.TOTALPLAINTETRAITES)) *
-                        100
-                      : 0,
+                    parseInt(ts.TOTALPLAINTETRAITES),
+                    parseInt(ts.AVISCLIENTFAVORABLE),
+                    parseInt(ts.AVISCLIENTNONFAVORABLE),
                   ],
                 },
                 SITUATIONPLAINTES: {
@@ -232,12 +278,10 @@ export class EtatSuiviComponent implements OnInit {
                 ['Nombre de', 'réclamations traitées'],
                 ['Avis client', 'favorable'],
                 ['Avis client', 'non favorable'],
-                ['Taux de', 'satisfaction en %'],
               ]
             );
-
             this.chartOptionsSituationPlaintes = barChartOptions(
-              'situation des réclamations des réclamations (reçus, traitées, non traitées)',
+              'situation des réclamations (reçus, traitées, non traitées)',
               [
                 {
                   name: 'Valeur',
@@ -282,10 +326,68 @@ export class EtatSuiviComponent implements OnInit {
               true,
               true
             );
+
+            if (sessionStorage.getItem('secondeFonctionAppelee') == 'false') {
+              sessionStorage.setItem('secondeFonctionAppelee', 'true');
+              // Appeler la seconde fonction
+              this.FormationChartPieEnregistrer();
+              // this.lancementtaux(this.data)
+              // Mettre à jour l'état pour indiquer que la seconde fonction a été appelée
+              if (this.statusForms == false) {
+                this.data.SITUATIONPLAINTES.LIBELLES.splice(0, 2);
+                this.data.SITUATIONPLAINTES.TOTALPLAINTENONTRAITES.splice(0, 2);
+                this.data.SITUATIONPLAINTES.TOTALPLAINTERECUES.splice(0, 2);
+                this.data.SITUATIONPLAINTES.TOTALPLAINTETRAITES.splice(0, 2);
+                this.chartOptionsSituationPlaintes = barChartOptions(
+                  'situation des réclamations (reçus, traitées, non traitées)',
+                  [
+                    {
+                      name: 'Valeur',
+                      data: this.data.SITUATIONPLAINTES.TOTALPLAINTERECUES,
+                      color: '#5B9BD5',
+                    },
+                    {
+                      name: 'Valeur',
+                      data: this.data.SITUATIONPLAINTES.TOTALPLAINTETRAITES,
+                      color: '#ED7D31',
+                    },
+                    {
+                      name: 'Valeur',
+                      data: this.data.SITUATIONPLAINTES.TOTALPLAINTENONTRAITES,
+                      color: '#A5A5A5',
+                    },
+                  ],
+                  data.SITUATIONPLAINTES.LIBELLES
+                );
+              } else {
+                this.chartOptionsSituationPlaintes = barChartOptions(
+                  'situation des réclamations (reçus, traitées, non traitées)',
+                  [
+                    {
+                      name: 'Valeur',
+                      data: this.data.SITUATIONPLAINTES.TOTALPLAINTERECUES,
+                      color: '#5B9BD5',
+                    },
+                    {
+                      name: 'Valeur',
+                      data: this.data.SITUATIONPLAINTES.TOTALPLAINTETRAITES,
+                      color: '#ED7D31',
+                    },
+                    {
+                      name: 'Valeur',
+                      data: this.data.SITUATIONPLAINTES.TOTALPLAINTENONTRAITES,
+                      color: '#A5A5A5',
+                    },
+                  ],
+                  data.SITUATIONPLAINTES.LIBELLES
+                );
+              }
+            }
           });
       });
     }, 1000);
   }
+
   printPage() {
     window.print();
   }

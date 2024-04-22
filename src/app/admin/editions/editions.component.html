@@ -43,6 +43,17 @@
                 </li>
                 <li class="nav-item">
                   <button
+                    class="nav-link {{ active_4 }}"
+                    data-bs-toggle="tab"
+                    data-bs-target="#etat_statistiquehebdo"
+                    (click)="SelectInvoice('statistiquehebdomadaire')"
+                  >
+                    <i class="mdi mdi-cube-outline me-2"></i>
+                    <span class="align-middle">Etat statistique hebdomadaire</span>
+                  </button>
+                </li>
+                <li class="nav-item">
+                  <button
                     class="nav-link {{ active_2 }}"
                     data-bs-toggle="tab"
                     data-bs-target="#etat_statistique"
@@ -226,14 +237,14 @@
                 
               </div>
 
-              <!-- etat statistique -->
+              <!-- etat statistique hebdomadaire-->
               <div
                 class="tab-pane fade show"
-                id="etat_statistique"
+                id="etat_statistiquehebdo"
                 role="tabpanel"
               >
-                <h6 class="text-body" *ngIf="affiche_option_2">Options</h6>
-                <div class="row mb-3 g-3" *ngIf="affiche_option_2">
+                <h6 class="text-body" *ngIf="affiche_option_4">Options</h6>
+                <div class="row mb-3 g-3" *ngIf="affiche_option_4">
                   <!-- agence -->
                   <div
                     class="form-floating form-floating-outline col-12 col-sm-8 col-lg-12 col-xxl-8"
@@ -259,125 +270,175 @@
                     <label for="idAgence">Agence</label>
                   </div>
 
+                   
                  
+                 
+                </div>
 
-                  <!-- exercice -->
-                  <div
-                    class="form-floating form-floating-outline col-12 col-sm-8 col-lg-12 col-xxl-8"
+                 <!-- bouton de confirmation -->
+                 <div class="col-6 col-sm-4 d-grid col-lg-6 col-xxl-4">
+                  <button
+                    class="bttn btn btn-primary btn-lg"
+                    (click)="ConfirmationOptions('')"
                   >
-                    <select
-                      class="form-select"
-                      id="idExercice"
-                      required
-                      (change)="resetdate2()"
-                      [(ngModel)]="formulaire_edition_2[1].valeur"
+                    <i class="mdi mdi-check me-2"></i
+                    >{{ LanguageService.edit_btn_confirm }}
+                  </button>
+                </div>
+                <!-- bouton de confirmation -->
+              </div>
+
+               <!-- etat statistique -->
+               <div
+                  class="tab-pane fade show"
+                  id="etat_statistique"
+                  role="tabpanel"
+                >
+                  <h6 class="text-body" *ngIf="affiche_option_2">Options</h6>
+                  <div class="row mb-3 g-3" *ngIf="affiche_option_2">
+                    <!-- agence -->
+                    <div
+                      class="form-floating form-floating-outline col-12 col-sm-8 col-lg-12 col-xxl-8"
                     >
-                      <option value="">Selectionnez un exercice/option></option>
-                      <option
-                        *ngFor="let item_exercice of tab_exercice"
-                        value="{{ item_exercice.EX_EXERCICE }}"
+                      <select
+                        class="form-select"
+                        id="idAgence"
+                        multiple
+                        #agence
+                        style="height: 150px;"
+                        required
+                        [(ngModel)]="formulaire_edition_2[0].valeur"
                       >
-                        {{ item_exercice.EX_EXERCICE }}
-                      </option>
-                    </select>
-                    <label for="idExercice">Exercice</label>
-                  </div>
-                    <!-- bouton de confirmation -->
-                    <div class="col-6 col-sm-4 d-grid col-lg-6 col-xxl-4">
-                      <button
-                        class="bttn btn btn-primary btn-lg"
-                        (click)="ConfirmationOptions('')"
-                      >
-                        <i class="mdi mdi-check me-2"></i
-                        >{{ LanguageService.edit_btn_confirm }}
-                      </button>
+                        <option value="">Selectionnez une agence</option>
+                        <!--<option value="ADMIN">TOUTES LES AGENCES</option>-->
+                        <option
+                          *ngFor="let item_agence of tab_agence"
+                          value="{{ item_agence.AG_CODEAGENCE }}"
+                        >
+                          {{ item_agence.AG_RAISONSOCIAL_TRANSLATE }}
+                        </option>
+                      </select>
+                      <label for="idAgence">Agence</label>
                     </div>
-                    <!-- bouton de confirmation -->
-                  <!-- periodicité -->
-                  <div
-                    class="form-floating form-floating-outline col-12 col-sm-8 col-lg-12 col-xxl-8"
-                  >
-                    <select
-                      class="form-select"
-                      id="idPeriodicite"
-                      required
-                      [(ngModel)]="formulaire_edition_2[2].valeur"
-                      (change)="
-                        ListeComboPeriode(formulaire_edition_2[2].valeur)
-                      "
-                    >
-                      <option value="">Selectionnez une périodicité</option>
-                      <option
-                        *ngFor="let item_periodicite of tab_periodicite"
-                        value="{{ item_periodicite.PE_CODEPERIODICITE }}"
-                      >
-                        {{ item_periodicite.PE_LIBELLE }}
-                      </option>
-                    </select>
-                    <label for="idPeriodicite">Périodicité</label>
-                  </div>
 
-                  <!-- periode -->
-                  <div
-                    class="form-floating form-floating-outline col-12 col-sm-8 col-lg-12 col-xxl-8"
-                  >
-                    <select
-                      class="form-select"
-                      id="idPeriode"
-                      required
-                      (change)="
-                        ChangeDate(
-                          formulaire_edition_2[2].valeur,
-                          formulaire_edition_2[3].valeur
-                        )
-                      "
-                      [(ngModel)]="formulaire_edition_2[3].valeur"
-                    >
-                      <option value="">Selectionnez une période</option>
-                      <option
-                        *ngFor="let item_periode of tab_periode"
-                        value="{{ item_periode.MO_CODEMOIS }}"
-                      >
-                        {{ item_periode.MO_LIBELLE }}
-                      </option>
-                    </select>
-                    <label for="idPeriode">Période</label>
-                  </div>
+                    
 
-                  <!-- date de debut -->
-                  <div class="col-12 col-sm-8 col-lg-12 col-xxl-8">
-                    <div class="form-floating form-floating-outline">
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="idDateDebut"
-                        placeholder="Entrez une option"
-                        name="quantity"
-                        aria-label="Quantity"
-                        [(ngModel)]="formulaire_edition_2[4].valeur"
-                      />
-                      <label for="idDateDebut">Date de début</label>
+                    <!-- exercice -->
+                    <div
+                      class="form-floating form-floating-outline col-12 col-sm-8 col-lg-12 col-xxl-8"
+                    >
+                      <select
+                        class="form-select"
+                        id="idExercice"
+                        required
+                        (change)="resetdate2()"
+                        [(ngModel)]="formulaire_edition_2[1].valeur"
+                      >
+                        <option value="">Selectionnez un exercice/option></option>
+                        <option
+                          *ngFor="let item_exercice of tab_exercice"
+                          value="{{ item_exercice.EX_EXERCICE }}"
+                        >
+                          {{ item_exercice.EX_EXERCICE }}
+                        </option>
+                      </select>
+                      <label for="idExercice">Exercice</label>
                     </div>
-                  </div>
+                      <!-- bouton de confirmation -->
+                      <div class="col-6 col-sm-4 d-grid col-lg-6 col-xxl-4">
+                        <button
+                          class="bttn btn btn-primary btn-lg"
+                          (click)="ConfirmationOptions('')"
+                        >
+                          <i class="mdi mdi-check me-2"></i
+                          >{{ LanguageService.edit_btn_confirm }}
+                        </button>
+                      </div>
+                      <!-- bouton de confirmation -->
+                    <!-- periodicité -->
+                    <div
+                      class="form-floating form-floating-outline col-12 col-sm-8 col-lg-12 col-xxl-8"
+                    >
+                      <select
+                        class="form-select"
+                        id="idPeriodicite"
+                        required
+                        [(ngModel)]="formulaire_edition_2[2].valeur"
+                        (change)="
+                          ListeComboPeriode(formulaire_edition_2[2].valeur)
+                        "
+                      >
+                        <option value="">Selectionnez une périodicité</option>
+                        <option
+                          *ngFor="let item_periodicite of tab_periodicite"
+                          value="{{ item_periodicite.PE_CODEPERIODICITE }}"
+                        >
+                          {{ item_periodicite.PE_LIBELLE }}
+                        </option>
+                      </select>
+                      <label for="idPeriodicite">Périodicité</label>
+                    </div>
 
-                  <!-- date de fin -->
-                  <div class="col-12 col-sm-8 col-lg-12 col-xxl-8">
-                    <div class="form-floating form-floating-outline">
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="idDateFin"
-                        placeholder="Entrez une option"
-                        name="quantity"
-                        aria-label="Quantity"
-                        [(ngModel)]="formulaire_edition_2[5].valeur"
-                      />
-                      <label for="idDateFin">Date de fin</label>
+                    <!-- periode -->
+                    <div
+                      class="form-floating form-floating-outline col-12 col-sm-8 col-lg-12 col-xxl-8"
+                    >
+                      <select
+                        class="form-select"
+                        id="idPeriode"
+                        required
+                        (change)="
+                          ChangeDate(
+                            formulaire_edition_2[2].valeur,
+                            formulaire_edition_2[3].valeur
+                          )
+                        "
+                        [(ngModel)]="formulaire_edition_2[3].valeur"
+                      >
+                        <option value="">Selectionnez une période</option>
+                        <option
+                          *ngFor="let item_periode of tab_periode"
+                          value="{{ item_periode.MO_CODEMOIS }}"
+                        >
+                          {{ item_periode.MO_LIBELLE }}
+                        </option>
+                      </select>
+                      <label for="idPeriode">Période</label>
+                    </div>
+
+                    <!-- date de debut -->
+                    <div class="col-12 col-sm-8 col-lg-12 col-xxl-8">
+                      <div class="form-floating form-floating-outline">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="idDateDebut"
+                          placeholder="Entrez une option"
+                          name="quantity"
+                          aria-label="Quantity"
+                          [(ngModel)]="formulaire_edition_2[4].valeur"
+                        />
+                        <label for="idDateDebut">Date de début</label>
+                      </div>
+                    </div>
+
+                    <!-- date de fin -->
+                    <div class="col-12 col-sm-8 col-lg-12 col-xxl-8">
+                      <div class="form-floating form-floating-outline">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="idDateFin"
+                          placeholder="Entrez une option"
+                          name="quantity"
+                          aria-label="Quantity"
+                          [(ngModel)]="formulaire_edition_2[5].valeur"
+                        />
+                        <label for="idDateFin">Date de fin</label>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-
               <!-- etat frequence -->
               <div
                 class="tab-pane fade show"
