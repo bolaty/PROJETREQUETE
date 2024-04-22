@@ -702,7 +702,7 @@ export class ReclamationsComponent {
                 { positionClass: 'toast-bottom-left' }
               );
 
-              this.ListeRequete();
+              this.ListeRequeteBis();
             }
 
             if (
@@ -742,7 +742,7 @@ export class ReclamationsComponent {
             'TRUE'
           ) {
             this.base64Image = '';
-            this.ListeRequete();
+            this.ListeRequeteBis();
             this.viderChamp();
             this.toastr.success(
               this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE,
@@ -1201,7 +1201,7 @@ export class ReclamationsComponent {
                 'success',
                 { positionClass: 'toast-bottom-left' }
               );
-              this.ListeRequete();
+              this.ListeRequeteBis();
               this.viderChampAff();
             }
           },
@@ -2063,6 +2063,579 @@ export class ReclamationsComponent {
     console.log('table_des_requetes', this.tab_req_afficher);
   }
 
+  ListeRequeteBis() {
+    var Option = '';
+    var body = {};
+    if (this.recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')) {
+      Option = 'RequeteClientsClasse.svc/pvgListeReqrequete';
+      body = {
+        Objets: [
+          {
+            OE_PARAM: ['01'],
+            clsObjetEnvoi: {
+              ET_CODEETABLISSEMENT: '',
+              AN_CODEANTENNE: '',
+              TYPEOPERATION: '01',
+            },
+          },
+        ],
+      };
+      this.AdminService.ShowLoader();
+      this.AdminService.AppelServeur(body, Option).subscribe(
+        (success: any) => {
+          this.ListeRetourRequete = success;
+          this.ListeRetourRequete =
+            this.ListeRetourRequete.pvgListeReqrequeteResult;
+          this.AdminService.CloseLoader();
+          if (this.ListeRetourRequete[0].clsResultat.SL_RESULTAT == 'TRUE') {
+            this.statutliste = true;
+            this.tab_req_enregistree = [];
+            this.tab_req_en_cours_trait = [];
+            this.tab_req_cloturee = [];
+            for (
+              let index = 0;
+              index < this.ListeRetourRequete.length;
+              index++
+            ) {
+              if (
+                this.ListeRetourRequete[index].RQ_DATESAISIEREQUETE !=
+                  '01/01/1900' &&
+                this.ListeRetourRequete[index].RQ_DATEDEBUTTRAITEMENTREQUETE ==
+                  '01/01/1900' &&
+                this.ListeRetourRequete[index].RQ_DATECLOTUREREQUETE ==
+                  '01/01/1900'
+              ) {
+                this.tab_req_enregistree.push(this.ListeRetourRequete[index]);
+              }
+
+              if (
+                this.ListeRetourRequete[index].RQ_DATESAISIEREQUETE !=
+                  '01/01/1900' &&
+                this.ListeRetourRequete[index].RQ_DATEDEBUTTRAITEMENTREQUETE !=
+                  '01/01/1900' &&
+                this.ListeRetourRequete[index].RQ_DATECLOTUREREQUETE ==
+                  '01/01/1900'
+              ) {
+                this.tab_req_en_cours_trait.push(
+                  this.ListeRetourRequete[index]
+                );
+              }
+
+              if (
+                this.ListeRetourRequete[index].RQ_DATESAISIEREQUETE !=
+                  '01/01/1900' &&
+                this.ListeRetourRequete[index].RQ_DATEDEBUTTRAITEMENTREQUETE !=
+                  '01/01/1900' &&
+                this.ListeRetourRequete[index].RQ_DATECLOTUREREQUETE !=
+                  '01/01/1900'
+              ) {
+                this.tab_req_cloturee.push(this.ListeRetourRequete[index]);
+              }
+            }
+            console.log(this.tab_req_cloturee);
+            // initialisation des boutons de tri des requetes
+            this.var_checked_enrg = 'checked';
+            this.var_checked_trai = '';
+            this.var_checked_clo = '';
+
+            // traduction :: traduction de chaque bloc
+            for (
+              let index = 0;
+              index < this.tab_req_enregistree.length;
+              index++
+            ) {
+              // verifier la langue en cours
+              this.tab_req_enregistree[index].TR_LIBELLETYEREQUETE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_enregistree[index].TR_LIBELLETYEREQUETE,
+                  this.LanguageService.langue_en_cours
+                );
+
+              this.tab_req_enregistree[index].RE_LIBELLEETAPE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_enregistree[index].RE_LIBELLEETAPE,
+                  this.LanguageService.langue_en_cours
+                );
+            }
+
+            for (
+              let index = 0;
+              index < this.tab_req_en_cours_trait.length;
+              index++
+            ) {
+              // verifier la langue en cours
+              this.tab_req_en_cours_trait[
+                index
+              ].TR_LIBELLETYEREQUETE_TRANSLATE = this.Translate(
+                this.tab_req_en_cours_trait[index].TR_LIBELLETYEREQUETE,
+                this.LanguageService.langue_en_cours
+              );
+
+              this.tab_req_en_cours_trait[index].RE_LIBELLEETAPE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_en_cours_trait[index].RE_LIBELLEETAPE,
+                  this.LanguageService.langue_en_cours
+                );
+            }
+
+            for (let index = 0; index < this.tab_req_cloturee.length; index++) {
+              // verifier la langue en cours
+              this.tab_req_cloturee[index].TR_LIBELLETYEREQUETE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_cloturee[index].TR_LIBELLETYEREQUETE,
+                  this.LanguageService.langue_en_cours
+                );
+
+              this.tab_req_cloturee[index].RE_LIBELLEETAPE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_cloturee[index].RE_LIBELLEETAPE,
+                  this.LanguageService.langue_en_cours
+                );
+            }
+            // traduction
+
+            // initialisation de l'affichage sur les requetes enregistrée
+            this.tab_req_afficher = [];
+
+            if (this.btn_filter == 'enrg') {
+              for (
+                let index = 0;
+                index < this.tab_req_enregistree.length;
+                index++
+              ) {
+                this.tab_req_afficher.push(this.tab_req_enregistree[index]);
+              }
+
+              this.var_checked_enrg = 'checked';
+              this.var_checked_trai = '';
+              this.var_checked_clo = '';
+            } else if (this.btn_filter == 'trai') {
+              for (
+                let index = 0;
+                index < this.tab_req_enregistree.length;
+                index++
+              ) {
+                this.tab_req_afficher.push(this.tab_req_en_cours_trait[index]);
+              }
+
+              this.var_checked_enrg = '';
+              this.var_checked_trai = 'checked';
+              this.var_checked_clo = '';
+
+              // Changer l'onglet actif vers "en cours de traitement"
+              const listeTabLink_trai = document.getElementById(
+                'btnradio2'
+              ) as HTMLAnchorElement;
+              if (listeTabLink_trai) {
+                listeTabLink_trai.click(); // Cliquez sur l'onglet "Liste" pour le rendre actif
+              }
+            } else {
+              for (
+                let index = 0;
+                index < this.tab_req_enregistree.length;
+                index++
+              ) {
+                this.tab_req_afficher.push(this.tab_req_cloturee[index]);
+              }
+
+              this.var_checked_enrg = '';
+              this.var_checked_trai = '';
+              this.var_checked_clo = 'checked';
+
+              // Changer l'onglet actif vers "en cours de traitement"
+              const listeTabLink_clo = document.getElementById(
+                'btnradio3'
+              ) as HTMLAnchorElement;
+              if (listeTabLink_clo) {
+                listeTabLink_clo.click(); // Cliquez sur l'onglet "Liste" pour le rendre actif
+              }
+            }
+
+            this.afficher_tri = true;
+          } else {
+            this.toastr.info(
+              this.ListeRetourRequete[0].clsResultat.SL_MESSAGE,
+              'info',
+              { positionClass: 'toast-bottom-left' }
+            );
+            this.statutliste = false;
+            this.afficher_tri = false;
+          }
+        },
+        (error) => {
+          this.AdminService.CloseLoader();
+          this.statutliste = false;
+          this.afficher_tri = false;
+          this.toastr.warning(
+            this.ListeRetourRequete[0].clsResultat.SL_MESSAGE,
+            'warning',
+            { positionClass: 'toast-bottom-left' }
+          );
+        }
+      );
+    } else if (this.recupinfo[0].TU_CODETYPEUTILISATEUR == '0001') {
+      Option = 'RequeteClientsClasse.svc/pvgChargerDansDataSetParOperateurs';
+      body = {
+        Objets: [
+          {
+            OE_PARAM: ['01', this.recupinfo[0].CU_CODECOMPTEUTULISATEUR],
+            clsObjetEnvoi: {
+              ET_CODEETABLISSEMENT: '',
+              AN_CODEANTENNE: '',
+              TYPEOPERATION: '01',
+            },
+          },
+        ],
+      };
+      this.AdminService.ShowLoader();
+      this.AdminService.AppelServeur(body, Option).subscribe(
+        (success: any) => {
+          this.ListeRetourRequete = success;
+          this.ListeRetourRequete =
+            this.ListeRetourRequete.pvgChargerDansDataSetParOperateursResult;
+          this.AdminService.CloseLoader();
+          if (this.ListeRetourRequete[0].clsResultat.SL_RESULTAT == 'TRUE') {
+            this.statutliste = true;
+            this.tab_req_enregistree = [];
+            this.tab_req_en_cours_trait = [];
+            this.tab_req_cloturee = [];
+            for (
+              let index = 0;
+              index < this.ListeRetourRequete.length;
+              index++
+            ) {
+              if (
+                this.ListeRetourRequete[index].RQ_DATESAISIEREQUETE !=
+                  '01/01/1900' &&
+                this.ListeRetourRequete[index].RQ_DATEDEBUTTRAITEMENTREQUETE ==
+                  '01/01/1900' &&
+                this.ListeRetourRequete[index].AT_DATECLOTUREETAPE ==
+                  '01/01/1900'
+              ) {
+                this.tab_req_enregistree.push(this.ListeRetourRequete[index]);
+              }
+
+              if (
+                this.ListeRetourRequete[index].RQ_DATESAISIEREQUETE !=
+                  '01/01/1900' &&
+                this.ListeRetourRequete[index].AT_DATEDEBUTTRAITEMENTETAPE !=
+                  '01/01/1900' &&
+                this.ListeRetourRequete[index].AT_DATECLOTUREETAPE ==
+                  '01/01/1900'
+              ) {
+                this.tab_req_en_cours_trait.push(
+                  this.ListeRetourRequete[index]
+                );
+              }
+
+              if (
+                this.ListeRetourRequete[index].RQ_DATESAISIEREQUETE !=
+                  '01/01/1900' &&
+                this.ListeRetourRequete[index].AT_DATEDEBUTTRAITEMENTETAPE !=
+                  '01/01/1900' &&
+                this.ListeRetourRequete[index].AT_DATECLOTUREETAPE !=
+                  '01/01/1900'
+              ) {
+                this.tab_req_cloturee.push(this.ListeRetourRequete[index]);
+              }
+            }
+
+            // initialisation des boutons de tri des requetes
+            this.var_checked_enrg = 'checked';
+            this.var_checked_trai = '';
+            this.var_checked_clo = '';
+
+            // traduction :: traduction de chaque bloc
+            for (
+              let index = 0;
+              index < this.tab_req_enregistree.length;
+              index++
+            ) {
+              // verifier la langue en cours
+              this.tab_req_enregistree[index].TR_LIBELLETYEREQUETE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_enregistree[index].TR_LIBELLETYEREQUETE,
+                  this.LanguageService.langue_en_cours
+                );
+
+              this.tab_req_enregistree[index].RE_LIBELLEETAPE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_enregistree[index].RE_LIBELLEETAPE,
+                  this.LanguageService.langue_en_cours
+                );
+            }
+
+            for (
+              let index = 0;
+              index < this.tab_req_en_cours_trait.length;
+              index++
+            ) {
+              // verifier la langue en cours
+              this.tab_req_en_cours_trait[
+                index
+              ].TR_LIBELLETYEREQUETE_TRANSLATE = this.Translate(
+                this.tab_req_en_cours_trait[index].TR_LIBELLETYEREQUETE,
+                this.LanguageService.langue_en_cours
+              );
+
+              this.tab_req_en_cours_trait[index].RE_LIBELLEETAPE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_en_cours_trait[index].RE_LIBELLEETAPE,
+                  this.LanguageService.langue_en_cours
+                );
+            }
+
+            for (let index = 0; index < this.tab_req_cloturee.length; index++) {
+              // verifier la langue en cours
+              this.tab_req_cloturee[index].TR_LIBELLETYEREQUETE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_cloturee[index].TR_LIBELLETYEREQUETE,
+                  this.LanguageService.langue_en_cours
+                );
+
+              this.tab_req_cloturee[index].RE_LIBELLEETAPE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_cloturee[index].RE_LIBELLEETAPE,
+                  this.LanguageService.langue_en_cours
+                );
+            }
+            // traduction
+
+            // initialisation de l'affichage sur les requetes enregistrée
+            this.tab_req_afficher = [];
+
+            if (this.btn_filter == 'enrg') {
+              for (
+                let index = 0;
+                index < this.tab_req_enregistree.length;
+                index++
+              ) {
+                this.tab_req_afficher.push(this.tab_req_enregistree[index]);
+              }
+            } else if (this.btn_filter == 'trai') {
+              for (
+                let index = 0;
+                index < this.tab_req_enregistree.length;
+                index++
+              ) {
+                this.tab_req_afficher.push(this.tab_req_en_cours_trait[index]);
+              }
+            } else {
+              for (
+                let index = 0;
+                index < this.tab_req_enregistree.length;
+                index++
+              ) {
+                this.tab_req_afficher.push(this.tab_req_cloturee[index]);
+              }
+            }
+
+            this.afficher_tri = true;
+          } else {
+            this.toastr.info(
+              this.ListeRetourRequete[0].clsResultat.SL_MESSAGE,
+              'info',
+              { positionClass: 'toast-bottom-left' }
+            );
+            this.statutliste = false;
+            this.afficher_tri = false;
+          }
+        },
+        (error) => {
+          this.AdminService.CloseLoader();
+          this.statutliste = false;
+          this.afficher_tri = false;
+          this.toastr.warning(
+            this.ListeRetourRequete[0].clsResultat.SL_MESSAGE,
+            'warning',
+            { positionClass: 'toast-bottom-left' }
+          );
+        }
+      );
+    } else {
+      Option = 'RequeteClientsClasse.svc/pvgListeReqrequete';
+      body = {
+        Objets: [
+          {
+            OE_PARAM: ['01', this.recupinfo[0].CU_CODECOMPTEUTULISATEUR],
+            clsObjetEnvoi: {
+              ET_CODEETABLISSEMENT: '',
+              AN_CODEANTENNE: '',
+              TYPEOPERATION: '01',
+            },
+          },
+        ],
+      };
+      this.AdminService.ShowLoader();
+      this.AdminService.AppelServeur(body, Option).subscribe(
+        (success: any) => {
+          this.ListeRetourRequete = success;
+          this.ListeRetourRequete =
+            this.ListeRetourRequete.pvgListeReqrequeteResult;
+          this.AdminService.CloseLoader();
+          if (this.ListeRetourRequete[0].clsResultat.SL_RESULTAT == 'TRUE') {
+            this.statutliste = true;
+            this.tab_req_enregistree = [];
+            this.tab_req_en_cours_trait = [];
+            this.tab_req_cloturee = [];
+            for (
+              let index = 0;
+              index < this.ListeRetourRequete.length;
+              index++
+            ) {
+              if (
+                this.ListeRetourRequete[index].RQ_DATESAISIEREQUETE !=
+                  '01/01/1900' &&
+                this.ListeRetourRequete[index].RQ_DATEDEBUTTRAITEMENTREQUETE ==
+                  '01/01/1900' &&
+                this.ListeRetourRequete[index].RQ_DATECLOTUREREQUETE ==
+                  '01/01/1900'
+              ) {
+                this.tab_req_enregistree.push(this.ListeRetourRequete[index]);
+              }
+
+              if (
+                this.ListeRetourRequete[index].RQ_DATESAISIEREQUETE !=
+                  '01/01/1900' &&
+                this.ListeRetourRequete[index].RQ_DATEDEBUTTRAITEMENTREQUETE !=
+                  '01/01/1900' &&
+                this.ListeRetourRequete[index].RQ_DATECLOTUREREQUETE ==
+                  '01/01/1900'
+              ) {
+                this.tab_req_en_cours_trait.push(
+                  this.ListeRetourRequete[index]
+                );
+              }
+
+              if (
+                this.ListeRetourRequete[index].RQ_DATESAISIEREQUETE !=
+                  '01/01/1900' &&
+                this.ListeRetourRequete[index].RQ_DATEDEBUTTRAITEMENTREQUETE !=
+                  '01/01/1900' &&
+                this.ListeRetourRequete[index].RQ_DATECLOTUREREQUETE !=
+                  '01/01/1900'
+              ) {
+                this.tab_req_cloturee.push(this.ListeRetourRequete[index]);
+              }
+            }
+
+            // initialisation des boutons de tri des requetes
+            this.var_checked_enrg = 'checked';
+            this.var_checked_trai = '';
+            this.var_checked_clo = '';
+
+            // traduction :: traduction de chaque bloc
+            for (
+              let index = 0;
+              index < this.tab_req_enregistree.length;
+              index++
+            ) {
+              // verifier la langue en cours
+              this.tab_req_enregistree[index].TR_LIBELLETYEREQUETE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_enregistree[index].TR_LIBELLETYEREQUETE,
+                  this.LanguageService.langue_en_cours
+                );
+
+              this.tab_req_enregistree[index].RE_LIBELLEETAPE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_enregistree[index].RE_LIBELLEETAPE,
+                  this.LanguageService.langue_en_cours
+                );
+            }
+
+            for (
+              let index = 0;
+              index < this.tab_req_en_cours_trait.length;
+              index++
+            ) {
+              // verifier la langue en cours
+              this.tab_req_en_cours_trait[
+                index
+              ].TR_LIBELLETYEREQUETE_TRANSLATE = this.Translate(
+                this.tab_req_en_cours_trait[index].TR_LIBELLETYEREQUETE,
+                this.LanguageService.langue_en_cours
+              );
+
+              this.tab_req_en_cours_trait[index].RE_LIBELLEETAPE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_en_cours_trait[index].RE_LIBELLEETAPE,
+                  this.LanguageService.langue_en_cours
+                );
+            }
+
+            for (let index = 0; index < this.tab_req_cloturee.length; index++) {
+              // verifier la langue en cours
+              this.tab_req_cloturee[index].TR_LIBELLETYEREQUETE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_cloturee[index].TR_LIBELLETYEREQUETE,
+                  this.LanguageService.langue_en_cours
+                );
+
+              this.tab_req_cloturee[index].RE_LIBELLEETAPE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_cloturee[index].RE_LIBELLEETAPE,
+                  this.LanguageService.langue_en_cours
+                );
+            }
+            // traduction
+
+            // initialisation de l'affichage sur les requetes enregistrée
+            this.tab_req_afficher = [];
+
+            if (this.btn_filter == 'enrg') {
+              for (
+                let index = 0;
+                index < this.tab_req_enregistree.length;
+                index++
+              ) {
+                this.tab_req_afficher.push(this.tab_req_enregistree[index]);
+              }
+            } else if (this.btn_filter == 'trai') {
+              for (
+                let index = 0;
+                index < this.tab_req_enregistree.length;
+                index++
+              ) {
+                this.tab_req_afficher.push(this.tab_req_en_cours_trait[index]);
+              }
+            } else {
+              for (
+                let index = 0;
+                index < this.tab_req_enregistree.length;
+                index++
+              ) {
+                this.tab_req_afficher.push(this.tab_req_cloturee[index]);
+              }
+            }
+
+            this.afficher_tri = true;
+          } else {
+            this.toastr.info(
+              this.ListeRetourRequete[0].clsResultat.SL_MESSAGE,
+              'info',
+              { positionClass: 'toast-bottom-left' }
+            );
+            this.statutliste = false;
+            this.afficher_tri = false;
+          }
+        },
+        (error) => {
+          this.AdminService.CloseLoader();
+          this.statutliste = false;
+          this.afficher_tri = false;
+          this.toastr.warning(
+            this.ListeRetourRequete[0].clsResultat.SL_MESSAGE,
+            'warning',
+            { positionClass: 'toast-bottom-left' }
+          );
+        }
+      );
+    }
+
+    console.log('table_des_requetes', this.tab_req_afficher);
+  }
+
   ListeRequeteold() {
     let Option = 'RequeteClientsClasse.svc/pvgListeReqrequete';
     var body = {};
@@ -2229,7 +2802,7 @@ export class ReclamationsComponent {
             { positionClass: 'toast-bottom-left' }
           );
           this.ObservationsCloture = '';
-          this.ListeRequete();
+          this.ListeRequeteBis();
           this.NotifierLesOperateursTraitants(recuperation.RQ_CODEREQUETE);
           $('#addNewAddressClotureDefinitive').modal('hide');
         }
@@ -2316,7 +2889,7 @@ export class ReclamationsComponent {
         } else {
           // this.toastr.success(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
           this.ObservationsCloture = '';
-          this.ListeRequete();
+          this.ListeRequeteBis();
           this.toastr.success(
             this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE,
             'success',
@@ -2397,7 +2970,7 @@ export class ReclamationsComponent {
               'success',
               { positionClass: 'toast-bottom-left' }
             );
-            this.ListeRequete();
+            this.ListeRequeteBis();
           } else {
             this.ListeContentieux('T');
           }
@@ -2634,6 +3207,19 @@ export class ReclamationsComponent {
       for (let index = 0; index < this.tab_req_cloturee.length; index++) {
         this.tab_req_afficher.push(this.tab_req_cloturee[index]);
       }
+
+      // modifie la couleur de la carte si elle a un avis favorable de la par du client
+      setTimeout(() => {
+        for (let index = 0; index < this.tab_req_afficher.length; index++) {
+          if (this.tab_req_afficher[index].NS_CODENIVEAUSATISFACTION == '001') {
+            $(`#card${index}`).css('background-color', '#b7e4c7');
+          } else if (
+            this.tab_req_afficher[index].NS_CODENIVEAUSATISFACTION == '002'
+          ) {
+            $(`#card${index}`).css('background-color', '#ffccd5');
+          }
+        }
+      }, 1000);
     }
   }
 
@@ -3067,34 +3653,40 @@ export class ReclamationsComponent {
         this.consultation_doc_req = false;
         this.consultation_doc_cont = false;
 
-        if (this.tab_data_doc[0].clsDocumentAssociesALaRequetes != null) {
-          this.consultation_doc_req = true;
-          this.tab_doc_show_req = [];
-          for (
-            let index = 0;
-            index < this.tab_data_doc[0].clsDocumentAssociesALaRequetes.length;
-            index++
-          ) {
-            this.tab_doc_show_req.push(
-              this.tab_data_doc[0].clsDocumentAssociesALaRequetes[index]
-                .RQ_NOMRAPPORT
-            );
+        for (let index = 0; index < this.tab_data_doc.length; index++) {
+          if (this.tab_data_doc[index].clsDocumentAssociesALaRequetes != null) {
+            this.consultation_doc_req = true;
+            this.tab_doc_show_req = [];
+            for (
+              let index2 = 0;
+              index2 <
+              this.tab_data_doc[index].clsDocumentAssociesALaRequetes.length;
+              index2++
+            ) {
+              this.tab_doc_show_req.push(
+                this.tab_data_doc[index].clsDocumentAssociesALaRequetes[index2]
+                  .RQ_NOMRAPPORT
+              );
+            }
           }
-        }
 
-        if (this.tab_data_doc[0].clsDocumentAssociesAuContentieux != null) {
-          this.consultation_doc_cont = true;
-          this.tab_doc_show_cont = [];
-          for (
-            let index = 0;
-            index <
-            this.tab_data_doc[0].clsDocumentAssociesAuContentieux.length;
-            index++
+          if (
+            this.tab_data_doc[index].clsDocumentAssociesAuContentieux != null
           ) {
-            this.tab_doc_show_cont.push(
-              this.tab_data_doc[0].clsDocumentAssociesAuContentieux[index]
-                .FICHIERSJOINT
-            );
+            this.consultation_doc_cont = true;
+            this.tab_doc_show_cont = [];
+            for (
+              let index3 = 0;
+              index3 <
+              this.tab_data_doc[index].clsDocumentAssociesAuContentieux.length;
+              index3++
+            ) {
+              this.tab_doc_show_cont.push(
+                this.tab_data_doc[index].clsDocumentAssociesAuContentieux[
+                  index3
+                ].FICHIERSJOINT
+              );
+            }
           }
         }
 

@@ -585,7 +585,7 @@ export class SuiviRequeteComponent {
             clsObjetEnvoi: {
               ET_CODEETABLISSEMENT: '',
               AN_CODEANTENNE: '',
-              TYPEOPERATION: '1',
+              TYPEOPERATION: '11',
             },
           },
         ],

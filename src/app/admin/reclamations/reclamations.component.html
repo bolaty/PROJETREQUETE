@@ -1080,7 +1080,7 @@
                   let index = index
                 "
               >
-                <div class="card">
+                <div class="card" id="{{ 'card' + index }}">
                   <div class="card-body">
                     <div class="d-flex align-items-center mb-3 pb-1">
                       <a class="d-flex align-items-center">
@@ -1881,7 +1881,7 @@
                   let index = index
                 "
               >
-                <div class="card">
+                <div class="card" id="{{ 'card' + index }}">
                   <div class="card-body">
                     <div class="d-flex align-items-center mb-3 pb-1">
                       <a class="d-flex align-items-center">
@@ -3663,7 +3663,8 @@
             *ngIf="
               doc.includes('.jpg') ||
               doc.includes('.jpeg') ||
-              doc.includes('.png')
+              doc.includes('.png') ||
+              doc.includes('.PNG')
             "
             (click)="ConsulterPJ(doc)"
           >
@@ -3756,7 +3757,8 @@
             *ngIf="
               doc.includes('.jpg') ||
               doc.includes('.jpeg') ||
-              doc.includes('.png')
+              doc.includes('.png') ||
+              doc.includes('.PNG')
             "
             (click)="ConsulterPJ(doc)"
           >
