@@ -78,6 +78,9 @@ export class EtatSuiviReclamationComponent implements OnInit {
               RQ_MONTANTTOTALCONTENTIEUX:
                 values?.RQ_MONTANTTOTALCONTENTIEUX ?? 0,
               RQ_NOMBRETOTALCONTENTIEUX: values?.RQ_NOMBRETOTALCONTENTIEUX ?? 0,
+              RQ_MONTANTTOTALCONTENTIEUXAPRES:
+                values?.RQ_MONTANTTOTALCONTENTIEUXAPRES ?? 0,
+              RQ_NOMBRETOTALCONTENTIEUXAPRES: values?.RQ_NOMBRETOTALCONTENTIEUXAPRES ?? 0,
               ENCOURS: values.clsReqrequeteRecus.map((e: any) => {
                 return {
                   TR_LIBELLETYEREQUETE: e.TR_LIBELLETYEREQUETE,
