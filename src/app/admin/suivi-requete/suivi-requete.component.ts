@@ -545,7 +545,7 @@ export class SuiviRequeteComponent {
           '0' + d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
         console.log(date);
       }
-      let Options = 'RequeteClientsClasse.svc/pvgMajReqrequete'; // le chemin d'appel du service web
+      let Options = 'RequeteClientsClasse.svc/pvgMajReqrequeteAvisclient'; // le chemin d'appel du service web
       //objet d'envoi
       let body = {
         Objets: [
@@ -573,7 +573,7 @@ export class SuiviRequeteComponent {
             RQ_NUMEROREQUETE: this.recupinfo.RQ_NUMEROREQUETE,
             RQ_OBJETREQUETE: this.recupinfo.RQ_OBJETREQUETE,
             RQ_OBSERVATIONAGENTTRAITEMENTREQUETE:
-              this.recupinfo.RQ_OBSERVATIONAGENTTRAITEMENTREQUETE,
+            this.formulaire_avis[1].valeur,
             RQ_OBSERVATIONDELAITRAITEMENTREQUETE:
               this.formulaire_avis[1].valeur,
             RQ_AFFICHERINFOCLIENT: 'O',
@@ -595,7 +595,7 @@ export class SuiviRequeteComponent {
         (success) => {
           this.tab_enregistrement_traitement = success;
           this.tab_enregistrement_traitement =
-            this.tab_enregistrement_traitement.pvgMajReqrequeteResult;
+            this.tab_enregistrement_traitement.pvgMajReqrequeteAvisclientResult;
           this.AdminService.CloseLoader();
           if (
             this.tab_enregistrement_traitement.clsResultat.SL_RESULTAT ==
@@ -609,7 +609,7 @@ export class SuiviRequeteComponent {
             );
           } else {
             if (this.formulaire_avis[0].valeur == '002') {
-              this.RelanceRequetePrincipale();
+                this.RelanceRequetePrincipale();
             }
             // this.toastr.success(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
             this.toastr.success(

@@ -81,19 +81,19 @@ export class EtatSuiviReclamationComponent implements OnInit {
               ENCOURS: values.clsReqrequeteRecus.map((e: any) => {
                 return {
                   TR_LIBELLETYEREQUETE: e.TR_LIBELLETYEREQUETE,
-                  RQ_DESCRIPTIONREQUETE: e.RQ_OBSERVATIONDELAITRAITEMENTREQUETE, // RQ_DESCRIPTIONREQUETE,
+                  RQ_DESCRIPTIONREQUETE: e.RQ_OBSERVATIONDELAITRAITEMENTREQUETE,//e.RQ_DESCRIPTIONREQUETEAVISCLIENT // RQ_DESCRIPTIONREQUETE,
                 };
               }),
               TRAITES: values.clsReqrequeteTraitees.map((e: any) => {
                 return {
                   TR_LIBELLETYEREQUETE: e.TR_LIBELLETYEREQUETE,
-                  RQ_DESCRIPTIONREQUETE: e.RQ_OBSERVATIONDELAITRAITEMENTREQUETE, // RQ_DESCRIPTIONREQUETE,
+                  RQ_DESCRIPTIONREQUETE: e.RQ_OBSERVATIONDELAITRAITEMENTREQUETE,//e.RQ_DESCRIPTIONREQUETEAVISCLIENT // RQ_DESCRIPTIONREQUETE,
                 };
               }),
               SUSPENDUES: values.clsReqrequeteSuspendues.map((e: any) => {
                 return {
                   TR_LIBELLETYEREQUETE: e.TR_LIBELLETYEREQUETE,
-                  RQ_DESCRIPTIONREQUETE: e.RQ_OBSERVATIONDELAITRAITEMENTREQUETE, // RQ_DESCRIPTIONREQUETE,
+                  RQ_DESCRIPTIONREQUETE: e.RQ_OBSERVATIONDELAITRAITEMENTREQUETE,//e.RQ_DESCRIPTIONREQUETEAVISCLIENT,// // RQ_DESCRIPTIONREQUETE,
                 };
               }),
             };

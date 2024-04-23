@@ -33,7 +33,8 @@ export class EditionsComponent {
   tab_periodicite: any = [];
   tab_periode: any = [];
   tab_date: any = [];
-
+  valtabAgence: any = [];
+  valAgence: any ='';
   formulaire_edition_1: any = [
     {
       id: 'idAgence',
@@ -195,6 +196,7 @@ export class EditionsComponent {
       this.active_3 = 'active';
       this.affiche_option_3 = true;
     }
+
   }
 
   ListeComboExercice() {
@@ -503,7 +505,8 @@ export class EditionsComponent {
           sessionStorage.setItem('statusForm', 'false');
       }
     if (this.invoice_label == 'bceao') {
-      this.recuptab_agence = [];
+      this.formulaire_edition_1[0].valeur = this.valAgence;
+      /*this.recuptab_agence = [];
       for (
         let index = 0;
         index < this.charger_l_agence.nativeElement.length;
@@ -519,7 +522,7 @@ export class EditionsComponent {
           localvalue[1] = localvalue[1].replaceAll("'", "''");
           this.recuptab_agence.push(localvalue[1]);
         }
-      }
+      }*/
       var test = 0;
       for (let index = 0; index < this.formulaire_edition_1.length; index++) {
         if (this.formulaire_edition_1[index].valeur == '') {
@@ -552,7 +555,7 @@ export class EditionsComponent {
           }
         );
       } else {
-        this.formulaire_edition_1[0].valeur = this.recuptab_agence.join(',');
+        //this.formulaire_edition_1[0].valeur = this.valAgence;//this.recuptab_agence.join(',');
         sessionStorage.setItem(
           'info_etat',
           JSON.stringify(this.formulaire_edition_1)
@@ -560,9 +563,9 @@ export class EditionsComponent {
         window.open('/admin/etat-suivi-reclamation', '_blank');
       }
     } else if (this.invoice_label == 'statistique' || this.invoice_label == 'statistiquehebdomadaire') {
-      
+      this.formulaire_edition_2[0].valeur = this.valAgence;
       this.recuptab_agence = [];
-      for (
+      /*for (
         let index = 0;
         index < this.charger_l_agence.nativeElement.length;
         index++
@@ -577,7 +580,7 @@ export class EditionsComponent {
           localvalue[1] = localvalue[1].replaceAll("'", "''");
           this.recuptab_agence.push(localvalue[1]);
         }
-      }
+      }*/
       var test = 0;
       if(this.invoice_label == 'statistiquehebdomadaire'){
         for (let index = 0; index < this.formulaire_edition_2.length; index++) {
@@ -621,7 +624,7 @@ export class EditionsComponent {
           }
         );
       } else {
-        this.formulaire_edition_2[0].valeur = this.recuptab_agence.join(',');
+      // this.formulaire_edition_2[0].valeur = this.valAgence;//this.recuptab_agence.join(',');
         sessionStorage.setItem(
           'info_etat',
           JSON.stringify(this.formulaire_edition_2)
@@ -629,7 +632,8 @@ export class EditionsComponent {
         window.open('/admin/etat-suivi', '_blank');
       }
     } else if (this.invoice_label == 'frequence') {
-      this.recuptab_agence = [];
+      this.formulaire_edition_3[0].valeur = this.valAgence;
+      /*this.recuptab_agence = [];
       for (
         let index = 0;
         index < this.charger_l_agence.nativeElement.length;
@@ -645,7 +649,7 @@ export class EditionsComponent {
           localvalue[1] = localvalue[1].replaceAll("'", "''");
           this.recuptab_agence.push(localvalue[1]);
         }
-      }
+      }*/
       var test = 0;
       for (let index = 0; index < this.formulaire_edition_3.length; index++) {
         if (this.formulaire_edition_3[index].valeur == '') {
@@ -678,7 +682,7 @@ export class EditionsComponent {
           }
         );
       } else {
-        this.formulaire_edition_3[0].valeur = this.recuptab_agence.join(',');
+        //this.formulaire_edition_3[0].valeur = this.valAgence;//this.recuptab_agence.join(',');
         sessionStorage.setItem(
           'info_etat',
           JSON.stringify(this.formulaire_edition_3)
@@ -738,6 +742,25 @@ export class EditionsComponent {
         this.LanguageService.langue_en_cours
       );
     }
+  }
+
+  VerifyTabAgence(element: any): void {
+    
+    // const index = this.valtabAgence.findIndex(obj => obj.id === element.id);
+    const index = this.valtabAgence.indexOf(element);
+    if (index !== -1) {
+        // Si l'élément existe, le supprimer du tableau
+        this.valtabAgence.splice(index, 1);
+        console.log("L'élément existe déjà dans le tableau. Il a été supprimé.");
+    } else {
+        // Sinon, ajouter l'élément au tableau
+        this.valtabAgence.push(element);
+       
+    }
+
+    // Transformer chaque élément en une chaîne avec des guillemets simples
+    //@ts-ignore
+     this.valAgence = this.valtabAgence.map(elements => `''${elements}''`).join(',');
   }
 
   ngOnDestroy(): void {
