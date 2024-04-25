@@ -35,6 +35,9 @@ export class EditionsComponent {
   tab_date: any = [];
   valtabAgence: any = [];
   valAgence: any ='';
+  valTablibAgence: any = [];
+  valAgencelib: any ='';
+  valPeriodelib: any ='';
   formulaire_edition_1: any = [
     {
       id: 'idAgence',
@@ -345,8 +348,8 @@ export class EditionsComponent {
       }
     );
   }
-
   ListeComboPeriode(code_periodicite: any) {
+    
     let Option = 'RequeteClientsClasse.svc/pvgPeriodiciteWeb';
 
     let body = {
@@ -427,7 +430,7 @@ export class EditionsComponent {
     this.AdminService.AppelServeur(body, Option).subscribe(
       (success: any) => {
         this.tab_date = success;
-
+        
         this.AdminService.CloseLoader();
         if (this.tab_date[0].SL_RESULTAT == 'TRUE') {
           if (this.invoice_label == 'bceao') {
@@ -499,6 +502,14 @@ export class EditionsComponent {
   ConfirmationOptions(action: any) {
     // if (action == 'retour') this.affichage_etat = true;
     // else this.affichage_etat = false;
+      for (let i = 0; i < this.tab_periode.length; i++) {
+        if(this.formulaire_edition_1[3].valeur == this.tab_periode[i].MO_CODEMOIS){
+            this.valPeriodelib = this.tab_periode[i].MO_LIBELLE
+            sessionStorage.setItem('libellePeriodeselect', JSON.stringify(this.valPeriodelib));
+            break
+        }
+      }
+      sessionStorage.setItem('libelleAgenceselect', JSON.stringify(this.valAgencelib));
       if(this.invoice_label == 'statistiquehebdomadaire'){
           sessionStorage.setItem('statusForm', 'true');
       }else{
@@ -744,23 +755,26 @@ export class EditionsComponent {
     }
   }
 
-  VerifyTabAgence(element: any): void {
+  VerifyTabAgence(element: any,elementlib:any): void {
     
     // const index = this.valtabAgence.findIndex(obj => obj.id === element.id);
     const index = this.valtabAgence.indexOf(element);
     if (index !== -1) {
         // Si l'élément existe, le supprimer du tableau
         this.valtabAgence.splice(index, 1);
+        this.valTablibAgence.splice(index, 1);
         console.log("L'élément existe déjà dans le tableau. Il a été supprimé.");
     } else {
         // Sinon, ajouter l'élément au tableau
         this.valtabAgence.push(element);
+        this.valTablibAgence.push(elementlib);
        
     }
 
     // Transformer chaque élément en une chaîne avec des guillemets simples
     //@ts-ignore
      this.valAgence = this.valtabAgence.map(elements => `''${elements}''`).join(',');
+     this.valAgencelib = this.valTablibAgence.join('/');
   }
 
   ngOnDestroy(): void {

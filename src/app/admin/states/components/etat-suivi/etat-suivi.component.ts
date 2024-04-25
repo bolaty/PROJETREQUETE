@@ -31,7 +31,9 @@ export class EtatSuiviComponent implements OnInit {
   info_session: any = JSON.parse(sessionStorage.getItem('info_etat') || '');
   statusForms: any = JSON.parse(sessionStorage.getItem('statusForm') || '');
   info_connexion: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
-
+  info_libAgence: any = JSON.parse(sessionStorage.getItem('libelleAgenceselect') || '');
+  info_libellePeriode: any = JSON.parse(sessionStorage.getItem('libellePeriodeselect') || '');
+  TITRE: any = ''
   data: any;
   chartOptionsSatisfaction: Partial<ChartOptions>;
   chartOptionsSituationPlaintes: Partial<ChartOptions>;
@@ -193,7 +195,8 @@ export class EtatSuiviComponent implements OnInit {
         var date =
           '0' + d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
       }
-
+      
+      this.TITRE = this.statusForms == true ? 'ETAT STATISTIQUE HEBDOMADAIRE' : 'ETAT STATISTIQUE'
       this.route.queryParams.subscribe((params) => {
         const paramName = params['paramName'];
         this.apiService
@@ -205,7 +208,7 @@ export class EtatSuiviComponent implements OnInit {
               this.statusForms == true ? date : this.info_session[5].valeur,
             CU_CODECOMPTEUTULISATEUR:
               this.info_connexion[0].CU_CODECOMPTEUTULISATEUR,
-            TYPEETAT: 'TSCLT',
+            TYPEETAT: this.statusForms == true ? 'HEBDO' : 'SIPRECU',
           })
           .pipe(
             map((res: any) => {
@@ -280,6 +283,7 @@ export class EtatSuiviComponent implements OnInit {
                 ['Avis client', 'non favorable'],
               ]
             );
+            data.SITUATIONPLAINTES.LIBELLES = this.statusForms == true ? data.SITUATIONPLAINTES.LIBELLES : [this.info_libellePeriode]
             this.chartOptionsSituationPlaintes = barChartOptions(
               'situation des réclamations (reçus, traitées, non traitées)',
               [
