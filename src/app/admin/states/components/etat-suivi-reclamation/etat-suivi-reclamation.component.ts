@@ -27,7 +27,7 @@ export class EtatSuiviReclamationComponent implements OnInit {
   SEMESTER_END: any;
   info_session: any = JSON.parse(sessionStorage.getItem('info_etat') || '');
   info_connexion: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
-
+  info_libAgence: any = JSON.parse(sessionStorage.getItem('libelleAgenceselect') || '');
   get currentDate(): string {
     return this.formatDate('/Date(' + Date.now() + ')/', true);
   }
