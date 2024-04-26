@@ -15,9 +15,9 @@ import { DateService } from 'src/app/services/date.service';
 export class EtatSuiviReclamationComponent implements OnInit {
   @ViewChild('contentEtatSuivi', { static: false }) content!: ElementRef;
 
-  // LienServeur: any = 'http://localhost:22248/'; // lien dev
+  LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
-  LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
+  // LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
 
   APP_URL: any = `${this.LienServeur}RequeteClientsClasse.svc/pvgListeReqrequeteBCAO`;
 
@@ -27,7 +27,9 @@ export class EtatSuiviReclamationComponent implements OnInit {
   SEMESTER_END: any;
   info_session: any = JSON.parse(sessionStorage.getItem('info_etat') || '');
   info_connexion: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
-  info_libAgence: any = JSON.parse(sessionStorage.getItem('libelleAgenceselect') || '');
+  info_libAgence: any = JSON.parse(
+    sessionStorage.getItem('libelleAgenceselect') || ''
+  );
   get currentDate(): string {
     return this.formatDate('/Date(' + Date.now() + ')/', true);
   }
