@@ -199,7 +199,7 @@ export class EditionsComponent {
       this.active_3 = 'active';
       this.affiche_option_3 = true;
     }
-
+    this.toggleAllCheckboxesrest()
   }
 
   ListeComboExercice() {
@@ -498,7 +498,50 @@ export class EditionsComponent {
       }
     );
   }
+  toggleAllCheckboxesrest() {
+    const isChecked = false;
+    // Parcourir toutes les cases à cocher et les cocher ou les décocher
+    this.tab_agence.forEach((item_agence: any) => {
+        item_agence.isChecked = isChecked;
+    });
 
+    if (isChecked) {
+      for(let i = 0; i < this.tab_agence.length; i++) {
+        this.valtabAgence.push(this.tab_agence[i].AG_CODEAGENCE)
+        this.valTablibAgence.push(this.tab_agence[i].AG_RAISONSOCIAL_TRANSLATE)
+      }
+     //@ts-ignore
+     this.valAgence = this.valtabAgence.map(elements => `''${elements}''`).join(',');
+     this.valAgencelib = this.valTablibAgence.join('/');
+    }else{
+      this.valtabAgence = []
+      this.valTablibAgence = []
+      this.valAgence =""
+      this.valAgencelib = ""
+    }
+  }
+  toggleAllCheckboxes(event: any) {
+    const isChecked = event.target.checked;
+    // Parcourir toutes les cases à cocher et les cocher ou les décocher
+    this.tab_agence.forEach((item_agence: any) => {
+        item_agence.isChecked = isChecked;
+    });
+
+    if (isChecked) {
+      for(let i = 0; i < this.tab_agence.length; i++) {
+        this.valtabAgence.push(this.tab_agence[i].AG_CODEAGENCE)
+        this.valTablibAgence.push(this.tab_agence[i].AG_RAISONSOCIAL_TRANSLATE)
+      }
+     //@ts-ignore
+     this.valAgence = this.valtabAgence.map(elements => `''${elements}''`).join(',');
+     this.valAgencelib = this.valTablibAgence.join('/');
+    }else{
+      this.valtabAgence = []
+      this.valTablibAgence = []
+      this.valAgence =""
+      this.valAgencelib = ""
+    }
+  }
   ConfirmationOptions(action: any) {
     // if (action == 'retour') this.affichage_etat = true;
     // else this.affichage_etat = false;

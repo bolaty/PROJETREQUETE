@@ -95,7 +95,7 @@
                   <div
                   class="form-floating form-floating-outline col-12 col-sm-12 col-lg-12 col-xxl-12"
                   >
-                  <div class="card">
+                 <!-- <div class="card">
                     <h5 class="card-header">Agence</h5>
                     <div class="card-body">
                       <div class="row" id="idAgence">
@@ -113,7 +113,30 @@
                       
                       </div>
                     </div>
+                  </div>-->
+                  <div class="card">
+                    <h5 class="card-header">Agence </h5>
+                    <span class="custom-option-header" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size: 15px;margin-left: 80%;">
+                      Tout cocher
+                    </span>
+                    <input class="form-check-input" type="checkbox" (change)="toggleAllCheckboxes($event)" id="checkAll" style="margin-left: 80%;"/>
+                    <div class="card-body">
+                        <div class="row" id="idAgence">
+                            <div class="col-md-3 mb-md-0 mb-2" *ngFor="let item_agence of tab_agence;let index=index">
+                                <div class="form-check custom-option custom-option-label custom-option-basic">
+                                    <label class="form-check-label custom-option-content" for="customCheckTemp5{{index}}">
+                                        <input class="form-check-input" type="checkbox" [(ngModel)]="item_agence.isChecked" (change)="VerifyTabAgence(item_agence.AG_CODEAGENCE,item_agence.AG_RAISONSOCIAL_TRANSLATE)" value="{{ item_agence.AG_CODEAGENCE }}" id="customCheckTemp5{{index }}" />
+                                        <span class="custom-option-header">
+                                            <span class="mb-0" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size: 10px;">{{ item_agence.AG_RAISONSOCIAL_TRANSLATE }}</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                   </div>
+                
+                
                  </div>
                   
                   <!--<div
@@ -272,7 +295,7 @@
                   <div
                   class="form-floating form-floating-outline col-12 col-sm-12 col-lg-12 col-xxl-12"
                   >
-                  <div class="card">
+                 <!--<div class="card">
                     <h5 class="card-header">Agence</h5>
                     <div class="card-body">
                       <div class="row" id="idAgence">
@@ -289,6 +312,27 @@
                         </div>
                       
                       </div>
+                    </div>
+                  </div>-->
+                  <div class="card">
+                    <h5 class="card-header">Agence </h5>
+                    <span class="custom-option-header" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size: 15px;margin-left: 80%;">
+                      Tout cocher
+                    </span>
+                    <input class="form-check-input" type="checkbox" (change)="toggleAllCheckboxes($event)" id="checkAll" style="margin-left: 80%;"/>
+                    <div class="card-body">
+                        <div class="row" id="idAgence">
+                            <div class="col-md-3 mb-md-0 mb-2" *ngFor="let item_agence of tab_agence;let index=index">
+                                <div class="form-check custom-option custom-option-label custom-option-basic">
+                                    <label class="form-check-label custom-option-content" for="customCheckTemp5{{index}}">
+                                        <input class="form-check-input" type="checkbox" [(ngModel)]="item_agence.isChecked" (change)="VerifyTabAgence(item_agence.AG_CODEAGENCE,item_agence.AG_RAISONSOCIAL_TRANSLATE)" value="{{ item_agence.AG_CODEAGENCE }}" id="customCheckTemp5{{index }}" />
+                                        <span class="custom-option-header">
+                                            <span class="mb-0" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size: 10px;">{{ item_agence.AG_RAISONSOCIAL_TRANSLATE }}</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                   </div>
                  </div>
@@ -345,7 +389,7 @@
                     <div
                     class="form-floating form-floating-outline col-12 col-sm-12 col-lg-12 col-xxl-12"
                     >
-                    <div class="card">
+                    <!--<div class="card">
                       <h5 class="card-header">Agence</h5>
                       <div class="card-body">
                         <div class="row" id="idAgence">
@@ -362,6 +406,27 @@
                           </div>
                         
                         </div>
+                      </div>
+                    </div>-->
+                    <div class="card">
+                      <h5 class="card-header">Agence </h5>
+                      <span class="custom-option-header" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size: 15px;margin-left: 80%;">
+                        Tout cocher
+                      </span>
+                      <input class="form-check-input" type="checkbox" (change)="toggleAllCheckboxes($event)" id="checkAll" style="margin-left: 80%;"/>
+                      <div class="card-body">
+                          <div class="row" id="idAgence">
+                              <div class="col-md-3 mb-md-0 mb-2" *ngFor="let item_agence of tab_agence;let index=index">
+                                  <div class="form-check custom-option custom-option-label custom-option-basic">
+                                      <label class="form-check-label custom-option-content" for="customCheckTemp5{{index}}">
+                                          <input class="form-check-input" type="checkbox" [(ngModel)]="item_agence.isChecked" (change)="VerifyTabAgence(item_agence.AG_CODEAGENCE,item_agence.AG_RAISONSOCIAL_TRANSLATE)" value="{{ item_agence.AG_CODEAGENCE }}" id="customCheckTemp5{{index }}" />
+                                          <span class="custom-option-header">
+                                              <span class="mb-0" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size: 10px;">{{ item_agence.AG_RAISONSOCIAL_TRANSLATE }}</span>
+                                          </span>
+                                      </label>
+                                  </div>
+                              </div>
+                          </div>
                       </div>
                     </div>
                    </div>
@@ -520,6 +585,27 @@
                   class="form-floating form-floating-outline col-12 col-sm-12 col-lg-12 col-xxl-12"
                   >
                   <div class="card">
+                    <h5 class="card-header">Agence </h5>
+                    <span class="custom-option-header" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size: 15px;margin-left: 80%;">
+                      Tout cocher
+                    </span>
+                    <input class="form-check-input" type="checkbox" (change)="toggleAllCheckboxes($event)" id="checkAll" style="margin-left: 80%;"/>
+                    <div class="card-body">
+                        <div class="row" id="idAgence">
+                            <div class="col-md-3 mb-md-0 mb-2" *ngFor="let item_agence of tab_agence;let index=index">
+                                <div class="form-check custom-option custom-option-label custom-option-basic">
+                                    <label class="form-check-label custom-option-content" for="customCheckTemp5{{index}}">
+                                        <input class="form-check-input" type="checkbox" [(ngModel)]="item_agence.isChecked" (change)="VerifyTabAgence(item_agence.AG_CODEAGENCE,item_agence.AG_RAISONSOCIAL_TRANSLATE)" value="{{ item_agence.AG_CODEAGENCE }}" id="customCheckTemp5{{index }}" />
+                                        <span class="custom-option-header">
+                                            <span class="mb-0" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size: 10px;">{{ item_agence.AG_RAISONSOCIAL_TRANSLATE }}</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                  <!--<div class="card">
                     <h5 class="card-header">Agence</h5>
                     <div class="card-body">
                       <div class="row" id="idAgence">
@@ -537,7 +623,7 @@
                       
                       </div>
                     </div>
-                  </div>
+                  </div>-->
                  </div>
 
 
