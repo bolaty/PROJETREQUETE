@@ -15,9 +15,9 @@ import { DateService } from 'src/app/services/date.service';
 export class EtatSuiviReclamationComponent implements OnInit {
   @ViewChild('contentEtatSuivi', { static: false }) content!: ElementRef;
 
-  LienServeur: any = 'http://localhost:22248/'; // lien dev
+  // LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
-  // LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
+  LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
 
   APP_URL: any = `${this.LienServeur}RequeteClientsClasse.svc/pvgListeReqrequeteBCAO`;
 
@@ -80,23 +80,24 @@ export class EtatSuiviReclamationComponent implements OnInit {
               RQ_NOMBRETOTALCONTENTIEUX: values?.RQ_NOMBRETOTALCONTENTIEUX ?? 0,
               RQ_MONTANTTOTALCONTENTIEUXAPRES:
                 values?.RQ_MONTANTTOTALCONTENTIEUXAPRES ?? 0,
-              RQ_NOMBRETOTALCONTENTIEUXAPRES: values?.RQ_NOMBRETOTALCONTENTIEUXAPRES ?? 0,
+              RQ_NOMBRETOTALCONTENTIEUXAPRES:
+                values?.RQ_NOMBRETOTALCONTENTIEUXAPRES ?? 0,
               ENCOURS: values.clsReqrequeteRecus.map((e: any) => {
                 return {
                   TR_LIBELLETYEREQUETE: e.TR_LIBELLETYEREQUETE,
-                  RQ_DESCRIPTIONREQUETE: e.RQ_OBSERVATIONDELAITRAITEMENTREQUETE,//e.RQ_DESCRIPTIONREQUETEAVISCLIENT // RQ_DESCRIPTIONREQUETE,
+                  RQ_DESCRIPTIONREQUETE: e.RQ_OBSERVATIONDELAITRAITEMENTREQUETE, //e.RQ_DESCRIPTIONREQUETEAVISCLIENT // RQ_DESCRIPTIONREQUETE,
                 };
               }),
               TRAITES: values.clsReqrequeteTraitees.map((e: any) => {
                 return {
                   TR_LIBELLETYEREQUETE: e.TR_LIBELLETYEREQUETE,
-                  RQ_DESCRIPTIONREQUETE: e.RQ_OBSERVATIONDELAITRAITEMENTREQUETE,//e.RQ_DESCRIPTIONREQUETEAVISCLIENT // RQ_DESCRIPTIONREQUETE,
+                  RQ_DESCRIPTIONREQUETE: e.RQ_OBSERVATIONDELAITRAITEMENTREQUETE, //e.RQ_DESCRIPTIONREQUETEAVISCLIENT // RQ_DESCRIPTIONREQUETE,
                 };
               }),
               SUSPENDUES: values.clsReqrequeteSuspendues.map((e: any) => {
                 return {
                   TR_LIBELLETYEREQUETE: e.TR_LIBELLETYEREQUETE,
-                  RQ_DESCRIPTIONREQUETE: e.RQ_OBSERVATIONDELAITRAITEMENTREQUETE,//e.RQ_DESCRIPTIONREQUETEAVISCLIENT,// // RQ_DESCRIPTIONREQUETE,
+                  RQ_DESCRIPTIONREQUETE: e.RQ_OBSERVATIONDELAITRAITEMENTREQUETE, //e.RQ_DESCRIPTIONREQUETEAVISCLIENT,// // RQ_DESCRIPTIONREQUETE,
                 };
               }),
             };
