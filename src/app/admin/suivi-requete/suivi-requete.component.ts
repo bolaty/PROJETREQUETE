@@ -16,9 +16,9 @@ declare var $: any;
   styleUrls: ['./suivi-requete.component.scss'],
 })
 export class SuiviRequeteComponent {
-  LienServeur: any = 'http://localhost:22248/'; // lien dev
+  // LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
-  // LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
+  LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
 
   maVariableSubscription?: Subscription;
 
@@ -573,7 +573,7 @@ export class SuiviRequeteComponent {
             RQ_NUMEROREQUETE: this.recupinfo.RQ_NUMEROREQUETE,
             RQ_OBJETREQUETE: this.recupinfo.RQ_OBJETREQUETE,
             RQ_OBSERVATIONAGENTTRAITEMENTREQUETE:
-            this.formulaire_avis[1].valeur,
+              this.formulaire_avis[1].valeur,
             RQ_OBSERVATIONDELAITRAITEMENTREQUETE:
               this.formulaire_avis[1].valeur,
             RQ_AFFICHERINFOCLIENT: 'O',
@@ -609,7 +609,7 @@ export class SuiviRequeteComponent {
             );
           } else {
             if (this.formulaire_avis[0].valeur == '002') {
-                this.RelanceRequetePrincipale();
+              this.RelanceRequetePrincipale();
             }
             // this.toastr.success(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
             this.toastr.success(
