@@ -510,6 +510,7 @@ export class OperateurComponent {
               OP_DATESAISIE: date,
             },
             clsReqtontineepargnantjournalier: null,
+            clsReqDroitOperateur: null, //laaa
             clsObjetEnvoi: {
               ET_CODEETABLISSEMENT: '',
               AN_CODEANTENNE: '',
