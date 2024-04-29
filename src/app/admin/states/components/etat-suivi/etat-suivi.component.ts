@@ -23,9 +23,9 @@ import Chart from 'chart.js/auto';
 export class EtatSuiviComponent implements OnInit {
   @ViewChild('content', { static: false }) content!: ElementRef;
 
-  // LienServeur: any = 'http://localhost:22248/'; // lien dev
+   LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
-  LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
+  //LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
 
   APP_URL: any = `${this.LienServeur}RequeteClientsClasse.svc/pvgTableauDeBord`;
   info_session: any = JSON.parse(sessionStorage.getItem('info_etat') || '');
@@ -84,7 +84,7 @@ export class EtatSuiviComponent implements OnInit {
     );
 
     this.chartOptionsSituationPlaintes = barChartOptions(
-      'situation des réclamations (reçus, traitées, non traitées)',
+      'situation des réclamations (enregistrées, traitées, non traitées)',
       [
         {
           name: 'Valeur',
@@ -161,7 +161,7 @@ export class EtatSuiviComponent implements OnInit {
     var valtaux = sessionStorage.getItem('valtab') || '';
     var colr = ['#fb8500', '#219ebc'];
     var valtotal = 100 - parseInt(valtaux);
-    var libelledata = ['Taux de satisfaction en %', ''];
+    var libelledata = ['Taux de satisfaction en %'];
     var val = [this.valtauxsatisfaction, valtotal]; //this.valtauxsatisfaction
     this.chart_pie = new Chart('MyChartPie3', {
       type: 'pie', //this denotes tha type of chart
@@ -242,7 +242,7 @@ export class EtatSuiviComponent implements OnInit {
                     (e: any) => e.TOTALPLAINTETRAITES
                   ),
                   TOTALPLAINTENONTRAITES: sp.map(
-                    (e: any) => e.TOTALPLAINTERECUES - e.TOTALPLAINTETRAITES
+                    (e: any) => Math.abs(e.TOTALPLAINTERECUES - e.TOTALPLAINTETRAITES)
                   ),
                 },
                 DELAITRAITEMENT: {
@@ -285,7 +285,7 @@ export class EtatSuiviComponent implements OnInit {
             );
             data.SITUATIONPLAINTES.LIBELLES = this.statusForms == true ? data.SITUATIONPLAINTES.LIBELLES : [this.info_libellePeriode]
             this.chartOptionsSituationPlaintes = barChartOptions(
-              'situation des réclamations (reçus, traitées, non traitées)',
+              'situation des réclamations (enregistrées, traitées, non traitées)',
               [
                 {
                   name: 'Valeur',
@@ -343,7 +343,7 @@ export class EtatSuiviComponent implements OnInit {
                 this.data.SITUATIONPLAINTES.TOTALPLAINTERECUES.splice(0, 2);
                 this.data.SITUATIONPLAINTES.TOTALPLAINTETRAITES.splice(0, 2);
                 this.chartOptionsSituationPlaintes = barChartOptions(
-                  'situation des réclamations (reçus, traitées, non traitées)',
+                  'situation des réclamations (enregistrées, traitées, non traitées)',
                   [
                     {
                       name: 'Valeur',
@@ -365,7 +365,7 @@ export class EtatSuiviComponent implements OnInit {
                 );
               } else {
                 this.chartOptionsSituationPlaintes = barChartOptions(
-                  'situation des réclamations (reçus, traitées, non traitées)',
+                  'situation des réclamations (enregistrées, traitées, non traitées)',
                   [
                     {
                       name: 'Valeur',

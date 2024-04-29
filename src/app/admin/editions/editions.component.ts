@@ -545,13 +545,7 @@ export class EditionsComponent {
   ConfirmationOptions(action: any) {
     // if (action == 'retour') this.affichage_etat = true;
     // else this.affichage_etat = false;
-      for (let i = 0; i < this.tab_periode.length; i++) {
-        if(this.formulaire_edition_1[3].valeur == this.tab_periode[i].MO_CODEMOIS){
-            this.valPeriodelib = this.tab_periode[i].MO_LIBELLE
-            sessionStorage.setItem('libellePeriodeselect', JSON.stringify(this.valPeriodelib));
-            break
-        }
-      }
+      
       sessionStorage.setItem('libelleAgenceselect', JSON.stringify(this.valAgencelib));
       if(this.invoice_label == 'statistiquehebdomadaire'){
           sessionStorage.setItem('statusForm', 'true');
@@ -559,6 +553,7 @@ export class EditionsComponent {
           sessionStorage.setItem('statusForm', 'false');
       }
     if (this.invoice_label == 'bceao') {
+      
       this.formulaire_edition_1[0].valeur = this.valAgence;
       /*this.recuptab_agence = [];
       for (
@@ -609,6 +604,13 @@ export class EditionsComponent {
           }
         );
       } else {
+        for (let i = 0; i < this.tab_periode.length; i++) {
+          if(this.formulaire_edition_1[3].valeur == this.tab_periode[i].MO_CODEMOIS){
+              this.valPeriodelib = this.tab_periode[i].MO_LIBELLE
+              sessionStorage.setItem('libellePeriodeselect', JSON.stringify(this.valPeriodelib));
+              break
+          }
+        }
         //this.formulaire_edition_1[0].valeur = this.valAgence;//this.recuptab_agence.join(',');
         sessionStorage.setItem(
           'info_etat',
@@ -619,6 +621,8 @@ export class EditionsComponent {
     } else if (this.invoice_label == 'statistique' || this.invoice_label == 'statistiquehebdomadaire') {
       this.formulaire_edition_2[0].valeur = this.valAgence;
       this.recuptab_agence = [];
+
+
       /*for (
         let index = 0;
         index < this.charger_l_agence.nativeElement.length;
@@ -678,6 +682,28 @@ export class EditionsComponent {
           }
         );
       } else {
+        if(this.invoice_label == 'statistique'){
+          for (let i = 0; i < this.tab_periode.length; i++) {
+            if(this.formulaire_edition_2[3].valeur == this.tab_periode[i].MO_CODEMOIS){
+                this.valPeriodelib = this.tab_periode[i].MO_LIBELLE
+                sessionStorage.setItem('libellePeriodeselect', JSON.stringify(this.valPeriodelib));
+                break
+            }
+          }
+        }else{
+          // Créez une nouvelle instance de la date
+          var date = new Date();
+
+          // Tableau contenant les noms des jours de la semaine en français
+          var joursSemaine = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+
+          // Récupérez le jour de la semaine en utilisant la méthode getDay() de l'objet Date
+          var jourEnFrancais = 'ce ' + joursSemaine[date.getDay()];
+          sessionStorage.setItem('libellePeriodeselect', JSON.stringify(jourEnFrancais));
+          
+
+        }
+       
       // this.formulaire_edition_2[0].valeur = this.valAgence;//this.recuptab_agence.join(',');
         sessionStorage.setItem(
           'info_etat',
@@ -736,6 +762,13 @@ export class EditionsComponent {
           }
         );
       } else {
+        for (let i = 0; i < this.tab_periode.length; i++) {
+          if(this.formulaire_edition_3[3].valeur == this.tab_periode[i].MO_CODEMOIS){
+              this.valPeriodelib = this.tab_periode[i].MO_LIBELLE
+              sessionStorage.setItem('libellePeriodeselect', JSON.stringify(this.valPeriodelib));
+              break
+          }
+        }
         //this.formulaire_edition_3[0].valeur = this.valAgence;//this.recuptab_agence.join(',');
         sessionStorage.setItem(
           'info_etat',
