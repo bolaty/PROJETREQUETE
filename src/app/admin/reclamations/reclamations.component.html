@@ -248,7 +248,7 @@
           <ul class="nav nav-align-left nav-pills flex-column flex-nowrap">
             <li
               class="nav-item"
-              *ngIf="!recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')"
+              *ngIf="!recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') && AdminService.objetEcran[5].STATUTOBJET == 'O'"
             >
               <!-- Nouvelles reclamations -->
               <button
@@ -737,7 +737,7 @@
                     </div>
                   </div>
 
-                  <div class="card-header" *ngIf="!statutClientExiste">
+                  <div class="card-header" *ngIf="!statutClientExiste && AdminService.objetEcran[7].STATUTOBJET == 'O'">
                     <ul class="nav nav-tabs" role="tablist">
                       <li class="nav-item">
                         <button

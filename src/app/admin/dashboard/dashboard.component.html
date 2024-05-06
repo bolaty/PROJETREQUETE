@@ -6,7 +6,7 @@
         <div class="card-body">
           <h4 class="card-title mb-1">
             {{ languageService.welcome_message }}
-            {{ recupinfo[0].CU_NOMUTILISATEUR }} ! 🎉
+            {{ recupinfo[0]?.CU_NOMUTILISATEUR }} ! 🎉
           </h4>
           <p class="pb-0">{{ languageService.welcome_message_sub_title }}</p>
           <!-- <h4 class="text-primary mb-1">0</h4> -->
@@ -69,7 +69,7 @@
             mois-ci
           </p> -->
         </div>
-        <div class="card-body" *ngIf="recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') && recupinfo[0].TU_CODETYPEUTILISATEUR == '0001'">
+        <div class="card-body" *ngIf="recupinfo[0]?.CU_NOMUTILISATEUR.includes('ADMIN') && recupinfo[0]?.TU_CODETYPEUTILISATEUR == '0001'">
           <div class="row g-3">
             <div class="col-md-3 col-6">
               <div class="d-flex align-items-center">
@@ -85,7 +85,7 @@
                     {{ languageService.stat_title_0 }}
                   </div>
                   <h5 class="mb-0">
-                    {{ recup_reclamation_stats[0].NOMBREREQUETESTOTAL }}
+                    {{ recup_reclamation_stats[0]?.NOMBREREQUETESTOTAL }}
                   </h5>
                 </div>
               </div>
@@ -104,7 +104,7 @@
                     {{ languageService.stat_title_1 }}
                   </div>
                   <h5 class="mb-0">
-                    {{ recup_reclamation_stats[0].NOMBREREQUETES }}
+                    {{ recup_reclamation_stats[0]?.NOMBREREQUETES }}
                   </h5>
                 </div>
               </div>
@@ -122,7 +122,7 @@
                     {{ languageService.stat_title_2 }}
                   </div>
                   <h5 class="mb-0">
-                    {{ recup_reclamation_stats[0].NOMBREREQUETESATTRIBUEES }}
+                    {{ recup_reclamation_stats[0]?.NOMBREREQUETESATTRIBUEES }}
                   </h5>
                 </div>
               </div>
@@ -140,7 +140,7 @@
                     {{ languageService.stat_title_3 }}
                   </div>
                   <h5 class="mb-0">
-                    {{ recup_reclamation_stats[0].NOMBREREQUETESENCOURS }}
+                    {{ recup_reclamation_stats[0]?.NOMBREREQUETESENCOURS }}
                   </h5>
                 </div>
               </div>
@@ -158,14 +158,14 @@
                     {{ languageService.stat_title_4 }}
                   </div>
                   <h5 class="mb-0">
-                    {{ recup_reclamation_stats[0].NOMBREREQUETEDEJATRAITER }}
+                    {{ recup_reclamation_stats[0]?.NOMBREREQUETEDEJATRAITER }}
                   </h5>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="card-body" *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR == '0001' && !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')">
+        <div class="card-body" *ngIf="recupinfo[0]?.TU_CODETYPEUTILISATEUR == '0001' && !recupinfo[0]?.CU_NOMUTILISATEUR.includes('ADMIN')">
           <div class="row g-3">
             <div class="col-md-4 col-6">
               <div class="d-flex align-items-center">
@@ -180,7 +180,7 @@
                     {{ languageService.stat_title_1 }}
                   </div>
                   <h5 class="mb-0">
-                    {{ recup_reclamation_stats[0].NOMBREREQUETES }}
+                    {{ recup_reclamation_stats[0]?.NOMBREREQUETES }}
                   </h5>
                 </div>
               </div>
@@ -198,7 +198,7 @@
                     {{ languageService.stat_title_2 }}
                   </div>
                   <h5 class="mb-0">
-                    {{ recup_reclamation_stats[0].NOMBREREQUETESATTRIBUEES }}
+                    {{ recup_reclamation_stats[0]?.NOMBREREQUETESATTRIBUEES }}
                   </h5>
                 </div>
               </div>
@@ -215,7 +215,7 @@
                     {{ languageService.stat_title_3 }}
                   </div>
                   <h5 class="mb-0">
-                    {{ recup_reclamation_stats[0].NOMBREREQUETESENCOURS }}
+                    {{ recup_reclamation_stats[0]?.NOMBREREQUETESENCOURS }}
                   </h5>
                 </div>
               </div>
@@ -233,14 +233,14 @@
                     {{ languageService.stat_title_4 }}
                   </div>
                   <h5 class="mb-0">
-                    {{ recup_reclamation_stats[0].NOMBREREQUETEDEJATRAITER }}
+                    {{ recup_reclamation_stats[0]?.NOMBREREQUETEDEJATRAITER }}
                   </h5>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="card-body" *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR == '0002'">
+        <div class="card-body" *ngIf="recupinfo[0]?.TU_CODETYPEUTILISATEUR == '0002'">
           <div class="row g-3">
             <div class="col-md-4 col-6">
               <div class="d-flex align-items-center">
@@ -255,7 +255,7 @@
                     {{ languageService.stat_title_1 }}
                   </div>
                   <h5 class="mb-0">
-                    {{ recup_reclamation_stats[0].NOMBREREQUETES }}
+                    {{ recup_reclamation_stats[0]?.NOMBREREQUETES }}
                   </h5>
                 </div>
               </div>
@@ -273,7 +273,7 @@
                     {{ languageService.stat_title_2 }}
                   </div>
                   <h5 class="mb-0">
-                    {{ recup_reclamation_stats[0].NOMBREREQUETESATTRIBUEES }}
+                    {{ recup_reclamation_stats[0]?.NOMBREREQUETESATTRIBUEES }}
                   </h5>
                 </div>
               </div>
@@ -291,7 +291,7 @@
                     {{ languageService.stat_title_3 }}
                   </div>
                   <h5 class="mb-0">
-                    {{ recup_reclamation_stats[0].NOMBREREQUETESENCOURS }}
+                    {{ recup_reclamation_stats[0]?.NOMBREREQUETESENCOURS }}
                   </h5>
                 </div>
               </div>
@@ -309,7 +309,7 @@
                     {{ languageService.stat_title_4 }}
                   </div>
                   <h5 class="mb-0">
-                    {{ recup_reclamation_stats[0].NOMBREREQUETEDEJATRAITER }}
+                    {{ recup_reclamation_stats[0]?.NOMBREREQUETEDEJATRAITER }}
                   </h5>
                 </div>
               </div>
@@ -370,7 +370,7 @@
                 <div class="ms-3 d-flex flex-column">
                   <p class="mb-1">Nombre de reclamation</p>
                   <h5 class="mb-1">
-                    {{ recup_reclamation_stats[0].NOMBREREQUETEDEJATRAITER }}
+                    {{ recup_reclamation_stats[0]?.NOMBREREQUETEDEJATRAITER }}
                   </h5>
                 </div>
               </div>
@@ -383,8 +383,7 @@
                   </div>
                   <p class="fw-medium mb-0">
                     {{
-                      recup_reclamation_stats[0]
-                        .NOMBREREQUETESTRAITEESDANSDELAIS
+                      recup_reclamation_stats[0]?.NOMBREREQUETESTRAITEESDANSDELAIS
                     }}
                   </p>
                 </div>
@@ -395,8 +394,7 @@
                   </div>
                   <p class="fw-medium mb-0">
                     {{
-                      recup_reclamation_stats[0]
-                        .NOMBREREQUETESTRAITEESHORSDELAIS
+                      recup_reclamation_stats[0]?.NOMBREREQUETESTRAITEESHORSDELAIS
                     }}
                   </p>
                 </div>

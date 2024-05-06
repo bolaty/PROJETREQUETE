@@ -14,11 +14,18 @@ export class OperateurComponent {
   recupinfo: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
   ecran_affiche: any = sessionStorage.getItem('choix_ecran');
   tab_eng_operateur: any = [];
+  tab_droit_operateur: any = [];
   ListeComboAgence: any = [];
+  ListeDroitUser: any = [];
+  valtabAgence: any = [];
+  ListeDroitforUser: any = [];
   ListeOperateur: any = [];
   tab_list_client: any = [];
   tab_enrg_cpte_client: any = [];
   ListeClients: any = [];
+  recup_idoperateur: any = '';
+  statutdroit: boolean = false;
+  statutAlldroit: boolean = false;
   search_bar: any = '';
   item_client: any = {};
   formulaire_operateur: any = [
@@ -218,6 +225,7 @@ export class OperateurComponent {
     $('#sendInvoiceOffcanvas').offcanvas('show');
     this.statusOrderListe = true;
     this.voirlist = this.ListeOperateur[info.id];
+    this.ComboDroitPARUtilisateur(this.voirlist.CU_CODECOMPTEUTULISATEUR)
   }
 
   checkModif() {
@@ -230,6 +238,46 @@ export class OperateurComponent {
     this.formulaire_operateur[4].valeur = this.voirlist.CU_CONTACT;
     this.formulaire_operateur[5].valeur = this.voirlist.CU_LOGIN;
     this.formulaire_operateur[6].valeur = this.voirlist.CU_MOTDEPASSE;
+    this.AdminService.ShowLoader();
+    setTimeout(() => {
+      this.ListeDroitUser.forEach((LtDroitUser2: any) => {
+        LtDroitUser2.DP_STATUT = 'N'
+      });
+      if(this.ListeDroitforUser.length > 0) {
+        this.ListeDroitUser.forEach((LtDroitUser2: any) => {
+          this.ListeDroitforUser.forEach((LtDroifortUser: any) => {
+            if(LtDroifortUser.DP_CODEDROITCOMPTEUTULISATEUR == LtDroitUser2.DP_CODEDROITCOMPTEUTULISATEUR){
+              LtDroitUser2.DP_STATUT = 'O'
+              
+            }
+          });
+        });
+        this.AdminService.CloseLoader();
+      }
+      
+    }, 2000);
+  }
+  changeVall(index:any){
+    if(this.ListeDroitUser[index].DP_STATUT == 'O') {
+      this.ListeDroitUser[index].DP_STATUT = 'N'
+    }else{
+      this.ListeDroitUser[index].DP_STATUT = 'O'
+    }
+    
+  }
+  cocheAll(){
+    
+    if(this.statutAlldroit == false){
+      this.ListeDroitUser.forEach((LtDroitUser2: any) => {
+        LtDroitUser2.DP_STATUT = 'O'
+      });
+      this.statutAlldroit = true
+    }else{
+      this.ListeDroitUser.forEach((LtDroitUser2: any) => {
+        LtDroitUser2.DP_STATUT = 'N'
+      });
+      this.statutAlldroit = false
+    }
   }
 
   chargementDate() {
@@ -346,7 +394,7 @@ export class OperateurComponent {
         this.ListeComboAgence = success;
         this.ListeComboAgence = this.ListeComboAgence.pvgReqAgenceComboResult;
 
-        this.ListeDesClients();
+        this.ComboListeDroitUtilisateur();
 
         if (this.ListeComboAgence[0].clsResultat.SL_RESULTAT == 'TRUE') {
           //  this.ComboOperateur()
@@ -356,6 +404,210 @@ export class OperateurComponent {
       (error) => {}
     );
   }
+
+  ComboListeDroitUtilisateur() {
+    let Option = 'RequeteClientsClasse.svc/pvgInsertIntoDatasetListeDroitUtilisateur';
+    let body = {
+      Objets: [
+        {
+          OE_PARAM: [],
+          clsObjetEnvoi: {
+            ET_CODEETABLISSEMENT: '',
+            AN_CODEANTENNE: '',
+            TYPEOPERATION: '01',
+          },
+        },
+      ],
+    };
+    this.AdminService.AppelServeur(body, Option).subscribe(
+      (success: any) => {
+        this.ListeDroitUser = success;
+        this.ListeDesClients();
+
+        
+      },
+      (error) => {}
+    );
+  }
+
+  ComboDroitPARUtilisateur(idOperateur: any) {
+    let Option = 'RequeteClientsClasse.svc/pvgDroitParOperateurs';
+    let body = {
+      Objets: [
+        {
+          CU_CODECOMPTEUTULISATEUR: idOperateur,
+          clsObjetEnvoi: {
+            ET_CODEETABLISSEMENT: '',
+            AN_CODEANTENNE: '',
+            TYPEOPERATION: '01',
+          },
+        },
+      ],
+    };
+    this.AdminService.AppelServeur(body, Option).subscribe(
+      (success: any) => {
+        this.ListeDroitforUser = success;
+        this.ListeDroitforUser = this.ListeDroitforUser.pvgDroitParOperateursResult
+        if (this.ListeDroitforUser[0].clsResultat.SL_RESULTAT == 'TRUE') {
+          this.statutdroit = true
+        } else {
+          this.statutdroit = false
+        }
+      },
+      (error) => {}
+    );
+  }
+
+  EnregistrementDroitOperateurModif() {
+    let Options = 'RequeteClientsClasse.svc/pvgAjouterdroitOperateur'; // le chemin d'appel du service web
+      
+      var tabdroitOperateur = []
+      for (var i = 0; i < this.ListeDroitUser.length; i++) {
+          if(this.ListeDroitUser[i].DP_STATUT == 'O'){
+            var prepa_objet = {
+              CU_CODECOMPTEUTULISATEUR: this.voirlist.CU_CODECOMPTEUTULISATEUR,
+              DP_CODEDROITCOMPTEUTULISATEUR: this.ListeDroitUser[i].DP_CODEDROITCOMPTEUTULISATEUR,
+              DP_LIBELLEDROITCOMPTEUTULISATEUR: this.ListeDroitUser[i].DP_LIBELLEDROITCOMPTEUTULISATEUR,
+              DP_STATUT: 'O',
+              clsObjetEnvoi: {
+                ET_CODEETABLISSEMENT: '',
+                AN_CODEANTENNE: '',
+                TYPEOPERATION: '01',
+              },
+            };
+    
+            tabdroitOperateur.push(prepa_objet);
+            prepa_objet = {
+              CU_CODECOMPTEUTULISATEUR: '',
+              DP_CODEDROITCOMPTEUTULISATEUR: '.',
+              DP_LIBELLEDROITCOMPTEUTULISATEUR: '',
+              DP_STATUT:'',
+              clsObjetEnvoi: {
+                ET_CODEETABLISSEMENT: '',
+                AN_CODEANTENNE: '',
+                TYPEOPERATION: '01',
+              },
+            };
+          }
+          
+      }
+      //objet d'envoi
+      let body = {
+        Objet: tabdroitOperateur,
+      };
+      this.AdminService.ShowLoader();
+      this.AdminService.AppelServeur(body, Options).subscribe(
+        (success) => {
+          this.tab_droit_operateur = success;
+          this.tab_droit_operateur = JSON.parse(this.tab_droit_operateur);
+          this.tab_droit_operateur = this.tab_droit_operateur.TABLE;
+          if (this.tab_droit_operateur[0].SL_RESULTAT == 'FALSE') {
+            this.toastr.error(
+              this.tab_droit_operateur[0].SL_MESSAGE,
+              'error',
+              { positionClass: 'toast-bottom-left' }
+            );
+            this.AdminService.CloseLoader();
+          } else {
+            this.toastr.success(
+              this.tab_droit_operateur[0].SL_MESSAGE,
+              'success',
+              { positionClass: 'toast-bottom-left' }
+            );
+          
+            this.AdminService.CloseLoader();
+          }
+        },
+        (error: any) => {
+          this.AdminService.CloseLoader();
+          this.toastr.warning(
+            this.tab_droit_operateur[0].SL_MESSAGE,
+            'warning',
+            { positionClass: 'toast-bottom-left' }
+          );
+        }
+      );
+  }
+
+  
+  EnregistrementDroitOperateur() {
+    let Options = 'RequeteClientsClasse.svc/pvgAjouterdroitOperateur'; // le chemin d'appel du service web
+      
+      var tabdroitOperateur = []
+      for (var i = 0; i < this.ListeDroitUser.length; i++) {
+        for (let index = 0; index < this.valtabAgence.length; index++) {
+          if(this.valtabAgence[index] == this.ListeDroitUser[i].DP_CODEDROITCOMPTEUTULISATEUR){
+            var prepa_objet = {
+              CU_CODECOMPTEUTULISATEUR: this.recup_idoperateur,
+              DP_CODEDROITCOMPTEUTULISATEUR: this.ListeDroitUser[i].DP_CODEDROITCOMPTEUTULISATEUR,
+              DP_LIBELLEDROITCOMPTEUTULISATEUR: this.ListeDroitUser[i].DP_LIBELLEDROITCOMPTEUTULISATEUR,
+              DP_STATUT: 'O',
+              clsObjetEnvoi: {
+                ET_CODEETABLISSEMENT: '',
+                AN_CODEANTENNE: '',
+                TYPEOPERATION: '01',
+              },
+            };
+    
+            tabdroitOperateur.push(prepa_objet);
+            prepa_objet = {
+              CU_CODECOMPTEUTULISATEUR: '',
+              DP_CODEDROITCOMPTEUTULISATEUR: '.',
+              DP_LIBELLEDROITCOMPTEUTULISATEUR: '',
+              DP_STATUT:'',
+              clsObjetEnvoi: {
+                ET_CODEETABLISSEMENT: '',
+                AN_CODEANTENNE: '',
+                TYPEOPERATION: '01',
+              },
+            };
+          }
+          
+        }
+      }
+      
+     
+
+      //objet d'envoi
+      let body = {
+        Objet: tabdroitOperateur,
+      };
+      this.AdminService.ShowLoader();
+      this.AdminService.AppelServeur(body, Options).subscribe(
+        (success) => {
+          this.tab_droit_operateur = success;
+          this.tab_droit_operateur = JSON.parse(this.tab_droit_operateur);
+          this.tab_droit_operateur = this.tab_droit_operateur.TABLE;
+          if (this.tab_droit_operateur[0].SL_RESULTAT == 'FALSE') {
+            this.toastr.error(
+              this.tab_droit_operateur[0].SL_MESSAGE,
+              'error',
+              { positionClass: 'toast-bottom-left' }
+            );
+            this.AdminService.CloseLoader();
+          } else {
+            this.toastr.success(
+              this.tab_droit_operateur[0].SL_MESSAGE,
+              'success',
+              { positionClass: 'toast-bottom-left' }
+            );
+          
+            this.AdminService.CloseLoader();
+          }
+        },
+        (error: any) => {
+          this.AdminService.CloseLoader();
+          this.toastr.warning(
+            this.tab_droit_operateur[0].SL_MESSAGE,
+            'warning',
+            { positionClass: 'toast-bottom-left' }
+          );
+        }
+      );
+  }
+
+
+
 
   ListeDesClients() {
     this.AdminService.ShowLoader();
@@ -534,11 +786,19 @@ export class OperateurComponent {
             );
             this.AdminService.CloseLoader();
           } else {
-            this.toastr.success(
+           /* this.toastr.success(
               this.tab_eng_operateur.clsResultat.SL_MESSAGE,
               'success',
               { positionClass: 'toast-bottom-left' }
-            );
+            );*/
+            if(this.statuFormulaire == 'MODIFICATION'){
+              this.EnregistrementDroitOperateurModif()
+            }else{
+              this.recup_idoperateur = this.tab_eng_operateur.CU_CODECOMPTEUTULISATEUR;
+              this.EnregistrementDroitOperateur()
+            }
+            
+          
             for (let index = 0; index < tableau_recu.length; index++) {
               tableau_recu[index].valeur = '';
             }
@@ -642,8 +902,50 @@ export class OperateurComponent {
     this.formulaire_client[3].valeur = le_client.CU_EMAIL;
     this.item_client = le_client;
     $('#modifInfoClienOffcanvas').offcanvas('show');
+    
   }
+  toggleAllCheckboxes2(event: any) {
+    const isChecked = event.target.checked;
+    // Parcourir toutes les cases à cocher et les cocher ou les décocher
+    this.ListeDroitUser.forEach((LtDroitUser2: any) => {
+      LtDroitUser2.isChecked = isChecked;
+    });
 
+    if (isChecked) {
+      for(let i = 0; i < this.ListeDroitUser.length; i++) {
+        this.valtabAgence.push(this.ListeDroitUser[i].DP_CODEDROITCOMPTEUTULISATEUR)
+      }
+    }else{
+      this.valtabAgence = []
+    }
+  }
+  toggleAllCheckboxes(event: any) {
+    const isChecked = event.target.checked;
+    // Parcourir toutes les cases à cocher et les cocher ou les décocher
+    this.ListeDroitUser.forEach((LtDroitUser: any) => {
+      LtDroitUser.isChecked = isChecked;
+    });
+
+    if (isChecked) {
+      for(let i = 0; i < this.ListeDroitUser.length; i++) {
+        this.valtabAgence.push(this.ListeDroitUser[i].DP_CODEDROITCOMPTEUTULISATEUR)
+      }
+    }else{
+      this.valtabAgence = []
+    }
+  }
+  VerifyTabAgence(element: any): void {
+    // const index = this.valtabAgence.findIndex(obj => obj.id === element.id);
+    const index = this.valtabAgence.indexOf(element);
+    if (index !== -1) {
+        // Si l'élément existe, le supprimer du tableau
+        this.valtabAgence.splice(index, 1);
+        console.log("L'élément existe déjà dans le tableau. Il a été supprimé.");
+    } else {
+        // Sinon, ajouter l'élément au tableau
+        this.valtabAgence.push(element);
+    }
+  }
   EnregistrementCompteClient(tableau_recu: any) {
     this.AdminService.SecuriteChampObligatoireEtTypeDeDonnee(tableau_recu);
     this.AdminService.TypeDeDonneeChampNonObligatoire(tableau_recu);

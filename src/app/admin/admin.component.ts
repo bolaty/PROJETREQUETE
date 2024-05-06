@@ -24,7 +24,8 @@ export class AdminComponent implements OnInit {
   tab_req_en_cours_trait: any = [];
   maVariableSubscription?: Subscription;
   code_requete: any;
-
+  recupinfoDroitUser: any = JSON.parse(sessionStorage.getItem('ListeDroitUsers') || '');
+  
   constructor(
     public AdminService: AdminService,
     private _router: Router,
@@ -1211,7 +1212,21 @@ export class AdminComponent implements OnInit {
   TestMobile2() {
     this.AdminService.showMenuMobile = true;
   }
+  chargementParamDroit(){
+    for(var i = 0; i < this.AdminService.objetEcran.length; i++) {
+        //@ts-ignore
+        const contientObjet = this.recupinfoDroitUser.some(
+          //@ts-ignore
+          (objet) => objet.DP_OBJET == this.AdminService.objetEcran[i].NOMOBJET
+        );
 
+        if (contientObjet) {
+          this.AdminService.objetEcran[i].STATUTOBJET = "O"
+        } else {
+          this.AdminService.objetEcran[i].STATUTOBJET = "N"
+        }
+    }
+  }
   ngOnDestroy(): void {
     // Assurez-vous de vous désabonner pour éviter les fuites de mémoire
     this.maVariableSubscription?.unsubscribe();
@@ -1246,9 +1261,11 @@ export class AdminComponent implements OnInit {
 
     // this.initNavbarDropdownScrollbar();
     this.Notification();
-
+    this.chargementParamDroit()
     setTimeout(() => {
+      
       this.InitialisationMainJs();
+     
     }, 1000);
 
     // info sur le theme de l'app

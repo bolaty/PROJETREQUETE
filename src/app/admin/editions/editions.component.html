@@ -30,18 +30,19 @@
               class="d-flex justify-content-between flex-column mb-3 mb-md-0 pe-md-3"
             >
               <ul class="nav nav-align-left nav-pills flex-column">
-                <li class="nav-item">
+                <li class="nav-item" *ngIf="AdminService.objetEcran[8].STATUTOBJET == 'O'">
                   <button
                     class="nav-link {{ active_1 }}"
                     data-bs-toggle="tab"
                     data-bs-target="#etat_bceao"
                     (click)="SelectInvoice('bceao')"
+                    
                   >
                     <i class="mdi mdi-cube-outline me-2"></i>
                     <span class="align-middle">Etat BCEAO</span>
                   </button>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" *ngIf="AdminService.objetEcran[9].STATUTOBJET == 'O'">
                   <button
                     class="nav-link {{ active_4 }}"
                     data-bs-toggle="tab"
@@ -52,7 +53,7 @@
                     <span class="align-middle">Etat statistique hebdomadaire</span>
                   </button>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" *ngIf="AdminService.objetEcran[9].STATUTOBJET == 'O'">
                   <button
                     class="nav-link {{ active_2 }}"
                     data-bs-toggle="tab"
@@ -63,7 +64,7 @@
                     <span class="align-middle">Etat statistique</span>
                   </button>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" *ngIf="AdminService.objetEcran[10].STATUTOBJET == 'O'">
                   <button
                     class="nav-link {{ active_3 }}"
                     data-bs-toggle="tab"

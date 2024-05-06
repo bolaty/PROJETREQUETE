@@ -19,6 +19,8 @@ export class LoginComponent {
   RetoursChargementMdp: any = [];
   tab_valeur_de_decision: any = [];
   tab_retour_data: any = [];
+  ListeDroitforUser: any = [];
+  ListeDroitUser: any = [];
   customizer: any;
   message: any;
   infoChmpPassword: any;
@@ -98,8 +100,8 @@ export class LoginComponent {
     let body = {
       Objets: [
         {
-          OE_PARAM: ['0001', this.formLogin.login, this.formLogin.mdp], // operateur personnalisable
-         // OE_PARAM: ['0002', this.formLogin.login, this.formLogin.mdp], // client personnalisable
+          //OE_PARAM: ['0001', this.formLogin.login, this.formLogin.mdp], // operateur personnalisable
+          OE_PARAM: ['0002', this.formLogin.login, this.formLogin.mdp], // client personnalisable
           clsObjetEnvoi: {
             ET_CODEETABLISSEMENT: '',
             AN_CODEANTENNE: '',
@@ -140,7 +142,8 @@ export class LoginComponent {
                 'infoLogin',
                 JSON.stringify(this.RetoursChargement)
               );
-              window.location.href = '/admin';
+              this.ComboListeDroitUtilisateur()
+              
             }
           } else {
             this.toastr.success(
@@ -166,7 +169,68 @@ export class LoginComponent {
       }
     );
   }
-
+  ComboListeDroitUtilisateur() {
+    let Option = 'RequeteClientsClasse.svc/pvgInsertIntoDatasetListeDroitUtilisateur';
+    let body = {
+      Objets: [
+        {
+          OE_PARAM: [],
+          clsObjetEnvoi: {
+            ET_CODEETABLISSEMENT: '',
+            AN_CODEANTENNE: '',
+            TYPEOPERATION: '01',
+          },
+        },
+      ],
+    };
+    this.AdminService.AppelServeur(body, Option).subscribe(
+      (success: any) => {
+        this.ListeDroitUser = success;
+        this.ComboDroitPARUtilisateur(this.RetoursChargement[0].CU_CODECOMPTEUTULISATEUR)
+        
+      },
+      (error) => {}
+    );
+  }
+  ComboDroitPARUtilisateur(idOperateur: any) {
+    let Option = 'RequeteClientsClasse.svc/pvgDroitParOperateurs';
+    let body = {
+      Objets: [
+        {
+          CU_CODECOMPTEUTULISATEUR: idOperateur,
+          clsObjetEnvoi: {
+            ET_CODEETABLISSEMENT: '',
+            AN_CODEANTENNE: '',
+            TYPEOPERATION: '01',
+          },
+        },
+      ],
+    };
+    this.AdminService.AppelServeur(body, Option).subscribe(
+      (success: any) => {
+        this.ListeDroitforUser = success;
+        this.ListeDroitforUser = this.ListeDroitforUser.pvgDroitParOperateursResult
+        if (this.ListeDroitforUser[0].clsResultat.SL_RESULTAT == 'TRUE') {
+          this.ListeDroitUser.forEach((LtDroitUser2: any) => {
+            LtDroitUser2.DP_STATUT = 'N'
+          });
+          if(this.ListeDroitforUser.length > 0) {
+            this.ListeDroitUser.forEach((LtDroitUser2: any) => {
+              this.ListeDroitforUser.forEach((LtDroifortUser: any) => {
+                if(LtDroifortUser.DP_CODEDROITCOMPTEUTULISATEUR == LtDroitUser2.DP_CODEDROITCOMPTEUTULISATEUR){
+                  LtDroitUser2.DP_STATUT = 'O'
+                  LtDroitUser2.DP_OBJET = LtDroifortUser.DP_OBJET
+                }
+              });
+            });
+          }
+        } 
+        sessionStorage.setItem('ListeDroitUsers', JSON.stringify(this.ListeDroitUser))
+        window.location.href = '/admin';
+      },
+      (error) => {}
+    );
+  }
   Recuperation() {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const phonePattern = /^(0|[0-9]\d*)$/;

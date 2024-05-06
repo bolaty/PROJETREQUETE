@@ -57,7 +57,7 @@
                 class="d-flex justify-content-between flex-column mb-3 mb-md-0 pe-md-3"
               >
                 <ul class="nav nav-align-left nav-pills flex-column">
-                  <li class="nav-item">
+                  <li class="nav-item" *ngIf="AdminService.objetEcran[6].STATUTOBJET == 'O'">
                     <button
                       class="nav-link active"
                       data-bs-toggle="tab"
@@ -229,9 +229,24 @@
                     <div class="col">
                       <div class="card">
                         <h5 class="card-header">Droit.s de l'opérateur</h5>
+                        <span class="custom-option-header" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size: 15px;margin-left: 80%;">
+                          Tout cocher
+                        </span>
+                        <input class="form-check-input" type="checkbox" (change)="toggleAllCheckboxes($event)" id="checkAll" style="margin-left: 80%;"/>
                         <div class="card-body">
                           <div class="row">
-                            <div class="col-md mb-md-0 mb-2">
+                            <div class="col-md-2 mb-md-0 mb-2" *ngFor="let LtDroitUser of ListeDroitUser;let index=index" style="margin-top: 25px;">
+                              <div class="form-check custom-option custom-option-icon">
+                                  <label class="form-check-label custom-option-content" for="MnuReclamation{{index}}">
+                                      <span class="custom-option-body">
+                                          <small>{{LtDroitUser.DP_LIBELLEDROITCOMPTEUTULISATEUR}}</small>
+                                      </span>
+                                      <input class="form-check-input" type="checkbox" name="check" [(ngModel)]="LtDroitUser.isChecked" (change)="VerifyTabAgence(LtDroitUser.DP_CODEDROITCOMPTEUTULISATEUR)" value="{{LtDroitUser.DP_CODEDROITCOMPTEUTULISATEUR}}" id="MnuReclamation{{index }}" />
+                                  </label>
+                              </div>
+                          </div>
+                          
+                           <!-- <div class="col-md-2 mb-md-0 mb-2" *ngFor="let LtDroitUser of ListeDroitUser">
                               <div
                                 class="form-check custom-option custom-option-icon"
                               >
@@ -254,318 +269,10 @@
                                   />
                                 </label>
                               </div>
-                            </div>
-                            <div class="col-md mb-md-0 mb-2">
-                              <div
-                                class="form-check custom-option custom-option-icon"
-                              >
-                                <label
-                                  class="form-check-label custom-option-content"
-                                  for="MnuRelance"
-                                >
-                                  <span class="custom-option-body">
-                                    <i class="mdi mdi-server"></i>
-                                    <span class="custom-option-title">
-                                      Relance
-                                    </span>
-                                    <small
-                                      >Droit de consultation du menu
-                                      relance</small
-                                    >
-                                  </span>
-                                  <input
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    value=""
-                                    id="MnuRelance"
-                                    [checked]="checkedMnuRelance"
-                                  />
-                                </label>
-                              </div>
-                            </div>
-                            <div class="col-md">
-                              <div
-                                class="form-check custom-option custom-option-icon"
-                              >
-                                <label
-                                  class="form-check-label custom-option-content"
-                                  for="MnuOperateur"
-                                >
-                                  <span class="custom-option-body">
-                                    <i class="mdi mdi-server"></i>
-                                    <span class="custom-option-title">
-                                      Opérateur
-                                    </span>
-                                    <small
-                                      >Droit de consultation du menu
-                                      opérateur</small
-                                    >
-                                  </span>
-                                  <input
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    value=""
-                                    id="MnuOperateur"
-                                    [checked]="checkedMnuOperateur"
-                                  />
-                                </label>
-                              </div>
-                            </div>
-
-                            <div class="col-md mb-md-0 mb-2">
-                              <div
-                                class="form-check custom-option custom-option-icon"
-                              >
-                                <label
-                                  class="form-check-label custom-option-content"
-                                  for="MnuClient"
-                                >
-                                  <span class="custom-option-body">
-                                    <i class="mdi mdi-server"></i>
-                                    <span class="custom-option-title">
-                                      Client
-                                    </span>
-                                    <small
-                                      >Droit de consultation du menu
-                                      client</small
-                                    >
-                                  </span>
-                                  <input
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    value=""
-                                    id="MnuClient"
-                                    [checked]="checkedMnuClient"
-                                  />
-                                </label>
-                              </div>
-                            </div>
-                            <div class="col-md mb-md-0 mb-2">
-                              <div
-                                class="form-check custom-option custom-option-icon"
-                              >
-                                <label
-                                  class="form-check-label custom-option-content"
-                                  for="MnuEdition"
-                                >
-                                  <span class="custom-option-body">
-                                    <i class="mdi mdi-server"></i>
-                                    <span class="custom-option-title">
-                                      Edition
-                                    </span>
-                                    <small
-                                      >Droit de consultation du menu
-                                      édition</small
-                                    >
-                                  </span>
-                                  <input
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    value=""
-                                    id="MnuEdition"
-                                    [checked]="checkedMnuEdition"
-                                  />
-                                </label>
-                              </div>
-                            </div>
-                            <div class="col-md">
-                              <div
-                                class="form-check custom-option custom-option-icon"
-                              >
-                                <label
-                                  class="form-check-label custom-option-content"
-                                  for="CreationDeReclamation"
-                                >
-                                  <span class="custom-option-body">
-                                    <i class="mdi mdi-server"></i>
-                                    <span class="custom-option-title">
-                                      Création reclamation
-                                    </span>
-                                    <small>
-                                      Droit de création d'une reclamation.
-                                    </small>
-                                  </span>
-                                  <input
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    value=""
-                                    id="CreationDeReclamation"
-                                    [checked]="checkedCreationDeReclamation"
-                                  />
-                                </label>
-                              </div>
-                            </div>
+                            </div>-->
+                           
                           </div>
                           &#160;&#160;&#160;
-                          <div class="row">
-                            <div class="col-md mb-md-0 mb-2">
-                              <div
-                                class="form-check custom-option custom-option-icon"
-                              >
-                                <label
-                                  class="form-check-label custom-option-content"
-                                  for="CreationOperateur"
-                                >
-                                  <span class="custom-option-body">
-                                    <i class="mdi mdi-server"></i>
-                                    <span class="custom-option-title">
-                                      Création opérateur
-                                    </span>
-                                    <small
-                                      >Droit de création d'un opérateur</small
-                                    >
-                                  </span>
-                                  <input
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    value=""
-                                    id="CreationOperateur"
-                                    [checked]="checkedCreationOperateur"
-                                  />
-                                </label>
-                              </div>
-                            </div>
-                            <div class="col-md mb-md-0 mb-2">
-                              <div
-                                class="form-check custom-option custom-option-icon"
-                              >
-                                <label
-                                  class="form-check-label custom-option-content"
-                                  for="CreationClient"
-                                >
-                                  <span class="custom-option-body">
-                                    <i class="mdi mdi-server"></i>
-                                    <span class="custom-option-title">
-                                      Création client
-                                    </span>
-                                    <small>Droit de création de client</small>
-                                  </span>
-                                  <input
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    value=""
-                                    id="CreationClient"
-                                    [checked]="checkedCreationClient"
-                                  />
-                                </label>
-                              </div>
-                            </div>
-                            <div class="col-md">
-                              <div
-                                class="form-check custom-option custom-option-icon"
-                              >
-                                <label
-                                  class="form-check-label custom-option-content"
-                                  for="EditionBceao"
-                                >
-                                  <span class="custom-option-body">
-                                    <i class="mdi mdi-server"></i>
-                                    <span class="custom-option-title">
-                                      Edition BCEAO
-                                    </span>
-                                    <small>
-                                      Droit de consultation de l'état BCEAO.
-                                    </small>
-                                  </span>
-                                  <input
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    value=""
-                                    id="EditionBceao"
-                                    [checked]="checkedEditionBceao"
-                                  />
-                                </label>
-                              </div>
-                            </div>
-
-                            <div class="col-md mb-md-0 mb-2">
-                              <div
-                                class="form-check custom-option custom-option-icon"
-                              >
-                                <label
-                                  class="form-check-label custom-option-content"
-                                  for="EditionStatistique"
-                                >
-                                  <span class="custom-option-body">
-                                    <i class="mdi mdi-server"></i>
-                                    <span class="custom-option-title">
-                                      Edition statistique
-                                    </span>
-                                    <small
-                                      >Droit de consultation de l'état
-                                      statistique</small
-                                    >
-                                  </span>
-                                  <input
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    value=""
-                                    id="EditionStatistique"
-                                    [checked]="checkedEditionStatistique"
-                                  />
-                                </label>
-                              </div>
-                            </div>
-                            <div class="col-md mb-md-0 mb-2">
-                              <div
-                                class="form-check custom-option custom-option-icon"
-                              >
-                                <label
-                                  class="form-check-label custom-option-content"
-                                  for="EditionFrequence"
-                                >
-                                  <span class="custom-option-body">
-                                    <i class="mdi mdi-server"></i>
-                                    <span class="custom-option-title">
-                                      Edition fréquence
-                                    </span>
-                                    <small
-                                      >Droit de consultation de l'état
-                                      fréquence</small
-                                    >
-                                  </span>
-                                  <input
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    value=""
-                                    id="EditionFrequence"
-                                    [checked]="checkedEditionFrequence"
-                                  />
-                                </label>
-                              </div>
-                            </div>
-                            <!-- <div class="col-md">
-                              <div
-                                class="form-check custom-option custom-option-icon"
-                              >
-                                <label
-                                  class="form-check-label custom-option-content"
-                                  for="customCheckboxSvg3"
-                                >
-                                  <span class="custom-option-body">
-                                    <img
-                                      src="../../assets/img/icons/unicons/paypal.png"
-                                      class="w-px-40 mb-2"
-                                      alt="paypal"
-                                    />
-                                    <span class="custom-option-title">
-                                      Native App
-                                    </span>
-                                    <small>
-                                      Cake sugar plum fruitcake I love sweet
-                                      roll jelly-o.
-                                    </small>
-                                  </span>
-                                  <input
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    value=""
-                                    id="customCheckboxSvg3"
-                                  />
-                                </label>
-                              </div>
-                            </div> -->
-                          </div>
                         </div>
                       </div>
                     </div>
@@ -749,7 +456,7 @@
                       <!-- <small class="text-muted ms-1">{{ item.CU_EMAIL }}</small> -->
                     </div>
                   </div>
-                  <div class="add-btn" (click)="ModifyInfoClient(item)">
+                  <div class="add-btn" (click)="ModifyInfoClient(item)" *ngIf="AdminService.objetEcran[7].STATUTOBJET == 'O'">
                     <button class="btn btn-primary btn-sm">Modifier</button>
                   </div>
                 </div>
@@ -878,6 +585,15 @@
           <span>{{ voirlist.CU_MOTDEPASSE }}</span>
         </li>
       </ul>
+      <h5 class="pb-3 border-bottom mb-3" *ngIf="statusOrderListe">Droit</h5>
+      <ul class="list-unstyled mb-4" *ngIf="statutdroit">
+        <li class="mb-3" *ngFor="let DroitforUser of ListeDroitforUser">
+          <span class="h6">{{DroitforUser.DP_LIBELLEDROITCOMPTEUTULISATEUR}} </span>
+          <span class="badge bg-label-success rounded-pill">Actif</span>
+        </li>
+      </ul>
+      <span class="h6" *ngIf="!statutdroit">Aucun droit accorder a cet utilisateur !!! </span>
+      <br> <br> <br>
       <div class="d-flex justify-content-center">
         <a
           href="javascript:;"
@@ -979,6 +695,47 @@
         />
         <label for="email">{{ LanguageService.op_chmp_title_3 }}</label>
       </div>
+      <h5 class="card-header">Droit.s de l'opérateur</h5>
+      <span class="custom-option-header"  style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size: 15px;margin-left: 80%;">
+        Tout cocher
+      </span>
+      <input class="form-check-input" type="checkbox" (click)="cocheAll()" id="checkAlldt" style="margin-left: 80%;"/>
+     
+      <div
+      class="d-flex mb-3"
+      *ngFor="let LtDroitUser2 of ListeDroitUser; let i = index" style="margin-top: 35px;"
+    >
+      <div class="flex-shrink-0">
+        <img
+          src="../../assets/img/icons/misc/aviato.png"
+          alt="aviato"
+          class="me-3"
+          height="26"
+        />
+      </div>
+      
+      <div class="flex-grow-1 row">
+        <div class="col-9 mb-sm-0 mb-2">
+          <h6 class="mb-0">{{LtDroitUser2.DP_LIBELLEDROITCOMPTEUTULISATEUR}}</h6>
+        </div>
+        <div class="col-3 text-end">
+          <label class="switch me-0">
+            <input
+              type="checkbox"
+              class="switch-input"
+              [checked]="LtDroitUser2.DP_STATUT === 'O'"
+              (click)="changeVall(i)"
+            />
+            <span class="switch-toggle-slider">
+              <span class="switch-on"></span>
+              <span class="switch-off"></span>
+            </span>
+            <span class="switch-label"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <br><br><br>
       <div class="mb-3 d-flex flex-wrap">
         <button
           type="button"
