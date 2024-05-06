@@ -100,8 +100,8 @@ export class LoginComponent {
     let body = {
       Objets: [
         {
-          //OE_PARAM: ['0001', this.formLogin.login, this.formLogin.mdp], // operateur personnalisable
-          OE_PARAM: ['0002', this.formLogin.login, this.formLogin.mdp], // client personnalisable
+          OE_PARAM: ['0001', this.formLogin.login, this.formLogin.mdp], // operateur personnalisable
+          // OE_PARAM: ['0002', this.formLogin.login, this.formLogin.mdp], // client personnalisable
           clsObjetEnvoi: {
             ET_CODEETABLISSEMENT: '',
             AN_CODEANTENNE: '',
@@ -129,12 +129,14 @@ export class LoginComponent {
           if (this.RetoursChargement[0].TU_CODETYPEUTILISATEUR == '0001') {
             if (this.RetoursChargement[0].CU_NOMBRECONNECTION == '0') {
               window.location.href = '/auth/changePassword';
-            }else if(this.RetoursChargement[0].CU_NOMUTILISATEUR.includes('ADMIN')){
+            } else if (
+              this.RetoursChargement[0].CU_NOMUTILISATEUR.includes('ADMIN')
+            ) {
               this.toastr.success(
                 this.RetoursChargement[0].clsResultat.SL_MESSAGE,
                 'success'
               );
-  
+
               sessionStorage.setItem('isLoggedIn', 'true');
               this.formLogin.login = '';
               this.formLogin.mdp = '';
@@ -156,8 +158,7 @@ export class LoginComponent {
                 'infoLogin',
                 JSON.stringify(this.RetoursChargement)
               );
-              this.ComboListeDroitUtilisateur()
-              
+              this.ComboListeDroitUtilisateur();
             }
           } else {
             this.toastr.success(
@@ -184,7 +185,8 @@ export class LoginComponent {
     );
   }
   ComboListeDroitUtilisateur() {
-    let Option = 'RequeteClientsClasse.svc/pvgInsertIntoDatasetListeDroitUtilisateur';
+    let Option =
+      'RequeteClientsClasse.svc/pvgInsertIntoDatasetListeDroitUtilisateur';
     let body = {
       Objets: [
         {
@@ -200,8 +202,9 @@ export class LoginComponent {
     this.AdminService.AppelServeur(body, Option).subscribe(
       (success: any) => {
         this.ListeDroitUser = success;
-        this.ComboDroitPARUtilisateur(this.RetoursChargement[0].CU_CODECOMPTEUTULISATEUR)
-        
+        this.ComboDroitPARUtilisateur(
+          this.RetoursChargement[0].CU_CODECOMPTEUTULISATEUR
+        );
       },
       (error) => {}
     );
@@ -223,23 +226,30 @@ export class LoginComponent {
     this.AdminService.AppelServeur(body, Option).subscribe(
       (success: any) => {
         this.ListeDroitforUser = success;
-        this.ListeDroitforUser = this.ListeDroitforUser.pvgDroitParOperateursResult
+        this.ListeDroitforUser =
+          this.ListeDroitforUser.pvgDroitParOperateursResult;
         if (this.ListeDroitforUser[0].clsResultat.SL_RESULTAT == 'TRUE') {
           this.ListeDroitUser.forEach((LtDroitUser2: any) => {
-            LtDroitUser2.DP_STATUT = 'N'
+            LtDroitUser2.DP_STATUT = 'N';
           });
-          if(this.ListeDroitforUser.length > 0) {
+          if (this.ListeDroitforUser.length > 0) {
             this.ListeDroitUser.forEach((LtDroitUser2: any) => {
               this.ListeDroitforUser.forEach((LtDroifortUser: any) => {
-                if(LtDroifortUser.DP_CODEDROITCOMPTEUTULISATEUR == LtDroitUser2.DP_CODEDROITCOMPTEUTULISATEUR){
-                  LtDroitUser2.DP_STATUT = 'O'
-                  LtDroitUser2.DP_OBJET = LtDroifortUser.DP_OBJET
+                if (
+                  LtDroifortUser.DP_CODEDROITCOMPTEUTULISATEUR ==
+                  LtDroitUser2.DP_CODEDROITCOMPTEUTULISATEUR
+                ) {
+                  LtDroitUser2.DP_STATUT = 'O';
+                  LtDroitUser2.DP_OBJET = LtDroifortUser.DP_OBJET;
                 }
               });
             });
           }
-        } 
-        sessionStorage.setItem('ListeDroitUsers', JSON.stringify(this.ListeDroitUser))
+        }
+        sessionStorage.setItem(
+          'ListeDroitUsers',
+          JSON.stringify(this.ListeDroitUser)
+        );
         window.location.href = '/admin';
       },
       (error) => {}
