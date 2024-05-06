@@ -129,6 +129,20 @@ export class LoginComponent {
           if (this.RetoursChargement[0].TU_CODETYPEUTILISATEUR == '0001') {
             if (this.RetoursChargement[0].CU_NOMBRECONNECTION == '0') {
               window.location.href = '/auth/changePassword';
+            }else if(this.RetoursChargement[0].CU_NOMUTILISATEUR.includes('ADMIN')){
+              this.toastr.success(
+                this.RetoursChargement[0].clsResultat.SL_MESSAGE,
+                'success'
+              );
+  
+              sessionStorage.setItem('isLoggedIn', 'true');
+              this.formLogin.login = '';
+              this.formLogin.mdp = '';
+              sessionStorage.setItem(
+                'infoLogin',
+                JSON.stringify(this.RetoursChargement)
+              );
+              window.location.href = '/admin';
             } else {
               this.toastr.success(
                 this.RetoursChargement[0].clsResultat.SL_MESSAGE,

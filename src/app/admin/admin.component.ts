@@ -25,7 +25,7 @@ export class AdminComponent implements OnInit {
   maVariableSubscription?: Subscription;
   code_requete: any;
   recupinfoDroitUser: any = JSON.parse(sessionStorage.getItem('ListeDroitUsers') || '');
-  
+  recupinfos: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
   constructor(
     public AdminService: AdminService,
     private _router: Router,
@@ -1213,7 +1213,13 @@ export class AdminComponent implements OnInit {
     this.AdminService.showMenuMobile = true;
   }
   chargementParamDroit(){
-    for(var i = 0; i < this.AdminService.objetEcran.length; i++) {
+    if(this.recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')){
+      for(var i = 0; i < this.AdminService.objetEcran.length; i++) {
+          this.AdminService.objetEcran[i].STATUTOBJET = "O"
+      }
+    }
+    else{
+      for(var i = 0; i < this.AdminService.objetEcran.length; i++) {
         //@ts-ignore
         const contientObjet = this.recupinfoDroitUser.some(
           //@ts-ignore
@@ -1225,7 +1231,9 @@ export class AdminComponent implements OnInit {
         } else {
           this.AdminService.objetEcran[i].STATUTOBJET = "N"
         }
+      }
     }
+    
   }
   ngOnDestroy(): void {
     // Assurez-vous de vous désabonner pour éviter les fuites de mémoire
