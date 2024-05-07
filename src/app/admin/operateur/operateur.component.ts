@@ -463,12 +463,12 @@ export class OperateurComponent {
       
       var tabdroitOperateur = []
       for (var i = 0; i < this.ListeDroitUser.length; i++) {
-          if(this.ListeDroitUser[i].DP_STATUT == 'O'){
+          //if(this.ListeDroitUser[i].DP_STATUT == 'O'){
             var prepa_objet = {
               CU_CODECOMPTEUTULISATEUR: this.voirlist.CU_CODECOMPTEUTULISATEUR,
               DP_CODEDROITCOMPTEUTULISATEUR: this.ListeDroitUser[i].DP_CODEDROITCOMPTEUTULISATEUR,
               DP_LIBELLEDROITCOMPTEUTULISATEUR: this.ListeDroitUser[i].DP_LIBELLEDROITCOMPTEUTULISATEUR,
-              DP_STATUT: 'O',
+              DP_STATUT: this.ListeDroitUser[i].DP_STATUT,
               clsObjetEnvoi: {
                 ET_CODEETABLISSEMENT: '',
                 AN_CODEANTENNE: '',
@@ -488,7 +488,7 @@ export class OperateurComponent {
                 TYPEOPERATION: '01',
               },
             };
-          }
+          //}
           
       }
       //objet d'envoi
@@ -591,7 +591,7 @@ export class OperateurComponent {
               'success',
               { positionClass: 'toast-bottom-left' }
             );
-          
+            this.viderchamp()
             this.AdminService.CloseLoader();
           }
         },
@@ -649,7 +649,7 @@ export class OperateurComponent {
     let body = {
       Objets: [
         {
-          OE_PARAM: [this.recupinfo[0].AG_CODEAGENCE, '0001'],
+          OE_PARAM: this.recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') ? ['0001'] :[this.recupinfo[0].AG_CODEAGENCE, '0001'],
           clsObjetEnvoi: {
             ET_CODEETABLISSEMENT: '',
             AN_CODEANTENNE: '',
@@ -798,7 +798,6 @@ export class OperateurComponent {
               this.EnregistrementDroitOperateur()
             }
             
-          
             for (let index = 0; index < tableau_recu.length; index++) {
               tableau_recu[index].valeur = '';
             }
@@ -818,7 +817,14 @@ export class OperateurComponent {
       );
     }
   }
-
+  viderchamp(){
+    this.statuFormulaire = 'ENREGISTREMENT'
+    for (let index = 0; index < this.formulaire_operateur.length; index++) {
+      this.formulaire_operateur[index].valeur = '';
+    }
+    this.ListeDroitUser = []
+    this.ComboListeDroitUtilisateur()
+  }
   RechercherClient(search_bar: any) {
     let Option = 'RequeteClientsClasse.svc/pvgListeUtilisateursRecherche';
 

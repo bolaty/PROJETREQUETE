@@ -24,7 +24,7 @@ export class AdminComponent implements OnInit {
   tab_req_en_cours_trait: any = [];
   maVariableSubscription?: Subscription;
   code_requete: any;
-  recupinfoDroitUser: any = JSON.parse(sessionStorage.getItem('ListeDroitUsers') || '');
+  recupinfoDroitUser: any;
   recupinfos: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
   constructor(
     public AdminService: AdminService,
@@ -1213,12 +1213,13 @@ export class AdminComponent implements OnInit {
     this.AdminService.showMenuMobile = true;
   }
   chargementParamDroit(){
-    if(this.recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')){
+    if(this.recupinfos[0].CU_NOMUTILISATEUR.includes('ADMIN')){
       for(var i = 0; i < this.AdminService.objetEcran.length; i++) {
           this.AdminService.objetEcran[i].STATUTOBJET = "O"
       }
     }
     else{
+      this.recupinfoDroitUser = JSON.parse(sessionStorage.getItem('ListeDroitUsers') || '');
       for(var i = 0; i < this.AdminService.objetEcran.length; i++) {
         //@ts-ignore
         const contientObjet = this.recupinfoDroitUser.some(
