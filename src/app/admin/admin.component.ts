@@ -15,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AdminComponent implements OnInit {
   recupinfo: any = '';
+  recupinfoDroitUser: any;
   ListeNotification: any = [];
   nombreNotif: any = 0;
   boutons: any = [];
@@ -24,8 +25,8 @@ export class AdminComponent implements OnInit {
   tab_req_en_cours_trait: any = [];
   maVariableSubscription?: Subscription;
   code_requete: any;
-  recupinfoDroitUser: any;
-  recupinfos: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
+
+  // recupinfos: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
   constructor(
     public AdminService: AdminService,
     private _router: Router,
@@ -1212,15 +1213,18 @@ export class AdminComponent implements OnInit {
   TestMobile2() {
     this.AdminService.showMenuMobile = true;
   }
-  chargementParamDroit(){
-    if(this.recupinfos[0].CU_NOMUTILISATEUR.includes('ADMIN')){
-      for(var i = 0; i < this.AdminService.objetEcran.length; i++) {
-          this.AdminService.objetEcran[i].STATUTOBJET = "O"
+  chargementParamDroit() {
+    this.recupinfo = JSON.parse(sessionStorage.getItem('infoLogin') || '');
+    if (this.recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')) {
+      for (var i = 0; i < this.AdminService.objetEcran.length; i++) {
+        this.AdminService.objetEcran[i].STATUTOBJET = 'O';
       }
-    }
-    else{
-      this.recupinfoDroitUser = JSON.parse(sessionStorage.getItem('ListeDroitUsers') || '');
-      for(var i = 0; i < this.AdminService.objetEcran.length; i++) {
+    } else {
+      this.recupinfoDroitUser = JSON.parse(
+        sessionStorage.getItem('ListeDroitUsers') || ''
+      );
+
+      for (var i = 0; i < this.AdminService.objetEcran.length; i++) {
         //@ts-ignore
         const contientObjet = this.recupinfoDroitUser.some(
           //@ts-ignore
@@ -1228,13 +1232,12 @@ export class AdminComponent implements OnInit {
         );
 
         if (contientObjet) {
-          this.AdminService.objetEcran[i].STATUTOBJET = "O"
+          this.AdminService.objetEcran[i].STATUTOBJET = 'O';
         } else {
-          this.AdminService.objetEcran[i].STATUTOBJET = "N"
+          this.AdminService.objetEcran[i].STATUTOBJET = 'N';
         }
       }
     }
-    
   }
   ngOnDestroy(): void {
     // Assurez-vous de vous désabonner pour éviter les fuites de mémoire
@@ -1270,11 +1273,9 @@ export class AdminComponent implements OnInit {
 
     // this.initNavbarDropdownScrollbar();
     this.Notification();
-    this.chargementParamDroit()
+    this.chargementParamDroit();
     setTimeout(() => {
-      
       this.InitialisationMainJs();
-     
     }, 1000);
 
     // info sur le theme de l'app
