@@ -8,7 +8,7 @@ export class ApiService {
   constructor(private http: HttpClient) {}
   private BASE_URL = 'http://51.210.111.16:1006';
 
-    //LienServeur: any = 'http://localhost:22248/'; // lien dev
+  // LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
   LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
 

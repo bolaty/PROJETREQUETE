@@ -248,7 +248,10 @@
           <ul class="nav nav-align-left nav-pills flex-column flex-nowrap">
             <li
               class="nav-item"
-              *ngIf="!recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') && AdminService.objetEcran[5].STATUTOBJET == 'O'"
+              *ngIf="
+                !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') &&
+                AdminService.objetEcran[5].STATUTOBJET == 'O'
+              "
             >
               <!-- Nouvelles reclamations -->
               <button
@@ -737,7 +740,13 @@
                     </div>
                   </div>
 
-                  <div class="card-header" *ngIf="!statutClientExiste && AdminService.objetEcran[7].STATUTOBJET == 'O'">
+                  <div
+                    class="card-header"
+                    *ngIf="
+                      !statutClientExiste &&
+                      AdminService.objetEcran[7].STATUTOBJET == 'O'
+                    "
+                  >
                     <ul class="nav nav-tabs" role="tablist">
                       <li class="nav-item">
                         <button
@@ -1235,7 +1244,7 @@
                       </div>
                     </div>
 
-                    <!-- *ngIf="observer_trans_trib" laaa-->
+                    <!-- *ngIf="observer_trans_trib"-->
                     <span
                       class="badge rounded-pill bg-label-dark"
                       *ngIf="
@@ -2456,8 +2465,8 @@
         </div>
 
         <p class="card-text" style="text-align: center">
-          Début de la requete :
-          {{ recupValEtape.RQ_DATEDEBUTTRAITEMENTREQUETE }} - Fin de la requete
+          Début de la requête :
+          {{ recupValEtape.RQ_DATEDEBUTTRAITEMENTREQUETE }} - Fin de la requête
           {{ recupValEtape.RQ_DATEFINTRAITEMENTREQUETE }}
         </p>
         <br />
@@ -2498,7 +2507,7 @@
             </div>
             <!-- /Navigation -->
             <!-- Options -->
-            <div class="col-12 col-md-8 pt-4 pt-md-0">
+            <div class="col-12 col-md-8 pt-4 pt-md-0" *ngIf="btn_etape">
               <div class="tab-content p-0 pe-xl-0 ps-md-3">
                 <!-- Restock Tab -->
                 <div
@@ -3241,6 +3250,7 @@
           aria-label="Close"
         ></button>
         <div class="text-center mb-4">
+          <!-- Annulation clôture définitive -->
           <h3 class="address-title mb-2 pb-1">
             {{ LanguageService.ann_clo_def_title }}
           </h3>
@@ -3315,6 +3325,7 @@
           aria-label="Close"
         ></button>
         <div class="text-center mb-4">
+          <!-- Transmission à un tribunal -->
           <h3 class="address-title mb-2 pb-1">
             {{ LanguageService.transmission_title }}
           </h3>
@@ -3439,6 +3450,7 @@
           aria-label="Close"
         ></button>
         <div class="text-center mb-4">
+          <!-- Cloture procédure judiciaire -->
           <h3 class="address-title mb-2 pb-1">
             {{ LanguageService.clo_pro_jud_title }}
           </h3>
