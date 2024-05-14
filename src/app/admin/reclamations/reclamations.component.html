@@ -37,7 +37,7 @@
         class="col-xl-6"
         *ngIf="
           !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') &&
-          recupinfo[0].TU_CODETYPEUTILISATEUR == '0001'
+          recupinfo[0].TU_CODETYPEUTILISATEUR == '0001' && AdminService.objetEcran[7].STATUTOBJET == 'O'
         "
       >
         <!-- <div class="card"> -->
@@ -126,7 +126,7 @@
           *ngIf="
             !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') &&
             recupinfo[0].TU_CODETYPEUTILISATEUR != '0002' &&
-            !phone_or_code
+            !phone_or_code && AdminService.objetEcran[7].STATUTOBJET == 'O'
           "
           (keyup)="RechercheAvecTouche1($event, 'code')"
         />
@@ -135,7 +135,7 @@
           *ngIf="
             !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') &&
             recupinfo[0].TU_CODETYPEUTILISATEUR != '0002' &&
-            !phone_or_code
+            !phone_or_code && AdminService.objetEcran[7].STATUTOBJET == 'O'
           "
           id="basic-addon1"
           (click)="RechercherSelonEcran('code')"
@@ -155,7 +155,7 @@
           *ngIf="
             !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') &&
             recupinfo[0].TU_CODETYPEUTILISATEUR != '0002' &&
-            phone_or_code
+            phone_or_code && AdminService.objetEcran[7].STATUTOBJET == 'O'
           "
           (keyup)="RechercheAvecTouche1($event, 'telephone')"
         />
@@ -164,7 +164,7 @@
           *ngIf="
             !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') &&
             recupinfo[0].TU_CODETYPEUTILISATEUR != '0002' &&
-            phone_or_code
+            phone_or_code && AdminService.objetEcran[7].STATUTOBJET == 'O'
           "
           id="basic-addon1"
           (click)="RechercherSelonEcran('telephone')"
@@ -208,7 +208,7 @@
       *ngIf="
         !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') &&
         recupinfo[0].TU_CODETYPEUTILISATEUR == '0001' &&
-        search_bar
+        search_bar 
       "
     >
       <h3 class="text-center text-primary mb-2">
@@ -246,6 +246,7 @@
       <div class="col-lg-3 col-md-4 col-12 mb-md-0 mb-3">
         <div class="d-flex justify-content-between flex-column mb-2 mb-md-0">
           <ul class="nav nav-align-left nav-pills flex-column flex-nowrap">
+            
             <li
               class="nav-item"
               *ngIf="!recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') && AdminService.objetEcran[5].STATUTOBJET == 'O'"
@@ -265,12 +266,31 @@
               </button>
             </li>
             <li
+            class="nav-item"
+            *ngIf="!recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') &&
+            recupinfo[0].TU_CODETYPEUTILISATEUR == '0002'"
+          >
+            <!-- Nouvelles reclamations -->
+            <button
+              class="nav-link active"
+              data-bs-toggle="tab"
+              data-bs-target="#payment"
+            >
+              <i class="mdi mdi-playlist-edit mdi-24px"></i>
+              <span
+                class="align-middle"
+                (click)="checkStatusForm('Nouvelles', '')"
+                >{{ LanguageService.reclam_engr_title }}</span
+              >
+            </button>
+          </li>
+          <li
               class="nav-item"
               *ngIf="
                 !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') &&
                 recupinfo[0].TU_CODETYPEUTILISATEUR == '0002'
               "
-            >
+              >
               <!-- Liste des reclamations -->
               <button
                 class="nav-link"
@@ -407,7 +427,7 @@
                     </ul>
                   </div>
 
-                  <div class="tab-content" *ngIf="statutClientExiste">
+                  <div class="tab-content" *ngIf="statutClientExiste && AdminService.objetEcran[7].STATUTOBJET == 'O'">
                     <!-- Personal Info -->
                     <div
                       class="tab-pane fade active show"
@@ -737,7 +757,7 @@
                     </div>
                   </div>
 
-                  <div class="card-header" *ngIf="!statutClientExiste && AdminService.objetEcran[7].STATUTOBJET == 'O'">
+                  <div class="card-header" *ngIf="!statutClientExiste ">
                     <ul class="nav nav-tabs" role="tablist">
                       <li class="nav-item">
                         <button

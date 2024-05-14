@@ -26,7 +26,7 @@ export class AdminComponent implements OnInit {
   maVariableSubscription?: Subscription;
   code_requete: any;
 
-  // recupinfos: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
+   recupinfos: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
   constructor(
     public AdminService: AdminService,
     private _router: Router,
