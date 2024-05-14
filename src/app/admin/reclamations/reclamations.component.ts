@@ -17,7 +17,7 @@ declare var $: any;
   styleUrls: ['./reclamations.component.scss'],
 })
 export class ReclamationsComponent {
-  // LienServeur: any = 'http://localhost:22248/'; // lien dev
+  //LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
   LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
 
@@ -3122,6 +3122,8 @@ export class ReclamationsComponent {
     let body = {
       Objets: [
         {
+          CU_CODECOMPTEUTULISATEUR:
+                this.recupValEtape.CU_CODECOMPTEUTULISATEUR,
           CT_CODEREQUETECONTENTIEUX: code_contentieux,
           CT_DATECLOTURECONTENTIEUX: date,
           CT_DATEOUVERTURECONTENTIEUX: '01/01/1900',

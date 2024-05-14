@@ -934,16 +934,36 @@ export class AdminComponent implements OnInit {
 
   Notification() {
     this.recupinfo = JSON.parse(sessionStorage.getItem('infoLogin') || '');
-
+    var statusOp = 'N'
+    var datejrouagence = "01/01/1900"
+    var d = new Date();
+        var date =
+          d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
+        var jour = d.getDate();
+        if (jour < 10) {
+          var date =
+            '0' +
+            d.getDate() +
+            '-0' +
+            (d.getMonth() + 1) +
+            '-' +
+            d.getFullYear();
+          console.log(date);
+        }
+    if(this.recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')){
+      datejrouagence = date
+    }else{
+      datejrouagence = this.recupinfo[0].AG_CODEAGENCE
+    }
     let Option = 'RequeteClientsClasse.svc/pvgListeSMS';
     let body = {
       Objets: [
         {
           OE_PARAM: [
-            this.recupinfo[0].AG_CODEAGENCE,
+            datejrouagence,
             this.recupinfo[0].CU_CODECOMPTEUTULISATEUR,
             '0003',
-            'N',
+            "N",
           ],
           clsObjetEnvoi: {
             ET_CODEETABLISSEMENT: '',
@@ -1272,11 +1292,15 @@ export class AdminComponent implements OnInit {
     }
 
     // this.initNavbarDropdownScrollbar();
-    this.Notification();
+   
     this.chargementParamDroit();
     setTimeout(() => {
       this.InitialisationMainJs();
     }, 1000);
+  
+    //setInterval(() => {
+      this.Notification();
+    //}, 2000);
 
     // info sur le theme de l'app
     let pointer = this;
