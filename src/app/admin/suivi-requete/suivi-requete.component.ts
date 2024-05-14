@@ -16,7 +16,7 @@ declare var $: any;
   styleUrls: ['./suivi-requete.component.scss'],
 })
 export class SuiviRequeteComponent {
-    //LienServeur: any = 'http://localhost:22248/'; // lien dev
+  // LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
   LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
 

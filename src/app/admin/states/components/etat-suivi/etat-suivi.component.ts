@@ -23,7 +23,7 @@ import Chart from 'chart.js/auto';
 export class EtatSuiviComponent implements OnInit {
   @ViewChild('content', { static: false }) content!: ElementRef;
 
-    //LienServeur: any = 'http://localhost:22248/'; // lien dev
+  // LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
   LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
 
@@ -248,8 +248,8 @@ export class EtatSuiviComponent implements OnInit {
                   TOTALPLAINTETRAITES: sp.map(
                     (e: any) => e.TOTALPLAINTETRAITES
                   ),
-                  TOTALPLAINTENONTRAITES: sp.map(
-                    (e: any) => Math.abs(e.TOTALPLAINTERECUES - e.TOTALPLAINTETRAITES)
+                  TOTALPLAINTENONTRAITES: sp.map((e: any) =>
+                    Math.abs(e.TOTALPLAINTERECUES - e.TOTALPLAINTETRAITES)
                   ),
                 },
                 DELAITRAITEMENT: {

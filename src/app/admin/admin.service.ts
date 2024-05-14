@@ -13,57 +13,57 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AdminService {
   // ***************** SECTION DES LIENS debut
-    //LienServeur: any = 'http://localhost:22248/'; // lien dev
+  // LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
   LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
 
   // ***************** SECTION DES LIENS fin
-  objetEcran:any=[
+  objetEcran: any = [
     {
-      "NOMOBJET":"MN_RECLAMATION",
-      "STATUTOBJET":""
+      NOMOBJET: 'MN_RECLAMATION',
+      STATUTOBJET: '',
     },
     {
-      "NOMOBJET":"MN_RELANCE",
-      "STATUTOBJET":""
+      NOMOBJET: 'MN_RELANCE',
+      STATUTOBJET: '',
     },
     {
-      "NOMOBJET":"MN_OPERATEUR",
-      "STATUTOBJET":""
+      NOMOBJET: 'MN_OPERATEUR',
+      STATUTOBJET: '',
     },
     {
-      "NOMOBJET":"MN_CLIENT",
-      "STATUTOBJET":""
+      NOMOBJET: 'MN_CLIENT',
+      STATUTOBJET: '',
     },
     {
-      "NOMOBJET":"MN_EDITION",
-      "STATUTOBJET":""
+      NOMOBJET: 'MN_EDITION',
+      STATUTOBJET: '',
     },
     {
-      "NOMOBJET":"OP_CREATION_RECLAMATION",
-      "STATUTOBJET":""
+      NOMOBJET: 'OP_CREATION_RECLAMATION',
+      STATUTOBJET: '',
     },
     {
-      "NOMOBJET":"OP_CREATION_OPERATEUR",
-      "STATUTOBJET":""
+      NOMOBJET: 'OP_CREATION_OPERATEUR',
+      STATUTOBJET: '',
     },
     {
-      "NOMOBJET":"OP_CREATION_CLIENT",
-      "STATUTOBJET":""
+      NOMOBJET: 'OP_CREATION_CLIENT',
+      STATUTOBJET: '',
     },
     {
-      "NOMOBJET":"EDT_BCEAO",
-      "STATUTOBJET":""
+      NOMOBJET: 'EDT_BCEAO',
+      STATUTOBJET: '',
     },
     {
-      "NOMOBJET":"EDT_STATISTIQUE",
-      "STATUTOBJET":""
+      NOMOBJET: 'EDT_STATISTIQUE',
+      STATUTOBJET: '',
     },
     {
-      "NOMOBJET":"EDT_FREQUENCE",
-      "STATUTOBJET":""
-    }
-]
+      NOMOBJET: 'EDT_FREQUENCE',
+      STATUTOBJET: '',
+    },
+  ];
   // ***************** SECTION DES DECLARATIONS debut
   date_sectionnee: any = {
     annee_date: '',
@@ -107,7 +107,7 @@ export class AdminService {
   CloseLoader() {
     Swal.close();
   }
- 
+
   AppelServeur(body: any, chemin_service: any) {
     return from(Network.getStatus()).pipe(
       switchMap((status) => {

@@ -17,7 +17,7 @@ declare var $: any;
   styleUrls: ['./reclamations.component.scss'],
 })
 export class ReclamationsComponent {
-    //LienServeur: any = 'http://localhost:22248/'; // lien dev
+  // LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
   LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
 
@@ -274,6 +274,7 @@ export class ReclamationsComponent {
   consultation_doc_cont: boolean = false;
   statutliste: boolean = false;
   statut_info_utilisateur: boolean = false;
+  btn_etape: boolean = false;
   SearchValue: any;
   SearchValueCode: any;
   SearchValuePhone: any;
@@ -657,6 +658,9 @@ export class ReclamationsComponent {
 
   SaveRapportProcedure(code_contentieux: any, btn: any) {
     if (this.files.length == 0) {
+      this.AdminService.CloseLoader();
+      if (btn == 'T') $('#transmissionauntribunal').modal('show');
+      if (btn == 'C') $('#clotureprocedurejudiciaire').modal('show');
       this.toastr.success('Veuillez selectionner un document !', 'success', {
         positionClass: 'toast-bottom-left',
       });
@@ -684,6 +688,7 @@ export class ReclamationsComponent {
               this.recupEnregistrerFichierProcedure.pvgMajReqrequeteContentieuxUPloadFileResult;
 
             if (btn == 'C') {
+              this.AdminService.CloseLoader();
               $('#clotureprocedurejudiciaire').modal('hide');
               this.modal_cloture_procedure[0].valeur = '';
               this.modal_cloture_procedure[1].valeur = '';
@@ -693,6 +698,7 @@ export class ReclamationsComponent {
                 { positionClass: 'toast-bottom-left' }
               );
             } else {
+              this.AdminService.CloseLoader();
               $('#transmissionauntribunal').modal('hide');
               this.modal_transmission_tribunal[0].valeur = '';
               this.modal_transmission_tribunal[1].valeur = '';
@@ -701,9 +707,9 @@ export class ReclamationsComponent {
                 'success',
                 { positionClass: 'toast-bottom-left' }
               );
-
-              this.ListeRequeteBis();
             }
+
+            this.ListeRequeteBis();
 
             if (
               this.recupEnregistrerFichierProcedure.clsResultat.SL_RESULTAT ==
@@ -1566,6 +1572,7 @@ export class ReclamationsComponent {
   }
 
   selectionEtape(info: any) {
+    this.btn_etape = true;
     this.recupEtape = info;
   }
 
@@ -2751,6 +2758,9 @@ export class ReclamationsComponent {
   }
 
   ClotureRequetePrincipale() {
+    this.AdminService.ShowLoader();
+    $('#addNewAddressClotureDefinitive').modal('hide');
+
     var d = new Date();
     var date = d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
     var jour = d.getDate();
@@ -2788,6 +2798,7 @@ export class ReclamationsComponent {
         if (
           this.tab_enregistrement_traitement.clsResultat.SL_RESULTAT == 'FALSE'
         ) {
+          $('#addNewAddressClotureDefinitive').modal('show');
           //this.toastr.error(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
           this.toastr.error(
             this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE,
@@ -2808,6 +2819,7 @@ export class ReclamationsComponent {
         }
       },
       (error: any) => {
+        $('#addNewAddressClotureDefinitive').modal('show');
         this.AdminService.CloseLoader();
         // this.toastr.warning(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
         this.toastr.warning(
@@ -2844,6 +2856,9 @@ export class ReclamationsComponent {
   }
 
   AnnulationClotureRequetePrincipale() {
+    this.AdminService.ShowLoader();
+    $('#addNewAddressAnnulationClotureDefinitive').modal('hide');
+
     var d = new Date();
     var date = d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
     var jour = d.getDate();
@@ -2880,6 +2895,7 @@ export class ReclamationsComponent {
         if (
           this.tab_enregistrement_traitement.clsResultat.SL_RESULTAT == 'FALSE'
         ) {
+          $('#addNewAddressAnnulationClotureDefinitive').modal('show');
           //this.toastr.error(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
           this.toastr.error(
             this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE,
@@ -2895,10 +2911,11 @@ export class ReclamationsComponent {
             'success',
             { positionClass: 'toast-bottom-left' }
           );
-          $('#addNewAddressAnnulationClotureDefinitive').modal('hide');
+          // $('#addNewAddressAnnulationClotureDefinitive').modal('hide');
         }
       },
       (error: any) => {
+        $('#addNewAddressAnnulationClotureDefinitive').modal('show');
         this.AdminService.CloseLoader();
         // this.toastr.warning(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
         this.toastr.warning(
@@ -2911,6 +2928,9 @@ export class ReclamationsComponent {
   }
 
   TransmissionTribunal() {
+    this.AdminService.ShowLoader();
+    $('#transmissionauntribunal').modal('hide');
+
     var d = new Date();
     var date = d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
     var jour = d.getDate();
@@ -2949,8 +2969,10 @@ export class ReclamationsComponent {
         this.tab_transmission_tribunal = success;
         this.tab_transmission_tribunal =
           this.tab_transmission_tribunal.pvgMajReqrequeteContentieuxResult;
-        this.AdminService.CloseLoader();
+
         if (this.tab_transmission_tribunal.clsResultat.SL_RESULTAT == 'FALSE') {
+          this.AdminService.CloseLoader();
+          $('#transmissionauntribunal').modal('show');
           this.toastr.error(
             this.tab_transmission_tribunal.clsResultat.SL_MESSAGE,
             'error',
@@ -2962,9 +2984,10 @@ export class ReclamationsComponent {
             this.base64Image == undefined ||
             this.base64Image == null
           ) {
+            this.AdminService.CloseLoader();
             this.modal_transmission_tribunal[0].valeur = '';
             this.modal_transmission_tribunal[1].valeur = '';
-            $('#transmissionauntribunal').modal('hide');
+            // $('#transmissionauntribunal').modal('hide');
             this.toastr.success(
               this.tab_transmission_tribunal.clsResultat.SL_MESSAGE,
               'success',
@@ -3017,8 +3040,10 @@ export class ReclamationsComponent {
         this.tab_liste_contentieux = success;
         this.tab_liste_contentieux =
           this.tab_liste_contentieux.pvgListeReqrequeteContentieuxResult;
-        this.AdminService.CloseLoader();
+
         if (this.tab_liste_contentieux[0].clsResultat.SL_RESULTAT == 'FALSE') {
+          this.AdminService.CloseLoader();
+          $('#transmissionauntribunal').modal('show');
           // Clôture impossible. Vous devez d'abord transmettre la requête à un tribunal
           this.toastr.error(
             this.LanguageService.tribunal_message_clo,
@@ -3058,6 +3083,7 @@ export class ReclamationsComponent {
 
             // Si le code n'existe pas, envoyer un message
             if (!code_existe) {
+              this.AdminService.CloseLoader();
               this.toastr.error(
                 this.LanguageService.tribunal_message_clo,
                 'error',
@@ -3079,6 +3105,9 @@ export class ReclamationsComponent {
   }
 
   ClotureProcedure(code_contentieux: any) {
+    this.AdminService.ShowLoader();
+    $('#clotureprocedurejudiciaire').modal('hide');
+
     var d = new Date();
     var date = d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
     var jour = d.getDate();
@@ -3116,8 +3145,10 @@ export class ReclamationsComponent {
         this.tab_cloture_procedure = success;
         this.tab_cloture_procedure =
           this.tab_cloture_procedure.pvgMajReqrequeteContentieuxResult;
-        this.AdminService.CloseLoader();
+
         if (this.tab_cloture_procedure.clsResultat.SL_RESULTAT == 'FALSE') {
+          this.AdminService.CloseLoader();
+          $('#clotureprocedurejudiciaire').modal('show');
           this.toastr.error(
             this.tab_cloture_procedure.clsResultat.SL_MESSAGE,
             'error',
@@ -3129,6 +3160,7 @@ export class ReclamationsComponent {
             this.base64Image == undefined ||
             this.base64Image == null
           ) {
+            this.AdminService.CloseLoader();
             this.toastr.success(
               this.tab_cloture_procedure.clsResultat.SL_MESSAGE,
               'success',
@@ -3137,6 +3169,7 @@ export class ReclamationsComponent {
             this.modal_cloture_procedure[0].valeur = '';
             this.modal_cloture_procedure[1].valeur = '';
             $('#clotureprocedurejudiciaire').modal('hide');
+            this.ListeRequeteBis();
           } else {
             this.SaveRapportProcedure('', 'C');
           }
@@ -3399,6 +3432,7 @@ export class ReclamationsComponent {
   }
 
   recupListe(info: any) {
+    this.btn_etape = false;
     sessionStorage.setItem('infoReque', JSON.stringify(info));
     this.ComboReqrequeteselonEtape(info.RQ_CODEREQUETE);
     this.recupValEtape = info;
@@ -3420,6 +3454,8 @@ export class ReclamationsComponent {
     for (let index = 0; index < this.formulaire_avis.length; index++) {
       this.formulaire_avis[index].valeur = '';
     }
+
+    this.ngOnInit();
   }
 
   ListeConsultationHistorique(list_step: any) {
@@ -4046,6 +4082,7 @@ export class ReclamationsComponent {
   }
 
   ngOnInit(): void {
+    this.btn_etape = false;
     this.ComboAgence();
     this.formulaire_plaintes_reclamations[8].valeur =
       this.recupinfo[0].CU_NOMUTILISATEUR;
