@@ -23,6 +23,8 @@ export class AdminComponent implements OnInit {
   tab_lecture_notif: any = [];
   ListeRetourRequete: any = [];
   tab_req_en_cours_trait: any = [];
+  reqcodeclient: any ;
+  reqmessageclient: any ;
   maVariableSubscription?: Subscription;
   code_requete: any;
 
@@ -1066,6 +1068,8 @@ export class AdminComponent implements OnInit {
   }
 
   AllerAuSuivi(notif: any) {
+    this.reqmessageclient = notif.SM_MESSAGE
+
     let Option = 'RequeteClientsClasse.svc/pvgLectureNotification';
     let body = {
       Objets: [
@@ -1087,7 +1091,7 @@ export class AdminComponent implements OnInit {
     this.code_requete = notif.SM_MESSAGE_TRANSLATE.split(':')[1];
     this.code_requete = this.code_requete.replace(/[^0-9]/g, '');
     console.log('code_requete', this.code_requete);
-
+   // this.ListeRequete();
     this.AdminService.AppelServeur(body, Option).subscribe((success: any) => {
       this.tab_lecture_notif = success;
       this.tab_lecture_notif =
@@ -1105,7 +1109,7 @@ export class AdminComponent implements OnInit {
     var Option = '';
     var body = {};
 
-    Option = 'RequeteClientsClasse.svc/pvgChargerDansDataSetParOperateurs';
+    /*Option = 'RequeteClientsClasse.svc/pvgChargerDansDataSetParOperateurs';
     body = {
       Objets: [
         {
@@ -1117,90 +1121,225 @@ export class AdminComponent implements OnInit {
           },
         },
       ],
-    };
-    this.AdminService.ShowLoader();
-    this.AdminService.AppelServeur(body, Option).subscribe(
-      (success: any) => {
-        this.ListeRetourRequete = success;
-        this.ListeRetourRequete =
-          this.ListeRetourRequete.pvgChargerDansDataSetParOperateursResult;
-        this.AdminService.CloseLoader();
-        if (this.ListeRetourRequete[0].clsResultat.SL_RESULTAT == 'TRUE') {
-          this.tab_req_en_cours_trait = [];
+    };*/
 
-          for (let index = 0; index < this.ListeRetourRequete.length; index++) {
-            if (
-              this.ListeRetourRequete[index].RQ_DATESAISIEREQUETE !=
-                '01/01/1900' &&
-              this.ListeRetourRequete[index].AT_DATEDEBUTTRAITEMENTETAPE !=
-                '01/01/1900' &&
-              this.ListeRetourRequete[index].AT_DATECLOTUREETAPE == '01/01/1900'
-            ) {
-              this.tab_req_en_cours_trait.push(this.ListeRetourRequete[index]);
+    
+    if (this.recupinfo[0].TU_CODETYPEUTILISATEUR == '0001') {
+      Option = 'RequeteClientsClasse.svc/pvgChargerDansDataSetParOperateurs';
+      body = {
+        Objets: [
+          {
+            OE_PARAM: ['01', this.recupinfo[0].CU_CODECOMPTEUTULISATEUR],
+            clsObjetEnvoi: {
+              ET_CODEETABLISSEMENT: '',
+              AN_CODEANTENNE: '',
+              TYPEOPERATION: '01',
+            },
+          },
+        ],
+      };
+      this.AdminService.ShowLoader();
+      this.AdminService.AppelServeur(body, Option).subscribe(
+        (success: any) => {
+          this.ListeRetourRequete = success;
+          this.ListeRetourRequete =
+            this.ListeRetourRequete.pvgChargerDansDataSetParOperateursResult;
+          this.AdminService.CloseLoader();
+          if (this.ListeRetourRequete[0].clsResultat.SL_RESULTAT == 'TRUE') {
+            this.tab_req_en_cours_trait = [];
+  
+            for (let index = 0; index < this.ListeRetourRequete.length; index++) {
+              if (
+                this.ListeRetourRequete[index].RQ_DATESAISIEREQUETE !=
+                  '01/01/1900' &&
+                this.ListeRetourRequete[index].AT_DATEDEBUTTRAITEMENTETAPE !=
+                  '01/01/1900' &&
+                this.ListeRetourRequete[index].AT_DATECLOTUREETAPE == '01/01/1900'
+              ) {
+                this.tab_req_en_cours_trait.push(this.ListeRetourRequete[index]);
+              }
             }
-          }
-
-          // traduction :: traduction de chaque bloc
-          for (
-            let index = 0;
-            index < this.tab_req_en_cours_trait.length;
-            index++
-          ) {
-            // verifier la langue en cours
-            this.tab_req_en_cours_trait[index].TR_LIBELLETYEREQUETE_TRANSLATE =
-              this.Translate(
-                this.tab_req_en_cours_trait[index].TR_LIBELLETYEREQUETE,
-                this.LanguageService.langue_en_cours
-              );
-
-            this.tab_req_en_cours_trait[index].RE_LIBELLEETAPE_TRANSLATE =
-              this.Translate(
-                this.tab_req_en_cours_trait[index].RE_LIBELLEETAPE,
-                this.LanguageService.langue_en_cours
-              );
-          }
-          // traduction
-
-          for (
-            let index = 0;
-            index < this.tab_req_en_cours_trait.length;
-            index++
-          ) {
-            if (
-              this.tab_req_en_cours_trait[index].RQ_CODEREQUETE ==
-              this.code_requete
+  
+            // traduction :: traduction de chaque bloc
+            for (
+              let index = 0;
+              index < this.tab_req_en_cours_trait.length;
+              index++
             ) {
-              // sauvegarde des infos
-              sessionStorage.setItem(
-                'infoReque',
-                JSON.stringify(this.tab_req_en_cours_trait[index])
-              );
-
-              break;
+              // verifier la langue en cours
+              this.tab_req_en_cours_trait[index].TR_LIBELLETYEREQUETE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_en_cours_trait[index].TR_LIBELLETYEREQUETE,
+                  this.LanguageService.langue_en_cours
+                );
+  
+              this.tab_req_en_cours_trait[index].RE_LIBELLEETAPE_TRANSLATE =
+                this.Translate(
+                  this.tab_req_en_cours_trait[index].RE_LIBELLEETAPE,
+                  this.LanguageService.langue_en_cours
+                );
             }
+            // traduction
+  
+            for (
+              let index = 0;
+              index < this.tab_req_en_cours_trait.length;
+              index++
+            ) {
+              if (
+                this.tab_req_en_cours_trait[index].RQ_CODEREQUETE ==
+                this.code_requete
+              ) {
+                // sauvegarde des infos
+                sessionStorage.setItem(
+                  'infoReque',
+                  JSON.stringify(this.tab_req_en_cours_trait[index])
+                );
+  
+                break;
+              }
+            }
+  
+            this.Notification();
+            this._router.navigate(['/admin/reclamations/liste/SuiviRequete']);
+            // window.location.href = '/admin/reclamations/liste/SuiviRequete';
+          } else {
+            this.toastr.info(
+              this.ListeRetourRequete[0].clsResultat.SL_MESSAGE,
+              'info',
+              { positionClass: 'toast-bottom-left' }
+            );
           }
-
-          this.Notification();
-          this._router.navigate(['/admin/reclamations/liste/SuiviRequete']);
-          // window.location.href = '/admin/reclamations/liste/SuiviRequete';
-        } else {
-          this.toastr.info(
+        },
+        (error) => {
+          this.AdminService.CloseLoader();
+          this.toastr.warning(
             this.ListeRetourRequete[0].clsResultat.SL_MESSAGE,
-            'info',
+            'warning',
             { positionClass: 'toast-bottom-left' }
           );
         }
-      },
-      (error) => {
-        this.AdminService.CloseLoader();
-        this.toastr.warning(
-          this.ListeRetourRequete[0].clsResultat.SL_MESSAGE,
-          'warning',
+      );
+  
+    }
+    if (this.recupinfo[0].TU_CODETYPEUTILISATEUR == '0002')  {
+      // Expression régulière pour rechercher le numéro de ticket
+      var regex = /numéro de ticket (\d+)/;
+
+      // Recherche du numéro de ticket dans le message
+      var match = this.reqmessageclient.match(regex);
+
+
+      // Si un numéro de ticket est trouvé
+      if (match && match.length > 1) {
+          this.reqcodeclient = match[1];
+          //console.log("Numéro de ticket : " + numeroTicket);
+      } 
+
+
+      if(match == null) {
+        this.toastr.error(
+          "Cette notification n'autorise pas d'actions.",
+          'error',
           { positionClass: 'toast-bottom-left' }
         );
+      }else{
+        Option = 'RequeteClientsClasse.svc/pvgListeReqrequete';
+        body = {
+          Objets: [
+            {
+              OE_PARAM: ['01', this.recupinfo[0].CU_CODECOMPTEUTULISATEUR],
+              clsObjetEnvoi: {
+                ET_CODEETABLISSEMENT: '',
+                AN_CODEANTENNE: '',
+                TYPEOPERATION: '01',
+              },
+            },
+          ],
+        };
+        this.AdminService.ShowLoader();
+        this.AdminService.AppelServeur(body, Option).subscribe(
+          (success: any) => {
+            this.ListeRetourRequete = success;
+            this.ListeRetourRequete =
+              this.ListeRetourRequete.pvgListeReqrequeteResult;
+            this.AdminService.CloseLoader();
+            if (this.ListeRetourRequete[0].clsResultat.SL_RESULTAT == 'TRUE') {
+              this.tab_req_en_cours_trait = [];
+    
+              for (let index = 0; index < this.ListeRetourRequete.length; index++) {
+                if (
+                  this.ListeRetourRequete[index].RQ_CODEREQUETE == this.reqcodeclient
+                ) {
+                  this.tab_req_en_cours_trait.push(this.ListeRetourRequete[index]);
+                }
+              }
+    
+              // traduction :: traduction de chaque bloc
+              for (
+                let index = 0;
+                index < this.tab_req_en_cours_trait.length;
+                index++
+              ) {
+                // verifier la langue en cours
+                this.tab_req_en_cours_trait[index].TR_LIBELLETYEREQUETE_TRANSLATE =
+                  this.Translate(
+                    this.tab_req_en_cours_trait[index].TR_LIBELLETYEREQUETE,
+                    this.LanguageService.langue_en_cours
+                  );
+    
+                this.tab_req_en_cours_trait[index].RE_LIBELLEETAPE_TRANSLATE =
+                  this.Translate(
+                    this.tab_req_en_cours_trait[index].RE_LIBELLEETAPE,
+                    this.LanguageService.langue_en_cours
+                  );
+              }
+              // traduction
+    
+              for (
+                let index = 0;
+                index < this.tab_req_en_cours_trait.length;
+                index++
+              ) {
+                if (
+                  this.ListeRetourRequete[index].RQ_CODEREQUETE == this.reqcodeclient
+                ) {
+                  // sauvegarde des infos
+                  sessionStorage.setItem(
+                    'infoReque',
+                    JSON.stringify(this.tab_req_en_cours_trait[index])
+                  );
+    
+                  break;
+                }
+              }
+    
+              this.Notification();
+              this._router.navigate(['/admin/reclamations/liste/SuiviRequete']);
+              // window.location.href = '/admin/reclamations/liste/SuiviRequete';
+            } else {
+              this.toastr.info(
+                this.ListeRetourRequete[0].clsResultat.SL_MESSAGE,
+                'info',
+                { positionClass: 'toast-bottom-left' }
+              );
+            }
+          },
+          (error) => {
+            this.AdminService.CloseLoader();
+            this.toastr.warning(
+              this.ListeRetourRequete[0].clsResultat.SL_MESSAGE,
+              'warning',
+              { positionClass: 'toast-bottom-left' }
+            );
+          }
+        );
       }
-    );
 
+      
+  
+    }
+   
     console.log('table_des_requetes', this.tab_req_en_cours_trait);
   }
 

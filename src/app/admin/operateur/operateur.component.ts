@@ -837,6 +837,7 @@ export class OperateurComponent {
         }
       );
     } else { */
+ 
     let body;
     // if (search_bar.substr(0, 1) === '0') {
     // dans le cas d'une recherche avec numero de telephone

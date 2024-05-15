@@ -1211,7 +1211,13 @@
                                     *ngIf="
                                       !recupinfo[0].CU_NOMUTILISATEUR.includes(
                                         'ADMIN'
-                                      )
+                                      ) && recupinfo[0].TU_CODETYPEUTILISATEUR == '0002' &&
+                                      ListRetourRequetes.RQ_DATESAISIEREQUETE !=
+                                        '01/01/1900' &&
+                                      ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE !=
+                                        '01/01/1900' &&
+                                      ListRetourRequetes.RQ_DATECLOTUREREQUETE !=
+                                        '01/01/1900'
                                     "
                                     ><i
                                       class="mdi mdi-animation-outline me-1"
@@ -1219,7 +1225,24 @@
                                     {{ LanguageService.suivi_reclam }}</a
                                   >
                                 </li>
-
+                                <li>
+                                  <!-- Suivi de la reclamation -->
+                                  <a
+                                    class="dropdown-item"
+                                    href="javascript:void(0);"
+                                    (click)="recupListe(ListRetourRequetes)"
+                                    routerLink="SuiviRequete"
+                                    *ngIf="
+                                      !recupinfo[0].CU_NOMUTILISATEUR.includes(
+                                        'ADMIN'
+                                      ) && recupinfo[0].TU_CODETYPEUTILISATEUR == '0001' 
+                                    "
+                                    ><i
+                                      class="mdi mdi-animation-outline me-1"
+                                    ></i>
+                                    {{ LanguageService.suivi_reclam }}</a
+                                  >
+                                </li>
                                 <!--<li>
                                     <hr class="dropdown-divider" />
                                   </li>

@@ -532,10 +532,22 @@ export class SuiviRequeteComponent {
 
     this.AdminService.SecuriteChampObligatoireEtTypeDeDonnee(tableau_recu);
     this.AdminService.TypeDeDonneeChampNonObligatoire(tableau_recu);
-    if (
+    if(this.recupinfo.RQ_CODEREQUETERELANCEE != ""){
+      this.toastr.error(
+        "Cette requête possède déjà une relance.",
+        'error',
+        { positionClass: 'toast-bottom-left' }
+      );
+    }if(this.recupinfo.NS_CODENIVEAUSATISFACTION == this.formulaire_avis[0].valeur){
+      this.toastr.error(
+        "Impossible de donner deux fois le même avis sur la requête.",
+        'error',
+        { positionClass: 'toast-bottom-left' }
+      );
+    }else if (
       this.AdminService.statut_traitement == true &&
       this.AdminService.statut_traitement_champ_non_obligatoire == true
-    ) {
+    ){
       var d = new Date();
       var date =
         d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
