@@ -1129,6 +1129,13 @@
                                 class="btn btn-text-secondary btn-icon rounded-pill dropdown-toggle hide-arrow p-0"
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
+                                *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR !='0002' || 
+                                      (recupinfo[0].TU_CODETYPEUTILISATEUR ==
+                                        '0002' &&
+                                        ListRetourRequetes.RQ_DATECLOTUREREQUETE !=
+                                        '01/01/1900'
+                                      )
+                                    "
                               >
                                 <i
                                   class="mdi mdi-dots-vertical mdi-24px text-muted"

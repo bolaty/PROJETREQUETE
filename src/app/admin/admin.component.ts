@@ -27,7 +27,6 @@ export class AdminComponent implements OnInit {
   reqmessageclient: any ;
   maVariableSubscription?: Subscription;
   code_requete: any;
-
    recupinfos: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
   constructor(
     public AdminService: AdminService,
@@ -981,7 +980,7 @@ export class AdminComponent implements OnInit {
       console.log('this.ListeNotification', this.ListeNotification);
       if (this.ListeNotification[0].clsResultat.SL_RESULTAT == 'TRUE') {
         this.nombreNotif = this.ListeNotification.length;
-
+        
         // formater les dates
         for (let index = 0; index < this.ListeNotification.length; index++) {
           // SM_DATEEMISSIONSMS
@@ -1379,23 +1378,29 @@ export class AdminComponent implements OnInit {
         this.AdminService.objetEcran[i].STATUTOBJET = 'O';
       }
     } else {
-      this.recupinfoDroitUser = JSON.parse(
-        sessionStorage.getItem('ListeDroitUsers') || ''
-      );
+      this.recupinfoDroitUser = sessionStorage.getItem('ListeDroitUsers') 
+      if(this.recupinfoDroitUser == null || this.recupinfoDroitUser == '') {
 
-      for (var i = 0; i < this.AdminService.objetEcran.length; i++) {
-        //@ts-ignore
-        const contientObjet = this.recupinfoDroitUser.some(
-          //@ts-ignore
-          (objet) => objet.DP_OBJET == this.AdminService.objetEcran[i].NOMOBJET
+      } else{
+        this.recupinfoDroitUser = JSON.parse(
+          sessionStorage.getItem('ListeDroitUsers') || ''
         );
-
-        if (contientObjet) {
-          this.AdminService.objetEcran[i].STATUTOBJET = 'O';
-        } else {
-          this.AdminService.objetEcran[i].STATUTOBJET = 'N';
+  
+        for (var i = 0; i < this.AdminService.objetEcran.length; i++) {
+          //@ts-ignore
+          const contientObjet = this.recupinfoDroitUser.some(
+            //@ts-ignore
+            (objet) => objet.DP_OBJET == this.AdminService.objetEcran[i].NOMOBJET
+          );
+  
+          if (contientObjet) {
+            this.AdminService.objetEcran[i].STATUTOBJET = 'O';
+          } else {
+            this.AdminService.objetEcran[i].STATUTOBJET = 'N';
+          }
         }
-      }
+      } 
+     
     }
   }
   ngOnDestroy(): void {
