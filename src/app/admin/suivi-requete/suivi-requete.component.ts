@@ -98,14 +98,14 @@ export class SuiviRequeteComponent {
       id: 'offcanvaSatisfaction',
       type: 'text',
       valeur: '',
-      obligatoire: 'N',
+      obligatoire: 'O',
       label: 'satisfaction',
     },
     {
       id: 'invoice-observation-avis',
       type: 'text',
       valeur: '',
-      obligatoire: 'N',
+      obligatoire: 'O',
       label: 'observation',
     },
   ];
@@ -532,10 +532,39 @@ export class SuiviRequeteComponent {
 
     this.AdminService.SecuriteChampObligatoireEtTypeDeDonnee(tableau_recu);
     this.AdminService.TypeDeDonneeChampNonObligatoire(tableau_recu);
-    if (
-      this.AdminService.statut_traitement == true &&
-      this.AdminService.statut_traitement_champ_non_obligatoire == true
+
+    /*if(this.recupinfo.RQ_CODEREQUETERELANCEE != ""){
+      this.toastr.error(
+        "Cette requête possède déjà une relance.",
+        'error',
+        { positionClass: 'toast-bottom-left' }
+      );
+    }else*/
+    if (this.formulaire_avis[0].valeur == '') {
+      /*this.toastr.error(
+        "le niveau de satisfaction est obligatoire",
+        'error',
+        { positionClass: 'toast-bottom-left' }
+      );*/
+    } else if (this.formulaire_avis[1].valeur == '') {
+      /*this.toastr.error(
+        "l'obsevation est obligatoire",
+        'error',
+        { positionClass: 'toast-bottom-left' }
+      );*/
+    } else if (this.recupinfo.NS_CODENIVEAUSATISFACTION == '002') {
+      this.toastr.error('Cette requête possède déjà une relance.', 'error', {
+        positionClass: 'toast-bottom-left',
+      });
+    } else if (
+      this.recupinfo.NS_CODENIVEAUSATISFACTION == this.formulaire_avis[0].valeur
     ) {
+      this.toastr.error(
+        'Impossible de donner deux fois le même avis sur la requête.',
+        'error',
+        { positionClass: 'toast-bottom-left' }
+      );
+    } else {
       var d = new Date();
       var date =
         d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();

@@ -411,7 +411,8 @@ export class ReclamationsComponent {
     let body = {
       Objets: [
         {
-          OE_PARAM: [this.recupinfo[0].AG_CODEAGENCE, '0001'],
+          //OE_PARAM: [this.recupinfo[0].AG_CODEAGENCE, '0001'],
+          OE_PARAM: ['0001'],
           clsObjetEnvoi: {
             ET_CODEETABLISSEMENT: '',
             AN_CODEANTENNE: '',
@@ -554,6 +555,7 @@ export class ReclamationsComponent {
         if (
           this.ListeComboAvisrecevabilite[0].clsResultat.SL_RESULTAT == 'TRUE'
         ) {
+          this.formulaire_avis[0].valeur = '01';
         } else {
         }
       },
@@ -2945,6 +2947,7 @@ export class ReclamationsComponent {
     let body = {
       Objets: [
         {
+          CU_CODECOMPTEUTULISATEUR: this.recupValEtape.CU_CODECOMPTEUTULISATEUR,
           CT_CODEREQUETECONTENTIEUX: '',
           CT_DATECLOTURECONTENTIEUX: '01/01/1900',
           CT_DATEOUVERTURECONTENTIEUX: date,
@@ -3122,6 +3125,7 @@ export class ReclamationsComponent {
     let body = {
       Objets: [
         {
+          CU_CODECOMPTEUTULISATEUR: this.recupValEtape.CU_CODECOMPTEUTULISATEUR,
           CT_CODEREQUETECONTENTIEUX: code_contentieux,
           CT_DATECLOTURECONTENTIEUX: date,
           CT_DATEOUVERTURECONTENTIEUX: '01/01/1900',

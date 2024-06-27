@@ -140,8 +140,8 @@
           </a>
         </li> -->
 
-        <!-- Reclamations -->
-        <li class="menu-item" routerLink="reclamations" *ngIf="AdminService.objetEcran[0].STATUTOBJET == 'O'">
+        <!-- Reclamations && AdminService.objetEcran[0].STATUTOBJET == 'O'-->
+        <li class="menu-item" routerLink="reclamations" *ngIf="(recupinfos[0].TU_CODETYPEUTILISATEUR == '0001' && AdminService.objetEcran[0].STATUTOBJET == 'O') || recupinfos[0].TU_CODETYPEUTILISATEUR == '0002'">
           <a style="cursor: pointer" class="menu-link">
             <span class="menu-icon tf-icons mdi mdi-alert-circle-check"></span>
             <div>{{ LanguageService.sidebar_menu_1 }}</div>
@@ -177,8 +177,8 @@
           class="menu-item"
           (click)="ChoixCreation('client')"
           *ngIf="
-            recupinfo[0].TU_CODETYPEUTILISATEUR != '0002' &&
-            !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') && AdminService.objetEcran[3].STATUTOBJET == 'O'
+            (recupinfo[0].TU_CODETYPEUTILISATEUR != '0002' &&
+            !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') && AdminService.objetEcran[3].STATUTOBJET == 'O') || recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')
           "
         >
           <a style="cursor: pointer" class="menu-link">
@@ -478,6 +478,7 @@
             <!-- Notification -->
             <li
               class="nav-item dropdown-notifications navbar-dropdown dropdown me-2 me-xl-1"
+              (click)="Notification()"
             >
               <a
                 class="nav-link btn btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow"
