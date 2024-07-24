@@ -80,8 +80,8 @@ export class ChangePasswordComponent {
       let Options = 'RequeteClientsClasse.svc/pvgUpdateFirstconnexion';
 
       let body = {
-        // TU_CODETYPEUTILISATEUR: '0001', // personnalisable // operateur
-        TU_CODETYPEUTILISATEUR: '0002', // personnalisable // client
+        TU_CODETYPEUTILISATEUR: '0001', // personnalisable // operateur
+        // TU_CODETYPEUTILISATEUR: '0002', // personnalisable // client
         CU_MOTDEPASSEOLD: this.formulaire_change_mdp[2].valeur,
         CU_LOGINOLD: this.formulaire_change_mdp[0].valeur,
         CU_MOTDEPASSENEW: this.formulaire_change_mdp[4].valeur,

@@ -22,7 +22,7 @@ export class AuthService {
   // LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
   LienServeur: any =
     'https://reclamationgesciserveurtest.mgdigitalplus.com:5803/'; // lien test gesci
-  user_connecte: boolean = false; // true designe la connexion d'un operateur et false celui d'un client // personnalisable
+  user_connecte: boolean = true; // true designe la connexion d'un operateur et false celui d'un client // personnalisable
 
   constructor(private http: HttpClient) {
     Network.addListener(

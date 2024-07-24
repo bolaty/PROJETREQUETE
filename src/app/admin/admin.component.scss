@@ -12,3 +12,16 @@
   max-height: 300px; /* Définissez la hauteur maximale que vous souhaitez pour la zone de notifications */
   overflow-y: auto; /* Activez le défilement vertical lorsque la zone de notifications dépasse la hauteur maximale */
 }
+
+// Définir les couleurs en RGBA
+$light-green: rgba(168, 230, 207, 1); // Vert clair
+$dark-green: rgba(56, 142, 60, 1); // Vert foncé
+
+.active-link {
+  background-color: linear-gradient(
+    188deg,
+    rgba(34, 193, 195, 1) 0%,
+    rgba(140, 122, 83, 1) 100%
+  );
+  font-weight: 500;
+}
