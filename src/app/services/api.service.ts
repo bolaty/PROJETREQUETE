@@ -10,8 +10,8 @@ export class ApiService {
 
   //LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
-  LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
-
+  //LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
+  LienServeur: any = 'https://reclamationserveurtest.mgdigitalplus.com:1041/'; // lien test local remuci•
   /* postData(url: string, data: any, fullUrl: boolean = false) {
     const headers = new HttpHeaders({
       Accept: 'application/json',

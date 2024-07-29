@@ -802,10 +802,13 @@ export class DashboardComponent {
 
   ngOnInit(): void {
     //this.DataDashboard();
-    this.DataDashboardSTATISTIQUE();
+   // this.DataDashboardSTATISTIQUE();
     if (!sessionStorage.getItem('isLoggedIn')) {
       window.location.href = '/auth';
     }
+    setTimeout(() => {
+      this.DataDashboardSTATISTIQUE();
+    }, 1000);
     /* for (let index = 0; index < this.table_id_pie.length; index++) {
       this.FormationChartPie(this.table_id_pie[index]);
     }

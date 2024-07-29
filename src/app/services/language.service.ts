@@ -134,6 +134,9 @@ export class LanguageService {
   info_cli_sub_title_1: string = '';
   info_cli_sub_title_2: string = '';
   info_cli_sub_title_3: string = '';
+  info_cli_sub_titleop_1: string = '';
+  info_cli_sub_titleop_2: string = '';
+  info_cli_sub_titleop_3: string = '';
   attr_reclam_title: string = '';
   attr_reclam_sub_title: string = '';
   attr_reclam_message_1: string = '';
@@ -402,6 +405,9 @@ export class LanguageService {
     this.info_cli_sub_title_1 = this.getTranslation('info_cli_sub_title_1');
     this.info_cli_sub_title_2 = this.getTranslation('info_cli_sub_title_2');
     this.info_cli_sub_title_3 = this.getTranslation('info_cli_sub_title_3');
+    this.info_cli_sub_titleop_1 = this.getTranslation('info_cli_sub_titleop_1');
+    this.info_cli_sub_titleop_2 = this.getTranslation('info_cli_sub_titleop_2');
+    this.info_cli_sub_titleop_3 = this.getTranslation('info_cli_sub_titleop_3');
     this.attr_reclam_title = this.getTranslation('attr_reclam_title');
     this.attr_reclam_sub_title = this.getTranslation('attr_reclam_sub_title');
     this.attr_reclam_message_1 = this.getTranslation('attr_reclam_message_1');

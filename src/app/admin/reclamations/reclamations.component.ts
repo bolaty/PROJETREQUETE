@@ -19,8 +19,8 @@ declare var $: any;
 export class ReclamationsComponent {
   //LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
-  LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
-
+  //LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
+  LienServeur: any = 'https://reclamationserveurtest.mgdigitalplus.com:1041/'; // lien test local remuci•
   maVariableSubscription?: Subscription;
 
   recupinfo: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
@@ -1155,13 +1155,13 @@ export class ReclamationsComponent {
             d.getFullYear();
           console.log(date);
         }
-
+        var CodeAgenceUtilisateur = this.formulaire_attr_reclamations[0].valeur.substring(0, 4);
         let Options = 'RequeteClientsClasse.svc/pvgMajReqrequeteEtape'; // le chemin d'appel du service web
         //objet d'envoi
         let body = {
           Objets: [
             {
-              AG_CODEAGENCE: this.recupinfo[0].AG_CODEAGENCE,
+              AG_CODEAGENCE: CodeAgenceUtilisateur ,//this.recupinfo[0].AG_CODEAGENCE,
               AT_DATECLOTUREETAPE: '01/01/1900',
               AT_DATEDEBUTTRAITEMENTETAPE:
                 this.formulaire_attr_reclamations[1].valeur,
@@ -1455,7 +1455,7 @@ export class ReclamationsComponent {
   ListeConsultationselonEtape() {
     let Option = 'RequeteClientsClasse.svc/pvgListeReqrequeteEtapeConsultation';
     var recuperation = JSON.parse(sessionStorage.getItem('infoReque') || '');
-
+    var CodeAgenceUtilisateur = recuperation.CU_CODECOMPTEUTULISATEURASSOCIER.substring(0, 4);
     let body;
 
     if (
@@ -1468,7 +1468,7 @@ export class ReclamationsComponent {
         Objets: [
           {
             OE_PARAM: [
-              this.recupinfo[0].AG_CODEAGENCE,
+              CodeAgenceUtilisateur,//this.recupinfo[0].AG_CODEAGENCE,
               recuperation.RQ_CODEREQUETERELANCEE,
               '',
               '',
@@ -1487,7 +1487,7 @@ export class ReclamationsComponent {
         Objets: [
           {
             OE_PARAM: [
-              this.recupinfo[0].AG_CODEAGENCE,
+              CodeAgenceUtilisateur,//this.recupinfo[0].AG_CODEAGENCE,
               recuperation.RQ_CODEREQUETE,
               '',
               '',
@@ -3873,7 +3873,7 @@ export class ReclamationsComponent {
     let body = {
       Objets: [
         {
-          OE_PARAM: [req_item.CU_CODECOMPTEUTULISATEUR],
+          OE_PARAM: [req_item.CU_CODECOMPTEUTULISATEUR,req_item.CU_CODECOMPTEUTULISATEURASSOCIER],
         },
       ],
     };

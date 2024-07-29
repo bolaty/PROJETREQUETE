@@ -25,8 +25,9 @@ export class EtatSuiviComponent implements OnInit {
 
   //LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
-  LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
-
+ // LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
+  LienServeur: any = 'https://reclamationserveurtest.mgdigitalplus.com:1041/'; // lien test local remuci• bly
+ 
   APP_URL: any = `${this.LienServeur}RequeteClientsClasse.svc/pvgTableauDeBord`;
   info_session: any = JSON.parse(sessionStorage.getItem('info_etat') || '');
   statusForms: any = JSON.parse(sessionStorage.getItem('statusForm') || '');

@@ -34,7 +34,9 @@ export class AdminComponent implements OnInit {
     public LanguageService: LanguageService,
     private toastr: ToastrService
   ) {}
-
+  routeDashboard(){
+    window.location.href ='admin/dashboard'
+  }
   Deconnexion() {
     // $.removeCookie('isLoggedIn', { path: '/' });
     sessionStorage.clear();
