@@ -17,7 +17,7 @@ declare var $: any;
   styleUrls: ['./reclamations.component.scss'],
 })
 export class ReclamationsComponent {
-  //LienServeur: any = 'http://localhost:22248/'; // lien dev
+  // LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
   //LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
   LienServeur: any = 'https://reclamationserveurtest.mgdigitalplus.com:1041/'; // lien test local remuci•
@@ -555,7 +555,7 @@ export class ReclamationsComponent {
         if (
           this.ListeComboAvisrecevabilite[0].clsResultat.SL_RESULTAT == 'TRUE'
         ) {
-          this.formulaire_avis[0].valeur = "01";
+          this.formulaire_avis[0].valeur = '01';
         } else {
         }
       },
@@ -2947,8 +2947,7 @@ export class ReclamationsComponent {
     let body = {
       Objets: [
         {
-          CU_CODECOMPTEUTULISATEUR:
-                this.recupValEtape.CU_CODECOMPTEUTULISATEUR,
+          CU_CODECOMPTEUTULISATEUR: this.recupValEtape.CU_CODECOMPTEUTULISATEUR,
           CT_CODEREQUETECONTENTIEUX: '',
           CT_DATECLOTURECONTENTIEUX: '01/01/1900',
           CT_DATEOUVERTURECONTENTIEUX: date,
@@ -3126,8 +3125,7 @@ export class ReclamationsComponent {
     let body = {
       Objets: [
         {
-          CU_CODECOMPTEUTULISATEUR:
-                this.recupValEtape.CU_CODECOMPTEUTULISATEUR,
+          CU_CODECOMPTEUTULISATEUR: this.recupValEtape.CU_CODECOMPTEUTULISATEUR,
           CT_CODEREQUETECONTENTIEUX: code_contentieux,
           CT_DATECLOTURECONTENTIEUX: date,
           CT_DATEOUVERTURECONTENTIEUX: '01/01/1900',

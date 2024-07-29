@@ -16,7 +16,7 @@ declare var $: any;
   styleUrls: ['./suivi-requete.component.scss'],
 })
 export class SuiviRequeteComponent {
-  //LienServeur: any = 'http://localhost:22248/'; // lien dev
+  // LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
   //LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
   LienServeur: any = 'https://reclamationserveurtest.mgdigitalplus.com:1041/'; // lien test local remuci• bly
@@ -533,7 +533,7 @@ export class SuiviRequeteComponent {
 
     this.AdminService.SecuriteChampObligatoireEtTypeDeDonnee(tableau_recu);
     this.AdminService.TypeDeDonneeChampNonObligatoire(tableau_recu);
-   
+
     /*if(this.recupinfo.RQ_CODEREQUETERELANCEE != ""){
       this.toastr.error(
         "Cette requête possède déjà une relance.",
@@ -541,32 +541,31 @@ export class SuiviRequeteComponent {
         { positionClass: 'toast-bottom-left' }
       );
     }else*/
-    if(this.formulaire_avis[0].valeur == ""){
-     /*this.toastr.error(
+    if (this.formulaire_avis[0].valeur == '') {
+      /*this.toastr.error(
         "le niveau de satisfaction est obligatoire",
         'error',
         { positionClass: 'toast-bottom-left' }
       );*/
-    }else
-    if(this.formulaire_avis[1].valeur == ""){
+    } else if (this.formulaire_avis[1].valeur == '') {
       /*this.toastr.error(
         "l'obsevation est obligatoire",
         'error',
         { positionClass: 'toast-bottom-left' }
       );*/
-    }else if(this.recupinfo.NS_CODENIVEAUSATISFACTION == "002"){
+    } else if (this.recupinfo.NS_CODENIVEAUSATISFACTION == '002') {
+      this.toastr.error('Cette requête possède déjà une relance.', 'error', {
+        positionClass: 'toast-bottom-left',
+      });
+    } else if (
+      this.recupinfo.NS_CODENIVEAUSATISFACTION == this.formulaire_avis[0].valeur
+    ) {
       this.toastr.error(
-        "Cette requête possède déjà une relance.",
+        'Impossible de donner deux fois le même avis sur la requête.',
         'error',
         { positionClass: 'toast-bottom-left' }
       );
-    }else if(this.recupinfo.NS_CODENIVEAUSATISFACTION == this.formulaire_avis[0].valeur){
-      this.toastr.error(
-        "Impossible de donner deux fois le même avis sur la requête.",
-        'error',
-        { positionClass: 'toast-bottom-left' }
-      );
-    }else {
+    } else {
       var d = new Date();
       var date =
         d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
