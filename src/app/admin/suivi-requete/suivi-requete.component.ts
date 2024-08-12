@@ -415,6 +415,9 @@ export class SuiviRequeteComponent {
               this.base64Image == undefined ||
               this.base64Image == null
             ) {
+              setTimeout(() => {
+                 window.location.href='admin/reclamations/liste'
+              }, 2000);
             } else {
               this.SaveRapport();
             }
@@ -513,6 +516,9 @@ export class SuiviRequeteComponent {
               this.recupEnregistrerFichier.clsResultat.SL_RESULTAT == 'FALSE'
             ) {
             } else {
+              setTimeout(() => {
+                window.location.href='admin/reclamations/liste'
+             }, 2000);
             }
           },
           (error: any) => {

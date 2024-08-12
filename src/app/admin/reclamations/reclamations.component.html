@@ -526,7 +526,7 @@
                                   "
                                 >
                                   <option
-                                    *ngFor="let ListAgence of ListeComboAgence"
+                                    *ngFor="let ListAgence of ListeComboAgenceParOperateur"
                                     value="{{ ListAgence.AG_CODEAGENCE }}"
                                   >
                                     {{ ListAgence.AG_RAISONSOCIAL_TRANSLATE }}
@@ -2594,7 +2594,7 @@
                         >
                           <option
                             *ngFor="
-                              let ListComboOperateur of ListeComboOperateur
+                              let ListComboOperateur of ListeComboParOperateur
                             "
                             value="{{
                               ListComboOperateur.CU_CODECOMPTEUTULISATEUR

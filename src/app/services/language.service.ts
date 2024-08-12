@@ -236,6 +236,7 @@ export class LanguageService {
 
   // language
   changeLanguage(lang: string): void {
+    sessionStorage.setItem('langselect', lang);
     this.langue_en_cours = lang;
     this.setLanguage(lang);
     // this.updateTranslations();

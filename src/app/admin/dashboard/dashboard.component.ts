@@ -808,6 +808,10 @@ export class DashboardComponent {
     }
     setTimeout(() => {
       this.DataDashboardSTATISTIQUE();
+      if (sessionStorage.getItem('langselect')) {
+       var lg =  sessionStorage.getItem('langselect') || ''
+       this.languageService.changeLanguage(lg)
+      }
     }, 1000);
     /* for (let index = 0; index < this.table_id_pie.length; index++) {
       this.FormationChartPie(this.table_id_pie[index]);

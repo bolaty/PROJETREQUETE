@@ -257,6 +257,8 @@ export class ReclamationsComponent {
   retourRequeteEnregistrement: any = [];
   ListeRetourRequete: any = [];
   ListeComboOperateur: any = [];
+  ListeComboParOperateur: any = [];
+  ListeComboAgenceParOperateur: any = [];
   ListeTypeRequete_1: any = [];
   ListeComboAvisrecevabilite: any = [];
   tab_enregistrement_traitement: any = [];
@@ -333,14 +335,20 @@ export class ReclamationsComponent {
         this.ListeComboAgence = this.ListeComboAgence.pvgReqAgenceComboResult;
         if (this.ListeComboAgence[0].clsResultat.SL_RESULTAT == 'TRUE') {
           // traduction combo agence
+         this.ListeComboAgenceParOperateur = []
+         var agenceOp = this.recupinfo[0].CU_CODECOMPTEUTULISATEUR.substring(0, 4)
           for (let index = 0; index < this.ListeComboAgence.length; index++) {
-            this.ListeComboAgence[index].AG_RAISONSOCIAL_TRANSLATE =
+            if(agenceOp == this.ListeComboAgence[index].AG_CODEAGENCE){
+              this.ListeComboAgence[index].AG_RAISONSOCIAL_TRANSLATE =
               this.Translate(
                 this.ListeComboAgence[index].AG_RAISONSOCIAL,
                 this.LanguageService.langue_en_cours
               );
+              this.ListeComboAgenceParOperateur.push(this.ListeComboAgence[index])
+            }
+            
           }
-
+          
           this.ComboEtapeParam();
         } else {
         }
@@ -3341,13 +3349,23 @@ export class ReclamationsComponent {
           this.ListeClients =
             this.ListeClients.pvgListeUtilisateursRechercheResult;
           if (this.ListeClients[0].clsResultat.SL_RESULTAT == 'TRUE') {
+            var agenceOp = this.recupinfo[0].CU_CODECOMPTEUTULISATEUR.substring(0, 4)
             this.AdminService.CloseLoader();
-            this.toastr.success(
-              this.ListeClients[0].clsResultat.SL_MESSAGE,
-              'success',
-              { positionClass: 'toast-bottom-left' }
-            );
-            this.statutClientExiste = false;
+            if(this.ListeClients[0].AG_CODEAGENCE == agenceOp){
+              this.toastr.success(
+                this.ListeClients[0].clsResultat.SL_MESSAGE,
+                'success',
+                { positionClass: 'toast-bottom-left' }
+              );
+              this.statutClientExiste = false;
+            }else{
+              this.toastr.error(
+                "Operation impossbile ce client n'appartient pas à votre agence !!!",
+                'error',
+                { positionClass: 'toast-bottom-left' }
+              );
+            }
+            
           } else {
             this.AdminService.CloseLoader();
             this.toastr.error(
@@ -3452,7 +3470,15 @@ export class ReclamationsComponent {
         info.CU_CODECOMPTEUTULISATEUR;
     }
     // this.ComboEtapeParamSimple()
-
+    this.ListeComboParOperateur = []
+    var agenceReq = this.recupValEtape.CU_CODECOMPTEUTULISATEUR.substring(0, 4)
+    var agenceOp = ""
+    for(var i = 0; i < this.ListeComboOperateur.length; i++) {
+      agenceOp = this.ListeComboOperateur[i].CU_CODECOMPTEUTULISATEUR.substring(0, 4)
+      if(agenceReq == agenceOp){
+        this.ListeComboParOperateur.push(this.ListeComboOperateur[i])
+      }
+    }
     /* if (info.RQ_NOMRAPPORT != '') this.consultation_doc_req = true;
     else this.consultation_doc_req = false; */
     for (let index = 0; index < this.formulaire_avis.length; index++) {
