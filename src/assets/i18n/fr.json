@@ -285,6 +285,7 @@
   "step_treatment_7": "OBSERVATION ANNULATION CLOTURE DEFINITIVE",
   "step_treatment_8": "DATE SAISIE RECLAMATION",
   "step_treatment_9": "DOCUMENT",
+  "step_treatment_10": "OPERATEUR TRAITEUR",
   "clo_def_title": "Clôture définitive",
   "clo_def_sub_title": "Clôturez définitivement",
   "clo_def_title_step": "Etapes",

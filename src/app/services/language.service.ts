@@ -157,6 +157,7 @@ export class LanguageService {
   step_treatment_7: string = '';
   step_treatment_8: string = '';
   step_treatment_9: string = '';
+  step_treatment_10: string = '';
   clo_def_title: string = '';
   clo_def_sub_title: string = '';
   clo_def_title_step: string = '';
@@ -433,6 +434,7 @@ export class LanguageService {
     this.step_treatment_7 = this.getTranslation('step_treatment_7');
     this.step_treatment_8 = this.getTranslation('step_treatment_8');
     this.step_treatment_9 = this.getTranslation('step_treatment_9');
+    this.step_treatment_10 = this.getTranslation('step_treatment_10');
     this.clo_def_title = this.getTranslation('clo_def_title');
     this.clo_def_sub_title = this.getTranslation('clo_def_sub_title');
     this.clo_def_title_step = this.getTranslation('clo_def_title_step');

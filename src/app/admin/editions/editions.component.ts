@@ -22,11 +22,13 @@ export class EditionsComponent {
   affiche_option_2: boolean = false;
   affiche_option_3: boolean = false;
   affiche_option_4: boolean = false;
+  affiche_option_5: boolean = false;
   invoice_label: any = '';
   active_1: any = '';
   active_2: any = '';
   active_3: any = '';
   active_4: any = '';
+  active_5: any = '';
   tab_exercice: any = [];
   tab_agence: any = [];
   recuptab_agence: any = [];
@@ -179,11 +181,12 @@ export class EditionsComponent {
 
   SelectInvoice(etat: any) {
     this.invoice_label = etat;
-    this.active_1 = this.active_2 = this.active_3 = this.active_4 ='';
+    this.active_1 = this.active_2 = this.active_3 = this.active_4 = this.active_4 ='';
     this.affiche_option_1 =
       this.affiche_option_2 =
       this.affiche_option_3 =
       this.affiche_option_4 =
+      this.affiche_option_5 =
         false;
 
     if (etat == 'bceao') {
@@ -195,6 +198,9 @@ export class EditionsComponent {
     }else if (etat == 'statistiquehebdomadaire') {
       this.active_4 = 'active';
       this.affiche_option_4 = true;
+    }else if (etat == 'frequencetransmission') {
+      this.active_5 = 'active';
+      this.affiche_option_5 = true;
     } else {
       this.active_3 = 'active';
       this.affiche_option_3 = true;
@@ -418,7 +424,7 @@ export class EditionsComponent {
         PE_CODEPERIODICITE: periodicite,
       };
     }
-    if (this.affiche_option_3 == true) {
+    if (this.affiche_option_3 == true || this.affiche_option_5 == true) {
       body = {
         EX_EXERCICE: this.formulaire_edition_3[1].valeur, //this.info_connexion[0].EX_EXERCICE,
         MO_CODEMOIS: periode,
@@ -449,7 +455,7 @@ export class EditionsComponent {
             this.formulaire_edition_1[5].valeur = '';
             this.formulaire_edition_3[4].valeur = '';
             this.formulaire_edition_3[5].valeur = '';
-          } else if (this.invoice_label == 'frequence') {
+          } else if (this.invoice_label == 'frequence' || this.invoice_label == 'frequencetransmission') {
             this.formulaire_edition_3[4].valeur = this.tab_date[0].MO_DATEDEBUT;
             this.formulaire_edition_3[5].valeur = this.tab_date[0].MO_DATEFIN;
 
@@ -479,7 +485,7 @@ export class EditionsComponent {
             this.formulaire_edition_1[5].valeur = '';
             this.formulaire_edition_3[4].valeur = '';
             this.formulaire_edition_3[5].valeur = '';
-          } else if (this.invoice_label == 'frequence') {
+          } else if (this.invoice_label == 'frequence' || this.invoice_label == 'frequencetransmission') {
             this.formulaire_edition_3[4].valeur = this.tab_date[0].MO_DATEDEBUT;
             this.formulaire_edition_3[5].valeur = this.tab_date[0].MO_DATEFIN;
 
@@ -711,7 +717,7 @@ export class EditionsComponent {
         ); 
         window.open('/admin/etat-suivi', '_blank');
       }
-    } else if (this.invoice_label == 'frequence') {
+    } else if (this.invoice_label == 'frequence' || this.invoice_label == 'frequencetransmission') {
       this.formulaire_edition_3[0].valeur = this.valAgence;
       /*this.recuptab_agence = [];
       for (
@@ -773,6 +779,10 @@ export class EditionsComponent {
         sessionStorage.setItem(
           'info_etat',
           JSON.stringify(this.formulaire_edition_3)
+        );
+        sessionStorage.setItem(
+          'info_etattypefrequence',
+          JSON.stringify(this.invoice_label)
         );
         window.open('/admin/frequence-reception', '_blank');
       }

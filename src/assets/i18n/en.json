@@ -285,6 +285,7 @@
   "step_treatment_7": "OBSERVATION CANCELLATION FINAL CLOSURE",
   "step_treatment_8": "DATE CLAIM ENTERED",
   "step_treatment_9": "DOCUMENT",
+  "step_treatment_10": "CATERER OPERATOR",
   "clo_def_title": "Final closure",
   "clo_def_sub_title": "Close permanently",
   "clo_def_title_step": "Steps",

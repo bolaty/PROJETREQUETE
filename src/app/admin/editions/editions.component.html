@@ -77,6 +77,19 @@
                     >
                   </button>
                 </li>
+                <li class="nav-item" *ngIf="AdminService.objetEcran[10].STATUTOBJET == 'O'">
+                  <button
+                    class="nav-link {{ active_5 }}"
+                    data-bs-toggle="tab"
+                    data-bs-target="#etat_frequencetransmission"
+                    (click)="SelectInvoice('frequencetransmission')"
+                  >
+                    <i class="mdi mdi-cube-outline me-2"></i>
+                    <span class="align-middle"
+                      >Fréquence de transmission des reclamations</span
+                    >
+                  </button>
+                </li>
               </ul>
             </div>
           </div>
@@ -769,6 +782,203 @@
                   </div>
                 </div>
               </div>
+              <div
+              class="tab-pane fade show"
+              id="etat_frequencetransmission"
+              role="tabpanel"
+            >
+              <h6 class="text-body" *ngIf="affiche_option_5">Options</h6>
+              <div class="row mb-3 g-3" *ngIf="affiche_option_5">
+                <!-- agence -->
+
+                <div
+                class="form-floating form-floating-outline col-12 col-sm-12 col-lg-12 col-xxl-12"
+                >
+                <div class="card">
+                  <h5 class="card-header">Agence </h5>
+                  <span class="custom-option-header" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size: 15px;margin-left: 80%;">
+                    Tout cocher
+                  </span>
+                  <input class="form-check-input" type="checkbox" (change)="toggleAllCheckboxes($event)" id="checkAll" style="margin-left: 80%;"/>
+                  <div class="card-body">
+                      <div class="row" id="idAgence">
+                          <div class="col-md-3 mb-md-0 mb-2" *ngFor="let item_agence of tab_agence;let index=index">
+                              <div class="form-check custom-option custom-option-label custom-option-basic">
+                                  <label class="form-check-label custom-option-content" for="customCheckTemp5{{index}}">
+                                      <input class="form-check-input" type="checkbox" [(ngModel)]="item_agence.isChecked" (change)="VerifyTabAgence(item_agence.AG_CODEAGENCE,item_agence.AG_RAISONSOCIAL_TRANSLATE)" value="{{ item_agence.AG_CODEAGENCE }}" id="customCheckTemp5{{index }}" />
+                                      <span class="custom-option-header">
+                                          <span class="mb-0" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size: 10px;">{{ item_agence.AG_RAISONSOCIAL_TRANSLATE }}</span>
+                                      </span>
+                                  </label>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+                <!--<div class="card">
+                  <h5 class="card-header">Agence</h5>
+                  <div class="card-body">
+                    <div class="row" id="idAgence">
+                      <div  class="col-md-3 mb-md-0 mb-2" *ngFor="let item_agence of tab_agence;let index=index">
+                        <div class="form-check custom-option custom-option-label custom-option-basic">
+                          <label class="form-check-label custom-option-content" for="customCheckTemp5{{index}}">
+                            <input class="form-check-input" type="checkbox"  (change)="VerifyTabAgence(item_agence.AG_CODEAGENCE,item_agence.AG_RAISONSOCIAL_TRANSLATE)" value="{{ item_agence.AG_CODEAGENCE }}" id="customCheckTemp5{{index}}"  />
+                            <span class="custom-option-header">
+                              <span class=" mb-0" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size: 10px;">{{ item_agence.AG_RAISONSOCIAL_TRANSLATE }}</span>
+                            </span>
+                            
+                          </label>
+                        </div>
+                      </div>
+                    
+                    </div>
+                  </div>
+                </div>-->
+               </div>
+
+
+              <!-- <div
+                  class="form-floating form-floating-outline col-12 col-sm-8 col-lg-12 col-xxl-8"
+                >
+                  <select
+                    class="form-select"
+                    id="idAgence"
+                    multiple
+                    #agence
+                    style="height: 150px;"
+                    required
+                    [(ngModel)]="formulaire_edition_3[0].valeur"
+                  >
+                    <option value="">Selectionnez une agence</option>
+                    <option
+                      *ngFor="let item_agence of tab_agence"
+                      value="{{ item_agence.AG_CODEAGENCE }}"
+                    >
+                      {{ item_agence.AG_RAISONSOCIAL_TRANSLATE }}
+                    </option>
+                  </select>
+                  <label for="idAgence">Agence</label>
+                </div>-->
+
+                
+
+                <!-- exercice -->
+                <div
+                  class="form-floating form-floating-outline col-12 col-sm-8 col-lg-12 col-xxl-8"
+                >
+                  <select
+                    class="form-select"
+                    id="idExercice"
+                    required
+                    (change)="resetdate3()"
+                    [(ngModel)]="formulaire_edition_3[1].valeur"
+                  >
+                    <option value="">Selectionnez un exercice</option>
+                    <option
+                      *ngFor="let item_exercice of tab_exercice"
+                      value="{{ item_exercice.EX_EXERCICE }}"
+                    >
+                      {{ item_exercice.EX_EXERCICE }}
+                    </option>
+                  </select>
+                  <label for="idExercice">Exercice</label>
+                </div>
+                <!-- bouton de confirmation -->
+                <div class="col-6 col-sm-4 d-grid col-lg-6 col-xxl-4">
+                  <button
+                    class="bttn btn btn-primary btn-lg"
+                    (click)="ConfirmationOptions('')"
+                  >
+                    <i class="mdi mdi-check me-2"></i
+                    >{{ LanguageService.edit_btn_confirm }}
+                  </button>
+                </div>
+                <!-- bouton de confirmation -->
+                <!-- periodicité -->
+                <div
+                  class="form-floating form-floating-outline col-12 col-sm-8 col-lg-12 col-xxl-8"
+                >
+                  <select
+                    class="form-select"
+                    id="idPeriodicite"
+                    required
+                    [(ngModel)]="formulaire_edition_3[2].valeur"
+                    (change)="
+                      ListeComboPeriode(formulaire_edition_3[2].valeur)
+                    "
+                  >
+                    <option value="">Selectionnez une périodicité</option>
+                    <option
+                      *ngFor="let item_periodicite of tab_periodicite"
+                      value="{{ item_periodicite.PE_CODEPERIODICITE }}"
+                    >
+                      {{ item_periodicite.PE_LIBELLE }}
+                    </option>
+                  </select>
+                  <label for="idPeriodicite">Périodicité</label>
+                </div>
+
+                <!-- periode -->
+                <div
+                  class="form-floating form-floating-outline col-12 col-sm-8 col-lg-12 col-xxl-8"
+                >
+                  <select
+                    class="form-select"
+                    id="idPeriode"
+                    required
+                    (change)="
+                      ChangeDate(
+                        formulaire_edition_3[2].valeur,
+                        formulaire_edition_3[3].valeur
+                      )
+                    "
+                    [(ngModel)]="formulaire_edition_3[3].valeur"
+                  >
+                    <option value="">Selectionnez une période</option>
+                    <option
+                      *ngFor="let item_periode of tab_periode"
+                      value="{{ item_periode.MO_CODEMOIS }}"
+                    >
+                      {{ item_periode.MO_LIBELLE }}
+                    </option>
+                  </select>
+                  <label for="idPeriode">Période</label>
+                </div>
+
+                <!-- date de debut -->
+                <div class="col-12 col-sm-8 col-lg-12 col-xxl-8">
+                  <div class="form-floating form-floating-outline">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="idDateDebut"
+                      placeholder="Entrez une option"
+                      name="quantity"
+                      aria-label="Quantity"
+                      [(ngModel)]="formulaire_edition_3[4].valeur"
+                    />
+                    <label for="idDateDebut">Date de début</label>
+                  </div>
+                </div>
+
+                <!-- date de fin -->
+                <div class="col-12 col-sm-8 col-lg-12 col-xxl-8">
+                  <div class="form-floating form-floating-outline">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="idDateFin"
+                      placeholder="Entrez une option"
+                      name="quantity"
+                      aria-label="Quantity"
+                      [(ngModel)]="formulaire_edition_3[5].valeur"
+                    />
+                    <label for="idDateFin">Date de fin</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
             </div>
           </div>
           <!-- /Options-->

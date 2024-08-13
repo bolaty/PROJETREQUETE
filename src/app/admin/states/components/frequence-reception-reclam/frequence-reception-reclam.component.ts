@@ -19,18 +19,19 @@ export class FrequenceReceptionReclamComponent implements OnInit {
     public AdminService: AdminService
   ) {}
 
-  // LienServeur: any = 'http://localhost:22248/'; // lien dev
+  LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
   //LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
-  LienServeur: any = 'https://reclamationserveurtest.mgdigitalplus.com:1041/'; // lien test local remuci• bly
+  //LienServeur: any = 'https://reclamationserveurtest.mgdigitalplus.com:1041/'; // lien test local remuci• bly
   
   APP_URL: any = `${this.LienServeur}RequeteClientsClasse.svc/pvgFrequenceReclamation`;
   postData: any;
   total: any;
   info_session: any = JSON.parse(sessionStorage.getItem('info_etat') || '');
+  Info_sessionFrequence: any = JSON.parse(sessionStorage.getItem('info_etattypefrequence') || '');
   info_connexion: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
   tab_retour: any = [];
-
+  LibelleEtat: any = " FREQUENCE DE RECEPTION DES RECLAMATIONS PAR CLIENT DU" 
   get CurrentDate(): string {
     return this.FormatDate('/Date(' + Date.now() + ')/', true);
   }
@@ -47,6 +48,14 @@ export class FrequenceReceptionReclamComponent implements OnInit {
     this.AdminService.showMenu = true;
     this.AdminService.ShowLoader();
     setTimeout(() => {
+
+      if(this.Info_sessionFrequence != 'frequencetransmission'){
+        this.LibelleEtat = " FREQUENCE DE RECEPTION DES RECLAMATIONS PAR CLIENT DU" 
+      }else{
+        this.LibelleEtat = " FREQUENCE DE TRANSMISSION DES REQUETE PAR OPERATEUR DU" 
+      }
+
+
       this.route.queryParams.subscribe((params) => {
         this.postData = {
           AG_CODEAGENCE: this.info_session[0].valeur,
@@ -54,7 +63,7 @@ export class FrequenceReceptionReclamComponent implements OnInit {
           RQ_DATEFIN: this.info_session[5].valeur,
           CU_CODECOMPTEUTULISATEUR:
             this.info_connexion[0].CU_CODECOMPTEUTULISATEUR,
-          TYPEETAT: 'TSCLT',
+          TYPEETAT: this.Info_sessionFrequence != 'frequencetransmission' ? 'TSCLT'  : 'TRCLT',
         };
 
         this.apiService

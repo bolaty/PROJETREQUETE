@@ -250,6 +250,14 @@ export class LoginComponent {
           'ListeDroitUsers',
           JSON.stringify(this.ListeDroitUser)
         );
+
+        if(this.ListeDroitUser[11].DP_STATUT == 'O') {
+          this.RetoursChargement[0].CU_NOMUTILISATEUR = this.RetoursChargement[0].CU_NOMUTILISATEUR + "ADMIN SPECIAL"
+          sessionStorage.setItem(
+            'infoLogin',
+            JSON.stringify(this.RetoursChargement)
+          );
+        }
         window.location.href = '/admin';
       },
       (error) => {}
