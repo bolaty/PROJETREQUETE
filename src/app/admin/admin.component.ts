@@ -938,14 +938,27 @@ export class AdminComponent implements OnInit {
     this.recupinfo = JSON.parse(sessionStorage.getItem('infoLogin') || '');
     var statusOp = 'N';
     var datejrouagence = '01/01/1900';
-    var d = new Date();
+   /* var d = new Date();
     var date = d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
     var jour = d.getDate();
     if (jour < 10) {
       var date =
         '0' + d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
       console.log(date);
-    }
+    }*/
+      var d = new Date();
+      var jour = d.getDate();
+      var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
+      var annee = d.getFullYear();
+
+      // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
+      var date =
+        (jour < 10 ? '0' + jour : jour) +
+        '-' +
+        (mois < 10 ? '0' + mois : mois) +
+        '-' +
+        annee;
+    
     if (this.recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')) {
       datejrouagence = date;
     } else {

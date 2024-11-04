@@ -642,7 +642,7 @@
         />
         <label for="email">{{ LanguageService.op_chmp_title_3 }}</label>
       </div>
-      <div class="form-floating form-floating-outline mb-4">
+      <!--<div class="form-floating form-floating-outline mb-4">
         <select
           id="agence"
           name="agence"
@@ -659,7 +659,7 @@
           </option>
         </select>
         <label for="agence">{{ LanguageService.op_chmp_title_4 }}</label>
-      </div>
+      </div>-->
       <div class="form-floating form-floating-outline mb-4">
         <div class="form-floating form-floating-outline">
           <input
@@ -696,6 +696,21 @@
         />
         <label for="email">{{ LanguageService.op_chmp_title_3 }}</label>
       </div>
+      <div class="form-floating form-floating-outline mb-4">
+        <div class="form-floating form-floating-outline">
+          <input
+            class="form-control"
+            type="text"
+            id="motdepasse"
+            name="motdepasse"
+            [placeholder]="0000"
+            [(ngModel)]="formulaire_operateur[6].valeur"
+          />
+          <label for="motdepasse">{{
+            LanguageService.op_chmp_title_7
+          }}</label>
+        </div>
+      </div><br>
       <h5 class="card-header">Droit.s de l'opérateur</h5>
       <span class="custom-option-header"  style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size: 15px;margin-left: 80%;">
         Tout cocher

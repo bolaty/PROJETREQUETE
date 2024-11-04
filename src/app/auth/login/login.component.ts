@@ -100,8 +100,8 @@ export class LoginComponent {
     let body = {
       Objets: [
         {
-          OE_PARAM: ['0001', this.formLogin.login, this.formLogin.mdp], // operateur personnalisable
-         // OE_PARAM: ['0002', this.formLogin.login, this.formLogin.mdp], // client personnalisable
+         // OE_PARAM: ['0001', this.formLogin.login, this.formLogin.mdp], // operateur personnalisable
+          OE_PARAM: ['0002', this.formLogin.login, this.formLogin.mdp], // client personnalisable
           clsObjetEnvoi: {
             ET_CODEETABLISSEMENT: '',
             AN_CODEANTENNE: '',
@@ -416,7 +416,7 @@ export class LoginComponent {
       this.AdminService.statut_traitement == true &&
       this.AdminService.statut_traitement_champ_non_obligatoire == true
     ) {
-      var d = new Date();
+     /* var d = new Date();
       var date =
         d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
       var jour = d.getDate();
@@ -424,7 +424,20 @@ export class LoginComponent {
         var date =
           '0' + d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
         console.log(date);
-      }
+      }*/
+
+      var d = new Date();
+      var jour = d.getDate();
+      var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
+      var annee = d.getFullYear();
+
+      // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
+      var date =
+        (jour < 10 ? '0' + jour : jour) +
+        '-' +
+        (mois < 10 ? '0' + mois : mois) +
+        '-' +
+        annee;
 
       let Options = 'RequeteClientsClasse.svc/pvgEnvoiEmail';
 

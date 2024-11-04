@@ -23,11 +23,14 @@ import Chart from 'chart.js/auto';
 export class EtatSuiviComponent implements OnInit {
   @ViewChild('content', { static: false }) content!: ElementRef;
 
-   LienServeur: any = 'http://localhost:22248/'; // lien dev
+   //LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
- // LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
-  //LienServeur: any = 'https://reclamationserveurtest.mgdigitalplus.com:1041/'; // lien test local remuci• bly
- 
+  // LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien prod remuci • 
+  // LienServeur: any = 'https://reclamationserveurtest.mgdigitalplus.com:1041/'; // lien test local remuci• bly
+  LienServeur: any = 'https://reclamationserveurprod.gesci-ci.info:1810/'; // lien gesci prod•
+  // LienServeur: any = 'https://reclamationserveurprod.maphar.net:1027/'; // lien maphar prod•
+
+
   APP_URL: any = `${this.LienServeur}RequeteClientsClasse.svc/pvgTableauDeBord`;
   info_session: any = JSON.parse(sessionStorage.getItem('info_etat') || '');
   statusForms: any = JSON.parse(sessionStorage.getItem('statusForm') || '');
@@ -192,14 +195,27 @@ export class EtatSuiviComponent implements OnInit {
     sessionStorage.setItem('valtab', '');
     sessionStorage.setItem('secondeFonctionAppelee', 'false');
     setTimeout(() => {
-      var d = new Date();
+      /*var d = new Date();
       var date =
         d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
       var jour = d.getDate();
       if (jour < 10) {
         var date =
           '0' + d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
-      }
+      }*/
+
+      var d = new Date();
+      var jour = d.getDate();
+      var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
+      var annee = d.getFullYear();
+
+      // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
+      var date =
+        (jour < 10 ? '0' + jour : jour) +
+        '-' +
+        (mois < 10 ? '0' + mois : mois) +
+        '-' +
+        annee;
 
       this.TITRE =
         this.statusForms == true

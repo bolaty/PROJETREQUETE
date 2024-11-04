@@ -423,7 +423,7 @@ export class DashboardComponent {
 
   DataDashboard() {
     let Option = 'RequeteClientsClasse.svc/pvgTableauDeBord';
-
+  //  var CodeAgenceUtilisateur = this.recupinfo[0].CU_CODECOMPTEUTULISATEUR.substring(0, 4);
     let body = {
       AG_CODEAGENCE: this.recupinfo[0].AG_CODEAGENCE,
       RQ_DATEDEBUT: this.recupinfo[0].EX_DATEDEBUT,
@@ -477,12 +477,13 @@ export class DashboardComponent {
     } else {
       TYPEOPERATION = '2';
     }
+    var CodeAgenceUtilisateur = this.recupinfo[0].CU_CODECOMPTEUTULISATEUR.substring(0, 4);
     let Option = 'RequeteClientsClasse.svc/pvgChargerDansDataSetDASHBOARD';
     let body = {
       Objets: [
         {
           OE_PARAM: [
-            this.recupinfo[0].AG_CODEAGENCE,
+            CodeAgenceUtilisateur,//this.recupinfo[0].AG_CODEAGENCE,
             this.recupinfo[0].CU_CODECOMPTEUTULISATEUR,
             '01/01/1900',
             '01/01/1900',
@@ -530,8 +531,9 @@ export class DashboardComponent {
     } else {
       TYPEOPERATION = 'CLIENT';
     }
+    var CodeAgenceUtilisateur = this.recupinfo[0].CU_CODECOMPTEUTULISATEUR.substring(0, 4);
     let body = {
-      AG_CODEAGENCE: this.recupinfo[0].AG_CODEAGENCE, //'1000',//this.recupinfo[0].AG_CODEAGENCE,//
+      AG_CODEAGENCE: CodeAgenceUtilisateur,//this.recupinfo[0].AG_CODEAGENCE, //'1000',//this.recupinfo[0].AG_CODEAGENCE,//
       RQ_DATEDEBUT: this.recupinfo[0].EX_DATEDEBUT, //'01/01/1900',//this.recupinfo[0].EX_DATEDEBUT,//
       RQ_DATEFIN: this.recupinfo[0].EX_DATEFIN, //'01/01/1900',//this.recupinfo[0].EX_DATEFIN,//
       CU_CODECOMPTEUTULISATEUR: this.recupinfo[0].CU_CODECOMPTEUTULISATEUR, //'10000000000000000000000000005',//this.recupinfo[0].CU_CODECOMPTEUTULISATEUR,//

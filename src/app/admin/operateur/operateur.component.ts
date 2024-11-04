@@ -612,11 +612,11 @@ export class OperateurComponent {
   ListeDesClients() {
     this.AdminService.ShowLoader();
     let Option = 'RequeteClientsClasse.svc/pvgInsertIntoDatasetListeClient';
-
+    var CodeAgenceUtilisateur = this.recupinfo[0].CU_CODECOMPTEUTULISATEUR.substring(0, 4);
     let body = {
       Objets: [
         {
-          OE_PARAM: [],
+          OE_PARAM: ['0002',CodeAgenceUtilisateur],
           clsObjetEnvoi: {
             ET_CODEETABLISSEMENT: '',
             AN_CODEANTENNE: '',
@@ -646,10 +646,11 @@ export class OperateurComponent {
 
   ListeOperateurs() {
     let Option = 'RequeteClientsClasse.svc/pvgListeUtilisateurs';
+    var CodeAgenceUtilisateur = this.recupinfo[0].CU_CODECOMPTEUTULISATEUR.substring(0, 4);
     let body = {
       Objets: [
         {
-          OE_PARAM: this.recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') ? ['0001'] :[this.recupinfo[0].AG_CODEAGENCE, '0001'],
+          OE_PARAM: this.recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') ? [CodeAgenceUtilisateur,'0001'] :[CodeAgenceUtilisateur, '0001'],
           clsObjetEnvoi: {
             ET_CODEETABLISSEMENT: '',
             AN_CODEANTENNE: '',
@@ -714,21 +715,24 @@ export class OperateurComponent {
       this.AdminService.statut_traitement_champ_non_obligatoire == true
     ) {
       var d = new Date();
-      var date =
-        d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
       var jour = d.getDate();
-      if (jour < 10) {
-        var date =
-          '0' + d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
-        console.log(date);
-      }
+      var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
+      var annee = d.getFullYear();
+
+      // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
+      var date =
+        (jour < 10 ? '0' + jour : jour) +
+        '-' +
+        (mois < 10 ? '0' + mois : mois) +
+        '-' +
+        annee;
 
       let Options = 'RequeteClientsClasse.svc/pvgMajUtilisateurs'; // le chemin d'appel du service web
       //objet d'envoi
       let body = {
         Objets: [
           {
-            AG_CODEAGENCE: this.formulaire_operateur[3].valeur,
+            AG_CODEAGENCE: this.statuFormulaire == 'MODIFICATION' ? '1000' : this.formulaire_operateur[3].valeur,//this.formulaire_operateur[3].valeur,
             CU_ADRESSEGEOGRAPHIQUEUTILISATEUR: '.',
             CU_CLESESSION: '',
             CU_CODECOMPTEUTULISATEUR:
@@ -826,7 +830,7 @@ export class OperateurComponent {
     this.ComboListeDroitUtilisateur()
   }
   RechercherClient(search_bar: any) {
-    let Option = 'RequeteClientsClasse.svc/pvgListeUtilisateursRecherche';
+    let Option = 'RequeteClientsClasse.svc/pvgListeUtilisateursRechercheParAgence';
 
     /*   if (search_bar == undefined || search_bar == '') {
       this.toastr.error(
@@ -837,14 +841,14 @@ export class OperateurComponent {
         }
       );
     } else { */
- 
+    var CodeAgenceUtilisateur = this.recupinfo[0].CU_CODECOMPTEUTULISATEUR.substring(0, 4);
     let body;
     // if (search_bar.substr(0, 1) === '0') {
     // dans le cas d'une recherche avec numero de telephone
     body = {
       Objets: [
         {
-          OE_PARAM: ['0002', '', search_bar, '', '01'],
+          OE_PARAM: ['0002', '', search_bar, CodeAgenceUtilisateur, '01'],
           clsObjetEnvoi: {
             ET_CODEETABLISSEMENT: '',
             AN_CODEANTENNE: '',
@@ -874,7 +878,7 @@ export class OperateurComponent {
       (success: any) => {
         this.tab_list_client = success;
         this.tab_list_client =
-          this.tab_list_client.pvgListeUtilisateursRechercheResult;
+          this.tab_list_client.pvgListeUtilisateursRechercheParAgenceResult;
         console.log('tab_list_client_2', this.tab_list_client);
         if (this.tab_list_client[0].clsResultat.SL_RESULTAT == 'TRUE') {
           this.affiche_liste_client = true;
@@ -960,7 +964,7 @@ export class OperateurComponent {
       this.AdminService.statut_traitement == true &&
       this.AdminService.statut_traitement_champ_non_obligatoire == true
     ) {
-      var d = new Date();
+      /*var d = new Date();
       var date =
         d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
       var jour = d.getDate();
@@ -968,7 +972,20 @@ export class OperateurComponent {
         var date =
           '0' + d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
         console.log(date);
-      }
+      }*/
+        var d = new Date();
+        var jour = d.getDate();
+        var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
+        var annee = d.getFullYear();
+  
+        // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
+        var date =
+          (jour < 10 ? '0' + jour : jour) +
+          '-' +
+          (mois < 10 ? '0' + mois : mois) +
+          '-' +
+          annee;
+
       let Options = 'RequeteClientsClasse.svc/pvgMajUtilisateurs'; // le chemin d'appel du service web
       //objet d'envoi
       let body = {

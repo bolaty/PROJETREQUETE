@@ -197,14 +197,27 @@ export class RelanceComponent {
   }
 
   ClotureEtape() {
-    var d = new Date();
+    /*var d = new Date();
     var date = d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
     var jour = d.getDate();
     if (jour < 10) {
       var date =
         '0' + d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
       console.log(date);
-    }
+    }*/
+
+    var d = new Date();
+      var jour = d.getDate();
+      var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
+      var annee = d.getFullYear();
+
+      // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
+      var date =
+        (jour < 10 ? '0' + jour : jour) +
+        '-' +
+        (mois < 10 ? '0' + mois : mois) +
+        '-' +
+        annee;
     var recuperation = JSON.parse(sessionStorage.getItem('infoReque') || '');
     let Options = 'RequeteClientsClasse.svc/pvgMajReqrequeteEtape'; // le chemin d'appel du service web
     //objet d'envoi
@@ -364,14 +377,27 @@ export class RelanceComponent {
     });
   }
   ListeDesRelance() {
-    var d = new Date();
+   /* var d = new Date();
     var date = d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
     var jour = d.getDate();
     if (jour < 10) {
       var date =
         '0' + d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
       console.log(date);
-    }
+    }*/
+
+    var d = new Date();
+      var jour = d.getDate();
+      var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
+      var annee = d.getFullYear();
+
+      // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
+      var date =
+        (jour < 10 ? '0' + jour : jour) +
+        '-' +
+        (mois < 10 ? '0' + mois : mois) +
+        '-' +
+        annee;
     let Option = 'RequeteClientsClasse.svc/pvgListeReqrequeteRelance';
     let body = {
       Objets: [
@@ -554,7 +580,7 @@ export class RelanceComponent {
           { positionClass: 'toast-bottom-left' }
         );
       } else {
-        var d = new Date();
+       /* var d = new Date();
         var date =
           d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
         var jour = d.getDate();
@@ -567,7 +593,20 @@ export class RelanceComponent {
             '-' +
             d.getFullYear();
           console.log(date);
-        }
+        }*/
+
+        var d = new Date();
+      var jour = d.getDate();
+      var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
+      var annee = d.getFullYear();
+
+      // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
+      var date =
+        (jour < 10 ? '0' + jour : jour) +
+        '-' +
+        (mois < 10 ? '0' + mois : mois) +
+        '-' +
+        annee;
         var recuperation = JSON.parse(
           sessionStorage.getItem('infoReque') || ''
         );

@@ -16,11 +16,14 @@ declare var $: any;
   styleUrls: ['./suivi-requete.component.scss'],
 })
 export class SuiviRequeteComponent {
-  LienServeur: any = 'http://localhost:22248/'; // lien dev
+  //LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
-  //LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
-  //LienServeur: any = 'https://reclamationserveurtest.mgdigitalplus.com:1041/'; // lien test local remuci• bly
- 
+ /// LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien prod  • remuci
+ // LienServeur: any = 'https://reclamationserveurtest.mgdigitalplus.com:1041/'; // lien test local remuci• bly
+  LienServeur: any = 'https://reclamationserveurprod.gesci-ci.info:1810/'; // lien gesci prod•
+  //LienServeur: any = 'https://reclamationserveurprod.maphar.net:1027/'; // lien maphar prod•
+
+
   maVariableSubscription?: Subscription;
 
   recupinfo: any = '';
@@ -256,7 +259,7 @@ export class SuiviRequeteComponent {
       this.AdminService.statut_traitement == true &&
       this.AdminService.statut_traitement_champ_non_obligatoire == true
     ) {
-      var d = new Date();
+      /*var d = new Date();
       var date =
         d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
       var jour = d.getDate();
@@ -264,7 +267,20 @@ export class SuiviRequeteComponent {
         var date =
           '0' + d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
         console.log(date);
-      }
+      }*/
+
+      var d = new Date();
+      var jour = d.getDate();
+      var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
+      var annee = d.getFullYear();
+
+      // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
+      var date =
+        (jour < 10 ? '0' + jour : jour) +
+        '-' +
+        (mois < 10 ? '0' + mois : mois) +
+        '-' +
+        annee;
       let Options = 'RequeteClientsClasse.svc/pvgMajReqrequete'; // le chemin d'appel du service web
       //objet d'envoi
       let body = {
@@ -356,7 +372,7 @@ export class SuiviRequeteComponent {
       this.AdminService.statut_traitement == true &&
       this.AdminService.statut_traitement_champ_non_obligatoire == true
     ) {
-      var d = new Date();
+      /*var d = new Date();
       var date =
         d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
       var jour = d.getDate();
@@ -364,7 +380,20 @@ export class SuiviRequeteComponent {
         var date =
           '0' + d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
         console.log(date);
-      }
+      }*/
+
+      var d = new Date();
+      var jour = d.getDate();
+      var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
+      var annee = d.getFullYear();
+
+      // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
+      var date =
+        (jour < 10 ? '0' + jour : jour) +
+        '-' +
+        (mois < 10 ? '0' + mois : mois) +
+        '-' +
+        annee;
       let Options = 'RequeteClientsClasse.svc/pvgMajReqrequeteEtape'; // le chemin d'appel du service web
       //objet d'envoi
       let body = {
@@ -486,14 +515,27 @@ export class SuiviRequeteComponent {
       reader.readAsDataURL(file);
     }
 
-    var d = new Date();
+    /*var d = new Date();
     var date = d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
     var jour = d.getDate();
     if (jour < 10) {
       var date =
         '0' + d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
       console.log(date);
-    }
+    }*/
+
+    var d = new Date();
+      var jour = d.getDate();
+      var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
+      var annee = d.getFullYear();
+
+      // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
+      var date =
+        (jour < 10 ? '0' + jour : jour) +
+        '-' +
+        (mois < 10 ? '0' + mois : mois) +
+        '-' +
+        annee;
   }
 
   SaveRapport() {
@@ -572,7 +614,7 @@ export class SuiviRequeteComponent {
         { positionClass: 'toast-bottom-left' }
       );
     } else {
-      var d = new Date();
+     /* var d = new Date();
       var date =
         d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
       var jour = d.getDate();
@@ -580,7 +622,20 @@ export class SuiviRequeteComponent {
         var date =
           '0' + d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
         console.log(date);
-      }
+      }*/
+
+      var d = new Date();
+      var jour = d.getDate();
+      var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
+      var annee = d.getFullYear();
+
+      // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
+      var date =
+        (jour < 10 ? '0' + jour : jour) +
+        '-' +
+        (mois < 10 ? '0' + mois : mois) +
+        '-' +
+        annee;
       let Options = 'RequeteClientsClasse.svc/pvgMajReqrequeteAvisclient'; // le chemin d'appel du service web
       //objet d'envoi
       let body = {
@@ -646,6 +701,13 @@ export class SuiviRequeteComponent {
           } else {
             if (this.formulaire_avis[0].valeur == '002') {
               this.RelanceRequetePrincipale();
+            }else{
+              
+              if(this.recupinfoconnect[0].TU_CODETYPEUTILISATEUR == '0002'){
+                setTimeout(() => {
+                  window.location.href = 'admin/reclamations/liste';
+                }, 2000);
+              }
             }
             // this.toastr.success(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
             this.toastr.success(
@@ -730,6 +792,11 @@ export class SuiviRequeteComponent {
             'error',
             { positionClass: 'toast-bottom-left' }
           );
+          if(this.recupinfoconnect[0].TU_CODETYPEUTILISATEUR == '0002'){
+            setTimeout(() => {
+              window.location.href = 'admin/reclamations/liste';
+            }, 2000);
+          }
         } else {
           // this.toastr.success(this.tab_enregistrement_traitement.clsResultat.SL_MESSAGE);
           this.toastr.success(
@@ -737,6 +804,11 @@ export class SuiviRequeteComponent {
             'success',
             { positionClass: 'toast-bottom-left' }
           );
+          if(this.recupinfoconnect[0].TU_CODETYPEUTILISATEUR == '0002'){
+            setTimeout(() => {
+              window.location.href = 'admin/reclamations/liste';
+            }, 2000);
+          }
         }
       },
       (error: any) => {

@@ -19,11 +19,14 @@ export class FrequenceReceptionReclamComponent implements OnInit {
     public AdminService: AdminService
   ) {}
 
-  LienServeur: any = 'http://localhost:22248/'; // lien dev
-  // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
-  //LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien test local • bly
-  //LienServeur: any = 'https://reclamationserveurtest.mgdigitalplus.com:1041/'; // lien test local remuci• bly
-  
+   //LienServeur: any = 'http://localhost:22248/'; // lien dev
+   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
+  // LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien prod  • remuci
+  // LienServeur: any = 'https://reclamationserveurtest.mgdigitalplus.com:1041/'; // lien test local remuci• bly
+    LienServeur: any = 'https://reclamationserveurprod.gesci-ci.info:1810/'; // lien gesci prod•
+   //LienServeur: any = 'https://reclamationserveurprod.maphar.net:1027/'; // lien maphar prod•
+
+
   APP_URL: any = `${this.LienServeur}RequeteClientsClasse.svc/pvgFrequenceReclamation`;
   postData: any;
   total: any;

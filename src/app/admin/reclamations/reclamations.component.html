@@ -1347,7 +1347,8 @@
                             ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE ==
                               '01/01/1900' &&
                             ListRetourRequetes.RQ_DATECLOTUREREQUETE ==
-                              '01/01/1900'
+                              '01/01/1900' &&
+                              ListRetourRequetes.RS_CODESTATUTRECEVABILITE != '02'
                           "
                           ><span class="badge bg-label-primary rounded-pill"
                             >{{ LanguageService.reclam_list_group_title_1 }}
@@ -1362,7 +1363,8 @@
                             ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE !=
                               '01/01/1900' &&
                             ListRetourRequetes.RQ_DATECLOTUREREQUETE ==
-                              '01/01/1900'
+                              '01/01/1900' &&
+                              ListRetourRequetes.RS_CODESTATUTRECEVABILITE != '02'
                           "
                           ><span class="badge bg-label-success rounded-pill"
                             >{{ LanguageService.reclam_list_group_title_2 }}
@@ -1375,10 +1377,21 @@
                         <a
                           *ngIf="
                             ListRetourRequetes.RQ_DATECLOTUREREQUETE !=
-                            '01/01/1900'
+                            '01/01/1900' &&
+                            ListRetourRequetes.RS_CODESTATUTRECEVABILITE != '02'
                           "
                           ><span class="badge bg-label-danger rounded-pill"
                             >{{ LanguageService.reclam_list_group_title_3 }}
+                            &nbsp;&nbsp;N°
+                            {{ ListRetourRequetes.RQ_CODEREQUETE }}</span
+                          ></a
+                        >
+                        <a
+                          *ngIf="
+                            ListRetourRequetes.RS_CODESTATUTRECEVABILITE == '02'
+                          "
+                          ><span class="badge bg-label-warning rounded-pill"
+                            >{{ LanguageService.non_receive_badge }}
                             &nbsp;&nbsp;N°
                             {{ ListRetourRequetes.RQ_CODEREQUETE }}</span
                           ></a
