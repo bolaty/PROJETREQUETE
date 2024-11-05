@@ -13,11 +13,11 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AdminService {
   // ***************** SECTION DES LIENS debut
-  //LienServeur: any = 'http://localhost:22248/'; // lien dev
+  LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
- // LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien prod  • remuci
- // LienServeur: any = 'https://reclamationserveurtest.mgdigitalplus.com:1041/'; // lien test local remuci•
-  LienServeur: any = 'https://reclamationserveurprod.gesci-ci.info:1810/'; // lien gesci prod•
+  // LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien prod  • remuci
+  // LienServeur: any = 'https://reclamationserveurtest.mgdigitalplus.com:1041/'; // lien test local remuci•
+  // LienServeur: any = 'https://reclamationserveurprod.gesci-ci.info:1810/'; // lien gesci prod•
   // LienServeur: any = 'https://reclamationserveurprod.maphar.net:1027/'; // lien maphar prod•
   // ***************** SECTION DES LIENS fin
   objetEcran: any = [
@@ -351,6 +351,73 @@ export class AdminService {
           objet_recu.valeur = '0000000' + objet_recu.valeur;
           break;
       }
+    }
+  }
+
+  _formatageMontantAlaSaisie(event: any, index: any, model: any) {
+    console.log('event', event);
+    // return;
+    if (
+      event.data == '0' ||
+      event.data == '1' ||
+      event.data == '2' ||
+      event.data == '3' ||
+      event.data == '4' ||
+      event.data == '5' ||
+      event.data == '6' ||
+      event.data == '7' ||
+      event.data == '8' ||
+      event.data == '9' ||
+      event.data == null
+    ) {
+      // Supprimez tous les séparateurs de milliers actuels (espaces)
+      var valeur = model[index].valeur.toString().replace(/ /g, '');
+
+      // Vérifiez si l'entrée est un nombre valide
+      var montantNumerique = Number(valeur);
+      if (!isNaN(montantNumerique)) {
+        // Formatez le montant en ajoutant un espace comme séparateur de milliers
+        var montantFormate = '';
+        var longueur = valeur.length;
+
+        for (var i = 0; i < longueur; i++) {
+          montantFormate += valeur[i];
+          if ((longueur - i - 1) % 3 === 0 && i !== longueur - 1) {
+            montantFormate += ' ';
+          }
+        }
+
+        // Mettez à jour le champ de saisie avec le montant formaté
+        model[index].valeur = montantFormate == '' ? '0' : montantFormate;
+      } else {
+        this.toastr.error('Veuillez saisir un montant valide.', 'error', {
+          positionClass: 'toast-bottom-left',
+        });
+      }
+    } else {
+      model[index].valeur = model[index].valeur.replace(/\D/g, '');
+
+      setTimeout(() => {
+        valeur = model[index].valeur;
+
+        // Vérifiez si l'entrée est un nombre valide
+        var montantNumerique = Number(valeur);
+        if (!isNaN(montantNumerique)) {
+          // Formatez le montant en ajoutant un espace comme séparateur de milliers
+          var montantFormate = '';
+          var longueur = valeur.length;
+
+          for (var i = 0; i < longueur; i++) {
+            montantFormate += valeur[i];
+            if ((longueur - i - 1) % 3 === 0 && i !== longueur - 1) {
+              montantFormate += ' ';
+            }
+          }
+
+          // Mettez à jour le champ de saisie avec le montant formaté
+          model[index].valeur = montantFormate == '' ? '0' : montantFormate;
+        }
+      }, 1000);
     }
   }
   // **************** SECTION DES FORMATAGES fin

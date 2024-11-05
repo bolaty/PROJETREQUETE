@@ -100,8 +100,8 @@ export class LoginComponent {
     let body = {
       Objets: [
         {
-         // OE_PARAM: ['0001', this.formLogin.login, this.formLogin.mdp], // operateur personnalisable
-          OE_PARAM: ['0002', this.formLogin.login, this.formLogin.mdp], // client personnalisable
+          OE_PARAM: ['0001', this.formLogin.login, this.formLogin.mdp], // operateur personnalisable
+          // OE_PARAM: ['0002', this.formLogin.login, this.formLogin.mdp], // client personnalisable
           clsObjetEnvoi: {
             ET_CODEETABLISSEMENT: '',
             AN_CODEANTENNE: '',
@@ -251,8 +251,9 @@ export class LoginComponent {
           JSON.stringify(this.ListeDroitUser)
         );
 
-        if(this.ListeDroitUser[11].DP_STATUT == 'O') {
-          this.RetoursChargement[0].CU_NOMUTILISATEUR = this.RetoursChargement[0].CU_NOMUTILISATEUR + "ADMIN SPECIAL"
+        if (this.ListeDroitUser[11].DP_STATUT == 'O') {
+          this.RetoursChargement[0].CU_NOMUTILISATEUR =
+            this.RetoursChargement[0].CU_NOMUTILISATEUR + 'ADMIN SPECIAL';
           sessionStorage.setItem(
             'infoLogin',
             JSON.stringify(this.RetoursChargement)
@@ -416,7 +417,7 @@ export class LoginComponent {
       this.AdminService.statut_traitement == true &&
       this.AdminService.statut_traitement_champ_non_obligatoire == true
     ) {
-     /* var d = new Date();
+      /* var d = new Date();
       var date =
         d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
       var jour = d.getDate();
