@@ -296,8 +296,6 @@ export class OperateurComponent {
           columns: [
             { data: 'NOM' }, // Colonne "full_name"
             { data: 'CONTACT' }, // Colonne "full_name"
-            { data: 'LOGIN' }, // Colonne "full_name"
-            { data: 'MOTDEPASSE' }, // Colonne "email"
           ],
           select: {
             style: 'single',
@@ -324,7 +322,7 @@ export class OperateurComponent {
             }
           },
           responsive: true,
-          order: [[2, 'desc']],
+          order: [[0, 'desc']],
           dom: '<"card-header"<"head-label text-center"><"dt-action-buttons text-end"B>><"d-flex justify-content-between align-items-center row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
           displayLength: 7,
           lengthMenu: [7, 10, 25, 50, 75, 100],
@@ -338,7 +336,7 @@ export class OperateurComponent {
                   extend: 'print',
                   text: '<i class="mdi mdi-printer-outline me-1" ></i>Imprimer',
                   className: 'dropdown-item',
-                  exportOptions: { columns: [0, 1, 2, 3] },
+                  exportOptions: { columns: [0, 1] },
                 },
                 /* {
                   extend: 'csv',
@@ -350,13 +348,13 @@ export class OperateurComponent {
                   extend: 'excel',
                   text: '<i class="mdi mdi-file-excel-outline me-1"></i>Excel',
                   className: 'dropdown-item',
-                  exportOptions: { columns: [0, 1, 2, 3] },
+                  exportOptions: { columns: [0, 1] },
                 },
                 {
                   extend: 'pdf',
                   text: '<i class="mdi mdi-file-pdf-box me-1"></i>Pdf',
                   className: 'dropdown-item',
-                  exportOptions: { columns: [0, 1, 2, 3] },
+                  exportOptions: { columns: [0, 1] },
                 },
                 /* {
                   extend: 'copy',
@@ -661,20 +659,32 @@ export class OperateurComponent {
         if (this.ListeOperateur[0].clsResultat.SL_RESULTAT == 'TRUE') {
           this.AdminService.CloseLoader();
           this.RecupOerateurs = [];
-          var obj = {
+          /*  var obj = {
             id: '',
             NOM: '',
             CONTACT: '',
             LOGIN: '',
             MOTDEPASSE: '',
+          }; */
+          var obj = {
+            id: '',
+            NOM: '',
+            CONTACT: '',
           };
           for (let i = 0; i < this.ListeOperateur.length; i++) {
-            obj = {
+            /* obj = {
               id: i.toString(),
               NOM: this.ListeOperateur[i].CU_NOMUTILISATEUR,
               CONTACT: this.ListeOperateur[i].CU_CONTACT,
               LOGIN: this.ListeOperateur[i].CU_LOGIN,
               MOTDEPASSE: this.ListeOperateur[i].CU_MOTDEPASSE,
+            }; */
+            obj = {
+              id: i.toString(),
+              NOM: this.ListeOperateur[i].CU_NOMUTILISATEUR,
+              CONTACT: this.ListeOperateur[i].CU_CONTACT,
+              // LOGIN: this.ListeOperateur[i].CU_LOGIN,
+              // MOTDEPASSE: this.ListeOperateur[i].CU_MOTDEPASSE,
             };
             this.RecupOerateurs.push(obj);
           }
@@ -1081,6 +1091,16 @@ export class OperateurComponent {
     this.ComboAgence();
 
     var pt = this;
+
+    if (!sessionStorage.getItem('isLoggedIn')) {
+      window.location.href = '/auth';
+    }
+    setTimeout(() => {
+      if (sessionStorage.getItem('langselect')) {
+        var lg = sessionStorage.getItem('langselect') || '';
+        this.LanguageService.changeLanguage(lg);
+      }
+    }, 1000);
 
     /* setTimeout(() => {
       pt.chargementDate();

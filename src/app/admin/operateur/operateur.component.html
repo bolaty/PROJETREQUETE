@@ -232,7 +232,9 @@
                     <!-- Custom SVG Icon Checkbox -->
                     <div class="col">
                       <div class="card">
-                        <h5 class="card-header">Droit.s de l'opérateur</h5>
+                        <h5 class="card-header">
+                          {{ LanguageService.op_title_droit }}
+                        </h5>
                         <span
                           class="custom-option-header"
                           style="
@@ -242,7 +244,7 @@
                             margin-left: 80%;
                           "
                         >
-                          Tout cocher
+                          {{ LanguageService.op_title_droit_coche }}
                         </span>
                         <input
                           class="form-check-input"
@@ -361,8 +363,8 @@
                         <tr>
                           <th>{{ LanguageService.op_table_title_1 }}</th>
                           <th>{{ LanguageService.op_table_title_2 }}</th>
-                          <th>{{ LanguageService.op_table_title_3 }}</th>
-                          <th>{{ LanguageService.op_table_title_4 }}</th>
+                          <!-- <th>{{ LanguageService.op_table_title_3 }}</th> -->
+                          <!-- <th>{{ LanguageService.op_table_title_4 }}</th> -->
                         </tr>
                       </thead>
                     </table>
@@ -519,7 +521,7 @@
           style="text-align: center; font-size: 40px; margin-top: 190px"
           *ngIf="!affiche_liste_client"
         >
-          <p>Aucun client !</p>
+          <p>{{ LanguageService.aucun_client }} !</p>
         </div>
         <!--/ Teams Cards -->
       </div>
@@ -640,17 +642,21 @@
           <span>{{ voirlist.CU_MOTDEPASSE }}</span>
         </li>
       </ul>
-      <h5 class="pb-3 border-bottom mb-3" *ngIf="statusOrderListe">Droit</h5>
+      <h5 class="pb-3 border-bottom mb-3" *ngIf="statusOrderListe">
+        {{ LanguageService.op_title_droit_2 }}
+      </h5>
       <ul class="list-unstyled mb-4" *ngIf="statutdroit">
         <li class="mb-3" *ngFor="let DroitforUser of ListeDroitforUser">
           <span class="h6"
             >{{ DroitforUser.DP_LIBELLEDROITCOMPTEUTULISATEUR }}
           </span>
-          <span class="badge bg-label-success rounded-pill">Actif</span>
+          <span class="badge bg-label-success rounded-pill">{{
+            LanguageService.op_title_droit_actif
+          }}</span>
         </li>
       </ul>
       <span class="h6" *ngIf="!statutdroit"
-        >Aucun droit accorder a cet utilisateur !!!
+        >{{ LanguageService.op_title_droit_libelle }} !!!
       </span>
       <br />
       <br />
@@ -770,7 +776,7 @@
         </div>
       </div>
       <br />
-      <h5 class="card-header">Droit.s de l'opérateur</h5>
+      <h5 class="card-header">{{ LanguageService.op_title_droit }}</h5>
       <span
         class="custom-option-header"
         style="
@@ -779,7 +785,7 @@
           margin-left: 80%;
         "
       >
-        Tout cocher
+        {{ LanguageService.op_title_droit_coche }}
       </span>
       <input
         class="form-check-input"

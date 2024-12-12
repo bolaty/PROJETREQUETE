@@ -36,10 +36,10 @@ export class EditionsComponent {
   tab_periode: any = [];
   tab_date: any = [];
   valtabAgence: any = [];
-  valAgence: any ='';
+  valAgence: any = '';
   valTablibAgence: any = [];
-  valAgencelib: any ='';
-  valPeriodelib: any ='';
+  valAgencelib: any = '';
+  valPeriodelib: any = '';
   formulaire_edition_1: any = [
     {
       id: 'idAgence',
@@ -181,7 +181,12 @@ export class EditionsComponent {
 
   SelectInvoice(etat: any) {
     this.invoice_label = etat;
-    this.active_1 = this.active_2 = this.active_3 = this.active_4 = this.active_4 ='';
+    this.active_1 =
+      this.active_2 =
+      this.active_3 =
+      this.active_4 =
+      this.active_4 =
+        '';
     this.affiche_option_1 =
       this.affiche_option_2 =
       this.affiche_option_3 =
@@ -195,17 +200,17 @@ export class EditionsComponent {
     } else if (etat == 'statistique') {
       this.active_2 = 'active';
       this.affiche_option_2 = true;
-    }else if (etat == 'statistiquehebdomadaire') {
+    } else if (etat == 'statistiquehebdomadaire') {
       this.active_4 = 'active';
       this.affiche_option_4 = true;
-    }else if (etat == 'frequencetransmission') {
+    } else if (etat == 'frequencetransmission') {
       this.active_5 = 'active';
       this.affiche_option_5 = true;
     } else {
       this.active_3 = 'active';
       this.affiche_option_3 = true;
     }
-    this.toggleAllCheckboxesrest()
+    this.toggleAllCheckboxesrest();
   }
 
   ListeComboExercice() {
@@ -355,7 +360,6 @@ export class EditionsComponent {
     );
   }
   ListeComboPeriode(code_periodicite: any) {
-    
     let Option = 'RequeteClientsClasse.svc/pvgPeriodiciteWeb';
 
     let body = {
@@ -436,7 +440,7 @@ export class EditionsComponent {
     this.AdminService.AppelServeur(body, Option).subscribe(
       (success: any) => {
         this.tab_date = success;
-        
+
         this.AdminService.CloseLoader();
         if (this.tab_date[0].SL_RESULTAT == 'TRUE') {
           if (this.invoice_label == 'bceao') {
@@ -455,7 +459,10 @@ export class EditionsComponent {
             this.formulaire_edition_1[5].valeur = '';
             this.formulaire_edition_3[4].valeur = '';
             this.formulaire_edition_3[5].valeur = '';
-          } else if (this.invoice_label == 'frequence' || this.invoice_label == 'frequencetransmission') {
+          } else if (
+            this.invoice_label == 'frequence' ||
+            this.invoice_label == 'frequencetransmission'
+          ) {
             this.formulaire_edition_3[4].valeur = this.tab_date[0].MO_DATEDEBUT;
             this.formulaire_edition_3[5].valeur = this.tab_date[0].MO_DATEFIN;
 
@@ -485,7 +492,10 @@ export class EditionsComponent {
             this.formulaire_edition_1[5].valeur = '';
             this.formulaire_edition_3[4].valeur = '';
             this.formulaire_edition_3[5].valeur = '';
-          } else if (this.invoice_label == 'frequence' || this.invoice_label == 'frequencetransmission') {
+          } else if (
+            this.invoice_label == 'frequence' ||
+            this.invoice_label == 'frequencetransmission'
+          ) {
             this.formulaire_edition_3[4].valeur = this.tab_date[0].MO_DATEDEBUT;
             this.formulaire_edition_3[5].valeur = this.tab_date[0].MO_DATEFIN;
 
@@ -508,58 +518,64 @@ export class EditionsComponent {
     const isChecked = false;
     // Parcourir toutes les cases à cocher et les cocher ou les décocher
     this.tab_agence.forEach((item_agence: any) => {
-        item_agence.isChecked = isChecked;
+      item_agence.isChecked = isChecked;
     });
 
     if (isChecked) {
-      for(let i = 0; i < this.tab_agence.length; i++) {
-        this.valtabAgence.push(this.tab_agence[i].AG_CODEAGENCE)
-        this.valTablibAgence.push(this.tab_agence[i].AG_RAISONSOCIAL_TRANSLATE)
+      for (let i = 0; i < this.tab_agence.length; i++) {
+        this.valtabAgence.push(this.tab_agence[i].AG_CODEAGENCE);
+        this.valTablibAgence.push(this.tab_agence[i].AG_RAISONSOCIAL_TRANSLATE);
       }
-     //@ts-ignore
-     this.valAgence = this.valtabAgence.map(elements => `''${elements}''`).join(',');
-     this.valAgencelib = this.valTablibAgence.join('/');
-    }else{
-      this.valtabAgence = []
-      this.valTablibAgence = []
-      this.valAgence =""
-      this.valAgencelib = ""
+
+      this.valAgence = this.valtabAgence //@ts-ignore
+        .map((elements) => `''${elements}''`)
+        .join(',');
+      this.valAgencelib = this.valTablibAgence.join('/');
+    } else {
+      this.valtabAgence = [];
+      this.valTablibAgence = [];
+      this.valAgence = '';
+      this.valAgencelib = '';
     }
   }
   toggleAllCheckboxes(event: any) {
     const isChecked = event.target.checked;
     // Parcourir toutes les cases à cocher et les cocher ou les décocher
     this.tab_agence.forEach((item_agence: any) => {
-        item_agence.isChecked = isChecked;
+      item_agence.isChecked = isChecked;
     });
 
     if (isChecked) {
-      for(let i = 0; i < this.tab_agence.length; i++) {
-        this.valtabAgence.push(this.tab_agence[i].AG_CODEAGENCE)
-        this.valTablibAgence.push(this.tab_agence[i].AG_RAISONSOCIAL_TRANSLATE)
+      for (let i = 0; i < this.tab_agence.length; i++) {
+        this.valtabAgence.push(this.tab_agence[i].AG_CODEAGENCE);
+        this.valTablibAgence.push(this.tab_agence[i].AG_RAISONSOCIAL_TRANSLATE);
       }
-     //@ts-ignore
-     this.valAgence = this.valtabAgence.map(elements => `''${elements}''`).join(',');
-     this.valAgencelib = this.valTablibAgence.join('/');
-    }else{
-      this.valtabAgence = []
-      this.valTablibAgence = []
-      this.valAgence =""
-      this.valAgencelib = ""
+
+      this.valAgence = this.valtabAgence //@ts-ignore
+        .map((elements) => `''${elements}''`)
+        .join(',');
+      this.valAgencelib = this.valTablibAgence.join('/');
+    } else {
+      this.valtabAgence = [];
+      this.valTablibAgence = [];
+      this.valAgence = '';
+      this.valAgencelib = '';
     }
   }
   ConfirmationOptions(action: any) {
     // if (action == 'retour') this.affichage_etat = true;
     // else this.affichage_etat = false;
-      
-      sessionStorage.setItem('libelleAgenceselect', JSON.stringify(this.valAgencelib));
-      if(this.invoice_label == 'statistiquehebdomadaire'){
-          sessionStorage.setItem('statusForm', 'true');
-      }else{
-          sessionStorage.setItem('statusForm', 'false');
-      }
+
+    sessionStorage.setItem(
+      'libelleAgenceselect',
+      JSON.stringify(this.valAgencelib)
+    );
+    if (this.invoice_label == 'statistiquehebdomadaire') {
+      sessionStorage.setItem('statusForm', 'true');
+    } else {
+      sessionStorage.setItem('statusForm', 'false');
+    }
     if (this.invoice_label == 'bceao') {
-      
       this.formulaire_edition_1[0].valeur = this.valAgence;
       /*this.recuptab_agence = [];
       for (
@@ -611,10 +627,16 @@ export class EditionsComponent {
         );
       } else {
         for (let i = 0; i < this.tab_periode.length; i++) {
-          if(this.formulaire_edition_1[3].valeur == this.tab_periode[i].MO_CODEMOIS){
-              this.valPeriodelib = this.tab_periode[i].MO_LIBELLE
-              sessionStorage.setItem('libellePeriodeselect', JSON.stringify(this.valPeriodelib));
-              break
+          if (
+            this.formulaire_edition_1[3].valeur ==
+            this.tab_periode[i].MO_CODEMOIS
+          ) {
+            this.valPeriodelib = this.tab_periode[i].MO_LIBELLE;
+            sessionStorage.setItem(
+              'libellePeriodeselect',
+              JSON.stringify(this.valPeriodelib)
+            );
+            break;
           }
         }
         //this.formulaire_edition_1[0].valeur = this.valAgence;//this.recuptab_agence.join(',');
@@ -624,10 +646,12 @@ export class EditionsComponent {
         );
         window.open('/admin/etat-suivi-reclamation', '_blank');
       }
-    } else if (this.invoice_label == 'statistique' || this.invoice_label == 'statistiquehebdomadaire') {
+    } else if (
+      this.invoice_label == 'statistique' ||
+      this.invoice_label == 'statistiquehebdomadaire'
+    ) {
       this.formulaire_edition_2[0].valeur = this.valAgence;
       this.recuptab_agence = [];
-
 
       /*for (
         let index = 0;
@@ -646,24 +670,23 @@ export class EditionsComponent {
         }
       }*/
       var test = 0;
-      if(this.invoice_label == 'statistiquehebdomadaire'){
+      if (this.invoice_label == 'statistiquehebdomadaire') {
         for (let index = 0; index < this.formulaire_edition_2.length; index++) {
           if (this.formulaire_edition_2[0].valeur == '') {
             test = 1;
-  
+
             break;
           }
         }
-      }else{
+      } else {
         for (let index = 0; index < this.formulaire_edition_2.length; index++) {
           if (this.formulaire_edition_2[index].valeur == '') {
             test = 1;
-  
+
             break;
           }
         }
       }
-      
 
       if (test == 1) {
         for (let index = 0; index < this.formulaire_edition_2.length; index++) {
@@ -688,36 +711,54 @@ export class EditionsComponent {
           }
         );
       } else {
-        if(this.invoice_label == 'statistique'){
+        if (this.invoice_label == 'statistique') {
           for (let i = 0; i < this.tab_periode.length; i++) {
-            if(this.formulaire_edition_2[3].valeur == this.tab_periode[i].MO_CODEMOIS){
-                this.valPeriodelib = this.tab_periode[i].MO_LIBELLE
-                sessionStorage.setItem('libellePeriodeselect', JSON.stringify(this.valPeriodelib));
-                break
+            if (
+              this.formulaire_edition_2[3].valeur ==
+              this.tab_periode[i].MO_CODEMOIS
+            ) {
+              this.valPeriodelib = this.tab_periode[i].MO_LIBELLE;
+              sessionStorage.setItem(
+                'libellePeriodeselect',
+                JSON.stringify(this.valPeriodelib)
+              );
+              break;
             }
           }
-        }else{
+        } else {
           // Créez une nouvelle instance de la date
           var date = new Date();
 
           // Tableau contenant les noms des jours de la semaine en français
-          var joursSemaine = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+          var joursSemaine = [
+            'dimanche',
+            'lundi',
+            'mardi',
+            'mercredi',
+            'jeudi',
+            'vendredi',
+            'samedi',
+          ];
 
           // Récupérez le jour de la semaine en utilisant la méthode getDay() de l'objet Date
           var jourEnFrancais = 'ce ' + joursSemaine[date.getDay()];
-          sessionStorage.setItem('libellePeriodeselect', JSON.stringify(jourEnFrancais));
-          
-
+          sessionStorage.setItem(
+            'libellePeriodeselect',
+            JSON.stringify(jourEnFrancais)
+          );
         }
-       
-      // this.formulaire_edition_2[0].valeur = this.valAgence;//this.recuptab_agence.join(',');
+
+        // this.formulaire_edition_2[0].valeur = this.valAgence;//this.recuptab_agence.join(',');
         sessionStorage.setItem(
           'info_etat',
           JSON.stringify(this.formulaire_edition_2)
-        ); 
+        );
         window.open('/admin/etat-suivi', '_blank');
       }
-    } else if (this.invoice_label == 'frequence' || this.invoice_label == 'frequencetransmission') {
+    } else if (
+      this.invoice_label == 'frequence' ||
+      this.invoice_label == 'frequencetransmission'
+    ) {
       this.formulaire_edition_3[0].valeur = this.valAgence;
       /*this.recuptab_agence = [];
       for (
@@ -769,10 +810,16 @@ export class EditionsComponent {
         );
       } else {
         for (let i = 0; i < this.tab_periode.length; i++) {
-          if(this.formulaire_edition_3[3].valeur == this.tab_periode[i].MO_CODEMOIS){
-              this.valPeriodelib = this.tab_periode[i].MO_LIBELLE
-              sessionStorage.setItem('libellePeriodeselect', JSON.stringify(this.valPeriodelib));
-              break
+          if (
+            this.formulaire_edition_3[3].valeur ==
+            this.tab_periode[i].MO_CODEMOIS
+          ) {
+            this.valPeriodelib = this.tab_periode[i].MO_LIBELLE;
+            sessionStorage.setItem(
+              'libellePeriodeselect',
+              JSON.stringify(this.valPeriodelib)
+            );
+            break;
           }
         }
         //this.formulaire_edition_3[0].valeur = this.valAgence;//this.recuptab_agence.join(',');
@@ -841,26 +888,27 @@ export class EditionsComponent {
     }
   }
 
-  VerifyTabAgence(element: any,elementlib:any): void {
-    
+  VerifyTabAgence(element: any, elementlib: any): void {
     // const index = this.valtabAgence.findIndex(obj => obj.id === element.id);
     const index = this.valtabAgence.indexOf(element);
     if (index !== -1) {
-        // Si l'élément existe, le supprimer du tableau
-        this.valtabAgence.splice(index, 1);
-        this.valTablibAgence.splice(index, 1);
-        console.log("L'élément existe déjà dans le tableau. Il a été supprimé.");
+      // Si l'élément existe, le supprimer du tableau
+      this.valtabAgence.splice(index, 1);
+      this.valTablibAgence.splice(index, 1);
+      console.log("L'élément existe déjà dans le tableau. Il a été supprimé.");
     } else {
-        // Sinon, ajouter l'élément au tableau
-        this.valtabAgence.push(element);
-        this.valTablibAgence.push(elementlib);
-       
+      // Sinon, ajouter l'élément au tableau
+      this.valtabAgence.push(element);
+      this.valTablibAgence.push(elementlib);
     }
 
     // Transformer chaque élément en une chaîne avec des guillemets simples
-    //@ts-ignore
-     this.valAgence = this.valtabAgence.map(elements => `''${elements}''`).join(',');
-     this.valAgencelib = this.valTablibAgence.join('/');
+
+    this.valAgence = this.valtabAgence
+      //@ts-ignore
+      .map((elements) => `''${elements}''`)
+      .join(',');
+    this.valAgencelib = this.valTablibAgence.join('/');
   }
 
   ngOnDestroy(): void {
@@ -881,5 +929,15 @@ export class EditionsComponent {
           }
         }
       );
+
+    if (!sessionStorage.getItem('isLoggedIn')) {
+      window.location.href = '/auth';
+    }
+    setTimeout(() => {
+      if (sessionStorage.getItem('langselect')) {
+        var lg = sessionStorage.getItem('langselect') || '';
+        this.LanguageService.changeLanguage(lg);
+      }
+    }, 1000);
   }
 }

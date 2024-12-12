@@ -18,11 +18,10 @@ declare var $: any;
 export class SuiviRequeteComponent {
   //LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
- /// LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien prod  • remuci
- // LienServeur: any = 'https://reclamationserveurtest.mgdigitalplus.com:1041/'; // lien test local remuci• bly
+  /// LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien prod  • remuci
+  // LienServeur: any = 'https://reclamationserveurtest.mgdigitalplus.com:1041/'; // lien test local remuci• bly
   LienServeur: any = 'https://reclamationserveurprod.gesci-ci.info:1810/'; // lien gesci prod•
   //LienServeur: any = 'https://reclamationserveurprod.maphar.net:1027/'; // lien maphar prod•
-
 
   maVariableSubscription?: Subscription;
 
@@ -445,7 +444,7 @@ export class SuiviRequeteComponent {
               this.base64Image == null
             ) {
               setTimeout(() => {
-                 window.location.href='admin/reclamations/liste'
+                window.location.href = 'admin/reclamations/liste';
               }, 2000);
             } else {
               this.SaveRapport();
@@ -525,17 +524,17 @@ export class SuiviRequeteComponent {
     }*/
 
     var d = new Date();
-      var jour = d.getDate();
-      var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
-      var annee = d.getFullYear();
+    var jour = d.getDate();
+    var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
+    var annee = d.getFullYear();
 
-      // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
-      var date =
-        (jour < 10 ? '0' + jour : jour) +
-        '-' +
-        (mois < 10 ? '0' + mois : mois) +
-        '-' +
-        annee;
+    // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
+    var date =
+      (jour < 10 ? '0' + jour : jour) +
+      '-' +
+      (mois < 10 ? '0' + mois : mois) +
+      '-' +
+      annee;
   }
 
   SaveRapport() {
@@ -559,8 +558,8 @@ export class SuiviRequeteComponent {
             ) {
             } else {
               setTimeout(() => {
-                window.location.href='admin/reclamations/liste'
-             }, 2000);
+                window.location.href = 'admin/reclamations/liste';
+              }, 2000);
             }
           },
           (error: any) => {
@@ -614,7 +613,7 @@ export class SuiviRequeteComponent {
         { positionClass: 'toast-bottom-left' }
       );
     } else {
-     /* var d = new Date();
+      /* var d = new Date();
       var date =
         d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
       var jour = d.getDate();
@@ -701,9 +700,8 @@ export class SuiviRequeteComponent {
           } else {
             if (this.formulaire_avis[0].valeur == '002') {
               this.RelanceRequetePrincipale();
-            }else{
-              
-              if(this.recupinfoconnect[0].TU_CODETYPEUTILISATEUR == '0002'){
+            } else {
+              if (this.recupinfoconnect[0].TU_CODETYPEUTILISATEUR == '0002') {
                 setTimeout(() => {
                   window.location.href = 'admin/reclamations/liste';
                 }, 2000);
@@ -792,7 +790,7 @@ export class SuiviRequeteComponent {
             'error',
             { positionClass: 'toast-bottom-left' }
           );
-          if(this.recupinfoconnect[0].TU_CODETYPEUTILISATEUR == '0002'){
+          if (this.recupinfoconnect[0].TU_CODETYPEUTILISATEUR == '0002') {
             setTimeout(() => {
               window.location.href = 'admin/reclamations/liste';
             }, 2000);
@@ -804,7 +802,7 @@ export class SuiviRequeteComponent {
             'success',
             { positionClass: 'toast-bottom-left' }
           );
-          if(this.recupinfoconnect[0].TU_CODETYPEUTILISATEUR == '0002'){
+          if (this.recupinfoconnect[0].TU_CODETYPEUTILISATEUR == '0002') {
             setTimeout(() => {
               window.location.href = 'admin/reclamations/liste';
             }, 2000);
@@ -950,5 +948,15 @@ export class SuiviRequeteComponent {
           }
         }
       );
+
+    if (!sessionStorage.getItem('isLoggedIn')) {
+      window.location.href = '/auth';
+    }
+    setTimeout(() => {
+      if (sessionStorage.getItem('langselect')) {
+        var lg = sessionStorage.getItem('langselect') || '';
+        this.LanguageService.changeLanguage(lg);
+      }
+    }, 1000);
   }
 }

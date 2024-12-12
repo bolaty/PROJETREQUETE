@@ -207,17 +207,17 @@ export class RelanceComponent {
     }*/
 
     var d = new Date();
-      var jour = d.getDate();
-      var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
-      var annee = d.getFullYear();
+    var jour = d.getDate();
+    var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
+    var annee = d.getFullYear();
 
-      // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
-      var date =
-        (jour < 10 ? '0' + jour : jour) +
-        '-' +
-        (mois < 10 ? '0' + mois : mois) +
-        '-' +
-        annee;
+    // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
+    var date =
+      (jour < 10 ? '0' + jour : jour) +
+      '-' +
+      (mois < 10 ? '0' + mois : mois) +
+      '-' +
+      annee;
     var recuperation = JSON.parse(sessionStorage.getItem('infoReque') || '');
     let Options = 'RequeteClientsClasse.svc/pvgMajReqrequeteEtape'; // le chemin d'appel du service web
     //objet d'envoi
@@ -377,7 +377,7 @@ export class RelanceComponent {
     });
   }
   ListeDesRelance() {
-   /* var d = new Date();
+    /* var d = new Date();
     var date = d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
     var jour = d.getDate();
     if (jour < 10) {
@@ -387,17 +387,17 @@ export class RelanceComponent {
     }*/
 
     var d = new Date();
-      var jour = d.getDate();
-      var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
-      var annee = d.getFullYear();
+    var jour = d.getDate();
+    var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
+    var annee = d.getFullYear();
 
-      // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
-      var date =
-        (jour < 10 ? '0' + jour : jour) +
-        '-' +
-        (mois < 10 ? '0' + mois : mois) +
-        '-' +
-        annee;
+    // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
+    var date =
+      (jour < 10 ? '0' + jour : jour) +
+      '-' +
+      (mois < 10 ? '0' + mois : mois) +
+      '-' +
+      annee;
     let Option = 'RequeteClientsClasse.svc/pvgListeReqrequeteRelance';
     let body = {
       Objets: [
@@ -580,7 +580,7 @@ export class RelanceComponent {
           { positionClass: 'toast-bottom-left' }
         );
       } else {
-       /* var d = new Date();
+        /* var d = new Date();
         var date =
           d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
         var jour = d.getDate();
@@ -596,17 +596,17 @@ export class RelanceComponent {
         }*/
 
         var d = new Date();
-      var jour = d.getDate();
-      var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
-      var annee = d.getFullYear();
+        var jour = d.getDate();
+        var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
+        var annee = d.getFullYear();
 
-      // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
-      var date =
-        (jour < 10 ? '0' + jour : jour) +
-        '-' +
-        (mois < 10 ? '0' + mois : mois) +
-        '-' +
-        annee;
+        // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
+        var date =
+          (jour < 10 ? '0' + jour : jour) +
+          '-' +
+          (mois < 10 ? '0' + mois : mois) +
+          '-' +
+          annee;
         var recuperation = JSON.parse(
           sessionStorage.getItem('infoReque') || ''
         );
@@ -694,5 +694,15 @@ export class RelanceComponent {
 
   ngOnInit(): void {
     this.ComboEtapeParam();
+
+    if (!sessionStorage.getItem('isLoggedIn')) {
+      window.location.href = '/auth';
+    }
+    setTimeout(() => {
+      if (sessionStorage.getItem('langselect')) {
+        var lg = sessionStorage.getItem('langselect') || '';
+        this.LanguageService.changeLanguage(lg);
+      }
+    }, 1000);
   }
 }

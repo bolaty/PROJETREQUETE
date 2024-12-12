@@ -1574,7 +1574,9 @@ export class ReclamationsComponent {
     let Option = 'RequeteClientsClasse.svc/pvgListeReqrequeteEtapeConsultation';
     var recuperation = JSON.parse(sessionStorage.getItem('infoReque') || '');
     var CodeAgenceUtilisateur =
-      recuperation.CU_CODECOMPTEUTULISATEURASSOCIER.substring(0, 4);
+      recuperation.CU_CODECOMPTEUTULISATEURASSOCIER != ''
+        ? recuperation.CU_CODECOMPTEUTULISATEURASSOCIER.substring(0, 4)
+        : recuperation.CU_CODECOMPTEUTULISATEUR.substring(0, 4);
     let body;
 
     if (
@@ -3686,6 +3688,11 @@ export class ReclamationsComponent {
       this.formulaire_avis[index].valeur = '';
     }
 
+    this.statutDateDebut = true; // remettre les champs date par defaut
+    this.statutDatefin = true; // remettre les champs date par defaut
+    this.formulaire_avis[2].obligatoire = 'O';
+    this.formulaire_avis[3].obligatoire = 'O';
+
     this.ngOnInit();
   }
 
@@ -4324,6 +4331,16 @@ export class ReclamationsComponent {
     if (this.recupinfo[0].TU_CODETYPEUTILISATEUR == '0002') {
       this.statutClientExiste = false;
     }
+
+    if (!sessionStorage.getItem('isLoggedIn')) {
+      window.location.href = '/auth';
+    }
+    setTimeout(() => {
+      if (sessionStorage.getItem('langselect')) {
+        var lg = sessionStorage.getItem('langselect') || '';
+        this.LanguageService.changeLanguage(lg);
+      }
+    }, 1000);
 
     // Abonnez-vous au flux observable dans le service
     this.maVariableSubscription =

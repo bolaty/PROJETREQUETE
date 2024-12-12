@@ -24,6 +24,10 @@ export class LanguageService {
   stat_title_2: string = '';
   stat_title_3: string = '';
   stat_title_4: string = '';
+  stat_title_5: string = '';
+  stat_title_6: string = '';
+  stat_title_7: string = '';
+  stat_title_8: string = '';
   footer_1: string = '';
   footer_2: string = '';
   header_search_bar: string = '';
@@ -51,6 +55,10 @@ export class LanguageService {
   reclam_engr_title: string = '';
   reclam_engr_bloc_title: string = '';
   reclam_engr_bloc_title_2: string = '';
+  reclam_filtre_par_code: string = '';
+  reclam_filtre_par_code_sub_title: string = '';
+  reclam_filtre_par_tel: string = '';
+  reclam_filtre_par_tel_sub_title: string = '';
   type_reclam: string = '';
   mode_collecte: string = '';
   descript_reclam: string = '';
@@ -103,6 +111,11 @@ export class LanguageService {
   op_chmp_title_5: string = '';
   op_chmp_title_6: string = '';
   op_chmp_title_7: string = '';
+  op_title_droit: string = '';
+  op_title_droit_coche: string = '';
+  op_title_droit_2: string = '';
+  op_title_droit_actif: string = '';
+  op_title_droit_libelle: string = '';
   op_btn_engr_1: string = '';
   op_btn_engr_2: string = '';
   op_table_title_1: string = '';
@@ -185,6 +198,7 @@ export class LanguageService {
   non_receive_badge: string = '';
   tribunal_end_badge: string = '';
   tribunal_message_clo: string = '';
+  aucun_client: string = '';
 
   constructor(private http: HttpClient) {
     this.setLanguage('fr'); // Set default language
@@ -255,6 +269,10 @@ export class LanguageService {
     this.stat_title_2 = this.getTranslation('stat_title_2');
     this.stat_title_3 = this.getTranslation('stat_title_3');
     this.stat_title_4 = this.getTranslation('stat_title_4');
+    this.stat_title_5 = this.getTranslation('stat_title_5');
+    this.stat_title_6 = this.getTranslation('stat_title_6');
+    this.stat_title_7 = this.getTranslation('stat_title_7');
+    this.stat_title_8 = this.getTranslation('stat_title_8');
     this.footer_1 = this.getTranslation('footer_1');
     this.footer_2 = this.getTranslation('footer_2');
     this.header_search_bar = this.getTranslation('header_search_bar');
@@ -304,6 +322,14 @@ export class LanguageService {
       'reclam_engr_bloc_title_2'
     );
     this.type_reclam = this.getTranslation('type_reclam');
+    this.reclam_filtre_par_code = this.getTranslation('reclam_filtre_par_code');
+    this.reclam_filtre_par_code_sub_title = this.getTranslation(
+      'reclam_filtre_par_code_sub_title'
+    );
+    this.reclam_filtre_par_tel = this.getTranslation('reclam_filtre_par_tel');
+    this.reclam_filtre_par_tel_sub_title = this.getTranslation(
+      'reclam_filtre_par_tel_sub_title'
+    );
     this.mode_collecte = this.getTranslation('mode_collecte');
     this.descript_reclam = this.getTranslation('descript_reclam');
     this.suivi_reclam = this.getTranslation('suivi_reclam');
@@ -368,6 +394,11 @@ export class LanguageService {
     this.op_chmp_title_5 = this.getTranslation('op_chmp_title_5');
     this.op_chmp_title_6 = this.getTranslation('op_chmp_title_6');
     this.op_chmp_title_7 = this.getTranslation('op_chmp_title_7');
+    this.op_title_droit = this.getTranslation('op_title_droit');
+    this.op_title_droit_coche = this.getTranslation('op_title_droit_coche');
+    this.op_title_droit_2 = this.getTranslation('op_title_droit_2');
+    this.op_title_droit_actif = this.getTranslation('op_title_droit_actif');
+    this.op_title_droit_libelle = this.getTranslation('op_title_droit_libelle');
     this.op_btn_engr_1 = this.getTranslation('op_btn_engr_1');
     this.op_btn_engr_2 = this.getTranslation('op_btn_engr_2');
     this.op_table_title_1 = this.getTranslation('op_table_title_1');
@@ -474,6 +505,7 @@ export class LanguageService {
     this.non_receive_badge = this.getTranslation('non_receive_badge');
     this.tribunal_end_badge = this.getTranslation('tribunal_end_badge');
     this.tribunal_message_clo = this.getTranslation('tribunal_message_clo');
+    this.aucun_client = this.getTranslation('aucun_client');
   }
   // language
 
