@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  angular-client:
+    image: clientclinique:v2-stable
+    build: .
+    ports:
+      - 5990:80
+    environment:
+      - API_URL=https://appwebroyalimmo_test.app.mgdigitalplus.com/api/
