@@ -17,13 +17,13 @@ declare var $: any;
   styleUrls: ['./reclamations.component.scss'],
 })
 export class ReclamationsComponent {
-   //LienServeur: any = 'http://localhost:22248/'; // lien dev
+  //LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
-  //LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien prod remuci • 
+  //LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien prod remuci •
   // LienServeur: any = 'https://reclamationserveurtest.mgdigitalplus.com:1041/'; // lien test local remuci•
   LienServeur: any = 'https://reclamationserveurprod.gesci-ci.info:1810/'; // lien gesci prod•
- // LienServeur: any = 'https://reclamationserveurprod.maphar.net:1027/'; // lien maphar prod•
-  
+  // LienServeur: any = 'https://reclamationserveurprod.maphar.net:1027/'; // lien maphar prod•
+
   maVariableSubscription?: Subscription;
 
   recupinfo: any = JSON.parse(sessionStorage.getItem('infoLogin') || '');
@@ -338,20 +338,24 @@ export class ReclamationsComponent {
         this.ListeComboAgence = this.ListeComboAgence.pvgReqAgenceComboResult;
         if (this.ListeComboAgence[0].clsResultat.SL_RESULTAT == 'TRUE') {
           // traduction combo agence
-         this.ListeComboAgenceParOperateur = []
-         var agenceOp = this.recupinfo[0].CU_CODECOMPTEUTULISATEUR.substring(0, 4)
+          this.ListeComboAgenceParOperateur = [];
+          var agenceOp = this.recupinfo[0].CU_CODECOMPTEUTULISATEUR.substring(
+            0,
+            4
+          );
           for (let index = 0; index < this.ListeComboAgence.length; index++) {
-            if(agenceOp == this.ListeComboAgence[index].AG_CODEAGENCE){
+            if (agenceOp == this.ListeComboAgence[index].AG_CODEAGENCE) {
               this.ListeComboAgence[index].AG_RAISONSOCIAL_TRANSLATE =
-              this.Translate(
-                this.ListeComboAgence[index].AG_RAISONSOCIAL,
-                this.LanguageService.langue_en_cours
+                this.Translate(
+                  this.ListeComboAgence[index].AG_RAISONSOCIAL,
+                  this.LanguageService.langue_en_cours
+                );
+              this.ListeComboAgenceParOperateur.push(
+                this.ListeComboAgence[index]
               );
-              this.ListeComboAgenceParOperateur.push(this.ListeComboAgence[index])
             }
-            
           }
-          
+
           this.ComboEtapeParam();
         } else {
         }
@@ -603,17 +607,17 @@ export class ReclamationsComponent {
     }*/
 
     var d = new Date();
-      var jour = d.getDate();
-      var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
-      var annee = d.getFullYear();
+    var jour = d.getDate();
+    var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
+    var annee = d.getFullYear();
 
-      // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
-      var date =
-        (jour < 10 ? '0' + jour : jour) +
-        '-' +
-        (mois < 10 ? '0' + mois : mois) +
-        '-' +
-        annee;
+    // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
+    var date =
+      (jour < 10 ? '0' + jour : jour) +
+      '-' +
+      (mois < 10 ? '0' + mois : mois) +
+      '-' +
+      annee;
   }
 
   HandleFileInputContentieux(event: any) {
@@ -646,17 +650,17 @@ export class ReclamationsComponent {
     }*/
 
     var d = new Date();
-      var jour = d.getDate();
-      var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
-      var annee = d.getFullYear();
+    var jour = d.getDate();
+    var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
+    var annee = d.getFullYear();
 
-      // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
-      var date =
-        (jour < 10 ? '0' + jour : jour) +
-        '-' +
-        (mois < 10 ? '0' + mois : mois) +
-        '-' +
-        annee;
+    // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
+    var date =
+      (jour < 10 ? '0' + jour : jour) +
+      '-' +
+      (mois < 10 ? '0' + mois : mois) +
+      '-' +
+      annee;
   }
 
   HandleFileInputContentieuxCloture(event: any) {
@@ -694,18 +698,18 @@ export class ReclamationsComponent {
       console.log(date);
     }*/
 
-      var d = new Date();
-      var jour = d.getDate();
-      var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
-      var annee = d.getFullYear();
+    var d = new Date();
+    var jour = d.getDate();
+    var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
+    var annee = d.getFullYear();
 
-      // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
-      var date =
-        (jour < 10 ? '0' + jour : jour) +
-        '-' +
-        (mois < 10 ? '0' + mois : mois) +
-        '-' +
-        annee;
+    // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
+    var date =
+      (jour < 10 ? '0' + jour : jour) +
+      '-' +
+      (mois < 10 ? '0' + mois : mois) +
+      '-' +
+      annee;
   }
 
   SaveRapportProcedure(code_contentieux: any, btn: any) {
@@ -822,7 +826,7 @@ export class ReclamationsComponent {
       this.AdminService.statut_traitement == true &&
       this.AdminService.statut_traitement_champ_non_obligatoire == true
     ) {
-     /* var d = new Date();
+      /* var d = new Date();
       var date =
         d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
       var jour = d.getDate();
@@ -1074,18 +1078,18 @@ export class ReclamationsComponent {
           '0' + d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
         console.log(date);
       }*/
-        var d = new Date();
-        var jour = d.getDate();
-        var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
-        var annee = d.getFullYear();
-  
-        // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
-        var date =
-          (jour < 10 ? '0' + jour : jour) +
-          '-' +
-          (mois < 10 ? '0' + mois : mois) +
-          '-' +
-          annee;
+      var d = new Date();
+      var jour = d.getDate();
+      var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
+      var annee = d.getFullYear();
+
+      // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
+      var date =
+        (jour < 10 ? '0' + jour : jour) +
+        '-' +
+        (mois < 10 ? '0' + mois : mois) +
+        '-' +
+        annee;
       let Options = 'RequeteClientsClasse.svc/pvgMajUtilisateurs'; // le chemin d'appel du service web
       //objet d'envoi
       let body = {
@@ -1231,24 +1235,25 @@ export class ReclamationsComponent {
           console.log(date);
         }*/
         var d = new Date();
-      var jour = d.getDate();
-      var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
-      var annee = d.getFullYear();
+        var jour = d.getDate();
+        var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
+        var annee = d.getFullYear();
 
-      // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
-      var date =
-        (jour < 10 ? '0' + jour : jour) +
-        '-' +
-        (mois < 10 ? '0' + mois : mois) +
-        '-' +
-        annee;
-        var CodeAgenceUtilisateur = this.formulaire_attr_reclamations[0].valeur.substring(0, 4);
+        // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
+        var date =
+          (jour < 10 ? '0' + jour : jour) +
+          '-' +
+          (mois < 10 ? '0' + mois : mois) +
+          '-' +
+          annee;
+        var CodeAgenceUtilisateur =
+          this.formulaire_attr_reclamations[0].valeur.substring(0, 4);
         let Options = 'RequeteClientsClasse.svc/pvgMajReqrequeteEtape'; // le chemin d'appel du service web
         //objet d'envoi
         let body = {
           Objets: [
             {
-              AG_CODEAGENCE: CodeAgenceUtilisateur ,//this.recupinfo[0].AG_CODEAGENCE,
+              AG_CODEAGENCE: CodeAgenceUtilisateur, //this.recupinfo[0].AG_CODEAGENCE,
               AT_DATECLOTUREETAPE: '01/01/1900',
               AT_DATEDEBUTTRAITEMENTETAPE:
                 this.formulaire_attr_reclamations[1].valeur,
@@ -1568,7 +1573,10 @@ export class ReclamationsComponent {
   ListeConsultationselonEtape() {
     let Option = 'RequeteClientsClasse.svc/pvgListeReqrequeteEtapeConsultation';
     var recuperation = JSON.parse(sessionStorage.getItem('infoReque') || '');
-    var CodeAgenceUtilisateur = recuperation.CU_CODECOMPTEUTULISATEURASSOCIER.substring(0, 4);
+    var CodeAgenceUtilisateur =
+      recuperation.CU_CODECOMPTEUTULISATEURASSOCIER != ''
+        ? recuperation.CU_CODECOMPTEUTULISATEURASSOCIER.substring(0, 4)
+        : recuperation.CU_CODECOMPTEUTULISATEUR.substring(0, 4);
     let body;
 
     if (
@@ -1581,7 +1589,7 @@ export class ReclamationsComponent {
         Objets: [
           {
             OE_PARAM: [
-              CodeAgenceUtilisateur,//this.recupinfo[0].AG_CODEAGENCE,
+              CodeAgenceUtilisateur, //this.recupinfo[0].AG_CODEAGENCE,
               recuperation.RQ_CODEREQUETERELANCEE,
               '',
               '',
@@ -1600,7 +1608,7 @@ export class ReclamationsComponent {
         Objets: [
           {
             OE_PARAM: [
-              CodeAgenceUtilisateur,//this.recupinfo[0].AG_CODEAGENCE,
+              CodeAgenceUtilisateur, //this.recupinfo[0].AG_CODEAGENCE,
               recuperation.RQ_CODEREQUETE,
               '',
               '',
@@ -1701,12 +1709,13 @@ export class ReclamationsComponent {
     var Option = '';
     var body = {};
     if (this.recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')) {
-      var CodeAgenceUtilisateur = this.recupinfo[0].CU_CODECOMPTEUTULISATEUR.substring(0, 4);
+      var CodeAgenceUtilisateur =
+        this.recupinfo[0].CU_CODECOMPTEUTULISATEUR.substring(0, 4);
       Option = 'RequeteClientsClasse.svc/pvgListeReqrequete';
       body = {
         Objets: [
           {
-            OE_PARAM: ['01','',CodeAgenceUtilisateur],
+            OE_PARAM: ['01', '', CodeAgenceUtilisateur],
             clsObjetEnvoi: {
               ET_CODEETABLISSEMENT: '',
               AN_CODEANTENNE: '',
@@ -2877,7 +2886,7 @@ export class ReclamationsComponent {
     this.AdminService.ShowLoader();
     $('#addNewAddressClotureDefinitive').modal('hide');
 
-   /* var d = new Date();
+    /* var d = new Date();
     var date = d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
     var jour = d.getDate();
     if (jour < 10) {
@@ -2887,17 +2896,17 @@ export class ReclamationsComponent {
     }*/
 
     var d = new Date();
-      var jour = d.getDate();
-      var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
-      var annee = d.getFullYear();
+    var jour = d.getDate();
+    var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
+    var annee = d.getFullYear();
 
-      // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
-      var date =
-        (jour < 10 ? '0' + jour : jour) +
-        '-' +
-        (mois < 10 ? '0' + mois : mois) +
-        '-' +
-        annee;
+    // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
+    var date =
+      (jour < 10 ? '0' + jour : jour) +
+      '-' +
+      (mois < 10 ? '0' + mois : mois) +
+      '-' +
+      annee;
     var recuperation = JSON.parse(sessionStorage.getItem('infoReque') || '');
     let Options = 'RequeteClientsClasse.svc/pvgMajReqrequete'; // le chemin d'appel du service web
     //objet d'envoi
@@ -2997,18 +3006,18 @@ export class ReclamationsComponent {
       console.log(date);
     }*/
 
-      var d = new Date();
-      var jour = d.getDate();
-      var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
-      var annee = d.getFullYear();
+    var d = new Date();
+    var jour = d.getDate();
+    var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
+    var annee = d.getFullYear();
 
-      // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
-      var date =
-        (jour < 10 ? '0' + jour : jour) +
-        '-' +
-        (mois < 10 ? '0' + mois : mois) +
-        '-' +
-        annee;
+    // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
+    var date =
+      (jour < 10 ? '0' + jour : jour) +
+      '-' +
+      (mois < 10 ? '0' + mois : mois) +
+      '-' +
+      annee;
     var recuperation = JSON.parse(sessionStorage.getItem('infoReque') || '');
     let Options = 'RequeteClientsClasse.svc/pvgMajReqrequete'; // le chemin d'appel du service web
     //objet d'envoi
@@ -3083,17 +3092,17 @@ export class ReclamationsComponent {
     }*/
 
     var d = new Date();
-      var jour = d.getDate();
-      var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
-      var annee = d.getFullYear();
+    var jour = d.getDate();
+    var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
+    var annee = d.getFullYear();
 
-      // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
-      var date =
-        (jour < 10 ? '0' + jour : jour) +
-        '-' +
-        (mois < 10 ? '0' + mois : mois) +
-        '-' +
-        annee;
+    // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
+    var date =
+      (jour < 10 ? '0' + jour : jour) +
+      '-' +
+      (mois < 10 ? '0' + mois : mois) +
+      '-' +
+      annee;
     var recuperation = JSON.parse(sessionStorage.getItem('infoReque') || '');
     let Options = 'RequeteClientsClasse.svc/pvgMajReqrequeteContentieux';
     //objet d'envoi
@@ -3105,8 +3114,9 @@ export class ReclamationsComponent {
           CT_DATECLOTURECONTENTIEUX: '01/01/1900',
           CT_DATEOUVERTURECONTENTIEUX: date,
           CT_MONTANTCONTENTIEUXEXTIME:
-            this.modal_transmission_tribunal[1].valeur,
-          CT_MONTANTCONTENTIEUXREEL: this.modal_transmission_tribunal[1].valeur,
+            this.modal_transmission_tribunal[1].valeur.replaceAll(' ', ''),
+          CT_MONTANTCONTENTIEUXREEL:
+            this.modal_transmission_tribunal[1].valeur.replaceAll(' ', ''),
           CT_OBSERVATION1: this.modal_transmission_tribunal[0].valeur,
           CT_OBSERVATION2: this.modal_transmission_tribunal[0].valeur,
           FICHIERSJOINT: '',
@@ -3167,7 +3177,7 @@ export class ReclamationsComponent {
   }
 
   ListeContentieux(btn: any) {
-   /* var d = new Date();
+    /* var d = new Date();
     var date = d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
     var jour = d.getDate();
     if (jour < 10) {
@@ -3177,17 +3187,17 @@ export class ReclamationsComponent {
     }*/
 
     var d = new Date();
-      var jour = d.getDate();
-      var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
-      var annee = d.getFullYear();
+    var jour = d.getDate();
+    var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
+    var annee = d.getFullYear();
 
-      // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
-      var date =
-        (jour < 10 ? '0' + jour : jour) +
-        '-' +
-        (mois < 10 ? '0' + mois : mois) +
-        '-' +
-        annee;
+    // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
+    var date =
+      (jour < 10 ? '0' + jour : jour) +
+      '-' +
+      (mois < 10 ? '0' + mois : mois) +
+      '-' +
+      annee;
     var recuperation = JSON.parse(sessionStorage.getItem('infoReque') || '');
     let Options = 'RequeteClientsClasse.svc/pvgListeReqrequeteContentieux'; // le chemin d'appel du service web
     //objet d'envoi
@@ -3287,17 +3297,17 @@ export class ReclamationsComponent {
     }*/
 
     var d = new Date();
-      var jour = d.getDate();
-      var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
-      var annee = d.getFullYear();
+    var jour = d.getDate();
+    var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
+    var annee = d.getFullYear();
 
-      // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
-      var date =
-        (jour < 10 ? '0' + jour : jour) +
-        '-' +
-        (mois < 10 ? '0' + mois : mois) +
-        '-' +
-        annee;
+    // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
+    var date =
+      (jour < 10 ? '0' + jour : jour) +
+      '-' +
+      (mois < 10 ? '0' + mois : mois) +
+      '-' +
+      annee;
     var recuperation = JSON.parse(sessionStorage.getItem('infoReque') || '');
     let Options = 'RequeteClientsClasse.svc/pvgMajReqrequeteContentieux'; // le chemin d'appel du service web
     //objet d'envoi
@@ -3308,8 +3318,10 @@ export class ReclamationsComponent {
           CT_CODEREQUETECONTENTIEUX: code_contentieux,
           CT_DATECLOTURECONTENTIEUX: date,
           CT_DATEOUVERTURECONTENTIEUX: '01/01/1900',
-          CT_MONTANTCONTENTIEUXEXTIME: this.modal_cloture_procedure[1].valeur,
-          CT_MONTANTCONTENTIEUXREEL: this.modal_cloture_procedure[1].valeur,
+          CT_MONTANTCONTENTIEUXEXTIME:
+            this.modal_cloture_procedure[1].valeur.replaceAll(' ', ''),
+          CT_MONTANTCONTENTIEUXREEL:
+            this.modal_cloture_procedure[1].valeur.replaceAll(' ', ''),
           CT_OBSERVATION1: this.modal_cloture_procedure[0].valeur,
           CT_OBSERVATION2: this.modal_cloture_procedure[0].valeur,
           FICHIERSJOINT: '',
@@ -3465,7 +3477,8 @@ export class ReclamationsComponent {
   }
 
   listeClients(elem: any) {
-    let Option = 'RequeteClientsClasse.svc/pvgListeUtilisateursRechercheParAgence';
+    let Option =
+      'RequeteClientsClasse.svc/pvgListeUtilisateursRechercheParAgence';
 
     if (
       elem == 'code' &&
@@ -3483,13 +3496,20 @@ export class ReclamationsComponent {
       });
     } else {
       let body;
-      var CodeAgenceUtilisateur = this.recupinfo[0].CU_CODECOMPTEUTULISATEUR.substring(0, 4);
+      var CodeAgenceUtilisateur =
+        this.recupinfo[0].CU_CODECOMPTEUTULISATEUR.substring(0, 4);
       if (elem == 'telephone') {
         // dans le cas d'une recherche avec numero de telephone
         body = {
           Objets: [
             {
-              OE_PARAM: ['0002', '', this.SearchValuePhone, CodeAgenceUtilisateur, '01'],
+              OE_PARAM: [
+                '0002',
+                '',
+                this.SearchValuePhone,
+                CodeAgenceUtilisateur,
+                '01',
+              ],
               clsObjetEnvoi: {
                 ET_CODEETABLISSEMENT: '',
                 AN_CODEANTENNE: '',
@@ -3503,7 +3523,13 @@ export class ReclamationsComponent {
         body = {
           Objets: [
             {
-              OE_PARAM: ['0002', this.SearchValueCode, '', CodeAgenceUtilisateur, '01'],
+              OE_PARAM: [
+                '0002',
+                this.SearchValueCode,
+                '',
+                CodeAgenceUtilisateur,
+                '01',
+              ],
               clsObjetEnvoi: {
                 ET_CODEETABLISSEMENT: '',
                 AN_CODEANTENNE: '',
@@ -3521,23 +3547,25 @@ export class ReclamationsComponent {
           this.ListeClients =
             this.ListeClients.pvgListeUtilisateursRechercheParAgenceResult;
           if (this.ListeClients[0].clsResultat.SL_RESULTAT == 'TRUE') {
-            var agenceOp = this.recupinfo[0].CU_CODECOMPTEUTULISATEUR.substring(0, 4)
+            var agenceOp = this.recupinfo[0].CU_CODECOMPTEUTULISATEUR.substring(
+              0,
+              4
+            );
             this.AdminService.CloseLoader();
-            if(this.ListeClients[0].AG_CODEAGENCE == agenceOp){
+            if (this.ListeClients[0].AG_CODEAGENCE == agenceOp) {
               this.toastr.success(
                 this.ListeClients[0].clsResultat.SL_MESSAGE,
                 'success',
                 { positionClass: 'toast-bottom-left' }
               );
               this.statutClientExiste = false;
-            }else{
+            } else {
               this.toastr.error(
                 "Operation impossbile ce client n'appartient pas à votre agence !!!",
                 'error',
                 { positionClass: 'toast-bottom-left' }
               );
             }
-            
           } else {
             this.AdminService.CloseLoader();
             this.toastr.error(
@@ -3642,13 +3670,16 @@ export class ReclamationsComponent {
         info.CU_CODECOMPTEUTULISATEUR;
     }
     // this.ComboEtapeParamSimple()
-    this.ListeComboParOperateur = []
-    var agenceReq = this.recupValEtape.CU_CODECOMPTEUTULISATEUR.substring(0, 4)
-    var agenceOp = ""
-    for(var i = 0; i < this.ListeComboOperateur.length; i++) {
-      agenceOp = this.ListeComboOperateur[i].CU_CODECOMPTEUTULISATEUR.substring(0, 4)
-      if(agenceReq == agenceOp){
-        this.ListeComboParOperateur.push(this.ListeComboOperateur[i])
+    this.ListeComboParOperateur = [];
+    var agenceReq = this.recupValEtape.CU_CODECOMPTEUTULISATEUR.substring(0, 4);
+    var agenceOp = '';
+    for (var i = 0; i < this.ListeComboOperateur.length; i++) {
+      agenceOp = this.ListeComboOperateur[i].CU_CODECOMPTEUTULISATEUR.substring(
+        0,
+        4
+      );
+      if (agenceReq == agenceOp) {
+        this.ListeComboParOperateur.push(this.ListeComboOperateur[i]);
       }
     }
     /* if (info.RQ_NOMRAPPORT != '') this.consultation_doc_req = true;
@@ -3656,6 +3687,11 @@ export class ReclamationsComponent {
     for (let index = 0; index < this.formulaire_avis.length; index++) {
       this.formulaire_avis[index].valeur = '';
     }
+
+    this.statutDateDebut = true; // remettre les champs date par defaut
+    this.statutDatefin = true; // remettre les champs date par defaut
+    this.formulaire_avis[2].obligatoire = 'O';
+    this.formulaire_avis[3].obligatoire = 'O';
 
     this.ngOnInit();
   }
@@ -4069,7 +4105,10 @@ export class ReclamationsComponent {
     let body = {
       Objets: [
         {
-          OE_PARAM: [req_item.CU_CODECOMPTEUTULISATEUR,req_item.CU_CODECOMPTEUTULISATEURASSOCIER],
+          OE_PARAM: [
+            req_item.CU_CODECOMPTEUTULISATEUR,
+            req_item.CU_CODECOMPTEUTULISATEURASSOCIER,
+          ],
         },
       ],
     };
@@ -4292,6 +4331,16 @@ export class ReclamationsComponent {
     if (this.recupinfo[0].TU_CODETYPEUTILISATEUR == '0002') {
       this.statutClientExiste = false;
     }
+
+    if (!sessionStorage.getItem('isLoggedIn')) {
+      window.location.href = '/auth';
+    }
+    setTimeout(() => {
+      if (sessionStorage.getItem('langselect')) {
+        var lg = sessionStorage.getItem('langselect') || '';
+        this.LanguageService.changeLanguage(lg);
+      }
+    }, 1000);
 
     // Abonnez-vous au flux observable dans le service
     this.maVariableSubscription =

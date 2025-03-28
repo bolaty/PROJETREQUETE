@@ -17,15 +17,14 @@ export class AuthService {
   libelleConnexion: any = '';
   tempsRestant: number = 10;
   statusConnect: boolean = false;
-  //LienServeur: any = 'http://localhost:22248/'; // lien dev
+  LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
- // LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien prod  • remuci
- //   LienServeur: any = 'https://reclamationserveurtest.mgdigitalplus.com:1041/'; // lien test local remuci• bly
-   LienServeur: any = 'https://reclamationserveurprod.gesci-ci.info:1810/'; // lien gesci prod•
+  // LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien prod  • remuci
+  //   LienServeur: any = 'https://reclamationserveurtest.mgdigitalplus.com:1041/'; // lien test local remuci• bly
+  //  LienServeur: any = 'https://reclamationserveurprod.gesci-ci.info:1810/'; // lien gesci prod•
   //LienServeur: any = 'https://reclamationserveurprod.maphar.net:1027/'; // lien maphar prod•
-  
-  
-  user_connecte: boolean = false; // true designe la connexion d'un operateur et false celui d'un client // personnalisable
+
+  user_connecte: boolean = true; // true designe la connexion d'un operateur et false celui d'un client // personnalisable
 
   constructor(private http: HttpClient) {
     Network.addListener(

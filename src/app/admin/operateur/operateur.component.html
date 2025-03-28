@@ -57,7 +57,10 @@
                 class="d-flex justify-content-between flex-column mb-3 mb-md-0 pe-md-3"
               >
                 <ul class="nav nav-align-left nav-pills flex-column">
-                  <li class="nav-item" *ngIf="AdminService.objetEcran[6].STATUTOBJET == 'O'">
+                  <li
+                    class="nav-item"
+                    *ngIf="AdminService.objetEcran[6].STATUTOBJET == 'O'"
+                  >
                     <button
                       class="nav-link active"
                       data-bs-toggle="tab"
@@ -229,25 +232,69 @@
                     <!-- Custom SVG Icon Checkbox -->
                     <div class="col">
                       <div class="card">
-                        <h5 class="card-header">Droit.s de l'opérateur</h5>
-                        <span class="custom-option-header" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size: 15px;margin-left: 80%;">
-                          Tout cocher
+                        <h5 class="card-header">
+                          {{ LanguageService.op_title_droit }}
+                        </h5>
+                        <span
+                          class="custom-option-header"
+                          style="
+                            font-family: 'Segoe UI', Tahoma, Geneva, Verdana,
+                              sans-serif;
+                            font-size: 15px;
+                            margin-left: 80%;
+                          "
+                        >
+                          {{ LanguageService.op_title_droit_coche }}
                         </span>
-                        <input class="form-check-input" type="checkbox" (change)="toggleAllCheckboxes($event)" id="checkAll" style="margin-left: 80%;"/>
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          (change)="toggleAllCheckboxes($event)"
+                          id="checkAll"
+                          style="margin-left: 80%"
+                        />
                         <div class="card-body">
                           <div class="row">
-                            <div class="col-md-2 mb-md-0 mb-2" *ngFor="let LtDroitUser of ListeDroitUser;let index=index" style="margin-top: 25px;">
-                              <div class="form-check custom-option custom-option-icon">
-                                  <label class="form-check-label custom-option-content" for="MnuReclamation{{index}}">
-                                      <span class="custom-option-body">
-                                          <small>{{LtDroitUser.DP_LIBELLEDROITCOMPTEUTULISATEUR}}</small>
-                                      </span>
-                                      <input class="form-check-input" type="checkbox" name="check" [(ngModel)]="LtDroitUser.isChecked" (change)="VerifyTabAgence(LtDroitUser.DP_CODEDROITCOMPTEUTULISATEUR)" value="{{LtDroitUser.DP_CODEDROITCOMPTEUTULISATEUR}}" id="MnuReclamation{{index }}" />
-                                  </label>
+                            <div
+                              class="col-md-2 mb-md-0 mb-2"
+                              *ngFor="
+                                let LtDroitUser of ListeDroitUser;
+                                let index = index
+                              "
+                              style="margin-top: 25px"
+                            >
+                              <div
+                                class="form-check custom-option custom-option-icon"
+                              >
+                                <label
+                                  class="form-check-label custom-option-content"
+                                  for="MnuReclamation{{ index }}"
+                                >
+                                  <span class="custom-option-body">
+                                    <small>{{
+                                      LtDroitUser.DP_LIBELLEDROITCOMPTEUTULISATEUR
+                                    }}</small>
+                                  </span>
+                                  <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    name="check"
+                                    [(ngModel)]="LtDroitUser.isChecked"
+                                    (change)="
+                                      VerifyTabAgence(
+                                        LtDroitUser.DP_CODEDROITCOMPTEUTULISATEUR
+                                      )
+                                    "
+                                    value="{{
+                                      LtDroitUser.DP_CODEDROITCOMPTEUTULISATEUR
+                                    }}"
+                                    id="MnuReclamation{{ index }}"
+                                  />
+                                </label>
                               </div>
-                          </div>
-                          
-                           <!-- <div class="col-md-2 mb-md-0 mb-2" *ngFor="let LtDroitUser of ListeDroitUser">
+                            </div>
+
+                            <!-- <div class="col-md-2 mb-md-0 mb-2" *ngFor="let LtDroitUser of ListeDroitUser">
                               <div
                                 class="form-check custom-option custom-option-icon"
                               >
@@ -271,7 +318,6 @@
                                 </label>
                               </div>
                             </div>-->
-                           
                           </div>
                           &#160;&#160;&#160;
                         </div>
@@ -317,8 +363,8 @@
                         <tr>
                           <th>{{ LanguageService.op_table_title_1 }}</th>
                           <th>{{ LanguageService.op_table_title_2 }}</th>
-                          <th>{{ LanguageService.op_table_title_3 }}</th>
-                          <th>{{ LanguageService.op_table_title_4 }}</th>
+                          <!-- <th>{{ LanguageService.op_table_title_3 }}</th> -->
+                          <!-- <th>{{ LanguageService.op_table_title_4 }}</th> -->
                         </tr>
                       </thead>
                     </table>
@@ -457,7 +503,11 @@
                       <!-- <small class="text-muted ms-1">{{ item.CU_EMAIL }}</small> -->
                     </div>
                   </div>
-                  <div class="add-btn" (click)="ModifyInfoClient(item)" *ngIf="AdminService.objetEcran[7].STATUTOBJET == 'O'">
+                  <div
+                    class="add-btn"
+                    (click)="ModifyInfoClient(item)"
+                    *ngIf="AdminService.objetEcran[7].STATUTOBJET == 'O'"
+                  >
                     <button class="btn btn-primary btn-sm">Modifier</button>
                   </div>
                 </div>
@@ -471,7 +521,7 @@
           style="text-align: center; font-size: 40px; margin-top: 190px"
           *ngIf="!affiche_liste_client"
         >
-          <p>Aucun client !</p>
+          <p>{{ LanguageService.aucun_client }} !</p>
         </div>
         <!--/ Teams Cards -->
       </div>
@@ -577,24 +627,40 @@
           <span class="h6">{{ LanguageService.info_cli_sub_title_3 }}: </span>
           <span>{{ voirlist.CU_CONTACT }}</span>
         </li>
-        <li class="mb-3">
+        <li
+          class="mb-3"
+          *ngIf="recupinfo[0]?.CU_NOMUTILISATEUR.includes('ADMIN')"
+        >
           <span class="h6">{{ LanguageService.op_chmp_title_6 }}: </span>
           <span>{{ voirlist.CU_LOGIN }}</span>
         </li>
-        <li class="mb-3">
+        <li
+          class="mb-3"
+          *ngIf="recupinfo[0]?.CU_NOMUTILISATEUR.includes('ADMIN')"
+        >
           <span class="h6">{{ LanguageService.op_chmp_title_7 }}: </span>
           <span>{{ voirlist.CU_MOTDEPASSE }}</span>
         </li>
       </ul>
-      <h5 class="pb-3 border-bottom mb-3" *ngIf="statusOrderListe">Droit</h5>
+      <h5 class="pb-3 border-bottom mb-3" *ngIf="statusOrderListe">
+        {{ LanguageService.op_title_droit_2 }}
+      </h5>
       <ul class="list-unstyled mb-4" *ngIf="statutdroit">
         <li class="mb-3" *ngFor="let DroitforUser of ListeDroitforUser">
-          <span class="h6">{{DroitforUser.DP_LIBELLEDROITCOMPTEUTULISATEUR}} </span>
-          <span class="badge bg-label-success rounded-pill">Actif</span>
+          <span class="h6"
+            >{{ DroitforUser.DP_LIBELLEDROITCOMPTEUTULISATEUR }}
+          </span>
+          <span class="badge bg-label-success rounded-pill">{{
+            LanguageService.op_title_droit_actif
+          }}</span>
         </li>
       </ul>
-      <span class="h6" *ngIf="!statutdroit">Aucun droit accorder a cet utilisateur !!! </span>
-      <br> <br> <br>
+      <span class="h6" *ngIf="!statutdroit"
+        >{{ LanguageService.op_title_droit_libelle }} !!!
+      </span>
+      <br />
+      <br />
+      <br />
       <div class="d-flex justify-content-center">
         <a
           href="javascript:;"
@@ -706,52 +772,67 @@
             [placeholder]="0000"
             [(ngModel)]="formulaire_operateur[6].valeur"
           />
-          <label for="motdepasse">{{
-            LanguageService.op_chmp_title_7
-          }}</label>
+          <label for="motdepasse">{{ LanguageService.op_chmp_title_7 }}</label>
         </div>
-      </div><br>
-      <h5 class="card-header">Droit.s de l'opérateur</h5>
-      <span class="custom-option-header"  style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size: 15px;margin-left: 80%;">
-        Tout cocher
+      </div>
+      <br />
+      <h5 class="card-header">{{ LanguageService.op_title_droit }}</h5>
+      <span
+        class="custom-option-header"
+        style="
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          font-size: 15px;
+          margin-left: 80%;
+        "
+      >
+        {{ LanguageService.op_title_droit_coche }}
       </span>
-      <input class="form-check-input" type="checkbox" (click)="cocheAll()" id="checkAlldt" style="margin-left: 80%;"/>
-     
+      <input
+        class="form-check-input"
+        type="checkbox"
+        (click)="cocheAll()"
+        id="checkAlldt"
+        style="margin-left: 80%"
+      />
+
       <div
-      class="d-flex mb-3"
-      *ngFor="let LtDroitUser2 of ListeDroitUser; let i = index" style="margin-top: 35px;"
-    >
-      <div class="flex-shrink-0">
-        <img
-          src="../../assets/img/icons/misc/aviato.png"
-          alt="aviato"
-          class="me-3"
-          height="26"
-        />
-      </div>
-      
-      <div class="flex-grow-1 row">
-        <div class="col-9 mb-sm-0 mb-2">
-          <h6 class="mb-0">{{LtDroitUser2.DP_LIBELLEDROITCOMPTEUTULISATEUR}}</h6>
+        class="d-flex mb-3"
+        *ngFor="let LtDroitUser2 of ListeDroitUser; let i = index"
+        style="margin-top: 35px"
+      >
+        <div class="flex-shrink-0">
+          <img
+            src="../../assets/img/icons/misc/aviato.png"
+            alt="aviato"
+            class="me-3"
+            height="26"
+          />
         </div>
-        <div class="col-3 text-end">
-          <label class="switch me-0">
-            <input
-              type="checkbox"
-              class="switch-input"
-              [checked]="LtDroitUser2.DP_STATUT === 'O'"
-              (click)="changeVall(i)"
-            />
-            <span class="switch-toggle-slider">
-              <span class="switch-on"></span>
-              <span class="switch-off"></span>
-            </span>
-            <span class="switch-label"></span>
-          </label>
+
+        <div class="flex-grow-1 row">
+          <div class="col-9 mb-sm-0 mb-2">
+            <h6 class="mb-0">
+              {{ LtDroitUser2.DP_LIBELLEDROITCOMPTEUTULISATEUR }}
+            </h6>
+          </div>
+          <div class="col-3 text-end">
+            <label class="switch me-0">
+              <input
+                type="checkbox"
+                class="switch-input"
+                [checked]="LtDroitUser2.DP_STATUT === 'O'"
+                (click)="changeVall(i)"
+              />
+              <span class="switch-toggle-slider">
+                <span class="switch-on"></span>
+                <span class="switch-off"></span>
+              </span>
+              <span class="switch-label"></span>
+            </label>
+          </div>
         </div>
       </div>
-    </div>
-    <br><br><br>
+      <br /><br /><br />
       <div class="mb-3 d-flex flex-wrap">
         <button
           type="button"

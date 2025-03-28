@@ -69,7 +69,13 @@
             mois-ci
           </p> -->
         </div>
-        <div class="card-body" *ngIf="recupinfo[0]?.CU_NOMUTILISATEUR.includes('ADMIN') && recupinfo[0]?.TU_CODETYPEUTILISATEUR == '0001'">
+        <div
+          class="card-body"
+          *ngIf="
+            recupinfo[0]?.CU_NOMUTILISATEUR.includes('ADMIN') &&
+            recupinfo[0]?.TU_CODETYPEUTILISATEUR == '0001'
+          "
+        >
           <div class="row g-3">
             <div class="col-md-3 col-6">
               <div class="d-flex align-items-center">
@@ -79,7 +85,7 @@
                     <i class="mdi mdi-alert-circle-check mdi-24px"></i>
                   </div>
                 </div>
-                
+
                 <div class="ms-3">
                   <div class="small mb-1">
                     {{ languageService.stat_title_0 }}
@@ -98,7 +104,7 @@
                     <i class="mdi mdi-alert-circle-check mdi-24px"></i>
                   </div>
                 </div>
-                
+
                 <div class="ms-3">
                   <div class="small mb-1">
                     {{ languageService.stat_title_1 }}
@@ -165,7 +171,13 @@
             </div>
           </div>
         </div>
-        <div class="card-body" *ngIf="recupinfo[0]?.TU_CODETYPEUTILISATEUR == '0001' && !recupinfo[0]?.CU_NOMUTILISATEUR.includes('ADMIN')">
+        <div
+          class="card-body"
+          *ngIf="
+            recupinfo[0]?.TU_CODETYPEUTILISATEUR == '0001' &&
+            !recupinfo[0]?.CU_NOMUTILISATEUR.includes('ADMIN')
+          "
+        >
           <div class="row g-3">
             <div class="col-md-4 col-6">
               <div class="d-flex align-items-center">
@@ -207,7 +219,7 @@
               <div class="d-flex align-items-center">
                 <div class="avatar">
                   <div class="avatar-initial bg-warning rounded shadow">
-                    
+
                   </div>
                 </div>
                 <div class="ms-3">
@@ -240,7 +252,10 @@
             </div>
           </div>
         </div>
-        <div class="card-body" *ngIf="recupinfo[0]?.TU_CODETYPEUTILISATEUR == '0002'">
+        <div
+          class="card-body"
+          *ngIf="recupinfo[0]?.TU_CODETYPEUTILISATEUR == '0002'"
+        >
           <div class="row g-3">
             <div class="col-md-4 col-6">
               <div class="d-flex align-items-center">
@@ -264,7 +279,7 @@
               <div class="d-flex align-items-center">
                 <div class="avatar">
                   <div class="avatar-initial bg-info rounded shadow">
-                   
+
                     <i class="mdi mdi-account-arrow-right-outline mdi-24px"></i>
                   </div>
                 </div>
@@ -325,7 +340,7 @@
       <div class="card h-100">
         <div class="card-header pb-1">
           <div class="d-flex justify-content-between">
-            <h5 class="mb-0">Délai de traitement</h5>
+            <h5 class="mb-0">{{ languageService.stat_title_5 }}</h5>
             <!-- <div class="dropdown">
               <button
                 class="btn p-0"
@@ -368,7 +383,7 @@
                   </div>
                 </div>
                 <div class="ms-3 d-flex flex-column">
-                  <p class="mb-1">Nombre de reclamation</p>
+                  <p class="mb-1">{{ languageService.stat_title_6 }}</p>
                   <h5 class="mb-1">
                     {{ recup_reclamation_stats[0]?.NOMBREREQUETEDEJATRAITER }}
                   </h5>
@@ -379,22 +394,28 @@
                 <div class="col-6">
                   <div class="d-flex align-items-center mb-2">
                     <div class="badge badge-dot bg-primary me-2"></div>
-                    <p class="text-heading mb-0">Dans les délais</p>
+                    <p class="text-heading mb-0">
+                      {{ languageService.stat_title_7 }}
+                    </p>
                   </div>
                   <p class="fw-medium mb-0">
                     {{
-                      recup_reclamation_stats[0]?.NOMBREREQUETESTRAITEESDANSDELAIS
+                      recup_reclamation_stats[0]
+                        ?.NOMBREREQUETESTRAITEESDANSDELAIS
                     }}
                   </p>
                 </div>
                 <div class="col-6">
                   <div class="d-flex align-items-center mb-2">
                     <div class="badge badge-dot bg-primary me-2"></div>
-                    <p class="text-heading mb-0">Hors délais</p>
+                    <p class="text-heading mb-0">
+                      {{ languageService.stat_title_8 }}
+                    </p>
                   </div>
                   <p class="fw-medium mb-0">
                     {{
-                      recup_reclamation_stats[0]?.NOMBREREQUETESTRAITEESHORSDELAIS
+                      recup_reclamation_stats[0]
+                        ?.NOMBREREQUETESTRAITEESHORSDELAIS
                     }}
                   </p>
                 </div>

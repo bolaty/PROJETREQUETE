@@ -37,7 +37,8 @@
         class="col-xl-6"
         *ngIf="
           !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') &&
-          recupinfo[0].TU_CODETYPEUTILISATEUR == '0001' && AdminService.objetEcran[7].STATUTOBJET == 'O'
+          recupinfo[0].TU_CODETYPEUTILISATEUR == '0001' &&
+          AdminService.objetEcran[7].STATUTOBJET == 'O'
         "
       >
         <!-- <div class="card"> -->
@@ -58,12 +59,16 @@
                     checked
                   />
                   <span class="custom-option-header">
-                    <span class="h6 mb-0">Code</span>
+                    <span class="h6 mb-0">{{
+                      LanguageService.reclam_filtre_par_code
+                    }}</span>
                     <!-- <span class="text-muted">Free</span> -->
                   </span>
                   <span class="custom-option-body">
                     <small class="text-body"
-                      >Recherchez avec le code (Ex.: 1).</small
+                      >{{
+                        LanguageService.reclam_filtre_par_code_sub_title
+                      }}.</small
                     >
                   </span>
                 </label>
@@ -83,13 +88,16 @@
                     id="customRadioTemp2"
                   />
                   <span class="custom-option-header">
-                    <span class="h6 mb-0">Téléphone</span>
+                    <span class="h6 mb-0">{{
+                      LanguageService.reclam_filtre_par_tel
+                    }}</span>
                     <!-- <span class="text-muted">$ 5.00</span> -->
                   </span>
                   <span class="custom-option-body">
                     <small class="text-body"
-                      >Recherchez avec le numéro de téléphone (Ex.:
-                      22501XXXXXXXX).</small
+                      >{{
+                        LanguageService.reclam_filtre_par_tel_sub_title
+                      }}.</small
                     >
                   </span>
                 </label>
@@ -126,7 +134,8 @@
           *ngIf="
             !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') &&
             recupinfo[0].TU_CODETYPEUTILISATEUR != '0002' &&
-            !phone_or_code && AdminService.objetEcran[7].STATUTOBJET == 'O'
+            !phone_or_code &&
+            AdminService.objetEcran[7].STATUTOBJET == 'O'
           "
           (keyup)="RechercheAvecTouche1($event, 'code')"
         />
@@ -135,7 +144,8 @@
           *ngIf="
             !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') &&
             recupinfo[0].TU_CODETYPEUTILISATEUR != '0002' &&
-            !phone_or_code && AdminService.objetEcran[7].STATUTOBJET == 'O'
+            !phone_or_code &&
+            AdminService.objetEcran[7].STATUTOBJET == 'O'
           "
           id="basic-addon1"
           (click)="RechercherSelonEcran('code')"
@@ -155,7 +165,8 @@
           *ngIf="
             !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') &&
             recupinfo[0].TU_CODETYPEUTILISATEUR != '0002' &&
-            phone_or_code && AdminService.objetEcran[7].STATUTOBJET == 'O'
+            phone_or_code &&
+            AdminService.objetEcran[7].STATUTOBJET == 'O'
           "
           (keyup)="RechercheAvecTouche1($event, 'telephone')"
         />
@@ -164,7 +175,8 @@
           *ngIf="
             !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') &&
             recupinfo[0].TU_CODETYPEUTILISATEUR != '0002' &&
-            phone_or_code && AdminService.objetEcran[7].STATUTOBJET == 'O'
+            phone_or_code &&
+            AdminService.objetEcran[7].STATUTOBJET == 'O'
           "
           id="basic-addon1"
           (click)="RechercherSelonEcran('telephone')"
@@ -208,7 +220,7 @@
       *ngIf="
         !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') &&
         recupinfo[0].TU_CODETYPEUTILISATEUR == '0001' &&
-        search_bar 
+        search_bar
       "
     >
       <h3 class="text-center text-primary mb-2">
@@ -246,7 +258,6 @@
       <div class="col-lg-3 col-md-4 col-12 mb-md-0 mb-3">
         <div class="d-flex justify-content-between flex-column mb-2 mb-md-0">
           <ul class="nav nav-align-left nav-pills flex-column flex-nowrap">
-            
             <li
               class="nav-item"
               *ngIf="
@@ -269,31 +280,33 @@
               </button>
             </li>
             <li
-            class="nav-item"
-            *ngIf="!recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') &&
-            recupinfo[0].TU_CODETYPEUTILISATEUR == '0002'"
-          >
-            <!-- Nouvelles reclamations -->
-            <button
-              class="nav-link active"
-              data-bs-toggle="tab"
-              data-bs-target="#payment"
-            >
-              <i class="mdi mdi-playlist-edit mdi-24px"></i>
-              <span
-                class="align-middle"
-                (click)="checkStatusForm('Nouvelles', '')"
-                >{{ LanguageService.reclam_engr_title }}</span
-              >
-            </button>
-          </li>
-          <li
               class="nav-item"
               *ngIf="
                 !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') &&
                 recupinfo[0].TU_CODETYPEUTILISATEUR == '0002'
               "
+            >
+              <!-- Nouvelles reclamations -->
+              <button
+                class="nav-link active"
+                data-bs-toggle="tab"
+                data-bs-target="#payment"
               >
+                <i class="mdi mdi-playlist-edit mdi-24px"></i>
+                <span
+                  class="align-middle"
+                  (click)="checkStatusForm('Nouvelles', '')"
+                  >{{ LanguageService.reclam_engr_title }}</span
+                >
+              </button>
+            </li>
+            <li
+              class="nav-item"
+              *ngIf="
+                !recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN') &&
+                recupinfo[0].TU_CODETYPEUTILISATEUR == '0002'
+              "
+            >
               <!-- Liste des reclamations -->
               <button
                 class="nav-link"
@@ -430,7 +443,13 @@
                     </ul>
                   </div>
 
-                  <div class="tab-content" *ngIf="statutClientExiste && AdminService.objetEcran[7].STATUTOBJET == 'O'">
+                  <div
+                    class="tab-content"
+                    *ngIf="
+                      statutClientExiste &&
+                      AdminService.objetEcran[7].STATUTOBJET == 'O'
+                    "
+                  >
                     <!-- Personal Info -->
                     <div
                       class="tab-pane fade active show"
@@ -526,7 +545,9 @@
                                   "
                                 >
                                   <option
-                                    *ngFor="let ListAgence of ListeComboAgenceParOperateur"
+                                    *ngFor="
+                                      let ListAgence of ListeComboAgenceParOperateur
+                                    "
                                     value="{{ ListAgence.AG_CODEAGENCE }}"
                                   >
                                     {{ ListAgence.AG_RAISONSOCIAL_TRANSLATE }}
@@ -760,7 +781,7 @@
                     </div>
                   </div>
 
-                  <div class="card-header" *ngIf="!statutClientExiste ">
+                  <div class="card-header" *ngIf="!statutClientExiste">
                     <ul class="nav nav-tabs" role="tablist">
                       <li class="nav-item">
                         <button
@@ -1129,13 +1150,14 @@
                                 class="btn btn-text-secondary btn-icon rounded-pill dropdown-toggle hide-arrow p-0"
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
-                                *ngIf="recupinfo[0].TU_CODETYPEUTILISATEUR !='0002' || 
-                                      (recupinfo[0].TU_CODETYPEUTILISATEUR ==
-                                        '0002' &&
-                                        ListRetourRequetes.RQ_DATECLOTUREREQUETE !=
-                                        '01/01/1900'
-                                      )
-                                    "
+                                *ngIf="
+                                  recupinfo[0].TU_CODETYPEUTILISATEUR !=
+                                    '0002' ||
+                                  (recupinfo[0].TU_CODETYPEUTILISATEUR ==
+                                    '0002' &&
+                                    ListRetourRequetes.RQ_DATECLOTUREREQUETE !=
+                                      '01/01/1900')
+                                "
                               >
                                 <i
                                   class="mdi mdi-dots-vertical mdi-24px text-muted"
@@ -1218,7 +1240,9 @@
                                     *ngIf="
                                       !recupinfo[0].CU_NOMUTILISATEUR.includes(
                                         'ADMIN'
-                                      ) && recupinfo[0].TU_CODETYPEUTILISATEUR == '0002' &&
+                                      ) &&
+                                      recupinfo[0].TU_CODETYPEUTILISATEUR ==
+                                        '0002' &&
                                       ListRetourRequetes.RQ_DATESAISIEREQUETE !=
                                         '01/01/1900' &&
                                       ListRetourRequetes.RQ_DATEDEBUTTRAITEMENTREQUETE !=
@@ -1242,7 +1266,9 @@
                                     *ngIf="
                                       !recupinfo[0].CU_NOMUTILISATEUR.includes(
                                         'ADMIN'
-                                      ) && recupinfo[0].TU_CODETYPEUTILISATEUR == '0001' 
+                                      ) &&
+                                      recupinfo[0].TU_CODETYPEUTILISATEUR ==
+                                        '0001'
                                     "
                                     ><i
                                       class="mdi mdi-animation-outline me-1"
@@ -1348,7 +1374,7 @@
                               '01/01/1900' &&
                             ListRetourRequetes.RQ_DATECLOTUREREQUETE ==
                               '01/01/1900' &&
-                              ListRetourRequetes.RS_CODESTATUTRECEVABILITE != '02'
+                            ListRetourRequetes.RS_CODESTATUTRECEVABILITE != '02'
                           "
                           ><span class="badge bg-label-primary rounded-pill"
                             >{{ LanguageService.reclam_list_group_title_1 }}
@@ -1364,7 +1390,7 @@
                               '01/01/1900' &&
                             ListRetourRequetes.RQ_DATECLOTUREREQUETE ==
                               '01/01/1900' &&
-                              ListRetourRequetes.RS_CODESTATUTRECEVABILITE != '02'
+                            ListRetourRequetes.RS_CODESTATUTRECEVABILITE != '02'
                           "
                           ><span class="badge bg-label-success rounded-pill"
                             >{{ LanguageService.reclam_list_group_title_2 }}
@@ -1377,7 +1403,7 @@
                         <a
                           *ngIf="
                             ListRetourRequetes.RQ_DATECLOTUREREQUETE !=
-                            '01/01/1900' &&
+                              '01/01/1900' &&
                             ListRetourRequetes.RS_CODESTATUTRECEVABILITE != '02'
                           "
                           ><span class="badge bg-label-danger rounded-pill"
@@ -2926,8 +2952,8 @@
                           </p>
                         </div>
                       </li>
-                       <!-- INFOS OPERATEUR TRAITANT -->
-                       <li class="timeline-item timeline-item-transparent">
+                      <!-- INFOS OPERATEUR TRAITANT -->
+                      <li class="timeline-item timeline-item-transparent">
                         <span class="timeline-point timeline-point-info"></span>
                         <div class="timeline-event">
                           <div class="timeline-header mb-2 pb-1">
@@ -2941,7 +2967,8 @@
                             > -->
                           </div>
                           <p class="mb-0" style="color: black">
-                            {{ voirlist.CU_NOMUTILISATEUR }} - {{ voirlist.CU_CONTACT }} - {{ voirlist.CU_EMAIL }}
+                            {{ voirlist.CU_NOMUTILISATEUR }} -
+                            {{ voirlist.CU_CONTACT }} - {{ voirlist.CU_EMAIL }}
                           </p>
                         </div>
                       </li>
@@ -3449,6 +3476,13 @@
                     LanguageService.champ_mtnt_contentieux_placeholder
                   "
                   [(ngModel)]="modal_transmission_tribunal[1].valeur"
+                  (input)="
+                    AdminService._formatageMontantAlaSaisie(
+                      $event,
+                      '1',
+                      modal_transmission_tribunal
+                    )
+                  "
                 />
                 <label for="formtabs-num-cpte-clt">{{
                   LanguageService.champ_mtnt_contentieux_placeholder
@@ -3574,6 +3608,13 @@
                     LanguageService.champ_mtnt_contentieux_placeholder
                   "
                   [(ngModel)]="modal_cloture_procedure[1].valeur"
+                  (input)="
+                    AdminService._formatageMontantAlaSaisie(
+                      $event,
+                      '1',
+                      modal_cloture_procedure
+                    )
+                  "
                 />
                 <label for="formtabs-num-cpte-clt">{{
                   LanguageService.champ_mtnt_contentieux_placeholder
@@ -3655,7 +3696,7 @@
   <div class="offcanvas-body my-auto mx-0 flex-grow-0">
     <strong
       ><label for="" style="color: black; font-size: large"
-        >{{ LanguageService.info_cli_sub_titleop_1}}:
+        >{{ LanguageService.info_cli_sub_titleop_1 }}:
       </label></strong
     >
     <p class="text-center">
@@ -3663,18 +3704,23 @@
     </p>
     <strong
       ><label for="" style="color: black; font-size: large"
-        >{{ LanguageService.info_cli_sub_titleop_2}}:
+        >{{ LanguageService.info_cli_sub_titleop_2 }}:
       </label></strong
     >
-    <p class="text-center">{{ tab_infos_client[0].CU_EMAILUTILISATEURASSOCIER }}</p>
+    <p class="text-center">
+      {{ tab_infos_client[0].CU_EMAILUTILISATEURASSOCIER }}
+    </p>
     <strong
       ><label for="" style="color: black; font-size: large"
-        >{{ LanguageService.info_cli_sub_titleop_3}}:
+        >{{ LanguageService.info_cli_sub_titleop_3 }}:
       </label></strong
     >
-    <p class="text-center">{{ tab_infos_client[0].CU_CONTACTUTILISATEURASSOCIER }}</p>
-    <hr><br>
-    &#160; &#160; &#160; 
+    <p class="text-center">
+      {{ tab_infos_client[0].CU_CONTACTUTILISATEURASSOCIER }}
+    </p>
+    <hr />
+    <br />
+    &#160; &#160; &#160;
     <strong
       ><label for="" style="color: black; font-size: large"
         >{{ LanguageService.info_cli_sub_title_1 }}:
