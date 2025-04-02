@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { LanguageService } from 'src/app/services/language.service';
 
 import { Subscription } from 'rxjs';
-
+import { AppConfigService } from '../../AppConfigService.service'; // Importez le service correctement
 declare var $: any;
 
 @Component({
@@ -20,8 +20,10 @@ export class SuiviRequeteComponent {
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
   /// LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien prod  • remuci
   // LienServeur: any = 'https://reclamationserveurtest.mgdigitalplus.com:1041/'; // lien test local remuci• bly
-  LienServeur: any = 'https://reclamationserveurprod.gesci-ci.info:1810/'; // lien gesci prod•
+  //LienServeur: any = 'https://reclamationserveurprod.gesci-ci.info:1810/'; // lien gesci prod•
   //LienServeur: any = 'https://reclamationserveurprod.maphar.net:1027/'; // lien maphar prod•
+  LienServeur: any = this.AppConfigService.getConfig('apiBaseUrl');
+
 
   maVariableSubscription?: Subscription;
 
@@ -117,7 +119,8 @@ export class SuiviRequeteComponent {
     public AdminService: AdminService,
     public LanguageService: LanguageService,
     private http: HttpClient,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private AppConfigService :AppConfigService
   ) {}
 
   voirTraitement1() {

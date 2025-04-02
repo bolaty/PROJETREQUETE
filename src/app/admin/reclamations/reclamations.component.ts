@@ -8,7 +8,7 @@ import { Subscription, forkJoin } from 'rxjs';
 // import { Dropzone } from 'src/app/services/dropzone';
 //@ts-ignore
 import Dropzone from 'dropzone';
-
+import { AppConfigService } from '../../AppConfigService.service'; // Importez le service correctement
 declare var $: any;
 
 @Component({
@@ -21,7 +21,8 @@ export class ReclamationsComponent {
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
   //LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien prod remuci •
   // LienServeur: any = 'https://reclamationserveurtest.mgdigitalplus.com:1041/'; // lien test local remuci•
-  LienServeur: any = 'https://reclamationserveurprod.gesci-ci.info:1810/'; // lien gesci prod•
+  //LienServeur: any = 'https://reclamationserveurprod.gesci-ci.info:1810/'; // lien gesci prod•
+  LienServeur: any = this.AppConfigService.getConfig('apiBaseUrl');//
   // LienServeur: any = 'https://reclamationserveurprod.maphar.net:1027/'; // lien maphar prod•
 
   maVariableSubscription?: Subscription;
@@ -314,7 +315,8 @@ export class ReclamationsComponent {
     public AdminService: AdminService,
     private toastr: ToastrService,
     public LanguageService: LanguageService,
-    private http: HttpClient
+    private http: HttpClient,
+    private AppConfigService :AppConfigService
   ) {}
 
   //

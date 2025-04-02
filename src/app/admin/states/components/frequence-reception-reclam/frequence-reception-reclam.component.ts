@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AdminService } from 'src/app/admin/admin.service';
 import { ApiService } from 'src/app/services/api.service';
 import { DateService } from 'src/app/services/date.service';
-
+import { AppConfigService } from '../../../../AppConfigService.service'; // Importez le service correctement
 @Component({
   selector: 'app-frequence-reception-reclam',
   templateUrl: './frequence-reception-reclam.component.html',
@@ -16,16 +16,17 @@ export class FrequenceReceptionReclamComponent implements OnInit {
     private dateService: DateService,
     private route: ActivatedRoute,
     private apiService: ApiService,
-    public AdminService: AdminService
+    public AdminService: AdminService,
+    private AppConfigService :AppConfigService
   ) {}
 
    //LienServeur: any = 'http://localhost:22248/'; // lien dev
    // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
   // LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien prod  • remuci
   // LienServeur: any = 'https://reclamationserveurtest.mgdigitalplus.com:1041/'; // lien test local remuci• bly
-    LienServeur: any = 'https://reclamationserveurprod.gesci-ci.info:1810/'; // lien gesci prod•
+  //  LienServeur: any = 'https://reclamationserveurprod.gesci-ci.info:1810/'; // lien gesci prod•
    //LienServeur: any = 'https://reclamationserveurprod.maphar.net:1027/'; // lien maphar prod•
-
+   LienServeur: any = this.AppConfigService.getConfig('apiBaseUrl');
 
   APP_URL: any = `${this.LienServeur}RequeteClientsClasse.svc/pvgFrequenceReclamation`;
   postData: any;
