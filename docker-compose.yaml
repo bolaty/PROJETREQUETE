@@ -6,4 +6,4 @@ services:
     ports:
       - 5990:80
     environment:
-      - API_URL=https://appwebroyalimmo_test.app.mgdigitalplus.com/api/
+      - API_URL=https://reclamationserveur.mgdigitalplus.com:1022/

@@ -8,7 +8,7 @@ RUN npm run build
 
 # Étape 2 : Serveur Nginx pour servir l'application
 FROM nginx:alpine3.21
-COPY --from=build /app/dist/hopital-fppn-client /usr/share/nginx/html
+COPY --from=build /app/dist/projet-plainte-reclamation /usr/share/nginx/html
 RUN rm -rf /etc/nginx/conf.d/*
 COPY default.conf /etc/nginx/conf.d/default.conf
 RUN apk add --no-cache gettext
