@@ -8,13 +8,16 @@ import { from, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
-import { AppConfigService } from '../AppConfigService.service'; // Importez le service correctement
+import { AppConfigService } from '../AppConfigService.service';
+
 @Injectable({
   providedIn: 'root',
 })
 export class AdminService {
+  LienServeur: any = this.AppConfigService.getConfig('apiBaseUrl');
+
   // ***************** SECTION DES LIENS debut
-  LienServeur: any = this.AppConfigService.getConfig('apiBaseUrl');// any = 'http://localhost:22248/'; // lien dev
+  // LienServeur: any = this.AppConfigService.getConfig('apiBaseUrl');// any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
   // LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien prod  • remuci
   // LienServeur: any = 'https://reclamationserveurtest.mgdigitalplus.com:1041/'; // lien test local remuci•
@@ -94,7 +97,11 @@ export class AdminService {
   for_phone: boolean = false;
   showMenuMobile: boolean = false;
 
-  constructor(private http: HttpClient, private toastr: ToastrService,private AppConfigService :AppConfigService) {
+  constructor(
+    private http: HttpClient,
+    private toastr: ToastrService,
+    private AppConfigService: AppConfigService
+  ) {
     Network.addListener(
       'networkStatusChange',
       this.checkNetworkStatus.bind(this)

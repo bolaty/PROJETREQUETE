@@ -7,7 +7,8 @@ declare var feather: any;
 import { from, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
-import { AppConfigService } from '../AppConfigService.service'; // Importez le service correctement
+import { AppConfigService } from '../AppConfigService.service';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -17,8 +18,10 @@ export class AuthService {
   libelleConnexion: any = '';
   tempsRestant: number = 10;
   statusConnect: boolean = false;
-  LienServeur: any = this.AppConfigService.getConfig('apiBaseUrl');// any = 'http://localhost:22248/'; // lien dev
-  
+
+  LienServeur: any = this.AppConfigService.getConfig('apiBaseUrl');
+
+  // LienServeur: any = 'http://localhost:22248/'; // lien dev
   // LienServeur: any = 'http://51.210.111.16:1009/'; // lien prod • remuci
   // LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien prod  • remuci
   //   LienServeur: any = 'https://reclamationserveurtest.mgdigitalplus.com:1041/'; // lien test local remuci• bly
@@ -27,7 +30,10 @@ export class AuthService {
 
   user_connecte: boolean = true; // true designe la connexion d'un operateur et false celui d'un client // personnalisable
 
-  constructor(private http: HttpClient,private AppConfigService :AppConfigService) {
+  constructor(
+    private http: HttpClient,
+    private AppConfigService: AppConfigService
+  ) {
     Network.addListener(
       'networkStatusChange',
       this.checkNetworkStatus.bind(this)
