@@ -283,7 +283,8 @@ export class OperateurComponent {
     var pt = this;
     $(function () {
       'use strict';
-      $.fn.dataTable.ext.errMode = 'throw';
+      if ($.fn.dataTable) $.fn.dataTable.ext.errMode = 'throw';
+
       $('.datatables-basic').DataTable().destroy();
       var dt_basic_table = $('.datatables-basic');
 

@@ -22,7 +22,7 @@ export class ReclamationsComponent {
   //LienServeur: any = 'https://reclamationserveur.mgdigitalplus.com:1022/'; // lien prod remuci •
   // LienServeur: any = 'https://reclamationserveurtest.mgdigitalplus.com:1041/'; // lien test local remuci•
   //LienServeur: any = 'https://reclamationserveurprod.gesci-ci.info:1810/'; // lien gesci prod•
-  LienServeur: any = this.AppConfigService.getConfig('apiBaseUrl');//
+  LienServeur: any = this.AppConfigService.getConfig('apiBaseUrl'); //
   // LienServeur: any = 'https://reclamationserveurprod.maphar.net:1027/'; // lien maphar prod•
 
   maVariableSubscription?: Subscription;
@@ -316,7 +316,7 @@ export class ReclamationsComponent {
     private toastr: ToastrService,
     public LanguageService: LanguageService,
     private http: HttpClient,
-    private AppConfigService :AppConfigService
+    private AppConfigService: AppConfigService
   ) {}
 
   //
@@ -4383,7 +4383,9 @@ export class ReclamationsComponent {
         addRemoveLinks: true,
       });
     } */
+  }
 
+  ngafterViewInit() {
     // Initialiser Dropzone
     Dropzone.autoDiscover = false;
     var myDropzone = new Dropzone('#myDropzone', {

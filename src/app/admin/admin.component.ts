@@ -38,8 +38,8 @@ export class AdminComponent implements OnInit {
     public LanguageService: LanguageService,
     private toastr: ToastrService
   ) {}
-  routeDashboard(){
-    window.location.href ='admin/dashboard'
+  routeDashboard() {
+    window.location.href = 'admin/dashboard';
   }
   Deconnexion() {
     // $.removeCookie('isLoggedIn', { path: '/' });
@@ -47,6 +47,7 @@ export class AdminComponent implements OnInit {
     localStorage.clear();
     window.location.href = 'auth/login';
   }
+
   InitialisationMainJs() {
     'use strict';
     var i18NextHttpBackend;
@@ -292,9 +293,8 @@ export class AdminComponent implements OnInit {
         // Update style switcher icon based on the stored style
 
         const styleSwitcherIcon = styleSwitcher.querySelector('i');
-
         //@ts-ignore
-        var pointer = this;
+        let pointer = this;
         if (storedStyle === 'light') {
           //@ts-ignore
           styleSwitcherIcon.classList.add('mdi-weather-sunny');
@@ -938,7 +938,7 @@ export class AdminComponent implements OnInit {
     this.recupinfo = JSON.parse(sessionStorage.getItem('infoLogin') || '');
     var statusOp = 'N';
     var datejrouagence = '01/01/1900';
-   /* var d = new Date();
+    /* var d = new Date();
     var date = d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
     var jour = d.getDate();
     if (jour < 10) {
@@ -946,19 +946,19 @@ export class AdminComponent implements OnInit {
         '0' + d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
       console.log(date);
     }*/
-      var d = new Date();
-      var jour = d.getDate();
-      var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
-      var annee = d.getFullYear();
+    var d = new Date();
+    var jour = d.getDate();
+    var mois = d.getMonth() + 1; // Les mois sont comptés de 0 à 11 en JavaScript
+    var annee = d.getFullYear();
 
-      // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
-      var date =
-        (jour < 10 ? '0' + jour : jour) +
-        '-' +
-        (mois < 10 ? '0' + mois : mois) +
-        '-' +
-        annee;
-    
+    // Ajout des zéros devant le jour et le mois s'ils sont inférieurs à 10
+    var date =
+      (jour < 10 ? '0' + jour : jour) +
+      '-' +
+      (mois < 10 ? '0' + mois : mois) +
+      '-' +
+      annee;
+
     if (this.recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')) {
       datejrouagence = date;
     } else {
