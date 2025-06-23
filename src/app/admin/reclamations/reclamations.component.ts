@@ -345,18 +345,27 @@ export class ReclamationsComponent {
             0,
             4
           );
-          for (let index = 0; index < this.ListeComboAgence.length; index++) {
-            if (agenceOp == this.ListeComboAgence[index].AG_CODEAGENCE) {
-              this.ListeComboAgence[index].AG_RAISONSOCIAL_TRANSLATE =
-                this.Translate(
-                  this.ListeComboAgence[index].AG_RAISONSOCIAL,
-                  this.LanguageService.langue_en_cours
+          if (this.recupinfo[0].CU_NOMUTILISATEUR.includes('SUPER')) {
+            //si l'utilisateur est un super admin il peut voir les operateurs des toutes agences 
+            // pour attribuer les requetes
+            this.ListeComboAgenceParOperateur = this.ListeComboAgence;
+          }else{
+            // sinon on filtre les agences par operateur
+            this.ListeComboAgenceParOperateur = [];
+            for (let index = 0; index < this.ListeComboAgence.length; index++) {
+              if (agenceOp == this.ListeComboAgence[index].AG_CODEAGENCE) {
+                this.ListeComboAgence[index].AG_RAISONSOCIAL_TRANSLATE =
+                  this.Translate(
+                    this.ListeComboAgence[index].AG_RAISONSOCIAL,
+                    this.LanguageService.langue_en_cours
+                  );
+                this.ListeComboAgenceParOperateur.push(
+                  this.ListeComboAgence[index]
                 );
-              this.ListeComboAgenceParOperateur.push(
-                this.ListeComboAgence[index]
-              );
+              }
             }
           }
+          
 
           this.ComboEtapeParam();
         } else {
@@ -579,8 +588,61 @@ export class ReclamationsComponent {
       (error) => {}
     );
   }
+removeFile(index: number) {
+  this.files.splice(index, 1);
+}
+HandleFileInput(event: any) {
+  // Initialiser le tableau si besoin
+  if (!this.files || !Array.isArray(this.files)) {
+    this.files = [];
+  } else {
+    // Convertir en tableau si c'est un FileList
+    if (this.files instanceof FileList) {
+      this.files = Array.from(this.files);
+    }
+  }
 
-  HandleFileInput(event: any) {
+  // Récupérer les nouveaux fichiers sélectionnés
+  const newFiles = Array.from(event.target.files);
+
+  // Vérifier la taille de chaque nouveau fichier et concaténer si OK
+  for (let i = 0; i < newFiles.length; i++) {
+    const file = newFiles[i];//@ts-ignore
+    if (file.size > 4 * 1024 * 1024) {
+      this.toastr.error(//@ts-ignore
+        `Le fichier "${file.name}" est trop volumineux. Veuillez sélectionner un fichier de taille inférieure à 4 Mo.`,
+        'Echec'
+      );
+      return;
+    }
+  }
+
+  // Concaténer les nouveaux fichiers à la liste existante
+  this.files = this.files.concat(newFiles);
+
+  // Optionnel : traiter le dernier fichier sélectionné pour l'affichage base64
+  if (this.files.length > 0) {
+    const lastFile = this.files[this.files.length - 1];
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      this.base64Image = e.target.result.split(',')[1];
+    };
+    reader.readAsDataURL(lastFile);
+  }
+
+  // ... (le reste de ton code pour la date si besoin)
+  var d = new Date();
+  var jour = d.getDate();
+  var mois = d.getMonth() + 1;
+  var annee = d.getFullYear();
+  var date =
+    (jour < 10 ? '0' + jour : jour) +
+    '-' +
+    (mois < 10 ? '0' + mois : mois) +
+    '-' +
+    annee;
+}
+/*  HandleFileInput(event: any) {
     this.files = event.target.files;
     for (let i = 0; i < this.files.length; i++) {
       const file = this.files[i];
@@ -599,14 +661,7 @@ export class ReclamationsComponent {
       reader.readAsDataURL(file);
     }
 
-    /*var d = new Date();
-    var date = d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
-    var jour = d.getDate();
-    if (jour < 10) {
-      var date =
-        '0' + d.getDate() + '-0' + (d.getMonth() + 1) + '-' + d.getFullYear();
-      console.log(date);
-    }*/
+    
 
     var d = new Date();
     var jour = d.getDate();
@@ -620,7 +675,7 @@ export class ReclamationsComponent {
       (mois < 10 ? '0' + mois : mois) +
       '-' +
       annee;
-  }
+  }*/
 
   HandleFileInputContentieux(event: any) {
     this.files = event.target.files;
@@ -1714,18 +1769,34 @@ export class ReclamationsComponent {
       var CodeAgenceUtilisateur =
         this.recupinfo[0].CU_CODECOMPTEUTULISATEUR.substring(0, 4);
       Option = 'RequeteClientsClasse.svc/pvgListeReqrequete';
-      body = {
-        Objets: [
-          {
-            OE_PARAM: ['01', '', CodeAgenceUtilisateur],
-            clsObjetEnvoi: {
-              ET_CODEETABLISSEMENT: '',
-              AN_CODEANTENNE: '',
-              TYPEOPERATION: '01',
+      if (this.recupinfo[0].CU_NOMUTILISATEUR.includes('SUPER')){
+        body = {
+          Objets: [
+            {
+              OE_PARAM: ['01'],
+              clsObjetEnvoi: {
+                ET_CODEETABLISSEMENT: '',
+                AN_CODEANTENNE: '',
+                TYPEOPERATION: '01',
+              },
             },
-          },
-        ],
-      };
+          ],
+        };
+      }else{
+        body = {
+          Objets: [
+            {
+              OE_PARAM: ['01', '', CodeAgenceUtilisateur],
+              clsObjetEnvoi: {
+                ET_CODEETABLISSEMENT: '',
+                AN_CODEANTENNE: '',
+                TYPEOPERATION: '01',
+              },
+            },
+          ],
+        };
+      }
+      
       this.AdminService.ShowLoader();
       this.AdminService.AppelServeur(body, Option).subscribe(
         (success: any) => {
@@ -3673,17 +3744,23 @@ export class ReclamationsComponent {
     }
     // this.ComboEtapeParamSimple()
     this.ListeComboParOperateur = [];
-    var agenceReq = this.recupValEtape.CU_CODECOMPTEUTULISATEUR.substring(0, 4);
-    var agenceOp = '';
-    for (var i = 0; i < this.ListeComboOperateur.length; i++) {
-      agenceOp = this.ListeComboOperateur[i].CU_CODECOMPTEUTULISATEUR.substring(
-        0,
-        4
-      );
-      if (agenceReq == agenceOp) {
-        this.ListeComboParOperateur.push(this.ListeComboOperateur[i]);
-      }
+    if (this.recupinfo[0].CU_NOMUTILISATEUR.includes('SUPER')){
+      //recuperation de tout les operateurs en mode SUPER ADMIN
+      this.ListeComboParOperateur = this.ListeComboOperateur
+    }else{
+      var agenceReq = this.recupValEtape.CU_CODECOMPTEUTULISATEUR.substring(0, 4);
+        var agenceOp = '';
+        for (var i = 0; i < this.ListeComboOperateur.length; i++) {
+          agenceOp = this.ListeComboOperateur[i].CU_CODECOMPTEUTULISATEUR.substring(
+            0,
+            4
+          );
+          if (agenceReq == agenceOp) {
+            this.ListeComboParOperateur.push(this.ListeComboOperateur[i]);
+          }
+        }
     }
+   
     /* if (info.RQ_NOMRAPPORT != '') this.consultation_doc_req = true;
     else this.consultation_doc_req = false; */
     for (let index = 0; index < this.formulaire_avis.length; index++) {

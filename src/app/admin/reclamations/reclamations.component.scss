@@ -35,3 +35,15 @@
   align-items: center;
   height: 100vh; /* pour centrer verticalement */
 }
+
+//nouveau code pour le dropzone 23/06/2025
+.file-dropzone {
+  border: 2px dashed #1976d2;
+  border-radius: 8px;
+  background: #f8fafd;
+  transition: border-color 0.2s;
+}
+.file-dropzone:hover {
+  border-color: #1565c0;
+  background: #f1f7fb;
+}

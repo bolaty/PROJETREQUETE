@@ -477,6 +477,9 @@ export class DashboardComponent {
     } else {
       TYPEOPERATION = '2';
     }
+    if (this.recupinfo[0].CU_NOMUTILISATEUR.includes('SUPER')) {
+      TYPEOPERATION = '3';
+    }
     var CodeAgenceUtilisateur = this.recupinfo[0].CU_CODECOMPTEUTULISATEUR.substring(0, 4);
     let Option = 'RequeteClientsClasse.svc/pvgChargerDansDataSetDASHBOARD';
     let body = {
@@ -531,6 +534,11 @@ export class DashboardComponent {
     } else {
       TYPEOPERATION = 'CLIENT';
     }
+
+    if (this.recupinfo[0].CU_NOMUTILISATEUR.includes('SUPER')) {
+      TYPEOPERATION = 'SUPERADMIN';
+    }
+    
     var CodeAgenceUtilisateur = this.recupinfo[0].CU_CODECOMPTEUTULISATEUR.substring(0, 4);
     let body = {
       AG_CODEAGENCE: CodeAgenceUtilisateur,//this.recupinfo[0].AG_CODEAGENCE, //'1000',//this.recupinfo[0].AG_CODEAGENCE,//

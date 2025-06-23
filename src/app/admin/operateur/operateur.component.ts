@@ -280,98 +280,82 @@ export class OperateurComponent {
   }
 
   chargementDate() {
-    var pt = this;
-    $(function () {
-      'use strict';
-      if ($.fn.dataTable) $.fn.dataTable.ext.errMode = 'throw';
+  var pt = this;
+  $(function () {
+    'use strict';
+    if ($.fn.dataTable) $.fn.dataTable.ext.errMode = 'throw';
 
-      $('.datatables-basic').DataTable().destroy();
-      var dt_basic_table = $('.datatables-basic');
+    $('.datatables-basic').DataTable().destroy();
+    var dt_basic_table = $('.datatables-basic');
 
-      // DataTable with buttons
-      // --------------------------------------------------------------------
-
-      if (dt_basic_table.length) {
-        var dt_basic = dt_basic_table.DataTable({
-          data: pt.RecupOerateurs,
-          columns: [
-            { data: 'NOM' }, // Colonne "full_name"
-            { data: 'CONTACT' }, // Colonne "full_name"
-          ],
-          select: {
-            style: 'single',
-            selector: 'td:first-child',
+    if (dt_basic_table.length) {
+      var dt_basic = dt_basic_table.DataTable({
+        data: pt.RecupOerateurs,
+        columns: [
+          { data: 'NOM' },
+          { data: 'CONTACT' },
+        ],
+        select: {
+          style: 'multi', // Permet la sélection multiple
+          selector: 'td:first-child',
+        },
+        rowCallback: function (row: any, data: any, index: any) {
+          $(row).on('dblclick', function () {
+            pt.rowClicked(data);
+          });
+        },
+        createdRow: function (row: any, data: any, index: any) {
+          if (data.NATURE === 'RECLAMATION') {
+            $(row).css('background-color', '#f1faee');
+          } else if (data.NATURE === 'PLAINTE') {
+            $(row).css('background-color', '#ffffff');
+          }
+        },
+        responsive: true,
+        order: [[0, 'desc']],
+        dom: '<"card-header"<"head-label text-center"><"dt-action-buttons text-end"B>><"d-flex justify-content-between align-items-center row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+        displayLength: 7,
+        lengthMenu: [7, 10, 25, 50, 75, 100],
+        buttons: [
+          {
+            extend: 'collection',
+            className: 'btn btn-label-primary dropdown-toggle me-2',
+            text: '<i class="mdi mdi-export-variant me-1"></i>Exporter',
+            buttons: [
+              {
+                extend: 'print',
+                text: '<i class="mdi mdi-printer-outline me-1" ></i>Imprimer',
+                className: 'dropdown-item',
+                exportOptions: { columns: [0, 1] },
+              },
+              {
+                extend: 'excel',
+                text: '<i class="mdi mdi-file-excel-outline me-1"></i>Excel',
+                className: 'dropdown-item',
+                exportOptions: { columns: [0, 1] },
+              },
+              {
+                extend: 'pdf',
+                text: '<i class="mdi mdi-file-pdf-box me-1"></i>Pdf',
+                className: 'dropdown-item',
+                exportOptions: { columns: [0, 1] },
+              },
+            ],
           },
-          rowCallback: function (row: any, data: any, index: any) {
-            $(row).on('dblclick', function () {
-              // Appeler la fonction ici
-              pt.rowClicked(data);
-            });
-          },
-          /* createdRow: function (row, data, index) {
-                if (data.NATURE === 'RECLAMATION') {
-                  $(row).find('td:eq(1)').css('color', 'green');
-                } else if (data.NATURE === 'PLAINTES') {
-                  $(row).find('td:eq(1)').css('color', 'red');
-                }
-              }*/
-          createdRow: function (row: any, data: any, index: any) {
-            if (data.NATURE === 'RECLAMATION') {
-              $(row).css('background-color', '#f1faee');
-            } else if (data.NATURE === 'PLAINTE') {
-              $(row).css('background-color', '#ffffff');
-            }
-          },
-          responsive: true,
-          order: [[0, 'desc']],
-          dom: '<"card-header"<"head-label text-center"><"dt-action-buttons text-end"B>><"d-flex justify-content-between align-items-center row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
-          displayLength: 7,
-          lengthMenu: [7, 10, 25, 50, 75, 100],
-          buttons: [
-            {
-              extend: 'collection',
-              className: 'btn btn-label-primary dropdown-toggle me-2',
-              text: '<i class="mdi mdi-export-variant me-1"></i>Exporter',
-              buttons: [
-                {
-                  extend: 'print',
-                  text: '<i class="mdi mdi-printer-outline me-1" ></i>Imprimer',
-                  className: 'dropdown-item',
-                  exportOptions: { columns: [0, 1] },
-                },
-                /* {
-                  extend: 'csv',
-                  text: '<i class="mdi mdi-file-document-outline me-1" ></i>Csv',
-                  className: 'dropdown-item',
-                  exportOptions: { columns: [0, 1, 2, 3] },
-                }, */
-                {
-                  extend: 'excel',
-                  text: '<i class="mdi mdi-file-excel-outline me-1"></i>Excel',
-                  className: 'dropdown-item',
-                  exportOptions: { columns: [0, 1] },
-                },
-                {
-                  extend: 'pdf',
-                  text: '<i class="mdi mdi-file-pdf-box me-1"></i>Pdf',
-                  className: 'dropdown-item',
-                  exportOptions: { columns: [0, 1] },
-                },
-                /* {
-                  extend: 'copy',
-                  text: '<i class="mdi mdi-content-copy me-1" ></i>Copy',
-                  className: 'dropdown-item',
-                  exportOptions: { columns: [0, 1, 2, 3] },
-                }, */
-              ],
-            },
-          ],
-        });
+        ],
+      });
 
-        $('div.head-label').html('<h5 class="card-title mb-0"></h5>');
-      }
-    });
-  }
+      // Sélectionner les 100 premières lignes par défaut
+      dt_basic.rows().every(function (rowIdx: number) {
+        if (rowIdx < 100) {
+          dt_basic.row(rowIdx).select();
+        }
+      });
+
+      $('div.head-label').html('<h5 class="card-title mb-0"></h5>');
+    }
+  });
+}
 
   ComboAgence() {
     let Option = 'RequeteClientsClasse.svc/pvgReqAgenceCombo';
@@ -511,7 +495,11 @@ export class OperateurComponent {
             'success',
             { positionClass: 'toast-bottom-left' }
           );
-
+          // Réinitialiser les checkboxes après modification
+          this.ListeDroitforUser.forEach((LtDroitUser: any) => {
+                  LtDroitUser.isChecked = false;
+                });
+                this.valtabAgence = [];
           this.AdminService.CloseLoader();
         }
       },
@@ -585,6 +573,11 @@ export class OperateurComponent {
             'success',
             { positionClass: 'toast-bottom-left' }
           );
+          // Réinitialiser les checkboxes après enregistrement
+          this.ListeDroitUser.forEach((LtDroitUser: any) => {
+            LtDroitUser.isChecked = false;
+          });
+          this.valtabAgence = [];
           this.viderchamp();
           this.AdminService.CloseLoader();
         }
@@ -811,11 +804,15 @@ export class OperateurComponent {
               this.EnregistrementDroitOperateur();
             }
 
-            for (let index = 0; index < tableau_recu.length; index++) {
-              tableau_recu[index].valeur = '';
-            }
-            this.ListeOperateurs();
-            this.AdminService.CloseLoader();
+            setTimeout(() => {
+              for (let index = 0; index < tableau_recu.length; index++) {
+                tableau_recu[index].valeur = '';
+              }
+              this.ListeOperateurs();
+              this.AdminService.CloseLoader();
+            }, 5000);
+
+            
           }
         },
         (error: any) => {

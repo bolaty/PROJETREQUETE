@@ -504,6 +504,9 @@ export class LoginComponent {
       window.location.href = '/admin';
     }
 
-    this.ValeurDeDecision();
+   
+    setTimeout(() => {
+       this.ValeurDeDecision();
+    }, 5000);
   }
 }

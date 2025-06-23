@@ -715,24 +715,15 @@
                             </div>
                           </div>
 
-                          <!-- Multi  -->
-                          <div class="col-12 mb-6">
-                            <!-- <div class="card"> -->
+                         
+                         <!-- <div class="col-12 mb-6">
                             <div class="card-body">
                               <form
                                 action="/upload"
                                 class="dropzone needsclick"
                                 id="dropzone-multi-fichier"
                               >
-                                <!-- <div class="dz-message needsclick">
-                                  Drop files here or click to upload
-                                  <span class="note needsclick"
-                                    >(This is just a demo dropzone. Selected
-                                    files are
-                                    <span class="fw-medium">not</span>
-                                    actually uploaded.)</span
-                                  >
-                                </div> -->
+                               
                                 <div class="fallback">
                                   <input
                                     name="file"
@@ -746,9 +737,39 @@
                                 </div>
                               </form>
                             </div>
-                            <!-- </div> -->
+                          </div>-->
+                         
+                           <!-- Zone de sélection de fichiers stylisée et épurée -->
+                          <div class="file-dropzone mb-2" (click)="fileInput.click()" style="cursor:pointer;">
+                            <input
+                              #fileInput
+                              name="file"
+                              type="file"
+                              [(ngModel)]="formulaire_plaintes_reclamations[9].valeur"
+                              (change)="HandleFileInput($event)"
+                              multiple
+                              style="display: none;"
+                            />
+                            <div class="dz-message needsclick" style="padding: 30px 0; text-align: center; color: #888;">
+                              <i class="mdi mdi-cloud-upload-outline" style="font-size: 32px; color: #1976d2;"></i>
+                              <div style="font-size: 16px; margin-top: 8px;">
+                                Déposez vos fichiers ici ou cliquez pour sélectionner
+                              </div>
+                              <div style="font-size: 12px; color: #bbb;">
+                                (Taille max : 4 Mo par fichier)
+                              </div>
+                            </div>
                           </div>
-                          <!-- Multi  -->
+
+                          <!-- Affichage des fichiers sélectionnés avec bouton suppression -->
+                          <ul *ngIf="files && files.length > 0" class="list-group mb-2">
+                            <li *ngFor="let file of files; let i = index" class="list-group-item d-flex justify-content-between align-items-center py-1">
+                              {{ file.name }}
+                              <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeFile(i)">
+                                <i class="mdi mdi-close"></i>
+                              </button>
+                            </li>
+                          </ul>
                         </div>
                         <div class="row mt-4">
                           <div class="col-md-6">
