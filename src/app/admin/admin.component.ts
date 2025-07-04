@@ -959,7 +959,7 @@ export class AdminComponent implements OnInit {
       '-' +
       annee;
 
-    if (this.recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')) {
+    if (this.recupinfo[0].NA_LIBELLETYPEUTILISATEUR.includes('ADMIN')) {
       datejrouagence = date;
     } else {
       datejrouagence = this.recupinfo[0].AG_CODEAGENCE;
@@ -1391,7 +1391,7 @@ export class AdminComponent implements OnInit {
   }
   chargementParamDroit() {
     this.recupinfo = JSON.parse(sessionStorage.getItem('infoLogin') || '');
-    if (this.recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')) {
+    if (this.recupinfo[0].NA_LIBELLETYPEUTILISATEUR.includes('ADMIN')) {
       for (var i = 0; i < this.AdminService.objetEcran.length; i++) {
         this.AdminService.objetEcran[i].STATUTOBJET = 'O';
       }

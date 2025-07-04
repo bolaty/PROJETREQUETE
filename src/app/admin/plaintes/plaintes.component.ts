@@ -587,6 +587,7 @@ export class PlaintesComponent {
           {
             AG_CODEAGENCE: this.formulaire_plaintes_reclamations[3].valeur,
             CU_ADRESSEGEOGRAPHIQUEUTILISATEUR: '.',
+            NA_CODETYPEUTILISATEUR: '',
             CU_CLESESSION: '',
             CU_CODECOMPTEUTULISATEUR: '',
             CU_CONTACT: this.formulaire_plaintes_reclamations[2].valeur, //"2250747839553",
@@ -939,7 +940,7 @@ export class PlaintesComponent {
   ListeRequete() {
     var Option = '';
     var body = {};
-    if (this.recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')) {
+    if (this.recupinfo[0].NA_LIBELLETYPEUTILISATEUR.includes('ADMIN')) {
       Option = 'RequeteClientsClasse.svc/pvgListeReqrequete';
       body = {
         Objets: [

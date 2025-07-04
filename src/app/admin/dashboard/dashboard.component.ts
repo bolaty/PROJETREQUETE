@@ -470,14 +470,14 @@ export class DashboardComponent {
   }
   DataDashboardSTATISTIQUE() {
     var TYPEOPERATION = '0';
-    if (this.recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')) {
+    if (this.recupinfo[0].NA_LIBELLETYPEUTILISATEUR.includes('ADMIN')) {
       TYPEOPERATION = '0';
     } else if (this.recupinfo[0].TU_CODETYPEUTILISATEUR == '0001') {
       TYPEOPERATION = '1';
     } else {
       TYPEOPERATION = '2';
     }
-    if (this.recupinfo[0].CU_NOMUTILISATEUR.includes('SUPER')) {
+    if (this.recupinfo[0].NA_CODETYPEUTILISATEUR == '0003') {
       TYPEOPERATION = '3';
     }
     var CodeAgenceUtilisateur = this.recupinfo[0].CU_CODECOMPTEUTULISATEUR.substring(0, 4);
@@ -527,7 +527,7 @@ export class DashboardComponent {
   DataDashboardSTATISTIQUEDETAIL() {
     let Option = 'RequeteClientsClasse.svc/pvgTableauDeBordstatistique';
     var TYPEOPERATION = 'ADMIN';
-    if (this.recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')) {
+    if (this.recupinfo[0].NA_LIBELLETYPEUTILISATEUR.includes('ADMIN')) {
       TYPEOPERATION = 'ADMIN';
     } else if (this.recupinfo[0].TU_CODETYPEUTILISATEUR == '0001') {
       TYPEOPERATION = 'OPERATEUR';
@@ -535,7 +535,7 @@ export class DashboardComponent {
       TYPEOPERATION = 'CLIENT';
     }
 
-    if (this.recupinfo[0].CU_NOMUTILISATEUR.includes('SUPER')) {
+    if (this.recupinfo[0].NA_CODETYPEUTILISATEUR == '0003') {
       TYPEOPERATION = 'SUPERADMIN';
     }
     

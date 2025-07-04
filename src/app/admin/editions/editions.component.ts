@@ -562,6 +562,34 @@ export class EditionsComponent {
       this.valAgencelib = '';
     }
   }
+    verifierDatesDansExercice(dateDebut:any, dateFin:any,Exerciceval:any) {
+    const exercice = Exerciceval;//this.formulaire_edition_1[1].valeur; // Exercice sélectionné (ex: "2024")
+    //const dateDebut = this.formulaire_edition_1[4].valeur; // Date de début (ex: "01/01/2024" ou "2024-01-01")
+    //const dateFin = this.formulaire_edition_1[5].valeur;   // Date de fin
+
+    // Fonction utilitaire pour extraire l'année d'une date (format "DD/MM/YYYY" ou "YYYY-MM-DD")
+    function getYear(dateStr: string): string | null {
+      if (!dateStr) return null;
+      if (dateStr.includes('/')) {
+        // Format "DD/MM/YYYY"
+        return dateStr.split('/')[2];
+      } else if (dateStr.includes('-')) {
+        // Format "YYYY-MM-DD"
+        return dateStr.split('-')[0];
+      }
+      return null;
+    }
+
+    const anneeDebut = getYear(dateDebut);
+    const anneeFin = getYear(dateFin);
+
+    if (anneeDebut !== exercice || anneeFin !== exercice) {
+      // Affiche une alerte ou un message d'erreur
+      this.toastr.error("Les deux dates doivent être dans l'exercice sélectionné (" + exercice + ")", "Erreur");
+      return false;
+    }
+    return true;
+  }
   ConfirmationOptions(action: any) {
     // if (action == 'retour') this.affichage_etat = true;
     // else this.affichage_etat = false;
@@ -626,6 +654,17 @@ export class EditionsComponent {
           }
         );
       } else {
+        if (!this.verifierDatesDansExercice(this.formulaire_edition_1[4].valeur,this.formulaire_edition_1[5].valeur,this.formulaire_edition_1[1].valeur)) {
+          $(`#${this.formulaire_edition_1[4].id}`).css(
+                'background-color',
+                'MistyRose'
+          );
+          $(`#${this.formulaire_edition_1[5].id}`).css(
+                'background-color',
+                'MistyRose'
+          );
+          return; // Stoppe le traitement si les dates ne sont pas valides
+        }
         for (let i = 0; i < this.tab_periode.length; i++) {
           if (
             this.formulaire_edition_1[3].valeur ==
@@ -712,6 +751,17 @@ export class EditionsComponent {
         );
       } else {
         if (this.invoice_label == 'statistique') {
+          if (!this.verifierDatesDansExercice(this.formulaire_edition_2[4].valeur,this.formulaire_edition_2[5].valeur,this.formulaire_edition_2[1].valeur)) {
+            $(`#${this.formulaire_edition_2[4].id}`).css(
+                  'background-color',
+                  'MistyRose'
+            );
+            $(`#${this.formulaire_edition_2[5].id}`).css(
+                  'background-color',
+                  'MistyRose'
+            );
+            return; // Stoppe le traitement si les dates ne sont pas valides
+          }
           for (let i = 0; i < this.tab_periode.length; i++) {
             if (
               this.formulaire_edition_2[3].valeur ==
@@ -809,6 +859,17 @@ export class EditionsComponent {
           }
         );
       } else {
+        if (!this.verifierDatesDansExercice(this.formulaire_edition_3[4].valeur,this.formulaire_edition_3[5].valeur,this.formulaire_edition_3[1].valeur)) {
+            $(`#${this.formulaire_edition_3[4].id}`).css(
+                  'background-color',
+                  'MistyRose'
+            );
+            $(`#${this.formulaire_edition_3[5].id}`).css(
+                  'background-color',
+                  'MistyRose'
+            );
+            return; // Stoppe le traitement si les dates ne sont pas valides
+          }
         for (let i = 0; i < this.tab_periode.length; i++) {
           if (
             this.formulaire_edition_3[3].valeur ==

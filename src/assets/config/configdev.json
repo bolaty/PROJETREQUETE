@@ -1,5 +1,5 @@
 {
-  "apiBaseUrl": "${API_URL}",
+  "apiBaseUrl": "http://localhost:50000/",
   "clientName": "Client X",
   "environment": "production"
 }

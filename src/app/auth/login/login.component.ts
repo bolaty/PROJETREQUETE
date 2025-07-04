@@ -31,28 +31,28 @@ export class LoginComponent {
       id: 'nom',
       type: 'text',
       valeur: '',
-      obligatoire: 'O',
+      obligatoire: 'N',
       label: 'nom',
     },
     {
       id: 'prenoms',
       type: 'text',
       valeur: '',
-      obligatoire: 'O',
+      obligatoire: 'N',
       label: 'prénoms',
     },
     {
       id: 'email',
       type: 'text',
       valeur: '',
-      obligatoire: 'O',
+      obligatoire: 'N',
       label: 'email',
     },
     {
       id: 'telephone',
       type: 'telephone',
       valeur: '',
-      obligatoire: 'O',
+      obligatoire: 'N',
       label: 'numéro de téléphone',
     },
     {
@@ -100,8 +100,8 @@ export class LoginComponent {
     let body = {
       Objets: [
         {
-          OE_PARAM: ['0001', this.formLogin.login, this.formLogin.mdp], // operateur personnalisable
-          // OE_PARAM: ['0002', this.formLogin.login, this.formLogin.mdp], // client personnalisable
+          //OE_PARAM: ['0001', this.formLogin.login, this.formLogin.mdp], // operateur personnalisable
+          OE_PARAM: ['0002', this.formLogin.login, this.formLogin.mdp], // client personnalisable
           clsObjetEnvoi: {
             ET_CODEETABLISSEMENT: '',
             AN_CODEANTENNE: '',
@@ -126,6 +126,16 @@ export class LoginComponent {
             'Echec'
           );
         } else {
+          // Vérification de l'année courante
+          const anneeBase = this.RetoursChargement[0].EX_EXERCICE;
+          const anneeSysteme = new Date().getFullYear().toString();
+          if (anneeBase !== anneeSysteme) {
+            this.toastr.error(
+              `Attention : L'année courante de la base (${anneeBase}) est différente de l'année système (${anneeSysteme})`,
+              'Alerte'
+            );
+            return ; // Arrêter le traitement si les années ne correspondent pas
+          }
           if (this.RetoursChargement[0].TU_CODETYPEUTILISATEUR == '0001') {
             if (this.RetoursChargement[0].CU_NOMBRECONNECTION == '0') {
               window.location.href = '/auth/changePassword';

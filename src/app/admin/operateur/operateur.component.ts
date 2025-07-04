@@ -78,6 +78,13 @@ export class OperateurComponent {
       obligatoire: 'N',
       label: 'mot de passe',
     },
+    {
+      id: 'natOperateur',
+      type: 'text',
+      valeur: '',
+      obligatoire: 'O',
+      label: 'Type Opérateur',
+    }
   ];
 
   formulaire_client: any = [
@@ -110,7 +117,7 @@ export class OperateurComponent {
       label: 'email',
     },
   ];
-
+  selectedAgence: string = '';
   RecupOerateurs: any = [];
   voirlist: any;
   recupclient: any = [
@@ -214,7 +221,10 @@ export class OperateurComponent {
   checkedEditionBceao: any = '';
   checkedEditionStatistique: any = '';
   checkedEditionFrequence: any = '';
-
+ ListeCombotypeOperateur: any = [];
+  clientToDisable: any = null;
+  showDisableModal: boolean = false;
+  RetourDesactivation: any = [];
   constructor(
     public AdminService: AdminService,
     private toastr: ToastrService,
@@ -227,7 +237,91 @@ export class OperateurComponent {
     this.voirlist = this.ListeOperateur[info.id];
     this.ComboDroitPARUtilisateur(this.voirlist.CU_CODECOMPTEUTULISATEUR);
   }
+  openDisableClientModal(client: any) {
+  this.clientToDisable = client;
+  this.showDisableModal = true;
+ }
 
+  closeDisableClientModal() {
+    this.showDisableModal = false;
+    this.clientToDisable = null;
+  }
+
+  /*confirmDisableClient() {
+    if (this.clientToDisable) {/
+      // Place ici ta logique de désactivation réelle
+      // Exemple :
+    
+      this.closeDisableClientModal();
+    }
+  }*/
+
+   confirmDisableClient() {
+    if (this.clientToDisable) {
+      let Option = 'RequeteClientsClasse.svc/pvgDeSACTIVATION';
+    var CodeAgenceUtilisateur =
+      this.voirlist.CU_CODECOMPTEUTULISATEUR.substring(0, 4);
+      var CU_ACTIF= 'N' 
+    if(this.voirlist.CU_ACTIF == 'O' || this.voirlist.CU_ACTIF == ''){
+      CU_ACTIF = 'N'
+    }else{
+      CU_ACTIF = 'O'
+    }
+
+    let body = {
+      Objets: [
+        {
+          OE_PARAM: [this.voirlist.CU_CODECOMPTEUTULISATEUR,CodeAgenceUtilisateur, '0001',CU_ACTIF],
+          clsObjetEnvoi: {
+            ET_CODEETABLISSEMENT: '',
+            AN_CODEANTENNE: '',
+            TYPEOPERATION: '01',
+          },
+        },
+      ],
+    };
+    this.AdminService.ShowLoader();
+    this.AdminService.AppelServeur(body, Option).subscribe(
+      (success: any) => {
+        this.RetourDesactivation = success;
+        this.RetourDesactivation = this.RetourDesactivation.pvgDeSACTIVATIONResult;
+        if (this.RetourDesactivation[0].clsResultat.SL_RESULTAT == 'TRUE') {
+          //this.AdminService.CloseLoader();
+          this.closeDisableClientModal();
+          $('#sendInvoiceOffcanvas').offcanvas('hide');
+          this.toastr.success(
+            'Operateur désactivé avec succès',
+            'success',
+            { positionClass: 'toast-bottom-left' }
+          );
+          this.RetourDesactivation = [];
+          setTimeout(() => {
+              this.ListeOperateurs();
+              this.AdminService.CloseLoader();
+            }, 2000);
+         
+        } else {
+          this.AdminService.CloseLoader();
+          this.toastr.error(
+            this.RetourDesactivation[0].clsResultat.SL_MESSAGE,
+            'error',
+            { positionClass: 'toast-bottom-left' }
+          );
+          this.RetourDesactivation = [];
+        }
+      },
+      (error) => {
+        this.AdminService.CloseLoader();
+        this.toastr.warning(
+          this.RetourDesactivation[0].clsResultat.SL_MESSAGE,
+          'warning',
+          { positionClass: 'toast-bottom-left' }
+        );
+      }
+    );
+    }
+   
+  }
   checkModif() {
     this.statusOrderListe = false;
     this.statuFormulaire = 'MODIFICATION';
@@ -238,6 +332,7 @@ export class OperateurComponent {
     this.formulaire_operateur[4].valeur = this.voirlist.CU_CONTACT;
     this.formulaire_operateur[5].valeur = this.voirlist.CU_LOGIN;
     this.formulaire_operateur[6].valeur = this.voirlist.CU_MOTDEPASSE;
+    this.formulaire_operateur[7].valeur = this.voirlist.NA_CODETYPEUTILISATEUR;
     this.AdminService.ShowLoader();
     setTimeout(() => {
       this.ListeDroitUser.forEach((LtDroitUser2: any) => {
@@ -376,9 +471,16 @@ export class OperateurComponent {
         this.ListeComboAgence = success;
         this.ListeComboAgence = this.ListeComboAgence.pvgReqAgenceComboResult;
 
-        this.ComboListeDroitUtilisateur();
-
+        this.CombotypeOperateur();
+        var agenceOp = this.recupinfo[0].CU_CODECOMPTEUTULISATEUR.substring(
+            0,
+            4
+          );
         if (this.ListeComboAgence[0].clsResultat.SL_RESULTAT == 'TRUE') {
+          if(this.recupinfo[0].NA_CODETYPEUTILISATEUR != '0003') {// si ce n'est pas un administrateur reseau
+            this.ListeComboAgence = this.ListeComboAgence.filter((item: any) => item.AG_CODEAGENCE == agenceOp);
+          }
+          
           //  this.ComboOperateur()
         } else {
         }
@@ -386,7 +488,72 @@ export class OperateurComponent {
       (error) => {}
     );
   }
+  /*get filteredClients() {//this.recupinfo[0].NA_LIBELLETYPEUTILISATEUR.includes('ADMIN')
+    if (!this.selectedAgence) return this.tab_list_client;
+    return this.tab_list_client.filter(
+      (item: any) => item.AG_CODEAGENCE === this.selectedAgence
+    );
+  }*/
+  get filteredClients() {
+    let clients = this.tab_list_client;
 
+    // Filtre par agence si sélectionnée
+    if (this.selectedAgence) {
+      clients = clients.filter(
+        (item: any) => item.AG_CODEAGENCE === this.selectedAgence
+      );
+    }
+
+    // Filtre par search_bar sur tous les champs
+    if (this.search_bar && this.search_bar.trim() !== '') {
+      const lowerSearchText = this.search_bar.toLowerCase();
+      clients = clients.filter((client: any) =>
+        Object.values(client).some(
+          value =>
+            value != null &&
+            value.toString().toLowerCase().includes(lowerSearchText)
+        )
+      );
+    }
+
+    return clients;
+  }
+CombotypeOperateur() {
+    let Option = 'RequeteClientsClasse.svc/pvgChargerDansDataSetNature';
+    let body = {
+      Objets: [
+        {
+          OE_PARAM: [],
+          clsObjetEnvoi: {
+            ET_CODEETABLISSEMENT: '',
+            AN_CODEANTENNE: '',
+            TYPEOPERATION: '01',
+          },
+        },
+      ],
+    };
+    this.AdminService.AppelServeur(body, Option).subscribe(
+      (success: any) => {
+        this.ListeCombotypeOperateur = success;
+        this.ListeCombotypeOperateur = this.ListeCombotypeOperateur.pvgChargerDansDataSetNatureResult;
+
+        this.ComboListeDroitUtilisateur();
+
+        if (this.ListeCombotypeOperateur[0].clsResultat.SL_RESULTAT == 'TRUE') {
+          if(this.recupinfo[0].NA_CODETYPEUTILISATEUR == '0003') {// si ce n'est pas un administrateur reseau
+            this.ListeCombotypeOperateur = this.ListeCombotypeOperateur
+          }else if(this.recupinfo[0].NA_CODETYPEUTILISATEUR == '0002') {// si c'est un administrateur reseau
+            this.ListeCombotypeOperateur = this.ListeCombotypeOperateur.filter((item: any) => item.NA_CODETYPEUTILISATEUR != '0003');
+          }else{// si c'est un operateur
+            this.ListeCombotypeOperateur = this.ListeCombotypeOperateur.filter((item: any) => item.NA_CODETYPEUTILISATEUR == '0001'  );
+          }
+          //  this.ComboOperateur()
+        } else {
+        }
+      },
+      (error) => {}
+    );
+  }
   ComboListeDroitUtilisateur() {
     let Option =
       'RequeteClientsClasse.svc/pvgInsertIntoDatasetListeDroitUtilisateur';
@@ -405,6 +572,7 @@ export class OperateurComponent {
     this.AdminService.AppelServeur(body, Option).subscribe(
       (success: any) => {
         this.ListeDroitUser = success;
+        this.ListeDroitUser = this.ListeDroitUser.filter((item: any) => item.DP_STATUT !== 'N');
         this.ListeDesClients();
       },
       (error) => {}
@@ -431,6 +599,7 @@ export class OperateurComponent {
         this.ListeDroitforUser =
           this.ListeDroitforUser.pvgDroitParOperateursResult;
         if (this.ListeDroitforUser[0].clsResultat.SL_RESULTAT == 'TRUE') {
+          this.ListeDroitforUser = this.ListeDroitforUser.filter((item: any) => item.DP_STATUT !== 'N');
           this.statutdroit = true;
         } else {
           this.statutdroit = false;
@@ -453,6 +622,7 @@ export class OperateurComponent {
         DP_LIBELLEDROITCOMPTEUTULISATEUR:
           this.ListeDroitUser[i].DP_LIBELLEDROITCOMPTEUTULISATEUR,
         DP_STATUT: this.ListeDroitUser[i].DP_STATUT,
+        TYPEOPERATION: '02',
         clsObjetEnvoi: {
           ET_CODEETABLISSEMENT: '',
           AN_CODEANTENNE: '',
@@ -466,6 +636,7 @@ export class OperateurComponent {
         DP_CODEDROITCOMPTEUTULISATEUR: '.',
         DP_LIBELLEDROITCOMPTEUTULISATEUR: '',
         DP_STATUT: '',
+        TYPEOPERATION: '02',
         clsObjetEnvoi: {
           ET_CODEETABLISSEMENT: '',
           AN_CODEANTENNE: '',
@@ -529,6 +700,7 @@ export class OperateurComponent {
             DP_LIBELLEDROITCOMPTEUTULISATEUR:
               this.ListeDroitUser[i].DP_LIBELLEDROITCOMPTEUTULISATEUR,
             DP_STATUT: 'O',
+            TYPEOPERATION: '01',
             clsObjetEnvoi: {
               ET_CODEETABLISSEMENT: '',
               AN_CODEANTENNE: '',
@@ -542,6 +714,7 @@ export class OperateurComponent {
             DP_CODEDROITCOMPTEUTULISATEUR: '.',
             DP_LIBELLEDROITCOMPTEUTULISATEUR: '',
             DP_STATUT: '',
+            TYPEOPERATION: '01',
             clsObjetEnvoi: {
               ET_CODEETABLISSEMENT: '',
               AN_CODEANTENNE: '',
@@ -573,6 +746,9 @@ export class OperateurComponent {
             'success',
             { positionClass: 'toast-bottom-left' }
           );
+          for (let index = 0; index < this.formulaire_operateur.length; index++) {
+                this.formulaire_operateur[index].valeur = '';
+              }
           // Réinitialiser les checkboxes après enregistrement
           this.ListeDroitUser.forEach((LtDroitUser: any) => {
             LtDroitUser.isChecked = false;
@@ -599,7 +775,9 @@ export class OperateurComponent {
     let body = {
       Objets: [
         {
-          OE_PARAM: ['0002', CodeAgenceUtilisateur],
+          OE_PARAM: this.recupinfo[0].NA_LIBELLETYPEUTILISATEUR.includes('ADMIN')
+            ? ['0002']
+            : [CodeAgenceUtilisateur,'0002' ],
           clsObjetEnvoi: {
             ET_CODEETABLISSEMENT: '',
             AN_CODEANTENNE: '',
@@ -634,8 +812,8 @@ export class OperateurComponent {
     let body = {
       Objets: [
         {
-          OE_PARAM: this.recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')
-            ? [CodeAgenceUtilisateur, '0001']
+          OE_PARAM: this.recupinfo[0].NA_LIBELLETYPEUTILISATEUR.includes('ADMIN')
+            ? ['0001']
             : [CodeAgenceUtilisateur, '0001'],
           clsObjetEnvoi: {
             ET_CODEETABLISSEMENT: '',
@@ -706,6 +884,12 @@ export class OperateurComponent {
   }
 
   EnregistrementCompteOperateur(tableau_recu: any) {
+    if (this.statuFormulaire === 'MODIFICATION') {
+      this.formulaire_operateur[7].obligatoire = 'N';
+    } else {
+      this.formulaire_operateur[7].obligatoire = 'O';
+    }        
+                
     this.AdminService.SecuriteChampObligatoireEtTypeDeDonnee(tableau_recu);
     this.AdminService.TypeDeDonneeChampNonObligatoire(tableau_recu);
     if (
@@ -735,6 +919,7 @@ export class OperateurComponent {
                 ? '1000'
                 : this.formulaire_operateur[3].valeur, //this.formulaire_operateur[3].valeur,
             CU_ADRESSEGEOGRAPHIQUEUTILISATEUR: '.',
+            NA_CODETYPEUTILISATEUR: this.formulaire_operateur[7].valeur,
             CU_CLESESSION: '',
             CU_CODECOMPTEUTULISATEUR:
               this.statuFormulaire == 'MODIFICATION'
@@ -805,9 +990,7 @@ export class OperateurComponent {
             }
 
             setTimeout(() => {
-              for (let index = 0; index < tableau_recu.length; index++) {
-                tableau_recu[index].valeur = '';
-              }
+              
               this.ListeOperateurs();
               this.AdminService.CloseLoader();
             }, 5000);
@@ -856,7 +1039,9 @@ export class OperateurComponent {
     body = {
       Objets: [
         {
-          OE_PARAM: ['0002', '', search_bar, CodeAgenceUtilisateur, '01'],
+          OE_PARAM: this.recupinfo[0].NA_LIBELLETYPEUTILISATEUR.includes('ADMIN')
+            ? ['0002' , '', search_bar, '', '01']
+            : ['0002', '', search_bar, CodeAgenceUtilisateur, '01'],
           clsObjetEnvoi: {
             ET_CODEETABLISSEMENT: '',
             AN_CODEANTENNE: '',
@@ -1007,6 +1192,7 @@ export class OperateurComponent {
             CU_CLESESSION: '',
             CU_CODECOMPTEUTULISATEUR: this.item_client.CU_CODECOMPTEUTULISATEUR,
             CU_CONTACT: this.formulaire_client[1].valeur, //"2250747839553",
+            NA_CODETYPEUTILISATEUR: '',
             CU_DATECLOTURE: '01/01/1900',
             CU_DATECREATION: date, //"01/01/1900",
             CU_DATEPIECE: '01/01/1900',

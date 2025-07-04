@@ -111,6 +111,7 @@ export class LanguageService {
   op_chmp_title_5: string = '';
   op_chmp_title_6: string = '';
   op_chmp_title_7: string = '';
+  op_chmp_title_0: string = '';
   op_title_droit: string = '';
   op_title_droit_coche: string = '';
   op_title_droit_2: string = '';
@@ -394,6 +395,7 @@ export class LanguageService {
     this.op_chmp_title_5 = this.getTranslation('op_chmp_title_5');
     this.op_chmp_title_6 = this.getTranslation('op_chmp_title_6');
     this.op_chmp_title_7 = this.getTranslation('op_chmp_title_7');
+    this.op_chmp_title_0 = this.getTranslation('op_chmp_title_0');
     this.op_title_droit = this.getTranslation('op_title_droit');
     this.op_title_droit_coche = this.getTranslation('op_title_droit_coche');
     this.op_title_droit_2 = this.getTranslation('op_title_droit_2');

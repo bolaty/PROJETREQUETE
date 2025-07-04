@@ -1,2 +1,6 @@
 // a faire
 // si le droit est coché il faut mettre une bordure sur l'element
+.form-select.border-primary:focus {
+  border-color: #1976d2;
+  box-shadow: 0 0 0 0.15rem rgba(25, 118, 210, 0.15);
+}

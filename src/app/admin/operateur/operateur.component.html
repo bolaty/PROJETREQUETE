@@ -226,6 +226,27 @@
                           }}</label>
                         </div>
                       </div>
+                      <div class="col-md-6">
+                        <div class="form-floating form-floating-outline">
+                          <select
+                            id="natOperateur"
+                            name="natOperateur"
+                            class="select2 form-select"
+                            data-allow-clear="true"
+                            [(ngModel)]="formulaire_operateur[7].valeur"
+                          >
+                            <option
+                              *ngFor="let ListAgence of ListeCombotypeOperateur"
+                              value="{{ ListAgence.NA_CODETYPEUTILISATEUR }}"
+                            >
+                              {{ ListAgence.NA_LIBELLETYPEUTILISATEUR }}
+                            </option>
+                          </select>
+                          <label for="natOperateur">{{
+                            LanguageService.op_chmp_title_0
+                          }}</label>
+                        </div>
+                      </div>
                     </div>
 
                     &#160;&#160;&#160;
@@ -403,7 +424,8 @@
         <div
           class="input-wrapper my-3 input-group input-group-lg input-group-merge px-sm-5"
         >
-          <!-- Recherche par code -->
+
+          <!-- Recherche par code (keyup)="RechercheAvecTouche1($event)"-->
           <input
             type="text"
             class="form-control"
@@ -412,30 +434,43 @@
             aria-label="Search"
             aria-describedby="basic-addon1"
             [(ngModel)]="search_bar"
-            (keyup)="RechercheAvecTouche1($event)"
+            
           />
-          <span
+          <!--<span
             class="input-group-text"
             id="basic-addon1"
             (click)="RechercherClient(search_bar)"
             style="cursor: pointer"
             ><i class="mdi mdi-magnify mdi-20px"></i
-          ></span>
+          ></span>-->
         </div>
       </div>
       &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
       &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
       &#160;
       <!-- FAQ's -->
-
+        
       <div class="tab-content p-0">
         <!-- Teams Cards -->
         <!-- User List Style -->
-        <small
-          class="text-light fw-medium"
+       <span
+          class="text-light fw-medium fs-5"
           *ngIf="tab_list_client && affiche_liste_client"
-          >Liste des clients</small
         >
+          Liste des clients
+        </span><br>
+        <!-- Ajoute ce bloc juste avant la liste des clients -->
+        <!-- Filtre agence aligné à gauche -->
+        <div class="d-flex justify-content-start mb-3" *ngIf="ecran_affiche == 'client' && ListeComboAgence?.length">
+          <div style="min-width: 260px;">
+            <select class="form-select border-primary shadow-sm" [(ngModel)]="selectedAgence" style="font-weight:500;">
+              <option value="">-- Filtrer par agence --</option>
+              <option *ngFor="let agence of ListeComboAgence" [value]="agence.AG_CODEAGENCE">
+                {{ agence.AG_RAISONSOCIAL }}
+              </option>
+            </select>
+          </div>
+        </div>
         <div
           class="demo-inline-spacing mt-3"
           *ngIf="tab_list_client && affiche_liste_client"
@@ -443,7 +478,7 @@
           <div class="list-group">
             <div
               class="list-group-item list-group-item-action d-flex align-items-center cursor-pointer"
-              *ngFor="let item of tab_list_client"
+              *ngFor="let item of filteredClients"
             >
               <img
                 src="../../assets/img/avatars/2.png"
@@ -510,6 +545,7 @@
                   >
                     <button class="btn btn-primary btn-sm">Modifier</button>
                   </div>
+                  
                 </div>
               </div>
             </div>
@@ -607,8 +643,27 @@
     ></button>
   </div>
   <div class="offcanvas-body flex-grow-1">
+    
     <h5 class="pb-3 border-bottom mb-3" *ngIf="statusOrderListe">Details</h5>
     <div class="info-container" *ngIf="statusOrderListe">
+      <div class="add-btn d-flex gap-2" *ngIf="recupinfo[0].NA_CODETYPEUTILISATEUR == '0003'">
+        <button
+         *ngIf="voirlist.CU_ACTIF == 'O' || voirlist.CU_ACTIF == ''"
+                class="btn btn-outline-danger btn-sm"
+                (click)="openDisableClientModal(voirlist)"
+                title="Désactiver cet Opérateur"
+              >
+            <i class="mdi mdi-account-off"></i> Désactiver
+        </button>
+        <button
+         *ngIf="voirlist.CU_ACTIF == 'N'"
+                class="btn btn-outline-danger btn-sm"
+                (click)="openDisableClientModal(voirlist)"
+                title="Activer cet Opérateur"
+              >
+            <i class="mdi mdi-account-off"></i> activer
+        </button>
+        </div><br>
       <ul class="list-unstyled mb-4">
         <li class="mb-3">
           <span class="h6">{{ LanguageService.op_chmp_title_1 }} : </span>
@@ -779,6 +834,27 @@
           <label for="motdepasse">{{ LanguageService.op_chmp_title_7 }}</label>
         </div>
       </div>
+      <div class="form-floating form-floating-outline mb-4">
+                        <div class="form-floating form-floating-outline">
+                          <select
+                            id="natOperateur"
+                            name="natOperateur"
+                            class="select2 form-select"
+                            data-allow-clear="true"
+                            [(ngModel)]="formulaire_operateur[7].valeur"
+                          >
+                            <option
+                              *ngFor="let ListAgence of ListeCombotypeOperateur"
+                              value="{{ ListAgence.NA_CODETYPEUTILISATEUR }}"
+                            >
+                              {{ ListAgence.NA_LIBELLETYPEUTILISATEUR }}
+                            </option>
+                          </select>
+                          <label for="natOperateur">{{
+                            LanguageService.op_chmp_title_0
+                          }}</label>
+                        </div>
+                      </div>
       <br />
       <h5 class="card-header">{{ LanguageService.op_title_droit }}</h5>
       <span
@@ -945,5 +1021,36 @@
         </button>
       </div>
     </form>
+  </div>
+</div>
+<!-- Modal de confirmation désactivation client -->
+<div
+  class="modal fade show"
+  tabindex="-1"
+  [ngStyle]="{ display: showDisableModal ? 'block' : 'none', background: showDisableModal ? 'rgba(0,0,0,0.15)' : 'none' }"
+  *ngIf="showDisableModal"
+  style="backdrop-filter: blur(2px);"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg rounded-4">
+      <div class="modal-header bg-white border-0 pb-0" style="border-top-left-radius: 1rem; border-top-right-radius: 1rem;">
+        <h5 class="modal-title text-danger d-flex align-items-center gap-2">
+          <i class="mdi mdi-alert-circle-outline"></i>
+          Confirmation
+        </h5>
+        <button type="button" class="btn-close" (click)="closeDisableClientModal()" aria-label="Fermer"></button>
+      </div>
+      <div class="modal-body text-center py-4">
+        <p class="mb-2" style="font-size: 1.1rem;">Voulez-vous vraiment désactiver ce client&nbsp;?</p>
+        <p class="fw-bold text-primary mb-0" *ngIf="clientToDisable" style="font-size: 1.2rem;">
+          {{ clientToDisable.CU_NOMUTILISATEUR || clientToDisable.NOM }}
+        </p>
+      </div>
+      <div class="modal-footer border-0 d-flex justify-content-center gap-3 pb-4">
+        <button type="button" class="btn btn-outline-secondary px-4" (click)="closeDisableClientModal()">Annuler</button>
+        <button type="button" *ngIf="voirlist.CU_ACTIF == 'N'" class="btn btn-danger px-4" (click)="confirmDisableClient()">Activer</button>
+        <button type="button" *ngIf="voirlist.CU_ACTIF == 'O' || voirlist.CU_ACTIF == ''" class="btn btn-danger px-4" (click)="confirmDisableClient()">Désactiver</button>
+      </div>
+    </div>
   </div>
 </div>

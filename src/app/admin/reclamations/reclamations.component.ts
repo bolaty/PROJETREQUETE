@@ -310,7 +310,9 @@ export class ReclamationsComponent {
   long_sentence: boolean = false;
   show_loader: boolean = false;
   phone_or_code: boolean = false;
-
+  selectedAgence: string = '';
+  selectedAgenceAttr: string = '';
+  recupinfoDroitUser: any ;
   constructor(
     public AdminService: AdminService,
     private toastr: ToastrService,
@@ -345,10 +347,28 @@ export class ReclamationsComponent {
             0,
             4
           );
-          if (this.recupinfo[0].CU_NOMUTILISATEUR.includes('SUPER')) {
+          /*this.recupinfoDroitUser = JSON.parse(sessionStorage.getItem('ListeDroitUsers') || '[]');
+          var contientObjet = this.recupinfoDroitUser.some(
+            (objet: any) => objet.OB_NOMOBJET === 'FT_RESPONSABLERECLAMATION'
+          );*/
+          
+          if (this.recupinfo[0].NA_CODETYPEUTILISATEUR == '0003' ) {
             //si l'utilisateur est un super admin il peut voir les operateurs des toutes agences 
-            // pour attribuer les requetes
-            this.ListeComboAgenceParOperateur = this.ListeComboAgence;
+            //pour attribuer les requetes
+            //this.ListeComboAgenceParOperateur = this.ListeComboAgence;
+            this.ListeComboAgenceParOperateur = [];
+            for (let index = 0; index < this.ListeComboAgence.length; index++) {
+             
+                this.ListeComboAgence[index].AG_RAISONSOCIAL_TRANSLATE =
+                  this.Translate(
+                    this.ListeComboAgence[index].AG_RAISONSOCIAL,
+                    this.LanguageService.langue_en_cours
+                  );
+                this.ListeComboAgenceParOperateur.push(
+                  this.ListeComboAgence[index]
+                );
+             
+            }
           }else{
             // sinon on filtre les agences par operateur
             this.ListeComboAgenceParOperateur = [];
@@ -1154,6 +1174,7 @@ HandleFileInput(event: any) {
           {
             AG_CODEAGENCE: this.formulaire_plaintes_reclamations[3].valeur,
             CU_ADRESSEGEOGRAPHIQUEUTILISATEUR: '.',
+            NA_CODETYPEUTILISATEUR: '',
             CU_CLESESSION: '',
             CU_CODECOMPTEUTULISATEUR: '',
             CU_CONTACT: this.formulaire_plaintes_reclamations[2].valeur, //"2250747839553",
@@ -1765,11 +1786,11 @@ HandleFileInput(event: any) {
   ListeRequete() {
     var Option = '';
     var body = {};
-    if (this.recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')) {
+    if (this.recupinfo[0].NA_LIBELLETYPEUTILISATEUR.includes('ADMIN')) {
       var CodeAgenceUtilisateur =
         this.recupinfo[0].CU_CODECOMPTEUTULISATEUR.substring(0, 4);
       Option = 'RequeteClientsClasse.svc/pvgListeReqrequete';
-      if (this.recupinfo[0].CU_NOMUTILISATEUR.includes('SUPER')){
+      if (this.recupinfo[0].NA_CODETYPEUTILISATEUR == '0003'){
         body = {
           Objets: [
             {
@@ -2271,7 +2292,7 @@ HandleFileInput(event: any) {
   ListeRequeteBis() {
     var Option = '';
     var body = {};
-    if (this.recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')) {
+    if (this.recupinfo[0].NA_LIBELLETYPEUTILISATEUR.includes('ADMIN')) {
       Option = 'RequeteClientsClasse.svc/pvgListeReqrequete';
       body = {
         Objets: [
@@ -2844,7 +2865,7 @@ HandleFileInput(event: any) {
   ListeRequeteold() {
     let Option = 'RequeteClientsClasse.svc/pvgListeReqrequete';
     var body = {};
-    if (this.recupinfo[0].CU_NOMUTILISATEUR.includes('ADMIN')) {
+    if (this.recupinfo[0].NA_LIBELLETYPEUTILISATEUR.includes('ADMIN')) {
       body = {
         Objets: [
           {
@@ -3744,9 +3765,17 @@ HandleFileInput(event: any) {
     }
     // this.ComboEtapeParamSimple()
     this.ListeComboParOperateur = [];
-    if (this.recupinfo[0].CU_NOMUTILISATEUR.includes('SUPER')){
+    if (this.recupinfo[0].NA_CODETYPEUTILISATEUR == '0003'){
       //recuperation de tout les operateurs en mode SUPER ADMIN
-      this.ListeComboParOperateur = this.ListeComboOperateur
+      this.ListeComboParOperateur = this.ListeComboOperateur.filter(
+        (item: any) => item.CU_CODECOMPTEUTULISATEUR != this.recupinfo[0].CU_CODECOMPTEUTULISATEUR
+             
+      );
+    }else if(this.recupinfo[0].NA_CODETYPEUTILISATEUR == '0002'){
+     this.ListeComboParOperateur = this.ListeComboOperateur.filter(
+        (item: any) => item.NA_CODETYPEUTILISATEUR != '0003' && item.CU_CODECOMPTEUTULISATEUR != this.recupinfo[0].CU_CODECOMPTEUTULISATEUR
+             
+      );
     }else{
       var agenceReq = this.recupValEtape.CU_CODECOMPTEUTULISATEUR.substring(0, 4);
         var agenceOp = '';
@@ -3759,6 +3788,10 @@ HandleFileInput(event: any) {
             this.ListeComboParOperateur.push(this.ListeComboOperateur[i]);
           }
         }
+        this.ListeComboParOperateur = this.ListeComboParOperateur.filter(
+        (item: any) => item.NA_CODETYPEUTILISATEUR == '0001' &&  item.CU_CODECOMPTEUTULISATEUR != this.recupinfo[0].CU_CODECOMPTEUTULISATEUR
+             
+      );
     }
    
     /* if (info.RQ_NOMRAPPORT != '') this.consultation_doc_req = true;
@@ -4063,11 +4096,17 @@ HandleFileInput(event: any) {
     this.SearchValueCode = '';
     this.SearchValuePhone = '';
 
-    if (type_user == 'simple') {
+    if (type_user == 'simple' ) {
       this.search_bar = true;
     } else {
       this.search_bar = false;
     }
+
+    /*if (this.recupinfo[0].NA_CODETYPEUTILISATEUR == '0003') {
+      this.search_bar = true;
+    } else {
+      this.search_bar = false;
+    }*/
 
     if (infoEcran == 'Liste') {
       this.statutFrmulaire = 'LISTE';
@@ -4392,7 +4431,46 @@ HandleFileInput(event: any) {
     };
     xhr.send(formData);
   }
+  
+  get filteredAttribution() {
+    let Operateurgrids = this.ListeComboParOperateur;
 
+    // Filtre par agence si sélectionnée
+    if (this.selectedAgenceAttr) {
+      Operateurgrids = Operateurgrids.filter(
+        (item: any) => item.AG_CODEAGENCE === this.selectedAgenceAttr
+             
+      );
+    }
+
+    
+    return Operateurgrids;
+  }
+  get filteredClients() {
+    let clients = this.tab_req_afficher;
+
+    // Filtre par agence si sélectionnée
+    if (this.selectedAgence) {
+      clients = clients.filter(
+        (item: any) => item.CU_CODECOMPTEUTULISATEUR.substring(0,4) === this.selectedAgence
+             
+      );
+    }
+
+    // Filtre par search_bar sur tous les champs
+    if (this.SearchValue && this.SearchValue.trim() !== '') {
+      const lowerSearchText = this.SearchValue.toLowerCase();
+      clients = clients.filter((client: any) =>
+        Object.values(client).some(
+          value =>
+            value != null &&
+            value.toString().toLowerCase().includes(lowerSearchText)
+        )
+      );
+    }
+    
+    return clients;
+  }
   ChoixRecherche(elem: any) {
     this.SearchValueCode = '';
     this.SearchValuePhone = '';
@@ -4431,7 +4509,9 @@ HandleFileInput(event: any) {
           }
         }
       );
-
+    if(this.recupinfo[0].NA_CODETYPEUTILISATEUR == '0003'){
+      this.checkStatusForm('Liste', 'admin')
+    }
     // Multiple Dropzone
     /* const previewTemplate = `<div class="dz-preview dz-file-preview">
       <div class="dz-details">
@@ -4463,6 +4543,7 @@ HandleFileInput(event: any) {
   }
 
   ngafterViewInit() {
+    
     // Initialiser Dropzone
     Dropzone.autoDiscover = false;
     var myDropzone = new Dropzone('#myDropzone', {
