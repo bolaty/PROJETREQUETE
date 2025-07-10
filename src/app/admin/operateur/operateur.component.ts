@@ -28,6 +28,7 @@ export class OperateurComponent {
   statutAlldroit: boolean = false;
   search_bar: any = '';
   item_client: any = {};
+  afficheOperateursDesactives: boolean = false;
   formulaire_operateur: any = [
     {
       id: 'nom',
@@ -47,7 +48,7 @@ export class OperateurComponent {
       id: 'email',
       type: 'text',
       valeur: '',
-      obligatoire: 'N',
+      obligatoire: 'O',
       label: 'email',
     },
     {
@@ -61,7 +62,7 @@ export class OperateurComponent {
       id: 'telephone',
       type: 'telephone',
       valeur: '',
-      obligatoire: 'N',
+      obligatoire: 'O',
       label: 'numéro de téléphone',
     },
     {
@@ -374,7 +375,7 @@ export class OperateurComponent {
     }
   }
 
-  chargementDate() {
+  chargementListeOperateur() {
   var pt = this;
   $(function () {
     'use strict';
@@ -388,7 +389,20 @@ export class OperateurComponent {
         data: pt.RecupOerateurs,
         columns: [
           { data: 'NOM' },
-          { data: 'CONTACT' },
+          { 
+            data: 'CONTACT'
+          },
+          { data: 'TYPE',
+            className: 'text-left',
+            render: function(data: any, type: any, row: any) {
+              // Badge selon le type d'opérateur
+              let badge = '';
+              if (row.TYPE === '0001' || row.TYPE == '') badge = '<span class="badge bg-primary ms-2">OPERATEUR CLASSIQUE</span>';
+              else if (row.TYPE === '0002') badge = '<span class="badge bg-success ms-2">ADMIN LOCAL</span>';
+              else if (row.TYPE === '0003') badge = '<span class="badge bg-warning text-dark ms-2">ADMIN RESEAU</span>';
+              else badge = `<span class="badge bg-secondary ms-2">${row.TYPE || ''}</span>`;
+              return `${badge}`;
+            } }
         ],
         select: {
           style: 'multi', // Permet la sélection multiple
@@ -421,19 +435,54 @@ export class OperateurComponent {
                 extend: 'print',
                 text: '<i class="mdi mdi-printer-outline me-1" ></i>Imprimer',
                 className: 'dropdown-item',
-                exportOptions: { columns: [0, 1] },
+                exportOptions: { columns: [0, 1,2] },
               },
               {
                 extend: 'excel',
                 text: '<i class="mdi mdi-file-excel-outline me-1"></i>Excel',
                 className: 'dropdown-item',
-                exportOptions: { columns: [0, 1] },
+                exportOptions: { columns: [0, 1,2] },
               },
               {
                 extend: 'pdf',
                 text: '<i class="mdi mdi-file-pdf-box me-1"></i>Pdf',
                 className: 'dropdown-item',
-                exportOptions: { columns: [0, 1] },
+                exportOptions: { columns: [0, 1, 2] },
+                customize: function (doc: any) {
+                  // Style épuré : marges, police, couleurs, alignement
+                  doc.styles.tableHeader = {
+                    fillColor: '#22c1c3',
+                    color: '#fff',
+                    alignment: 'center',
+                    fontSize: 12,
+                    bold: true,
+                    margin: [0, 5, 0, 5]
+                  };
+                  doc.styles.tableBodyEven = {
+                    fillColor: '#f8fafd'
+                  };
+                  doc.styles.tableBodyOdd = {
+                    fillColor: '#ffffff'
+                  };
+                  doc.styles.title = {
+                    fontSize: 16,
+                    bold: true,
+                    color: '#1976d2',
+                    alignment: 'center'
+                  };
+                  doc.defaultStyle = {
+                    fontSize: 11,
+                    color: '#222'
+                  };
+                  // Réduire les bordures
+                  doc.content[1].table.widths = ['*', '*', '*'];
+                  // Centrer le contenu
+                  doc.content[1].table.body.forEach(function(row: any, i: number) {
+                    row.forEach(function(cell: any) {
+                      cell.alignment = 'center';
+                    });
+                  });
+                }
               },
             ],
           },
@@ -804,7 +853,14 @@ CombotypeOperateur() {
       }
     );
   }
-
+  onToggleOperateursDesactives() {
+    this.afficheOperateursDesactives = !this.afficheOperateursDesactives;
+    if (this.afficheOperateursDesactives) {
+      this.ListeOperateursDesactive();
+    } else {
+      this.ListeOperateurs();
+    }
+  }
   ListeOperateurs() {
     let Option = 'RequeteClientsClasse.svc/pvgListeUtilisateurs';
     var CodeAgenceUtilisateur =
@@ -842,6 +898,7 @@ CombotypeOperateur() {
             id: '',
             NOM: '',
             CONTACT: '',
+            TYPE: ''
           };
           for (let i = 0; i < this.ListeOperateur.length; i++) {
             /* obj = {
@@ -855,13 +912,14 @@ CombotypeOperateur() {
               id: i.toString(),
               NOM: this.ListeOperateur[i].CU_NOMUTILISATEUR,
               CONTACT: this.ListeOperateur[i].CU_CONTACT,
+              TYPE: this.ListeOperateur[i].NA_CODETYPEUTILISATEUR
               // LOGIN: this.ListeOperateur[i].CU_LOGIN,
               // MOTDEPASSE: this.ListeOperateur[i].CU_MOTDEPASSE,
             };
             this.RecupOerateurs.push(obj);
           }
           //  this.toastr.success(this.ListeOperateur[0].clsResultat.SL_MESSAGE, 'success', { positionClass: 'toast-bottom-left'});
-          this.chargementDate();
+          this.chargementListeOperateur();
         } else {
           this.AdminService.CloseLoader();
           this.toastr.error(
@@ -882,12 +940,90 @@ CombotypeOperateur() {
       }
     );
   }
-
+  ListeOperateursDesactive() {
+    let Option = 'RequeteClientsClasse.svc/pvgListeUtilisateursDesactive';
+    var CodeAgenceUtilisateur =
+      this.recupinfo[0].CU_CODECOMPTEUTULISATEUR.substring(0, 4);
+    let body = {
+      Objets: [
+        {
+          OE_PARAM: this.recupinfo[0].NA_LIBELLETYPEUTILISATEUR.includes('ADMIN')
+            ? ['0001']
+            : [CodeAgenceUtilisateur, '0001'],
+          clsObjetEnvoi: {
+            ET_CODEETABLISSEMENT: '',
+            AN_CODEANTENNE: '',
+            TYPEOPERATION: '01',
+          },
+        },
+      ],
+    };
+    // $(".datatables-basic").DataTable().destroy();
+    this.AdminService.AppelServeur(body, Option).subscribe(
+      (success: any) => {
+        this.ListeOperateur = success;
+        this.ListeOperateur = this.ListeOperateur.pvgListeUtilisateursDesactiveResult;
+        if (this.ListeOperateur[0].clsResultat.SL_RESULTAT == 'TRUE') {
+          this.AdminService.CloseLoader();
+          this.RecupOerateurs = [];
+          /*  var obj = {
+            id: '',
+            NOM: '',
+            CONTACT: '',
+            LOGIN: '',
+            MOTDEPASSE: '',
+          }; */
+          var obj = {
+            id: '',
+            NOM: '',
+            CONTACT: '',
+            TYPE: ''
+          };
+          for (let i = 0; i < this.ListeOperateur.length; i++) {
+            /* obj = {
+              id: i.toString(),
+              NOM: this.ListeOperateur[i].CU_NOMUTILISATEUR,
+              CONTACT: this.ListeOperateur[i].CU_CONTACT,
+              LOGIN: this.ListeOperateur[i].CU_LOGIN,
+              MOTDEPASSE: this.ListeOperateur[i].CU_MOTDEPASSE,
+            }; */
+            obj = {
+              id: i.toString(),
+              NOM: this.ListeOperateur[i].CU_NOMUTILISATEUR,
+              CONTACT: this.ListeOperateur[i].CU_CONTACT,
+              TYPE: this.ListeOperateur[i].NA_CODETYPEUTILISATEUR
+              // LOGIN: this.ListeOperateur[i].CU_LOGIN,
+              // MOTDEPASSE: this.ListeOperateur[i].CU_MOTDEPASSE,
+            };
+            this.RecupOerateurs.push(obj);
+          }
+          //  this.toastr.success(this.ListeOperateur[0].clsResultat.SL_MESSAGE, 'success', { positionClass: 'toast-bottom-left'});
+          this.chargementListeOperateur();
+        } else {
+          this.AdminService.CloseLoader();
+          this.toastr.error(
+            this.ListeOperateur[0].clsResultat.SL_MESSAGE,
+            'error',
+            { positionClass: 'toast-bottom-left' }
+          );
+          this.RecupOerateurs = [];
+        }
+      },
+      (error) => {
+        this.AdminService.CloseLoader();
+        this.toastr.warning(
+          this.ListeOperateur[0].clsResultat.SL_MESSAGE,
+          'warning',
+          { positionClass: 'toast-bottom-left' }
+        );
+      }
+    );
+  }
   EnregistrementCompteOperateur(tableau_recu: any) {
     if (this.statuFormulaire === 'MODIFICATION') {
-      this.formulaire_operateur[7].obligatoire = 'N';
+      tableau_recu[7].obligatoire = 'N';
     } else {
-      this.formulaire_operateur[7].obligatoire = 'O';
+      tableau_recu[7].obligatoire = 'O';
     }        
                 
     this.AdminService.SecuriteChampObligatoireEtTypeDeDonnee(tableau_recu);
@@ -1287,7 +1423,7 @@ CombotypeOperateur() {
     }, 1000);
 
     /* setTimeout(() => {
-      pt.chargementDate();
+      pt.chargementListeOperateur();
     }, 1000);*/
   }
 }

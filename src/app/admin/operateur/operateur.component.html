@@ -53,6 +53,7 @@
           <div class="row">
             <!-- Navigation -->
             <div class="col-12 col-md-2 mx-auto card-separator">
+              
               <div
                 class="d-flex justify-content-between flex-column mb-3 mb-md-0 pe-md-3"
               >
@@ -378,16 +379,35 @@
                             <div class="col-md-4 user_status"></div>
                           </div>
                         </div> -->
+                  <div class="d-flex justify-content-end mb-3" *ngIf="recupinfo[0].NA_CODETYPEUTILISATEUR == '0003'">
+                    <button
+                      class="btn btn-outline-primary"
+                      (click)="onToggleOperateursDesactives()"
+                    >
+                      <i class="mdi" [ngClass]="afficheOperateursDesactives ? 'mdi-account-group-outline' : 'mdi-account-off-outline'"></i>
+                      {{ afficheOperateursDesactives ? 'Voir les opérateurs actifs' : 'Voir les opérateurs désactivés' }}
+                    </button>
+                  </div>
                   <div class="card-datatable table-responsive pt-0">
-                    <table class="datatables-basic table table-bordered">
-                      <thead style="background-color: #83c5be">
+                    <table class="datatables-basic table table-hover align-middle shadow-sm rounded" style="background: #fff;">
+                      <thead style="background-color: #83c5be;">
                         <tr>
-                          <th>{{ LanguageService.op_table_title_1 }}</th>
-                          <th>{{ LanguageService.op_table_title_2 }}</th>
+                          <th class="text-primary fw-semibold" style="border-top-left-radius: 8px;">{{ LanguageService.op_table_title_1 }}</th>
+                          <th class="text-primary fw-semibold" style="border-top-right-radius: 8px;">{{ LanguageService.op_table_title_2 }}</th>
+                          <th class="text-primary fw-semibold" style="border-top-right-radius: 8px;">TYPE</th>
                           <!-- <th>{{ LanguageService.op_table_title_3 }}</th> -->
                           <!-- <th>{{ LanguageService.op_table_title_4 }}</th> -->
                         </tr>
                       </thead>
+                      <tbody>
+                        <!-- Exemple de ligne, à adapter avec *ngFor -->
+                        <!--
+                        <tr *ngFor="let op of operateurs">
+                          <td>{{ op.CU_NOMUTILISATEUR }}</td>
+                          <td>{{ op.CU_EMAIL }}</td>
+                        </tr>
+                        -->
+                      </tbody>
                     </table>
                   </div>
                   <!-- /Navigation -->

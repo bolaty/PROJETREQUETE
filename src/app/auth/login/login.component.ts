@@ -100,8 +100,8 @@ export class LoginComponent {
     let body = {
       Objets: [
         {
-          //OE_PARAM: ['0001', this.formLogin.login, this.formLogin.mdp], // operateur personnalisable
-          OE_PARAM: ['0002', this.formLogin.login, this.formLogin.mdp], // client personnalisable
+          OE_PARAM: ['0001', this.formLogin.login, this.formLogin.mdp], // operateur personnalisable
+          //OE_PARAM: ['0002', this.formLogin.login, this.formLogin.mdp], // client personnalisable
           clsObjetEnvoi: {
             ET_CODEETABLISSEMENT: '',
             AN_CODEANTENNE: '',
@@ -127,7 +127,7 @@ export class LoginComponent {
           );
         } else {
           // Vérification de l'année courante
-          const anneeBase = this.RetoursChargement[0].EX_EXERCICE;
+          /*const anneeBase = this.RetoursChargement[0].EX_EXERCICE;
           const anneeSysteme = new Date().getFullYear().toString();
           if (anneeBase !== anneeSysteme) {
             this.toastr.error(
@@ -135,7 +135,7 @@ export class LoginComponent {
               'Alerte'
             );
             return ; // Arrêter le traitement si les années ne correspondent pas
-          }
+          }*/
           if (this.RetoursChargement[0].TU_CODETYPEUTILISATEUR == '0001') {
             if (this.RetoursChargement[0].CU_NOMBRECONNECTION == '0') {
               window.location.href = '/auth/changePassword';

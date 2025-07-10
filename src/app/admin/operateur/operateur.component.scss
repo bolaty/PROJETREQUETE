@@ -4,3 +4,28 @@
   border-color: #1976d2;
   box-shadow: 0 0 0 0.15rem rgba(25, 118, 210, 0.15);
 }
+
+
+
+/* Ajoute dans styles.scss ou dans le style du composant */
+.table thead th {
+  border: none !important;
+  font-size: 1.08rem;
+  letter-spacing: 0.5px;
+  background: #e0f2f1 !important;
+}
+.table tbody tr {
+  transition: background 0.2s;
+}
+.table tbody tr:hover {
+  background: #f1f7fa !important;
+}
+.card {
+  border-radius: 1.25rem !important;
+}
+.btn {
+  border-radius: 2rem !important;
+}
+.form-control {
+  border-radius: 0.75rem !important;
+}

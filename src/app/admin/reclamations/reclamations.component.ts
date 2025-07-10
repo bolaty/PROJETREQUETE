@@ -883,6 +883,7 @@ HandleFileInput(event: any) {
             this.base64Image = '';
             this.ListeRequeteBis();
             this.viderChamp();
+            this.files = [];
             this.toastr.success(
               this.retourRequeteEnregistrement.clsResultat.SL_MESSAGE,
               'success',
@@ -3730,7 +3731,8 @@ HandleFileInput(event: any) {
       this.option_body.style.backgroundColor = '';
     }
 
-    this.ngOnInit();
+    //this.ngOnInit(); // Modification pour ne pas recharger la page a revenir en cas de bug
+    //this.ComboReqrequeteselonEtape(info.RQ_CODEREQUETE);
   }
 
   recupListeCloture(info: any) {
@@ -3805,7 +3807,7 @@ HandleFileInput(event: any) {
     this.formulaire_avis[2].obligatoire = 'O';
     this.formulaire_avis[3].obligatoire = 'O';
 
-    this.ngOnInit();
+    //this.ngOnInit(); Modification pour ne pas recharger la page a revenir en cas de bug
   }
 
   ListeConsultationHistorique(list_step: any) {
@@ -3978,9 +3980,9 @@ HandleFileInput(event: any) {
             for (let j = 0; j < this.ListeComboEtapes.length; j++) {
               if (
                 this.ListeComboEtapeSelonReq[i].RE_CODEETAPE ==
-                  this.ListeComboEtapes[j].RE_CODEETAPE &&
+                  this.ListeComboEtapes[j].RE_CODEETAPE /*&&
                 this.ListeComboEtapeSelonReq[i].AT_DATECLOTUREETAPE ==
-                  '01/01/1900'
+                  '01/01/1900'*/
               ) {
                 this.ListeComboEtapes[j].RE_ACTIF = 'N';
               }

@@ -25,3 +25,110 @@ $dark-green: rgba(56, 142, 60, 1); // Vert foncé
   );
   font-weight: 500;
 }
+
+
+
+// Animations douces pour les cartes, boutons, inputs et tableaux
+
+// Animation d’apparition pour les cartes
+@keyframes fadeInCard {
+  from { opacity: 0; transform: translateY(20px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+.card {
+  border-radius: 1.25rem !important;
+  animation: fadeInCard 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: box-shadow 0.2s, transform 0.2s;
+  &:hover {
+    box-shadow: 0 8px 32px rgba(34, 193, 195, 0.12);
+    transform: translateY(-2px) scale(1.01);
+  }
+}
+
+// Animation sur les boutons
+.btn {
+  border-radius: 2rem !important;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s;
+  &:hover, &:focus {
+    box-shadow: 0 4px 16px rgba(34, 193, 195, 0.10);
+    transform: translateY(-1px) scale(1.03);
+  }
+}
+
+// Animation sur les champs de formulaire
+.form-control {
+  border-radius: 0.75rem !important;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  &:focus {
+    border-color: #22c1c3;
+    box-shadow: 0 0 0 0.15rem rgba(34, 193, 195, 0.15);
+  }
+}
+
+// Animation sur les lignes de tableau au survol
+.table tbody tr {
+  transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+  &:hover {
+    background: #f1f7fa !important;
+    box-shadow: 0 2px 8px rgba(34, 193, 195, 0.07);
+    transform: scale(1.01);
+  }
+}
+
+// Animation d’apparition pour les modales (si tu utilises des modales custom)
+@keyframes fadeInModal {
+  from { opacity: 0; transform: scale(0.97);}
+  to { opacity: 1; transform: scale(1);}
+}
+.modal-content {
+  animation: fadeInModal 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: box-shadow 0.2s;
+}
+
+// Animation sur les liens actifs
+.active-link {
+  background: linear-gradient(
+    188deg,
+    rgba(34, 193, 195, 0.22) 0%,
+    rgba(140, 122, 83, 0.18) 100%
+  );
+  color: #1976d2;
+  font-weight: 700;
+  border-radius: 1rem;
+  position: relative;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s, transform 0.2s;
+
+  box-shadow: 0 2px 12px rgba(34, 193, 195, 0.10);
+
+  // Soulignement animé
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    bottom: 10px;
+    height: 3px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #22c1c3 0%, #8c7a53 100%);
+    opacity: 0;
+    transform: scaleX(0.7);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+
+  &:hover, &:focus {
+    background: linear-gradient(
+      188deg,
+      rgba(34, 193, 195, 0.32) 0%,
+      rgba(140, 122, 83, 0.25) 100%
+    );
+    color: #125a8a;
+    box-shadow: 0 6px 24px rgba(34, 193, 195, 0.18);
+    transform: translateY(-3px) scale(1.04);
+
+    &::after {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+  }
+}

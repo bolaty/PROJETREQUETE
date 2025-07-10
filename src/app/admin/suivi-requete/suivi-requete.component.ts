@@ -845,7 +845,7 @@ export class SuiviRequeteComponent {
         this.ListeComboEtapeSelonReq = success;
         this.ListeComboEtapeSelonReq =
           this.ListeComboEtapeSelonReq.pvgListeReqrequeteEtapeparRequeteResult;
-
+         //AT_INDEXETAPE
         console.log(
           'this.ListeComboEtapeSelonReq',
           this.ListeComboEtapeSelonReq
@@ -858,8 +858,8 @@ export class SuiviRequeteComponent {
             index++
           ) {
             if (
-              this.ListeComboEtapeSelonReq[index].RQ_CODEREQUETE ==
-              this.recupinfo.RQ_CODEREQUETE
+              this.ListeComboEtapeSelonReq[index].AT_INDEXETAPE ==
+              this.recupinfo.AT_INDEXETAPE
             ) {
               this.var_off_on = this.ListeComboEtapeSelonReq[index].AT_ACTIF;
               break;
